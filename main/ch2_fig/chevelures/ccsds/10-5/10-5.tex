@@ -1,0 +1,160 @@
+\documentclass[margin=10pt, varwidth]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{colorbrewer}
+\usepackage{pgffor}
+\pgfplotsset{compat=newest}
+\usepackage{amsmath}
+\begin{document}
+\vbox{\hbox{
+\begin{tikzpicture}
+	\begin{axis}[
+			footnotesize, width=20cm, height=10cm,    
+			xmin=0, xmax=30, %xtick={0,0.2,...,1.6},
+			ymin=0, ymax=550,
+			xlabel=It\'eration n / n+1, 
+			ylabel=Nombre d'oscillations Nat vers Nat,  
+			grid=both, grid style={gray!30},
+			%tick align=outside, tickpos=left, legend pos=north east
+			colorbrewer cycle list=Spectral
+		]	
+		\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {nn_f.dat}; }																								
+	\end{axis}
+\end{tikzpicture} %
+\begin{tikzpicture}
+	\begin{axis}[
+			footnotesize, width=20cm, height=10cm,    
+			xmin=0, xmax=30, %xtick={0,0.2,...,1.6},
+			ymin=0, ymax=550,
+			xlabel=It\'eration n / n+1, 
+			ylabel=Nombre d'oscillations Int vers Int,  
+			grid=both, grid style={gray!30},
+			%tick align=outside, tickpos=left, legend pos=north east
+			colorbrewer cycle list=Spectral
+		]
+		\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {ii_f.dat}; }																								
+	\end{axis}
+\end{tikzpicture} 
+\begin{tikzpicture}
+	\begin{axis}[
+			footnotesize, width=20cm, height=10cm,    
+			xmin=0, xmax=30, %xtick={0,0.2,...,1.6},
+			ymin=0, ymax=550,
+			xlabel=It\'eration n / n, 
+			ylabel=Nombre d'oscillations Nat vers Int,  
+			grid=both, grid style={gray!30},
+			%tick align=outside, tickpos=left, legend pos=north east
+			colorbrewer cycle list=Spectral
+		]
+		
+		\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {ni_f.dat}; }																													
+			
+	\end{axis}
+\end{tikzpicture}  
+\begin{tikzpicture}
+	\begin{axis}[
+			footnotesize, width=20cm, height=10cm,    
+			xmin=0, xmax=30, %xtick={0,0.2,...,1.6},
+			ymin=0, ymax=550,
+			xlabel=It\'eration n / n+1, 
+			ylabel=Nombre d'oscillations Int vers Nat,  
+			grid=both, grid style={gray!30},
+			%tick align=outside, tickpos=left, legend pos=north east
+			colorbrewer cycle list=Spectral
+		]
+		
+		\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {in_f.dat}; }																								
+	\end{axis}
+\end{tikzpicture}  
+\begin{tikzpicture}
+	\begin{axis}[
+			footnotesize, width=20cm, height=10cm,    
+			xmin=0, xmax=30, %xtick={0,0.2,...,1.6},
+			ymin=0, ymax=550,
+			xlabel=It\'eration n, 
+			ylabel=Nombre d'erreurs,  
+			grid=both, grid style={gray!30},
+			%tick align=outside, tickpos=left, legend pos=north east
+			colorbrewer cycle list=Spectral
+		]		
+		\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {err_f.dat}; }																								
+	\end{axis}
+\end{tikzpicture} }}
+
+
+\vbox{\hbox{
+\begin{tikzpicture}
+	\begin{axis}[
+			footnotesize, width=20cm, height=10cm,    
+			xmin=0, xmax=30, %xtick={0,0.2,...,1.6},
+			ymin=0, ymax=550,
+			xlabel=It\'eration n / n+1, 
+			ylabel=Nombre d'oscillations Nat vers Nat,  
+			grid=both, grid style={gray!30},
+			%tick align=outside, tickpos=left, legend pos=north east
+			colorbrewer cycle list=Spectral
+		]	
+		\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {nn_c.dat}; }																								
+	\end{axis}
+\end{tikzpicture} %
+\begin{tikzpicture}
+	\begin{axis}[
+			footnotesize, width=20cm, height=10cm,    
+			xmin=0, xmax=30, %xtick={0,0.2,...,1.6},
+			ymin=0, ymax=550,
+			xlabel=It\'eration n / n+1, 
+			ylabel=Nombre d'oscillations Int vers Int,  
+			grid=both, grid style={gray!30},
+			%tick align=outside, tickpos=left, legend pos=north east
+			colorbrewer cycle list=Spectral
+		]
+		\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {ii_c.dat}; }																								
+	\end{axis}
+\end{tikzpicture} 
+\begin{tikzpicture}
+	\begin{axis}[
+			footnotesize, width=20cm, height=10cm,    
+			xmin=0, xmax=30, %xtick={0,0.2,...,1.6},
+			ymin=0, ymax=550,
+			xlabel=It\'eration n / n, 
+			ylabel=Nombre d'oscillations Nat vers Int,  
+			grid=both, grid style={gray!30},
+			%tick align=outside, tickpos=left, legend pos=north east
+			colorbrewer cycle list=Spectral
+		]
+		
+		\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {ni_c.dat}; }																													
+			
+	\end{axis}
+\end{tikzpicture}  
+\begin{tikzpicture}
+	\begin{axis}[
+			footnotesize, width=20cm, height=10cm,    
+			xmin=0, xmax=30, %xtick={0,0.2,...,1.6},
+			ymin=0, ymax=550,
+			xlabel=It\'eration n / n+1, 
+			ylabel=Nombre d'oscillations Int vers Nat,  
+			grid=both, grid style={gray!30},
+			%tick align=outside, tickpos=left, legend pos=north east
+			colorbrewer cycle list=Spectral
+		]
+		
+		\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {in_c.dat}; }																								
+	\end{axis}
+\end{tikzpicture}  
+\begin{tikzpicture}
+	\begin{axis}[
+			footnotesize, width=20cm, height=10cm,    
+			xmin=0, xmax=30, %xtick={0,0.2,...,1.6},
+			ymin=0, ymax=550,
+			xlabel=It\'eration n, 
+			ylabel=Nombre d'erreurs,  
+			grid=both, grid style={gray!30},
+			%tick align=outside, tickpos=left, legend pos=north east
+			colorbrewer cycle list=Spectral
+		]		
+		\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {err_c.dat}; }																								
+	\end{axis}
+\end{tikzpicture} }}
+
+
+\end{document}

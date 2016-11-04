@@ -1,0 +1,68 @@
+\begin{titlepage}
+  \setlength{\oddsidemargin}{-2mm}
+  \begin{center}
+    %\large
+    
+    %\sffamily
+    
+    
+    %\tikzset{external/export next=false}
+    \begin{tikzpicture}[overlay,remember picture]
+      \coordinate (SW) at (current page.south west);
+      \coordinate (SE) at (current page.south east);
+      \coordinate (NW) at (current page.north west);
+      \coordinate (NE) at (current page.north east);
+      
+      \coordinate (anchorSceauA) at ($(SW)!.84!(SE)$);
+      \coordinate (anchorSceauB) at ($(SE)!0.25!(NE)$);
+      \coordinate (anchorSceau) at (anchorSceauA |- anchorSceauB);
+      
+      \node[opacity=.1] at (anchorSceau) {\includegraphics[height=7.5cm]{head/sceauUnivBord.png}};
+      \node[inner sep=5,anchor=north west] at ($(NW)!.05!(SE)$) {\includegraphics[height=2.5cm]{head/ub.jpg}};
+      
+      \node[inner sep=5,anchor=north east] at ($(NE)!.05!(SW)$) {\includegraphics[height=2.5cm]{head/TAS.jpg}};
+    \end{tikzpicture}
+    
+    \noindent \Large{THÈSE PRÉSENTÉE\\POUR OBTENIR LE GRADE DE\\}
+      \vspace*{1.5em}
+      \noindent \Huge \textbf{DOCTEUR DE \\L'UNIVERSITÉ DE BORDEAUX\\} 
+        \vspace*{1.5em}
+        \noindent \Large{\bsc{École Doctorale des Sciences de l'Ingénieur\\Spécialité : Électronique\\}}
+          \vspace*{1.5em}
+          \noindent \Large{par \textbf{Thibaud \bsc{Tonnellier}}\\}
+            \vspace*{1.5em}
+            {\color{bleuUni}\hrule} \vspace*{0.2cm}
+            \noindent {\Huge \textbf{Mise en \oe uvre d'un environnement de prototypage temps réel pour l'expertise de nouveaux schémas de codage canal}} \\
+            \vspace*{0.2cm} {\color{bleuUni}\hrule}
+            \vspace*{1.5em}
+            \begin{tabular}{rl}
+              \Large{Directeur de thèse : }     & Christophe \bsc{Jégo} \\
+              \Large{Co-encadrants de thèse : } & Bertrand \bsc{Le Gal}  \\
+                                                 & Camille \bsc{Leroux}   \\
+            \end{tabular}
+            
+            \vspace*{1.5em}
+            \noindent \Large préparée au Laboratoire IMS \\ en collaboration avec Thales Alenia Space \\
+            \vspace*{1.5em}
+            \noindent \large soutenue le \\
+            \vspace*{1.5em}
+          \end{center}
+          \noindent \large \textbf{Jury :} \\
+          \vspace*{-1.5em}
+          \begin{center}
+            \begin{tabular}{lclclr}
+              Prénom \textsc{Nom}         & - & Professeur des Universités & - & Lieu                & \textit{Président}   \\
+              Prénom \textsc{Nom}         & - & Titre                       & - & Lieu                & \textit{Rapporteur}   \\
+              Prénom \textsc{Nom}         & - & Titre                       & - & Lieu                & \textit{Rapporteur}   \\
+              Nicolas \textsc{Van Wambeke} & - & Ingénieur                  & - & Thales Alenia Space & \textit{Examinateur}  \\
+              Benjamin \textsc{Gadat}      & - & Ingénieur                  & - & Airbus Group        & \textit{Examinateur}  \\
+              Christophe \textsc{Jégo}    & - & Professeur des Universités & - & Bordeaux INP        & \textit{Directeur}    \\
+              Bertrand \textsc{Le Gal}     & - & Maître de Conférence      & - & Bordeaux INP        & \textit{Co-directeur} \\
+              Camille \textsc{Leroux}      & - & Maître de Conférence      & - & Bordeaux INP        & \textit{Co-directeur} \\
+            \end{tabular}
+          \end{center}
+          
+          
+          
+        \end{titlepage}
+        

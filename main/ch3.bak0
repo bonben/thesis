@@ -1,0 +1,36 @@
+%!TEX root = ../my_thesis.tex
+\chapter{Des oscillations du décodage itératif} % (fold)
+\label{cha:chapter_3}
+
+Dans ce chapitre, on présente le SC et le décodage  à la Benjamin
+
+\vspace*{\fill}
+\minitocTITI
+\vspace*{\fill}
+
+\section{État de l'art} % (fold)
+\label{sec:_tat_de_l_art}
+
+\subsection{Convergence} 
+\label{sub:convergence}
+
+
+\subsection{Critère d'arrêt}
+\label{sub:crit_re_d_arr_t}
+
+
+
+\section{Mesures} % (fold)
+\label{sec:mesures}
+
+\subsection{Polarisation des APP}
+\label{sub:polarisation_des_app}
+
+blalblaa
+
+\subsection{Nombre d'erreurs en fonction des oscillations}
+\label{sub:nombre_d_erreurs_en_fonction_des_oscillations}
+
+bla
+\subsubsection{Extrinsèques} 
+\label{ssub:extrins_ques}

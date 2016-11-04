@@ -1,0 +1,64 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usepackage{textcomp}
+\definecolor{falseframe}{RGB}{254,178,76}
+\definecolor{correctframe}{RGB}{44,162,95}
+\definecolor{falsebit}{RGB}{227,74,51}
+\definecolor{correctbit}{RGB}{67,162,202}
+\pgfplotsset{compat=newest}
+%test
+\begin{document}
+
+
+\begin{tikzpicture} 
+\begin{axis}[   x tick label style= {rotate=45,anchor=north east},
+				xticklabel interval boundaries,
+                ylabel=Fr\'equence,
+                xlabel= Oscillations par bit $\div$ Moyenne oscillations par trame erronée $\times$ 10,
+                ymin=0, ymax=0.25, ytick = {0,0.02,...,0.24},
+                legend style={at={(1.1,0.55)}, anchor=north, legend columns=1}, 
+                ybar interval, %bar width=8pt,
+                enlarge x limits=-0.1,
+                ymajorgrids, grid style={gray!30},
+                width=20cm,
+                height=15cm]
+%\addplot coordinates {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3) (0.6,2) (0.7,1.5) (1,1.5)}; 
+
+	\addplot[fill=correctbit!50] table [x=R, y=NNC] {test.dat}; 
+	\addplot[fill=correctbit]  table [x=R, y=IIC] {test.dat}; 
+	\addplot[fill=falsebit!50]  table [x=R, y=NNE] {test.dat}; 
+	\addplot[fill=falsebit]  table [x=R, y=IIE] {test.dat}; 
+	\addplot[correctframe,sharp plot,update limits=false, very thick] coordinates {(1,0) (1,0.15)} node[rotate=45] at (axis cs:1.13,0.162) {\textbf{Moyenne}};
+
+	\legend{N\textrightarrow N bit correct, I\textrightarrow I bit correct,N\textrightarrow N bit erron\'e, I\textrightarrow I bit erron\'e}
+\end{axis}
+
+\end{tikzpicture}
+
+
+\begin{tikzpicture} 
+\begin{axis}[   x tick label style= {rotate=45,anchor=north east},
+                                xticklabel interval boundaries,
+                ylabel=Fr\'equence,
+                xlabel= Oscillations par bit $\div$ Moyenne oscillations par trame erronée $\times$ 10,
+                ymin=0, ymax=0.25, ytick = {0,0.02,...,0.24},
+                legend style={at={(1.1,0.55)}, anchor=north, legend columns=1}, 
+                ybar interval, %bar width=8pt,
+                enlarge x limits=-0.1,
+                ymajorgrids, grid style={gray!30},
+                width=20cm,
+                height=15cm]
+%\addplot coordinates {(0,2) (0.1,1) (0.3,0.5) (0.35,4) (0.5,3) (0.6,2) (0.7,1.5) (1,1.5)}; 
+
+        \addplot[fill=correctbit!50] table [x=R, y=NIC] {test.dat}; 
+        \addplot[fill=correctbit]  table [x=R, y=INC] {test.dat}; 
+        \addplot[fill=falsebit!50]  table [x=R, y=NIE] {test.dat}; 
+        \addplot[fill=falsebit]  table [x=R, y=INE] {test.dat}; 
+
+        \addplot[correctframe,sharp plot,update limits=false, very thick] coordinates {(1,0) (1,0.15)} node[rotate=45] at (axis cs:1.13,0.162) {\textbf{Moyenne}};
+
+        \legend{N\textrightarrow I bit correct, I\textrightarrow N bit correct, N \textrightarrow I bit erron\'e, I\textrightarrow N bit erron\'e}
+\end{axis}
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,37 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usepackage{textcomp}
+\definecolor{falseframe}{RGB}{254,178,76}
+\definecolor{correctframe}{RGB}{44,162,95}
+\definecolor{falsebit}{RGB}{227,74,51}
+\definecolor{correctbit}{RGB}{67,162,202}
+\pgfplotsset{compat=newest}
+%SNR = 0.6 = 1.2e-2, 32 its, sf =0.75
+\begin{document}
+
+
+\begin{tikzpicture} 
+    \begin{axis}[symbolic x coords={N\textrightarrow N, I\textrightarrow I, N\textrightarrow I, I\textrightarrow N},
+                xtick=data,
+                x tick label style= {rotate=45,anchor=north east},
+                ylabel=Nombre d'oscillations par bit,
+                ymin=0, ymax=31,
+                legend style={at={(1.55,0.55)}, anchor=north, legend columns=1}, 
+                ybar, bar width=8pt,
+                enlarge x limits=0.2,
+                ymajorgrids, grid style={gray!30},
+                ] 
+
+        \addplot[fill=falseframe] coordinates {(N\textrightarrow N,10.1555) (I\textrightarrow I,10.1716) (N\textrightarrow I,13.4196) (I\textrightarrow N,13.865)};
+       
+        \addplot[fill=falsebit] coordinates {(N\textrightarrow N,12.3082) (I\textrightarrow I,12.299) (N\textrightarrow I,15.7558) (I\textrightarrow N,16.2103)};
+        \addplot[fill=correctbit] coordinates {(N\textrightarrow N,9.78694) (I\textrightarrow I,9.80732) (N\textrightarrow I,13.0196) (I\textrightarrow N,13.4634)};
+
+        \addplot[fill=correctframe] coordinates {(N\textrightarrow N,0.926082) (I\textrightarrow I,0.75208) (N\textrightarrow I,1.07016) (I\textrightarrow N,1.29275)};
+        
+        \legend{Trames erron\'ees \`a la derni\`ere it\'eration, Bits erron\'es dans trames erron\'ees, Bits justes dans trames erron\'ees, Trames corrig\'ees \`a la derni\`ere it\'eration} 
+
+
+    \end{axis} 
+\end{tikzpicture}
+\end{document}

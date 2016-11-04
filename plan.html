@@ -1,0 +1,405 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  
+  <title>
+   Made with Remarkable!
+  </title>
+  
+  <style>
+   body{font-family:Helvetica,Arial,sans-serif;background-color:#fff}h1,h2{text-align:center;color:#6495ed}h3,h4{color:#6495ed}blockquote{background:#f9f9f9;border-left:10px solid #6495ed;margin:1.5em 10px;padding:.5em 10px;font-style:italic}blockquote p{display:inline}hr{clear:both;float:none;width:100%;height:2.5px;margin:1.4em 0;border:none;background:#ddd;background:#ddd {background-color:#aaa}table tr th{font-weight:700;border:1px solid #ccc;text-align:left;margin:0;padding:6px 13px}table tr td{border:1px solid #ccc;text-align:left;margin:0;padding:6px 13px}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}
+  </style>
+ </head>
+ <body>
+  <h3 id="introduction-3p">
+   Introduction [3p]
+  </h3>
+  <ul>
+   <li>
+    Communications numériques, plancher d’erreur (=problématique)
+   </li>
+   <li>
+    Sommaire détaillé
+   </li>
+   <li>
+    Contributions
+   </li>
+  </ul>
+  <h3 id="1-contexte-et-etat-de-lart-35p">
+   1. Contexte et état de l’art [35p]
+  </h3>
+  <ul>
+   <li>
+    Définitions et fondamentaux [10p]
+    <ul>
+     <li>
+      Information [1p]
+     </li>
+     <li>
+      Théorie de Shannon [2p] (capacité, modèle chaine, canal)
+     </li>
+     <li>
+      Codes en blocs [2p]
+     </li>
+     <li>
+      Codes convolutifs [4p]
+      <ul>
+       <li>
+        Représentation
+       </li>
+       <li>
+        Terminaison
+       </li>
+       <li>
+        Propriétés (recursif, systématique, lien poly et distance)
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li>
+    Turbo Codes convolutifs [25p]
+    <ul>
+     <li>
+      Construction [4p]
+      <ul>
+       <li>
+        Principe [2p]
+       </li>
+       <li>
+        Entrelaceurs [2p]
+       </li>
+      </ul>
+     </li>
+     <li>
+      Décodage itératif [5p]
+      <ul>
+       <li>
+        Principe [2p]
+       </li>
+       <li>
+        Décodage SISO: MAP [2p]
+       </li>
+       <li>
+        Simplification/Complexité (logmap, mlmap, emlmap) [1p]
+       </li>
+      </ul>
+     </li>
+     <li>
+      Les turbo codes standardisés + perfs décodage [2p]
+     </li>
+     <li>
+      Le problème du plancher d’erreur [14p]
+      <ul>
+       <li>
+        Performances asymptotiques [4p]
+        <ul>
+         <li>
+          Borne de l’union
+         </li>
+         <li>
+          Spectre de distance
+         </li>
+        </ul>
+       </li>
+       <li>
+        Impact des paramètres du code sur les performances [2p]
+       </li>
+       <li>
+        Méthodes d’abaissement du plancher [9p]
+        <ul>
+         <li>
+          Concaténation de code [6p]
+          <ul>
+           <li>
+            BCH [1p]
+           </li>
+           <li>
+            CRC [3p]
+            <ul>
+             <li>
+              Multiple redec (youssouf, pfletshinger)
+             </li>
+             <li>
+              CRC-aided hybrid.. (osd based)
+             </li>
+            </ul>
+           </li>
+           <li>
+            Turbo 3D [1p]
+           </li>
+           <li>
+            Turbo Precoded [1p]
+           </li>
+          </ul>
+         </li>
+         <li>
+          Forcer valeur bits, dummy bit [2p]
+         </li>
+         <li>
+          List decoding [1p]
+         </li>
+        </ul>
+       </li>
+      </ul>
+     </li>
+     <li>
+      Conclusion
+     </li>
+    </ul>
+   </li>
+  </ul>
+  <h3 id="2-des-oscillations-au-cours-du-processus-iteratif-25p">
+   2. Des oscillations au cours du processus itératif [25p]
+  </h3>
+  <ul>
+   <li>
+    État de l’art sur ces oscillations [3p]
+    <ul>
+     <li>
+      Études sur la convergence
+     </li>
+     <li>
+      Critère d’arrêt
+     </li>
+    </ul>
+   </li>
+   <li>
+    Mesures [8p]
+    <ul>
+     <li>
+      Nombre d’oscillations en fonction des itération [2p]
+     </li>
+     <li>
+      Nombre d’oscillation en fonction du nombre d’erreurs [2p]
+     </li>
+     <li>
+      ??? [2p]
+     </li>
+     <li>
+      Corrélations (statistiques) [2p]
+     </li>
+    </ul>
+   </li>
+   <li>
+    SelfCorrected [8p]
+    <ul>
+     <li>
+      LDPC et transcription turbo codes [2p]
+     </li>
+     <li>
+      Études 8, 16, 32 états, entrelaceur random [3p]
+     </li>
+     <li>
+      Résultats CCSDS et LTE [2p]
+     </li>
+     <li>
+      Conclusion [1p]
+     </li>
+    </ul>
+   </li>
+   <li>
+    Oscillations pour redécodage [5p]
+    <ul>
+     <li>
+      État de l’art (CIM + Benjamin LDPC) [1p]
+     </li>
+     <li>
+      Expérimentations [3p]
+     </li>
+     <li>
+      Conclusion [1p]
+     </li>
+    </ul>
+   </li>
+   <li>
+    Conclusion [1p]
+   </li>
+  </ul>
+  <h3 id="3-caracterisation-et-identification-des-erreurs-residuelles-35p">
+   3. Caractérisation et identification des erreurs résiduelles [35p]
+  </h3>
+  <ul>
+   <li>
+    Existence des erreurs résiduelles [6p]
+    <ul>
+     <li>
+      Prédiction via spectre de distance [4p]
+     </li>
+     <li>
+      Comparaison théorie/pratique sur TC standardisés [2p]
+      <ul>
+       <li>
+        Binaire (LTE et CCSDS)
+       </li>
+       <li>
+        Double Binaire (DVB-RCS1 et DVB-RCS2)
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li>
+    Critères d’identification [12p]
+    <ul>
+     <li>
+      Observations (corrélation amplitude et erreur) [2p]
+     </li>
+     <li>
+      Comparaisons de métriques [8p]
+      <ul>
+       <li>
+        Amplitude des info extrinsèque [4p]
+       </li>
+       <li>
+        Amplitude des a posteriori [2p]
+       </li>
+       <li>
+        Oscillations [2p]
+       </li>
+      </ul>
+     </li>
+     <li>
+      Double-binaire [2p]
+     </li>
+    </ul>
+   </li>
+   <li>
+    Le Flip and Check [13p]
+    <ul>
+     <li>
+      Principe [1p]
+     </li>
+     <li>
+      Performances de décodage avec critère d’arrêt génie [6p]
+      <ul>
+       <li>
+        Impact taille de recherche vs métrique parfaite [4p]
+       </li>
+       <li>
+        Comparaison avec l’état de l’art [2p]
+       </li>
+      </ul>
+     </li>
+     <li>
+      Étude cas implantable [6p]
+      <ul>
+       <li>
+        CRC [3p]
+        <ul>
+         <li>
+          Probabilité d’erreur du CRC [2p]
+         </li>
+         <li>
+          Probabilité d’erreur à cause des modifications [1p]
+         </li>
+        </ul>
+       </li>
+       <li>
+        Algorithme proposé [1p]
+       </li>
+       <li>
+        Dégradation des performances de décodage [1p]
+       </li>
+      </ul>
+     </li>
+     <li>
+      Double binaire [2p]
+     </li>
+    </ul>
+   </li>
+   <li>
+    Conclusion [2p]
+   </li>
+  </ul>
+  <h3 id="4-architecture-materielle-de-correction-des-erreurs-residuelles-32p">
+   4. Architecture matérielle de correction des erreurs résiduelles [32p]
+  </h3>
+  <ul>
+   <li>
+    État de l’art turbo décodeur [5p]
+    <ul>
+     <li>
+      Quantification des données [1p]
+     </li>
+     <li>
+      Ordonnancement SISOs [2p]
+     </li>
+     <li>
+      Décodage Parallèle [2p]
+     </li>
+    </ul>
+   </li>
+   <li>
+    Adaptation de l’algorithme [10p]
+    <ul>
+     <li>
+      Complexité calculatoire [2p]
+     </li>
+     <li>
+      Impact sur les performances [7p]
+      <ul>
+       <li>
+        Taille recherche [1p]
+       </li>
+       <li>
+        Quantification données [1p]
+       </li>
+       <li>
+        Itérations [3p]
+       </li>
+       <li>
+        Ordonnancement [2p]
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li>
+    Implémentation [15p]
+    <ul>
+     <li>
+      Version séquentielle [9p]
+      <ul>
+       <li>
+        Choix architecturaux [2p]
+       </li>
+       <li>
+        Architecture des différents blocs [5p]
+       </li>
+       <li>
+        Résultats de synthèse [1p]
+       </li>
+       <li>
+        Résultats [1p]
+       </li>
+      </ul>
+     </li>
+     <li>
+      Version parallèle [6p]
+      <ul>
+       <li>
+        Architecture des différents blocs [4p]
+       </li>
+       <li>
+        Résultats de synthèse [1p]
+       </li>
+       <li>
+        Résultats [1p]
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li>
+    Conclusion [2p]
+   </li>
+  </ul>
+  <h3 id="conclusions-et-perspectives">
+   Conclusions et perspectives
+  </h3>
+  
+  
+  
+  
+ 
+</body></html>

@@ -1,0 +1,26 @@
+Fri Jun 17 18:49:24 2016
+latexindent version 2.1R, a script to indent .tex files
+latexindent lives here: /usr/share/texlive/texmf-dist/scripts/latexindent/
+
+Directory for backup files and indent.log: .
+Reading defaultSettings.yaml from /usr/share/texlive/texmf-dist/scripts/latexindent/defaultSettings.yaml
+
+Home directory is /home/tibo
+To specify user settings you would put indentconfig.yaml here: 
+	/home/tibo/indentconfig.yaml
+
+Alternatively, you can use the hidden file .indentconfig.yaml as: 
+	/home/tibo/.indentconfig.yaml
+
+
+Backup procedure:
+
+	 copying ch3.tex to ./ch3.bak0
+
+	 Backup file: ./ch3.bak0
+	 Overwriting file: ch3.tex
+
+Line Count of ch3.tex: 36
+Line Count of indented ch3.tex: 36
+
+Line counts of original file and indented file match

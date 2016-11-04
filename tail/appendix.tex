@@ -1,0 +1,109 @@
+%!TEX root = ../my_thesis.tex
+
+\appendix
+\chapter{Compléments au Chapitre Premier}
+\section{Détails des calculs de l'algorithme APP}\label{append:app}
+Cette partie vise à démontrer l'ensemble des calculs présentés dans la section \ref{sec:BCJR}.
+\subsection{Décomposition de la probabilité jointe} 
+Cette décomposition est basée sur le partitionnement de la séquence reçue $\mathbf{y}$ en trois sous-séquences. La première représentant le passé $ \mathbf{y_{<k}}$, la seconde le présent $\mathbf{y_{k}} $ et enfin le futur $ \mathbf{y_{>k}}$.
+
+Le calcul suivant est basé sur la relation de Bayes : $P(A|B) = \frac{P(A,B)}{P(B)}$ et sa version ternaire $P(A|B,C) = \frac{P(A,B|C)}{P(B|C)}$.
+
+Aussi, sont nécessaires au déroulement de ce calcul les propriétés de Markov du treillis de l'encodeur RSC considéré. En effet :
+\begin{align*}
+	\hspace*{-4ex}
+	P(s_{k-1}=s, s_{k}=s',\mathbf{y}) & = P(s_{k-1}=s, s_{k}=s',\mathbf{y_{<k}},\mathbf{y_{k}},\mathbf{y_{>k}})                                                                                                                             \\
+	                                  & = P(\mathbf{y_{>k}}|s_{k-1}=s, s_{k}=s',\mathbf{y_{<k}},\mathbf{y_{k}})\times P(s_{k-1}=s, s_{k}=s',\mathbf{y_{<k}},\mathbf{y_{k}})                                                                 \\
+	                                  & =P(\mathbf{y_{>k}}|s_{k}=s')\times P(s_{k-1}=s, s_{k}=s',\mathbf{y_{<k}},\mathbf{y_{k}})                                                                                                            \\
+	                                  & =P(\mathbf{y_{>k}}|s_{k}=s')\times P(s_{k}=s',\mathbf{y_{k}}|s_{k-1}=s,\mathbf{y_{<k}})\times P(s_{k-1}=s,\mathbf{y_{<k}})                                                                          \\
+	                                  & = \underbrace{P(\mathbf{y_{>k}}|s_{k}=s')}_{\beta_k(s')}\times \underbrace{P(s_{k}=s',\mathbf{y_{k}}|s_{k-1}=s)}_{\gamma_k(s,s')}\times \underbrace{P(s_{k-1}=s,\mathbf{y_{<k}})}_{\alpha_{k-1}(s)} \\
+	                                  & = \alpha_{k-1}(s) \times \gamma_k(s,s') \times \beta_k(s')                                                                                                                                          
+\end{align*}
+
+\subsection{Calcul récursif de $\alpha$}
+Par définition, $\alpha_{k-1}(s) = P(s_{k-1}=s,\mathbf{y_{<k}})$. Or, sachant que $\sum\limits_B P(A,B) = P(A)$ et en appliquant le théorème de Bayes,
+\begin{align*}
+	\hspace*{-4ex}
+	\alpha_k(s) & = \sum\limits_{s'}P(s_{k}=s,s_{k-1}=s',\mathbf{y_{<k}},\mathbf{y_k})                                        \\
+	            & = \sum\limits_{s'}P(s_{k}=s,\mathbf{y_k} | s_{k-1}=s',\mathbf{y_{<k}}) \times P(s_{k-1}=s',\mathbf{y_{<k}}) \\
+	            & = \sum\limits_{s'}P(s_{k}=s,\mathbf{y_k} | s_{k-1}=s') \times P(s_{k-1}=s',\mathbf{y_{<k}})                 \\
+	            & = \sum\limits_{s'}\gamma_k(s',s)\times \alpha_{k-1}(s')                                                     
+\end{align*}
+Ainsi, les valeurs de $\alpha_k(s)$ peuvent être calculées récursivement en parcourant le treillis dans l'ordre chronologique, à partir des valeurs initiales $\alpha_0(s)$ et des probabilités de transition.
+
+\subsection{Calcul récursif de $\beta$}
+En utilisant les mêmes propriétés calculatoires que pour le calcul de $\alpha$ : 
+\begin{align*}
+	\hspace*{-4ex}
+	\beta_{k-1}(s) & = P(\mathbf{y_{>k-1}}|s)                                                             \\
+	               & = \sum\limits_{s'}P(s',\mathbf{y_{k}},\mathbf{y_{>k}|s})                             \\
+	               & = \sum\limits_{s'}P(\mathbf{y_{>k}} | s',s, \mathbf{y_{k}}) P(s', \mathbf{y_{k}}| s) \\
+	               & = \sum\limits_{s'}P(\mathbf{y_{>k}} | s') P(s', \mathbf{y_{k}}| s)                   \\
+	               & = \sum\limits_{s'}\gamma_k(s,s')\times \beta_{k}(s')                                 
+\end{align*}
+
+
+\subsection{Calcul de la probabilité \textit{a posteriori}}
+La probabilité \textit{a posteriori} a pour expression : 
+\begin{align*}
+	\|\mathbf{y}_k-\mathbf{c}_k\|^2 & = (y_k^s - c_k^s)^2 + (y_k^p - c_k^p)^2                                               \\
+	                                & = (y_k^s)^2 - 2  y_k^s   c_k^s +  (c_k^s)^2 + (y_k^p)^2 - 2  y_k^p c_k^p +  (c_k^p)^2 \\
+	                                & = (y_k^s)^2 +   (y_k^p)^2 + 2  - 2*( y_k^s   c_k^s +  y_k^p c_k^p)                    
+\end{align*}
+
+Ainsi, \[\gamma_k(s,s') = \frac{P(m_k)}{2\pi\sigma^2}\exp\left(-\frac{ (y_k^s)^2 +   (y_k^p)^2 + 2}{2\sigma^2}\right) \exp\left(\frac{( y_k^s   c_k^s +  y_k^p c_k^p)}{\sigma^2}\right)\]
+
+Or, la première exponentielle n'est pas dépendante de $m_k$ (ou du chemin $ s \mapsto s'$) et peut donc être supprimé du numérateur et du dénominateur dans l’expression de la probabilité \textit{a posteriori}.
+
+
+\section{Détails des calculs pour les algorithmes sub-APP}\label{append:subAPP}
+\subsection{Calcul des métriques}
+Dans le cadre des algorithmes sub-APP, les probabilités manipulées sont transformées en métriques en prenant le logarithme népérien de celles-ci. Ainsi, nous avons :
+\begin{align*}
+	\tilde{\alpha}_k(s) & = \ln \sum\limits_{s'}\alpha_{k-1}(s')\times\gamma_k(s',s)                                                     \\
+	                    & = \ln \sum\limits_{s'} \exp\left(\tilde{\alpha}_{k-1}(s')\right)\times\exp\left(\tilde{\gamma}_k(s', s)\right) \\
+	                    & = \ln \sum\limits_{s'} \exp\left(\tilde{\alpha}_{k-1}(s') + \tilde{\gamma}_k(s', s)\right)                     
+\end{align*}
+Des calculs très similaires permettent d'obtenir $\tilde{\beta}_k(s)$ et $\tilde{\gamma}_k(s,s')$.
+
+\subsection{Opérateur $\maxstar$}\label{append:maxstar}
+En partant de la définition de l’opérateur $\maxstar$ et en utilisant une disjonction de cas, on obtient : 
+\begin{align*}
+	\maxstar(x,y) & = \ln\left(\e^x+\e^x\right)              \\
+	              & =\begin{cases}                           
+	\ln	\left(\e^x\left(1+\e^{y-x}\right)\right) \text{si} x>y  \\
+	\ln	\left(\e^y\left(1+\e^{x-y}\right)\right) \text{si} x<y
+	\end{cases}\\
+	              & =\begin{cases}                           
+	x + \ln\left(1+\e^{y-x}\right) \quad\text{si}\quad x>y  \\
+	y+\ln\left(1+\e^{x-y}\right) \quad\text{si}\quad x<y
+	\end{cases}\\
+	              & =\max(x,y) +\ln\left(1+\e^{|x-y|}\right) 
+\end{align*}
+
+
+% Ainsi, en reprenant les définitions récursives et en substituant les probabilités par les métriques, leurs expressions deviennent : 
+% \begin{align*}
+% 	M^\alpha_k(s) & = \ln \sum\limits_{s'}\alpha_{k-1}(s')\times\gamma_k(s',s)                                         \\
+% 	              & = \ln \sum\limits_{s'} \exp\left(M^\alpha_{k-1}(s')\right)\times\exp\left(M^\gamma_k(s', s)\right) \\
+% 	              & = \ln \sum\limits_{s'} \exp\left(M^\alpha_{k-1}(s') + M^\gamma_k(s', s)\right)                     
+% \end{align*}
+% et 
+% \[M^\beta_k(s) = \ln \sum\limits_{s'} \exp\left(M^\beta_{k+1}(s') + M^\gamma_{k+1}(s, s')\right)\]
+% avec pour conditions initiales, 
+
+% De même les LLR \textit{a posteriori} deviennent :
+% \begin{align*} 
+% 	L(m_k) & = \ln \sum\limits_{s,s'\in S_1} \exp\left( M^\alpha_{k-1}(s) + M^\gamma_{k}(s, s') + M^\beta_k(s') \right)       \\ 
+% 	       & \quad - \ln \sum\limits_{s,s'\in S_0} \exp\left( M^\alpha_{k-1}(s) + M^\gamma_{k}(s, s') + M^\beta_k(s') \right) 
+% \end{align*}
+% Toutefois, ces réécritures dans le domaines logarithmiques ne permettent pas encore de réduire la complexité calculatoire. Pour ce faire, introduisons l'opérateur \[\maxstar(x,y) = \ln(\mathrm{e}^x + \mathrm{e}^y).\]
+% Ainsi, les métriques précédentes deviennent : 
+
+
+
+% Il est démontré facilement (en utilisant un disjonction de cas) que :
+% \[\maxstar(x,y) = \max(x,y) + \ln(1+e^{|x-y|})\]
+% \paragraph{Stabilité numérique}
+
+

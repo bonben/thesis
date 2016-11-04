@@ -1,0 +1,31 @@
+%   0.65 |     6602 |    11365 |      100 | 1.68e-03 | 1.51e-02 ||     2.72 |     0.91 |  1130.95 ||     1.74 | 00h00'11  
+%Number of frames OK and finally false: 0
+%----------------------
+%-- Erroneous Frames --
+%BE: 11527 --- BE/FE = 115.27
+%--- Erroneous Bits ---
+%Number of oscillation Nat Nat per bit in error: 10.8133
+%Number of oscillation Int Int per bit in error: 10.7109
+%Number of disagree    Nat Int per bit in error: 16.2791
+%Number of disagree    Int Nat per bit in error: 16.8078
+%--- Correct Bits ---
+%Number of oscillation Nat Nat per bit ok: 7.25005
+%Number of oscillation Int Int per bit ok: 7.15744
+%Number of disagree    Nat Int per bit ok: 11.2399
+%Number of disagree    Int Nat per bit ok: 11.6317
+%--- All Bits ---
+%Number of oscillation Nat Nat per bit: 7.65116
+%Number of oscillation Int Int per bit: 7.55745
+%Number of disagree    Nat Int per bit: 11.8072
+%Number of disagree    Int Nat per bit: 12.2144
+%----------------------
+%-- Correct   Frames --
+%Number of oscillation Nat Nat per bit: 0.648857
+%Number of oscillation Int Int per bit: 0.483926
+%Number of disagree    Nat Int per bit: 0.765596
+%Number of disagree    Int Nat per bit: 0.980645
+X	EB CB AB CF
+NN	10.8133 7.25005 7.65116 0.648857
+II  10.7109 7.15744 7.55745 0.483926
+NI	16.2791 11.2399 11.8072 0.765596
+IN 	16.8078 11.6317 12.2144 0.980645
