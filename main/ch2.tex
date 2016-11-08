@@ -65,4 +65,132 @@ de l'information extrinsèque au cours du décodage itératif des turbo codes es
 \section{Observations statistiques des oscillations dans le processus de turbo décodage}
 
 \subsection{Cadre de l'étude}
-Cette étude se place dans le cadre des turbo codes binaires. Les deux standards 
+Cette étude se place dans le cadre des turbo codes binaires. Les deux standards considérés sont le standard LTE (8 
+états) et le standard CCSDS (16 états). Ces statistiques sont obtenues grâce à un décodeur utilisant l'algorithme 
+EML-MAP, itérant jusque 32 fois. Dans un premier temps, des moyennes statistiques sont présentées faisant apparaître une 
+corrélation forte entre les oscillations dans la trame et le fait que cette trame soit erronée. Ensuite, ces 
+statistiques sont présentées en fonction de l'itération courante. Finalement, les occurrences du nombre d'oscillations
+seront présentés suivant qu'un bit soit correct ou non lors de la dernière itération. Toutes ces statistiques sont 
+présentées pour plusieurs valeurs de SNR correspondant à des taux d'erreur trame valant $10^{-2}, 10^{-3}, 10^{-4}, 
+10^{-5}$.
+
+Au sein d'un turbo décodeur, quatre types d'oscillations des informations extrinsèques peuvent être considérées. Elles 
+peuvent survenir en sortie d'un même décodeur élémentaire entre deux itérations. Cela peut correspondre à une 
+oscillation du décodeur opérant dans l'ordre naturel (respectivement entrelacé) entre deux itérations, noté alors 
+$N\rightarrow N$ (respectivement $I\rightarrow I$). Une oscillation peut aussi se produire entre les deux dimensions. 
+Dans ce cas, un des décodeurs à un avis sur un bit et lors de la demi-itération suivante l'autre décodeur a un avis 
+opposé. Ces oscilaltions correspondent donc à des désaccord entre les deux décodeurs élémentaires. Ils sont notés 
+$N\rightarrow I$ (respectivement $I\rightarrow N$) si la référence est le décodeur opérant dans l'ordre naturel 
+(respectivement entrelacé).
+
+La Figure \ref{fig:osc} présente ces 4 types d’oscillations des informations extrinsèques sur un schéma de turbo 
+décodeur dans lequel les étapes d'entrelacement n’apparaissent pas pour plus de simplicité.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=7cm]{main/ch2_fig/ipe/osc.pdf}
+	\caption{\label{fig:osc}Les différentes oscillations de l'information extrinsèque possibles.}
+\end{figure}
+
+\subsection{Nombre moyen d'oscillations par bit}
+Cette section présente 
+
+\begin{figure}[!ht]
+	\begin{tikzpicture}
+		
+		\begin{groupplot}[group style={group name=lte, group size= 2 by 2, horizontal sep=2cm, vertical sep=2cm}, 
+					height=0.4\textwidth,  width=0.5\textwidth,
+					symbolic x coords={NN, II, NI, IN},
+	                xtick=data,
+	                %x tick label style= {rotate=45,anchor=north east},
+	                ylabel=Nombre d'oscillations par bit,
+	                ymin=0, ymax=31,
+	                ybar = 1.5pt, /pgf/bar width=8pt,
+	                enlarge x limits=0.15, ymajorgrids, grid style={gray!30},legend columns=2]
+		\nextgroupplot[legend to name=grouplegend]
+                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/lte_2/10-2/moyennes.dat}; 
+                \addlegendentry{Trames erronées à la dernière itération}
+        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/lte_2/10-2/moyennes.dat};  
+        		\addlegendentry{Bits erronés dans trames erronées}
+        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/lte_2/10-2/moyennes.dat}; 
+        		\addlegendentry{Bits justes dans trames erronées} 
+        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/lte_2/10-2/moyennes.dat};  
+        		\addlegendentry{Trames corrigées à la dernière itération}
+        \nextgroupplot[]
+	            \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/lte_2/10-3/moyennes.dat}; 
+	    		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/lte_2/10-3/moyennes.dat}; 
+	    		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/lte_2/10-3/moyennes.dat}; 
+	    		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/lte_2/10-3/moyennes.dat}; 
+        \nextgroupplot[]
+                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/lte_2/10-4/moyennes.dat}; 
+        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/lte_2/10-4/moyennes.dat}; 
+        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/lte_2/10-4/moyennes.dat}; 
+        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/lte_2/10-4/moyennes.dat}; 
+        \nextgroupplot[]
+                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/lte_2/10-5/moyennes.dat}; 
+        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/lte_2/10-5/moyennes.dat}; 
+        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/lte_2/10-5/moyennes.dat}; 
+        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/lte_2/10-5/moyennes.dat}; 
+        		\coordinate (bot) at (rel axis cs:1,0);
+
+		\end{groupplot}
+
+		\node[below = 0.8cm of lte c1r1.south] {(a) : FER = $10^{-2}$};
+        \node[below = 0.8cm of lte c2r1.south] {(b) : FER = $10^{-3}$};
+        \node[below = 0.8cm of lte c1r2.south] {(c) : FER = $10^{-4}$};
+        \node[below = 0.8cm of lte c2r2.south] {(d) : FER = $10^{-5}$};
+
+		\node at (lte c1r1.north) [anchor=south, xshift=3.4cm, yshift=1cm] {\ref{grouplegend}};
+	\end{tikzpicture}
+	\caption{Oscillations moyenne pour différents taux d'erreurs dtrame cibles, standard LTE \label{fig:ltemoy}}
+\end{figure}
+
+\begin{figure}[!ht]
+	\begin{tikzpicture}
+		
+		\begin{groupplot}[group style={group name=ccsds, group size= 2 by 2, horizontal sep=2cm, vertical sep=2cm}, 
+					height=0.4\textwidth,  width=0.5\textwidth,
+					symbolic x coords={NN, II, NI, IN},
+	                xtick=data,
+	                %x tick label style= {rotate=45,anchor=north east},
+	                ylabel=Nombre d'oscillations par bit,
+	                ymin=0, ymax=31,
+	                ybar = 1.5pt, /pgf/bar width=8pt,
+	                enlarge x limits=0.15, ymajorgrids, grid style={gray!30},legend columns=2]
+		\nextgroupplot[legend to name=grouplegend]
+                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/ccsds_2/10-2/moyennes.dat}; 
+                \addlegendentry{Trames erronées à la dernière itération}
+        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/ccsds_2/10-2/moyennes.dat};  
+        		\addlegendentry{Bits erronés dans trames erronées}
+        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/ccsds_2/10-2/moyennes.dat}; 
+        		\addlegendentry{Bits justes dans trames erronées} 
+        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/ccsds_2/10-2/moyennes.dat};  
+        		\addlegendentry{Trames corrigées à la dernière itération}
+        \nextgroupplot[]
+	            \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/ccsds_2/10-3/moyennes.dat}; 
+	    		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/ccsds_2/10-3/moyennes.dat}; 
+	    		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/ccsds_2/10-3/moyennes.dat}; 
+	    		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/ccsds_2/10-3/moyennes.dat}; 
+        \nextgroupplot[]
+                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/ccsds_2/10-4/moyennes.dat}; 
+        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/ccsds_2/10-4/moyennes.dat}; 
+        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/ccsds_2/10-4/moyennes.dat}; 
+        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/ccsds_2/10-4/moyennes.dat}; 
+        \nextgroupplot[]
+                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/ccsds_2/10-5/moyennes.dat}; 
+        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/ccsds_2/10-5/moyennes.dat}; 
+        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/ccsds_2/10-5/moyennes.dat}; 
+        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/ccsds_2/10-5/moyennes.dat}; 
+        		\coordinate (bot) at (rel axis cs:1,0);
+
+		\end{groupplot}
+
+		\node[below = 0.8cm of lte c1r1.south] {(a) : FER = $10^{-2}$};
+        \node[below = 0.8cm of lte c2r1.south] {(b) : FER = $10^{-3}$};
+        \node[below = 0.8cm of lte c1r2.south] {(c) : FER = $10^{-4}$};
+        \node[below = 0.8cm of lte c2r2.south] {(d) : FER = $10^{-5}$};
+
+		\node at (ccsds c1r1.north) [anchor=south, xshift=3.4cm, yshift=1cm] {\ref{grouplegend}};
+	\end{tikzpicture}
+	\caption{Oscillations moyenne pour différents taux d'erreurs dtrame cibles, standard CCSDS \label{fig:ccsdsmoy}}
+\end{figure}
