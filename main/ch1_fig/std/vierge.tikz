@@ -1,0 +1,18 @@
+%!TEX root = ../../../my_thesis.tex
+\begin{tikzpicture}
+	\begin{semilogyaxis}[footnotesize, width=0.8\linewidth, height=0.6\linewidth,    
+			xmin=0, xmax=3, xtick={0,0.4,...,3.0},
+			%ymin=2e-6,  ymax=0.11,
+			xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
+		tick align=outside, tickpos=left, legend pos=north east]
+																				
+	%	\addplot[mark=o,Paired-1]  table [x=SNR, y=FER] {main/ch1_fig/std/lte13_528.dat}; 
+	%	\addplot[mark=diamond,Paired-3]  table [x=SNR, y=FER] {main/ch1_fig/std/lte13_1504.dat}; 
+	%	\addplot[mark=square,Paired-5]  table [x=SNR, y=FER] {main/ch1_fig/std/lte13_2048.dat}; 
+	%	\addplot[mark=triangle,Paired-7]  table [x=SNR, y=FER2] {main/ch1_fig/std/lte13_6144.dat}; 
+																						
+																														
+	%	\legend{K=528, K=1504, K=2048, K=6144}
+																														
+	\end{semilogyaxis}
+\end{tikzpicture}  

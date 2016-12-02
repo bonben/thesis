@@ -1,0 +1,58 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{eulervm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+\usepackage{pgffor}
+\usepackage{amsmath}
+\usepackage{textcomp}
+
+\definecolor{falseframe}{RGB}{254,178,76}
+\definecolor{correctframe}{RGB}{44,162,95}
+\definecolor{falsebit}{RGB}{227,74,51}
+\definecolor{correctbit}{RGB}{67,162,202}
+
+\setlength{\textwidth}{146.8mm}
+
+
+\begin{document}
+
+        \begin{tikzpicture}
+                
+                \begin{groupplot}[group style={group name=ccsds, group size= 1 by 2, horizontal sep=2cm, vertical sep=2.2cm}, 
+                                    height=0.5\textwidth,  width=\textwidth,
+                                    xtick=data,
+                                    ylabel= Occurence normalisée,
+                                    xlabel= Oscillations par bit dans trames erronée,
+                                    ymin=0, ymax=0.2, %ytick = {0,1000,...,10000},
+                                    %legend style={at={(0.9,0.9)}, anchor=north, legend columns=1}, 
+                                    ybar interval, 
+                                    %bar width=3pt,
+                                    enlarge x limits=-0.1,
+                                    ymajorgrids, grid style={gray!30}]
+                \nextgroupplot[]
+                        \addplot[fill=correctbit!50] table [x=R, y=NNC] {../stats/ccsds_2/10-5/dist.dat}; 
+                        \addplot[fill=correctbit]  table [x=R, y=IIC] {../stats/ccsds_2/10-5/dist.dat}; 
+                        \addplot[fill=falsebit!50]  table [x=R, y=NNE] {../stats/ccsds_2/10-5/dist.dat}; 
+                        \addplot[fill=falsebit]  table [x=R, y=IIE] {../stats/ccsds_2/10-5/dist.dat};  
+                        \legend{N\textrightarrow N bit correct, I\textrightarrow I bit correct,N\textrightarrow N bit erroné, I\textrightarrow I bit erroné}
+            \nextgroupplot[]
+                        \addplot[fill=correctbit!50] table [x=R, y=NIC] {../stats/ccsds_2/10-5/dist.dat}; 
+                        \addplot[fill=correctbit]  table [x=R, y=NIC] {../stats/ccsds_2/10-5/dist.dat}; 
+                        \addplot[fill=falsebit!50]  table [x=R, y=NIE] {../stats/ccsds_2/10-5/dist.dat}; 
+                        \addplot[fill=falsebit]  table [x=R, y=INE] {../stats/ccsds_2/10-5/dist.dat};  
+                        \legend{N \textrightarrow I bit correct, I \textrightarrow N bit correct,N \textrightarrow I bit erroné, I \textrightarrow N bit erroné}
+                \end{groupplot}
+
+                \node[below = 1.2cm of ccsds c1r1.south] {(a) : Oscillations};
+                \node[below = 1.2cm of ccsds c1r2.south] {(b) : Désaccords};
+
+        
+        \end{tikzpicture}
+
+\end{document}

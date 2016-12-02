@@ -1,0 +1,55 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+ \pgfplotsset{compat=newest}
+\usepackage{amsmath}
+\definecolor{Paired-2}{RGB}{166,206,227}
+\definecolor{Paired-1}{RGB}{31,120,180}
+\definecolor{Paired-4}{RGB}{178,223,138}
+\definecolor{Paired-3}{RGB}{51,160,44}
+\definecolor{Paired-6}{RGB}{251,154,153}
+\definecolor{Paired-5}{RGB}{227,26,28}
+\begin{document}
+
+\begin{tikzpicture}
+	\begin{semilogyaxis}[
+			footnotesize, width=12cm, height=8cm,    
+			xmin=0, xmax=1.6, xtick={0,0.2,...,1.6},
+			%ymin=2e-6,  ymax=0.11,
+			xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
+			tick align=outside, tickpos=left, legend pos=north east
+		]
+			
+		 \addplot[mark=o,Paired-1, restrict x to domain=0:1.5]  table [x=SNR, y=SF] {8s.dat}; 
+		 \addplot[mark=o,Paired-2, restrict x to domain=0:1.5]  table [x=SNR, y=SC] {8s.dat}; 
+		 \addplot[mark=o,Paired-3, restrict x to domain=0:1.5]  table [x=SNR, y=SF] {16s.dat}; 
+		 \addplot[mark=o,Paired-4, restrict x to domain=0:1.5]  table [x=SNR, y=SC] {16s.dat}; 		
+		 \addplot[mark=o,Paired-5, restrict x to domain=0:1.3]  table [x=SNR, y=SF] {32s.dat}; 
+		 \addplot[mark=o,Paired-6, restrict x to domain=0:1.3]  table [x=SNR, y=SC] {32s.dat}; 																		
+																														
+		\legend{8 \'etats SF, 8 \'etats SC, 16 \'etats SF, 16 \'etats SC, 32 \'etats SF, 32 \'etats SC}
+																														
+	\end{semilogyaxis}
+\end{tikzpicture}  
+
+\begin{tikzpicture}
+	\begin{semilogyaxis}[
+			footnotesize, width=12cm, height=8cm,    
+			xmin=0, xmax=1.6, xtick={0,0.2,...,1.6},
+			%ymin=2e-6,  ymax=0.11,
+			xlabel=$E_b/N_0 \text{(dB)}$, ylabel=BER,  grid=both, grid style={gray!30},
+			tick align=outside, tickpos=left, legend pos=north east
+		]
+			
+		 \addplot[mark=o,Paired-1, restrict x to domain=0:1.5]  table [x=SNR, y=SF_B] {8s.dat}; 
+		 \addplot[mark=o,Paired-2, restrict x to domain=0:1.5]  table [x=SNR, y=SC_B] {8s.dat}; 
+		 \addplot[mark=o,Paired-3, restrict x to domain=0:1.5]  table [x=SNR, y=SF_B] {16s.dat}; 
+		 \addplot[mark=o,Paired-4, restrict x to domain=0:1.5]  table [x=SNR, y=SC_B] {16s.dat}; 		
+		 \addplot[mark=o,Paired-5, restrict x to domain=0:1.3]  table [x=SNR, y=SF_B] {32s.dat}; 
+		 \addplot[mark=o,Paired-6, restrict x to domain=0:1.3]  table [x=SNR, y=SC_B] {32s.dat}; 																		
+																														
+		\legend{8 \'etats SF, 8 \'etats SC, 16 \'etats SF, 16 \'etats SC, 32 \'etats SF, 32 \'etats SC}
+																														
+	\end{semilogyaxis}
+\end{tikzpicture}  
+
+\end{document}
