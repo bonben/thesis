@@ -910,13 +910,13 @@ Dans la suite de ce manuscrit, les standards CCSDS, LTE, DVB-RCS et DVB-RCS2 ser
 
 \begin{figure}[h]
 	\begin{center}
-		\subfloat[LTE R=1/3]{
-			\input{main/ch1_fig/std/lte13.tikz}
+		\subfloat[DVB-RCS - K=220]{
+			\input{main/ch1_fig/std/vierge.tikz}
 			\label{sub:dvbrcs220}
 		}	   
 
-		\subfloat[LTE R=4/5]{
-			\input{main/ch1_fig/std/lte45.tikz}
+		\subfloat[DVB-RCS - K=752]{
+			\input{main/ch1_fig/std/vierge.tikz}
 			\label{sub:dvbrcs752}
 		}
 																																																																																																																																									
@@ -928,14 +928,14 @@ Dans la suite de ce manuscrit, les standards CCSDS, LTE, DVB-RCS et DVB-RCS2 ser
 
 \begin{figure}[h]
 \centering
-			\input{main/ch1_fig/std/lte13.tikz}	
+			\input{main/ch1_fig/std/vierge.tikz}	
 		\caption{Taux d'erreur trame pour le standard CCSDS pour deux rendements et deux tailles de trame. Décodage par l'algorithme EML-MAP effectuant 8 itérations, critère d’arrêt génie}
 		\label{fig:ferstdCCSDS}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-			\input{main/ch1_fig/std/lte13.tikz}	
+			\input{main/ch1_fig/std/vierge.tikz}	
 		\caption{Taux d'erreur trame pour le standard DVB-RCS2. Décodage par l'algorithme EML-MAP effectuant 8 itérations, critère d’arrêt génie}
 		\label{fig:ferstdDVB2}
 \end{figure}
@@ -996,18 +996,18 @@ Ainsi, selon les valeurs ($w,A_w,W_w$) associées à un code, nous pouvons expri
 C'est pourquoi, de nombreux travaux de recherche ont porté sur l'extraction des spectres de distance afin de prévoir le comportement asymptotique d'un turbo code.
 	
 \subsubsection{Méthodes d'obtention du spectre de distance de turbo codes}
-Les premières méthodes visant à obtenir le spectre de distance sont basées sur des approches par force brute \cite{illuminating}. Leur principe est de considérer toutes les séquences possibles pour le premier codeur constitutif, de les entrelacer et de les coder avec le second codeur constitutif afin de trouver la distance du code. Cependant, pour des distances minimales conséquentes, cette recherche devient impossible à mener.
+Les premières méthodes visant à obtenir le spectre de distance sont basées sur des approches par force brute \cite{illuminating}. Leur principe est de considérer toutes les séquences possibles pour le premier codeur constitutif, de les entrelacer et de les coder avec le second codeur constitutif afin d'obtenir la distance du code. Cependant, pour des distances minimales conséquentes, cette recherche devient impossible à mener.
 	
-En 2001, un algorithme basé sur l'utilisation de sous codes contraints à été proposé par Garello \textit{et al.} \cite{garellodfree}. Cet algorithme permet de déterminer exactement les premiers termes du spectre. Cependant, lorsque la taille du code et la distance minimale sont conséquentes, le temps de calcul impliqué rend cet algorithme difficile à exploiter.
+En 2001, un algorithme basé sur l'utilisation de sous codes contraints a été proposé par Garello \textit{et al.} \cite{garellodfree}. Cet algorithme permet de déterminer exactement les premiers termes du spectre. Cependant, lorsque la taille du code et la distance minimale sont conséquentes, le temps de calcul est prohibitif rendant cet algorithme difficile à exploiter.
 	
-Ainsi, plusieurs techniques ont été proposées qui ne se basent pas sur les propriétés du code mais sur la capacité de correction du décodeur. En 2002, Berrou \textit{et al.} ont proposé une méthode rapide basée sur la capacité d'un décodeur à compenser l'insertion d'un événement d'erreur \cite{eim}. Son principe est d'insérer une impulsion croissante $A_i$ dans le mot de code tout-à-zéro, ce pour toutes les positions $i$, ($0\le i \le K-1$). Lorsque l'impulsion est suffisamment grande, le décodeur ne converge plus vers le mot de code $\mathbf{0}$. Posons $A_i^*$ l'amplitude maximale de l’impulsion à la position $i$ ne mettant pas en défaut le décodeur. Il a alors été montré que dans le cas d'un décodeur ML, la distance impulsionnelle définie par $d_imp = \min\limits_i (A_i)$ est aussi la distance minimale du code. Puisque le décodage des turbo codes n'est pas ML, la véritable $d_{min}$ n'est pas toujours obtenue par cette méthode. Il a été observée que cette méthode est plutôt pessimiste mais néanmoins, des distances plus grandes que la vraie $d_{min}$ ont été trouvées \cite{yocComparisonMethods}.
+Ainsi, plusieurs techniques ont été proposées qui se basant pas sur sur la capacité de correction du décodeur plutôt que sur les propriétés du code. En 2002, Berrou \textit{et al.} ont proposé une méthode rapide basée sur la capacité d'un décodeur à compenser l'insertion d'un événement d'erreur \cite{eim}. Son principe est d'insérer une impulsion croissante $A_i$ dans le mot de code tout-à-zéro, ce pour toutes les positions $i$, ($0\le i \le K-1$). Lorsque l'impulsion est suffisamment grande, le décodeur ne converge plus vers le mot de code $\mathbf{0}$ (tout à zéro). Posons $A_i^*$ l'amplitude maximale de l’impulsion à la position $i$ ne mettant pas en défaut le décodeur. Il a alors été montré que dans le cas d'un décodeur ML, la distance impulsionnelle définie par $d_imp = \min\limits_i (A_i)$ est aussi la distance minimale du code. Puisque le décodage des turbo codes n'est pas ML, la véritable $d_{min}$ n'est pas toujours obtenue par cette méthode. Il a été constaté que cette méthode est plutôt pessimiste mais néanmoins, des distances plus grandes que la vraie $d_{min}$ ont été trouvées \cite{yocComparisonMethods}.
 	
 En 2004, Garello \textit{et al.} ont proposé une méthode similaire à la précédente \cite{garelloAllZero}. Dans celle-ci, l'impulsion d'erreur empêche le décodeur de converger vers le mot de code $\mathbf{0}$. Il converge donc vers une séquence d'entrée non-nulle. En encodant cette séquence d'entrée, un mot de code non-nul est obtenu. Le poids de Hamming de ce mot de code est alors une borne supérieure de la distance minimale du code. Cependant, cette méthode propose des résultats probants uniquement pour des codes possédant de faibles $d_{min}$ \cite{yocComparisonMethods}.
 	
-Enfin, en 2005, Crozier \textit{et al.} proposent deux méthodes améliorées, découlant de la précédente \cite{crozierDIM}. Une première impulsion est placée à une position $i$ dans la partie systématique du mot de code. Une seconde y est ajoutée à un position $j$. Ensuite le décodage est mené et les distance et multiplicité associées sont relevées de la manière que pour \cite{garelloAllZero}. Dans l'article \cite{crozierDIM} les auteurs considèrent que placer la seconde impulsion dans la zone $\llbracket i; i+2D\rrbracket$, avec D la distance minimale du code estimée est suffisant. Cependant, dans \cite{yocComparisonMethods} il est précisé que la fiabilité de cette méthode est augmentée si $j \in \llbracket i; K-1\rrbracket$. Pis encore, selon nos expérimentations, dans le cadre de turbo codes non circulaire, afin d’approcher au plus près les résultats fournis par la méthode \cite{garellodfree}, imposer $i \in \llbracket 0; K-1\rrbracket$ et $j \in \llbracket i; N\rrbracket$ semblent offrir le meilleur compromis selon des simulations.
+Enfin, en 2005, Crozier \textit{et al.} ont développé deux méthodes améliorées, découlant de la précédente \cite{crozierDIM}. Une première impulsion est placée à une position $i$ dans la partie systématique du mot de code. Une seconde est ajoutée à une position $j$. Ensuite le décodage est mené et les distances et multiplicités associées sont relevées de la même manière que dans \cite{garelloAllZero}. Les auteurs considèrent que placer la seconde impulsion dans la zone $\llbracket i; i+2D\rrbracket$, avec D la distance minimale du code estimée est suffisant. Cependant, dans \cite{yocComparisonMethods}, il est précisé que la fiabilité de cette méthode est accrue si $j \in \llbracket i; K-1\rrbracket$. Pis encore, selon nos expérimentations, dans le cas de turbo codes non circulaires, afin d’approcher au plus près les résultats fournis par la méthode \cite{garellodfree}, imposer $i \in \llbracket 0; K-1\rrbracket$ et $j \in \llbracket i; N\rrbracket$ semblent offrir le meilleur compromis.
 	
 \paragraph*{Exemples de prévision du plancher d'erreur}
-Ainsi, en utilisant la méthode de la double impulsion de Crozier \cite{crozierDIM} ou bien la méthode utilisant les sous-codes contraints de Garello \cite{garellodfree}, nous pouvons calculer les spectres de distance pour les différents turbo codes standardisés.
+En utilisant la méthode de la double impulsion de Crozier \cite{crozierDIM} ou la méthode utilisant les sous-codes contraints de Garello \cite{garellodfree}, nous pouvons calculer les spectres de distance pour les différents turbo codes standardisés.
 
 Le tableau \ref{tab:spectre} présente les premiers termes du spectre de distance pour le turbo code du standard LTE pour $K \in \{528; 2048; 6144\}$ et $R=1/3$. Nous pouvons remarquer que les multiplicités sont faibles et que les distances minimales sont globalement croissantes avec $K$.
 
@@ -1043,11 +1043,17 @@ Le tableau \ref{tab:spectre} présente les premiers termes du spectre de distanc
 \multicolumn{1}{c}{\multirow{2}{*}{\textbf{2048}}} & 27/1/1 & 28/2/4   & 29/1/3   & 30/1/2   & 31/3/9   & 33/2/6     & 34/1/4       & 35/2/6     \\
 \multicolumn{1}{c}{}                      &        & 36/1/4   & 37/3/8   & 38/5/16  & 39/12/18 & 40/6/24    & 41/16/62     & 41/16/62   \\ \cdashlinelr{2-9}
 \multirow{2}{*}{\textbf{6144}}                     & 26/1/2 &  32/1/4        &  33/1/3        &   34/1/4       & 36/1/4         & 37/1/3           &  38/1/4            &  39/2/5          \\
-                                          &        &          &  40/3/4        &    41/7/3      &          &            &              & \\
+                                          &        &          &  40/3/4        &    41/7/3      &   42/9/34       &  43/10/46          &   44/6/30           &45/8/40 \\
                                           \bottomrule           
 \end{tabular}}
 \end{table}
-En utilisant ces données et l'équation \ref{eq:uboundfer}, nous pouvons ajouter sur les courbes de performances de la Figure \ref{fig:ferstdlte} la borne de l'union. Il est remarquable que pour les 3 codes considérés, la courbe de performance est très proche de la borne de l'union lorsque les SNR sont suffisamment élevés.
+En utilisant ces données et l'équation \ref{eq:uboundfer}, nous pouvons ajouter sur les courbes de performances de la Figure \ref{fig:ferstdlte} la borne de l'union. Il est remarquable que pour les 3 codes considérés, la courbe de 
+performance est parallèle à la borne de l'union lorsque le décodeur est en régime asymptotique. Pour K=528 et K=2048, 
+le courbe de performances est situé à un facteur d'approximativement 2 de la borne de l'union. Pour K=6144, cet écart 
+est un peu plus important et représente un facteur 4. L'écart à la borne de l'union s'explique par la sous-optimalité de l'algorithme de décodage conjointement avec le faible nombre d'itération employé.
+
+
+%très proche de la borne de l'union lorsque les SNR sont suffisamment élevés.
 
 \begin{figure}[h!]
 	\centering
@@ -1057,72 +1063,142 @@ En utilisant ces données et l'équation \ref{eq:uboundfer}, nous pouvons ajoute
 \end{figure}
 		
 \subsection{Les méthodes d'abaissement du plancher d'erreur}
+Afin d'abaisser le plancher d'erreur des turbo codes, différentes méthodes peuvent être employées. 
 \subsubsection{Modification des paramètres des turbo codes}
-Afin d'abaisser ce plancher d'erreur, différentes méthodes peuvent être employées. 
 Dans un premier temps, la longueur de contrainte des codeurs convolutifs peut être augmentée. C'est notamment l'une des stratégies employée lors de la ratification de la seconde version du standard DVB-RCS. En effet, les codeurs convolutifs sont passés de 8 états à 16 états. Il en résulte un plancher d'erreur abaissé d'environ une décade. En revanche, la complexité calculatoire double lorsque le nombre d'états double.
 		
-Ainsi, hormis ce premier paramètre, le spectre de distance est régi par l'entrelaceur. C'est pour cela que de nombreuses recherches ses sont concentrées dans la recherche d'entrelaceur. De plus, l'entrelaceur n'a pas d'impact sur la complexité du décodage. Néanmoins, des limites existent quand aux distances et multiplicités minimales obtenables. Aujourd'hui, nous avons à disposition des structures d'entrelaceurs (comme évoqué en section \ref{sec:entrelacement}) permettant d'obtenir des distances minimales aussi grandes que possible. Cependant des avancés continuent en considérant la conception d'entrelaceur conjointement à celle de la matrice de poinçonnage. Cette conception conjointe permet d'obtenir des distance minimales très importantes pour des codes à haut rendement \cite{punctureConstrained}.
+Ainsi, hormis le paramètre de la longueur de contrainte, le spectre de distance est régi par l'entrelaceur. C'est pour cela que de nombreuses recherches se sont concentrées sur la fonction d'entrelacement. De plus, l'entrelaceur n'a, \textit{a priori}, pas d'impact sur la complexité de décodage. Néanmoins, des limites existent quant aux distances et multiplicités minimales atteignables. Aujourd'hui, nous avons à disposition des structures d'entrelaceurs (comme évoqué en section \ref{sec:entrelacement}) permettant d'obtenir des distances minimales aussi grandes que nécessaire. Cependant des innovations consistent en la conception d'entrelaceurs conjointement à celle des matrices de poinçonnage. Cette conception conjointe permet d'obtenir des distance minimales très importantes pour des turbo codes à haut rendement \cite{punctureConstrained}.
 
-Cependant, un autre vecteur d'optimisation des performance est situé au niveau du décodeur. En effet, les méthodes itératives sont sous-optimales. Ainsi, plusieurs méthodes de décodages effectuant des opérations calculatoires après un décodage usuel ont été considérées. Ces approchent peuvent résulter en l'obtention de plusieurs séquence d'information probables. Ainsi, l'utilisation d'un code détecteur d'erreurs concaténé en amont du turbo codeur devient nécessaire. Plus encore, la concaténation série de différents codes permet de combler différentes lacunes des turbo codes. 
+Cependant, un autre vecteur d'optimisation des performances se situe au niveau du décodage itératif. En effet, les méthodes de décodage itératives sont sous-optimales. Ainsi, plusieurs méthodes de décodage effectuant des traitements complémentaires après un turbo décodage usuel ont été considérées. Ces approchent peuvent résulter en l'obtention de plusieurs séquences d'information probables. Ainsi, l'utilisation d'un code détecteur d'erreurs concaténé en amont du turbo codeur est une approche envisageable. Plus encore, la concaténation série de différents codes permet d’accroître les performances des turbo codes. 
 
 % Cependant, dans le cadre de turbo code déjà standardisés, ces deux paramètres sont immuables et ne peuvent être des leviers permettant l'amélioration des performances.	Dans la littérature, différentes méthodes ont été proposées afin de réduire ce plancher d'erreur, ce sans modifier ni les codeurs élémentaires ni l'entrelaceur. La section suivante présente ces différentes méthodes.
 
 \subsubsection{Concaténation de code en série et décodages associés}
+Parmi les divers codes qu'il est possible de concaténer avec un turbo code, trois ont particulièrement été considéré dans la littérature. La première section présente l'emploi d'un code BCH qui permet de corriger, par construction, un nombre défini d'erreurs. La deuxième section concerne l'utilisation d'un code RSC avec rendement unitaire permettant d'augmenter la distance minimale du code. Enfin, la dernière section s'intéresse à l'adjonction d'un code CRC. Ce dernier est alors majoritairement employé pour sélectionner un mot de code parmi plusieurs candidats.
 \paragraph{Code BCH}
-Dès l'apparition des turbo codes, il a été remarqué que les motifs d'erreurs dans le plancher d'erreur des turbo codes sont constitués de quelques 1 séparés par des 0. Autrement dit, si pour un SNR élevé, le turbo décodeur ne converge pas vers la bonne séquence d'information, alors la séquence décodée est très proche de la bonne séquence. Partant de ce constant, ANdersen propose en 1996 de concaténer un code BCH avec un turbo code \cite{andersenBCH}. Ainsi, après un non décodage du turbo code non fructueux, un décodage dur du code BCH est effectué permettant d'éliminer les erreurs résiduelles. Cette approche résulte en un abaissement du plancher d'erreur (provenant de l'augmentation de la distance minimale du code via la concaténation série) mais la convergence est retardé en raison de la baisse de rendement provenant de l'ajout de redondance. Par construction, le nombre de bits de redondance nécessaire pour qu'un code BCH corrige $t$ erreurs est donné par : \[R_{BCH} = t \times \lceil \log_2 K\rceil.\]
-Ainsi, plus K est grand, moins la baisse de rendement est importante. De plus, la complexité d'un décodeur dur BCH possède une complexité raisonnable. Un schéma de codage équivalent a été choisi dans le cadre du standard DVB-S2 où  un code LDPC est concaténé avec un code BCH.
+Dès l'apparition des turbo codes, il a été remarqué que les motifs d'erreurs des turbo codes en régime asymptotique sont constitués de quelques 1 séparés par des 0. Autrement dit, si pour une valeur de SNR élevée, le turbo décodeur ne converge pas vers la bonne séquence d'information, alors la séquence décodée est très proche de la bonne séquence. Partant de ce constant, Andersen propose en 1996 de concaténer un code BCH avec un turbo code \cite{andersenBCH}. La Figure \ref{fig:bchc} présente cette concaténation série au niveau du codeur. Après un décodage du turbo code non fructueux, un décodage dur à partir du code BCH est effectué permettant d'éliminer les erreurs résiduelles. Cette approche résulte en un abaissement du plancher d'erreurs. Ceci s'explique par une augmentation de la distance minimale du code via la concaténation série. En revanche, la convergence est retardée en raison de la baisse du rendement global provenant de l'ajout de redondance supplémentaire. Par construction, le nombre de bits de redondance nécessaires pour qu'un code BCH corrige $t$ erreurs a pour expression : \[R_{BCH} = t \times \lceil \log_2 K\rceil.\]
+Ainsi, plus K est grand, moins l'impacte sur le rendement est important. De plus, la complexité calculatoire d'un décodeur dur BCH est raisonnable. À titre d'exemple, un schéma de codage équivalent a été choisi dans le cadre du standard DVB-S2 où  un code LDPC est concaténé avec un code BCH.
 
-Afin de réduire la perte de rendement, dans \cite{narayananBCH}, une analyse analytique est réalisée afin d’identifier les positions les plus souvent erronées dans la séquence d'information. Ainsi, uniquement ces positions sont protégées par le BCH, impliquant un besoin de redondance moins important.
+Afin de réduire la perte de rendement, une analyse analytique est réalisée dans \cite{narayananBCH}. Cette dernière permet d’identifier les positions les plus souvent erronées dans la séquence d'information. Dès lors, seules ces positions sont protégées par un code BCH, impliquant un surcoût moins important au niveau des bits de redondance.
 
-Il est à noter que le code BCH peut aussi servir de code détecteur d'erreur et donc de critère d’arrêt. Ceci permet à \cite{takeshitaBCH} d'augmenter le nombre d'itérations du turbo décodeur arguant le fait que le nombre d'itérations moyen n'est que peu impacté. Ceci a pour effet d'améliorer la convergence.
+Il est à noter que le code BCH peut aussi servir de code détecteur d'erreurs et donc de critère d’arrêt lors d'un processus de décodage itératif. Ceci permet d'augmenter le nombre maximal d'itérations du turbo décodeur car le nombre d'itérations moyen n'est que peu impacté, comme décrit dans \cite{takeshitaBCH}. Ainsi, la la convergence est améliorée.
+
+\begin{figure}[!tb]
+	\begin{center}
+	\includegraphics[]{main/ch1_fig/abaiss/bch.pdf}
+	\end{center}
+	\caption{Concaténation série d'un code BCH et d'un turbo code \label{fig:bchc}}
+\end{figure}
 
 \paragraph{Code RSC de rendement 1}
-Le principe d'une concaténation basée sur un tel code est d'encoder partiellement soit l'information redondantes provenant des codeurs élémentaires soit l'information systématique avant de la fournir aux codeurs élémentaires.
+Le principe d'une concaténation basée sur un tel code est d'encoder partiellement soit l'information redondante provenant des codeurs élémentaires soit l'information systématique avant de la fournir aux codeurs élémentaires.
 
-Le premier cas de concaténation est nommé turbo codes 3D. Ils ont été pensé par Berrou \textit{et al.} en 2007 \cite{TC3D_1}, puis analysés successivement dans \cite{TC3D_2} et \cite{TC3D_3}.
-Le second cas est nommé quant à lui turbo code pré-codé. Leur apparition remonte à 2011 \cite{precoded}. Leur structure a été modifié puis optimisé dans \cite{precoding}.
+Le première forme de concaténation est nommée turbo codes 3D. Ces derniers ont été présentés par Berrou \textit{et al.} en 2007 \cite{TC3D_1}, puis analysés successivement dans \cite{TC3D_2} et \cite{TC3D_3}.
+La forme est nommée quant à elle turbo code pré-codé. Leur proposition remonte à 2011 \cite{precoded}. Leur structure a été modifiée puis optimisée dans \cite{precoding}. Les codeurs associés sont présentés en Figure \ref{fig:t3d}.
 
-Que ce soit pour les turbo codes 3D ou les turbo codes pré-codés, l'utilisation d'un code RSC de rendement 1 permet de ne pas modifier le rendement global du schéma de codage. Cependant, plus la part d'information passant par le codeur additionnel est important, plus la convergence est retardée et plus la distance minimale est augmentée. Ainsi, un compromis doit être trouvé suivant les performances visées. 
+Que ce soit pour les turbo codes 3D ou les turbo codes pré-codés, l'utilisation d'un code RSC de rendement 1 permet de ne pas modifier le rendement global du schéma de codage. Cependant, plus la part d'information 
+traitée par ce codeur additionnel est importante, plus la convergence est retardée et plus la distance minimale est augmentée. Ainsi, un compromis peut être trouvé suivant les performances visées. 
 
-Dans les deux cas, 3 décodeurs SISO doivent échanger mutuellement de l'information. La complexité calculatoire est donc augmentée. Dans \cite{TC3D_2}, une hausse d'environ $10\%$ est annoncée. Cependant, la latence du système est augmentée puisque une itération de décodage correspond à l'activation successives des 3 décodeurs SISO.
+Dans les deux cas, trois décodeurs SISO doivent échanger mutuellement de l'information. La complexité calculatoire du décodage augmente de façon notable. Dans \cite{TC3D_2}, une hausse de la complexité calculatoire du décodeur  d'environ $10\%$ est estimée. De plus, la latence de décodage augmente puisqu'une itération de décodage correspond dorénavant à l'activation successive des 3 décodeurs SISO.
+
+\begin{figure}[tb]
+  \begin{center}
+    \subfloat[Turbo code 3D]{
+      \includegraphics[width=0.45\textwidth]{main/ch1_fig/abaiss/t3d.pdf}
+      \label{sub:t3d}
+                         }
+    \subfloat[Turbo code pré-codé]{
+      \includegraphics[width=0.45\textwidth]{main/ch1_fig/abaiss/precod.pdf}
+      \label{sub:pre}
+                         }
+    \caption{Concaténation d'un turbo code et d'un RSC de rendement 1}
+    \label{fig:t3d}
+  \end{center}
+\end{figure}
 
 \paragraph{Code CRC}
-La troisième concaténation utilise les codes détecteurs d'erreur CRC. Ils possèdent l'avantage d'être souvent définis dans les différents standards employant des turbo codes. Ils servent alors à des demandes de renvoi automatique (ARQ), permettant d'améliorer la qualité de service. Ils peuvent aussi permettre d'arrêter le processus itératif dès lors que le turbo décodeur a convergé vers le bon mot de code. Des analyses ont été menées afin de déterminer les probabilités de détection correction, d'erreur non détectée et de fausse alarme lorsque le décodage du CRC est effectué lors du processus itératif \cite{detectionCRC}. 
+La troisième concaténation utilise des codes détecteurs d'erreurs CRC. La concaténation série d'un tel code avec un turbo code est présenté en Figure \ref{fig:crc}. Cette famille de code possède un pouvoir de détection important. Ainsi, ce type de détecteur est souvent défini dans les standards employant des turbo codes. Par exemple, dans le standard LTE, ils permettent l'utilisation de demandes de renvoi automatique (ARQ). Dans ce cas, lorsque le récepteur détecte une erreur de transmission, il peut demander une retransmission des données. L'ARQ permet une amélioration de la qualité de service. D'autre part, les codes CRC peuvent aussi permettre d'arrêter le processus de décodage itératif dès lors que le turbo décodeur a convergé vers le bon mot de code. Des analyses comme dans \cite{detectionCRC} ont été menées afin de déterminer les probabilités d'erreurs non détectées et de fausse alerte lorsque qu'une détection CRC est effectuée au cours du processus itératif. 
 
-\subparagraph{Décodage par liste} Cette famille de décodage a été pensée des la fin des années 50 indépendamment par Elias et Wozencraft \cite{elias1957list,wozencraft1958list}. Dans le cadre des codes convolutifs, son principe est de fournir les $\cal{L}$ séquences les plus probables correspondant à des chemins dans le treillis. Ces $\cal{L}$ séquences peuvent être obtenues grâce à l'algorithme de Viterbi par liste (LVA) possédant une version parallèle et une version séquentielle \cite{lva}. Plus récemment, une dérivation de l'algorithme ML-APP permettant d'obtenir ces $\cal{L}$ séquences a été proposé \cite{mlla}.
-Dans le cadre du décodage des turbo codes par listes, trois principales approches peuvent être appliquées :
-\begin{itemize}
-	\item Chacun des codes constituants est décodé selon un algorithme liste. Dès que l'intersection des deux ensembles de liste contient un élément, le décodage s'arrête et cette séquence est la sortie du décodeur. Cette technique semble avoir moins d'intérêt pour les grandes tailles de trame \cite{sadowPair}. 
-	\item Le LVA peut aussi être réalisé après le processus itératif usuel. Dans ce cas, il est exécuté à la fin du processus ou après chaque itération \cite{narayaList}. Les informations \textit{a posteriori} du turbo décodeur servent alors d'information \textit{a priori} pour le LVA. Afin de déterminer la bonne séquence parmi les $\cal{L}$ séquences obtenues, un code détecteur d'erreurs est utilisé. Grâce à cette technique des gains notables dans le plancher d'erreur sont obtenus.
-	\item Le décodage fournissant une liste de séquence peut aussi être appliqué avant le processus itératif. Il doit alors fournir $\cal{L}$ séquences distinctes de sorties souples qui seront utilisés en tant qu'information \textit{a priori} par $\cal{L}$ turbo décodeurs distincts. A nouveau, l'identification de la bonne séquence est réalisée par un code détecteur d'erreur. Cette méthode propose des gains aussi bien dans la zone de convergence que dans le plancher d'erreur mais possède un surcoût calculatoire important \cite{newList}.
-\end{itemize}
+Dans un but d'améliorer les performances de décodage, les codes CRC ont été utilisé de diverses manières. Celles-ci sont maintenant présentées.
 
-\subparagraph{Décodage utilisant le décodage par statistique ordonnées (OSD)} Des approches utilisant un tel décodage ont été proposé pour les turbo codes \cite{osdAided}. Le principe réside dans le fait d'appliquer l'OSD \cite{osd} de rang 1 après chaque itération de turbo décodage ou après le processus itératif. Le décodage OSD se base sur la matrice génératrice du code. Celle-ci est permutée selon la fiabilité des informations. Grâce à une élimination Gaussienne et en inversant les décisions dures du décodeur turbo, <$K$ mots sont identifiées. Finalement, grâce à un code détecteur d'erreur, le bon mot est identifié. D'importants gains sont obtenus dans la convergence pour de petites tailles de trames et des hauts rendements.  
-Cette méthode a été étendue en considérant la matrice globale de la concaténation série du code CRC et du turbo code dans \cite{osdCrcAided}. Dans ce cas le code CRC perd son pouvoir de correction mais les performances de décodage sont améliorées car la distance minimale du code concaténé est utilisé. Cependant, la complexité calculatoire de cette méthode est telle qu'uniquement des décodages de petites tailles de trames peuvent être envisagés.
+\begin{figure}[b]
+	\begin{center}
+	\includegraphics[]{main/ch1_fig/abaiss/crc.pdf}
+	\end{center}
+	\caption{Concaténation série d'un code CRC et d'un turbo code \label{fig:crc}}
+\end{figure}
 
-\subparagraph{Multiples décodages turbo} Cette méthode a été présenté par Crozier et Ould-Cheikh-Mouhamedou dans \cite{cim} puis reformulé dans \cite{fsm}. Son principe est le suivant. Si, à la fin du processus itératif, le décodeur n'a pas convergé vers le bon mot de code, les valeurs absolues des informations \textit{a posteriori} sont triées par ordre croissant. La valeur de l'information canal systématique correspondant à la position la moins fiable est alors forcée à une valeur supérieure à la distance minimale du code. Un nouveau décodage itératif est alors effectué. Le résultat est vérifié grâce à un code détecteur. Si le bon mot n'a pas été identifié, alors, la seconde position la moins fiable est forcée à une valeur supérieure à la distance minimale du code, tout en ayant remis la position la moins fiable à sa valeur originelle. Un nouveau décodage itératif est alors effectué. Ce processus est répété jusqu'à ce qu'un nombre prédéfini de positions testées soit atteint ou jusqu'à ce que le code détecteur valide le mot.
-Dans le cadre des turbo codes double binaires, les 4 possibilités de valeurs pour le couple $(A_i,B_i)$ sont testées. Les performances de décodage sont améliorées à la fois dans la convergence et dans le plancher d'erreur mais ce au prix, d'une multiplication de la complexité calculatoire par le nombre de positions examinées.
 
-Cette technique a été étendue par Pfletschinger dans \cite{pflet}. Cette fois toutes les informations provenant du canal sont considérés pour être fixés à une valeur supérieure à la distance minimale du code. Ainsi, jusqu'à $N$ décodages successifs sont effectués. Afin d'obtenir les meilleures performances de décodage le LVA est conjointement employé. Cependant, bien que cette méthode présente les meilleures performances de décodage, elle ne peux être considéré dans un contexte temps réel du fait de sa latence.
+\subparagraph{Décodage par liste} Cette famille de décodage a été pensée des la fin des années 50 indépendamment par Elias et Wozencraft \cite{elias1957list,wozencraft1958list}. Dans le cadre des codes convolutifs, son principe est de fournir les $\cal{L}$ séquences les plus probables correspondant à des chemins dans le treillis. Ces $\cal{L}$ séquences peuvent être obtenues grâce à l'algorithme de Viterbi par liste (LVA) selon une approche parallèle ou une approche séquentielle \cite{lva}. Plus récemment, une dérivation de l'algorithme ML-APP permettant d'obtenir $\cal{L}$ séquences a été proposée \cite{mlla}.
+Dans le cadre du décodage de turbo codes par liste, trois principales approches peuvent être appliquées :
+\begin{enumerate}
+	\item \textbf{Intersection de liste : } Chacun des codes constituants est décodé selon un algorithme pat liste. Dès que l'intersection des deux ensembles de liste consiste en une seule séquence, le décodage s'arrête. Cette séquence est alors la sortie du décodeur \cite{sadowPair}. 
+	\item \textbf{LVA post turbo : }  Le LVA peut aussi être réalisé en dehors du processus itératif usuel. Dans ce cas, il est exécuté après chaque itération ou à la fin du processus \cite{narayaList}. Les informations \textit{a posteriori} du turbo décodeur servent alors d'informations \textit{a priori} pour le LVA. Afin de déterminer la bonne séquence parmi les $\cal{L}$ séquences obtenues, un code détecteur d'erreurs est utilisé. Grâce à cette technique des gains notables, de l'ordre d'un facteur dix avec une liste de taille trois dans le plancher d'erreur, sont obtenus.
+	\item \textbf{LVA pré turbo : } Le décodage liste peut aussi être appliqué avant le processus itératif. Il doit alors fournir $\cal{L}$ séquences distinctes de sorties souples qui seront utilisées en tant qu'information \textit{a priori} par $\cal{L}$ turbo décodeurs distincts. A nouveau, l'identification de la bonne séquence est réalisée par un code détecteur d'erreurs. Cette méthode propose des gains aussi bien dans la zone de convergence que dans le plancher d'erreur, mais possède un surcoût calculatoire important \cite{newList}. Ces gains représentent un facteur cinq pour de petites tailles de trame avec une liste de taille 16.
+\end{enumerate}
 
-\subsubsection{Récapitulatif des différentes méthodes}
-Dans cette section, les différentes méthodes sont récapitulées et comparées en terme de gains de décodage, de complexité de décodage et d'implications sur la latence du décodeur. Ces informations sont regroupées dans le tableau \ref{tab:recap}.
+Les décodeurs associés à ces différentes utilisations du LVA sont récapitulés en Figure \ref{fig:lva}. 
 
-\begin{table}[]
+
+\begin{figure}[tb]
+  \begin{center}
+    \subfloat[Intersection de listes]{
+      \includegraphics[width=0.45\textwidth]{main/ch1_fig/abaiss/lva_pll.pdf}
+      \label{sub:lva1}}\\[1.5em] 
+    \subfloat[LVA post turbo]{
+      \includegraphics[width=0.5\textwidth]{main/ch1_fig/abaiss/lva_post.pdf}
+      \label{sub:lva2}}\\[1.5em] 
+    \subfloat[LVA pré turbo]{
+      \includegraphics[width=0.5\textwidth]{main/ch1_fig/abaiss/lva_pre.pdf}
+      \label{sub:lva3}}
+    \caption{Décodeur utilisant l’algorithme de Viterbi par liste}
+    \label{fig:lva}
+  \end{center}
+\end{figure}
+
+\subparagraph{Décodage utilisant le décodage par statistiques ordonnées (OSD)} Des approches utilisant un tel décodage ont été proposées pour les turbo codes \cite{osdAided}. Le principe réside dans le fait d'appliquer l'OSD \cite{osd} de rang 1 après chaque itération de turbo décodage ou après le processus itératif. Une présentation schématique de ce principe est donné en Figure \ref{fig:osd}. Le décodage OSD se base sur la matrice génératrice du code. Celle-ci est permutée selon la fiabilité des informations. Grâce à une élimination Gaussienne et en inversant les décisions dures du décodeur turbo, $K$ mots sont identifiés. Finalement, le bon mot est sélectionné à l'aide d'un code détecteur d'erreurs. D'importants gains sont obtenus dans la zone de convergence pour de petites tailles de trame et de hauts rendements.  
+Cette méthode a été étendue en considérant la matrice globale de la concaténation série du code CRC et du turbo code dans \cite{osdCrcAided}. Dans ce cas, le code CRC perd son pouvoir de détection mais les performances de décodage sont améliorées car la distance minimale du code concaténé est exploitée. Cependant, la complexité calculatoire de cette méthode est telle que seuls des décodages de trame de petite taille peuvent être envisagés.
+
+\begin{figure}[tb]
+\begin{center}
+	\includegraphics[]{main/ch1_fig/abaiss/osd.pdf}
+	\end{center}
+	\caption{Décodage associant un turbo code et un décodeur OSD \label{fig:osd}}
+\end{figure}
+
+\subparagraph{Multiples turbo décodages} Cette méthode a été présentée par Crozier et Ould-Cheikh-Mouhamedou dans \cite{cim} puis reformulé dans \cite{fsm}. Son principe est le suivant. Si, à la fin du processus itératif, le décodeur n'a pas convergé vers le bon mot de code, les valeurs absolues des informations \textit{a posteriori} sont triées par ordre croissant. La valeur de l'information systématique correspondant à la position la moins fiable est alors forcée à une valeur supérieure à celle de la distance minimale du code. Un nouveau turbo décodage itératif est alors effectué. Le résultat est vérifié grâce à un code détecteur d'erreurs. Si le bon mot n'a pas été identifié, alors, la seconde position la moins fiable est forcée à une valeur supérieure à la distance minimale du code, tout en ayant remis la position la moins fiable à sa valeur originelle. Un nouveau turbo décodage itératif est alors effectué. Ce processus est répété jusqu'à ce qu'un nombre prédéfini de positions testées soit atteint ou jusqu'à ce que le code détecteur d'erreurs valide le mot courant.
+
+Dans le cadre des turbo codes double binaires, les quatre possibilités de valeurs pour le couple $(A_i,B_i)$ sont considérées. Les performances de décodage sont améliorées à la fois dans la zone de convergence et au niveau du plancher d'erreur mais ce au prix, 
+%d'une multiplication de la complexité calculatoire par le nombre de positions examinées. 
+d'une multiplication par $4\times L$ de la complexité calculatoire avec $L$ le nombre de positions examinées.
+
+Cette technique a été étendue par Pfletschinger dans \cite{pflet}. Cette fois toutes les informations provenant du canal sont considérées pour être fixées à une valeur supérieure à celle de la distance minimale du code. Ainsi, $N$ turbo décodages successifs peuvent être nécessaires. Afin d'obtenir les meilleures performances de décodage, un algorithme LVA est conjointement employé. Cependant, bien que cette méthode présente les meilleures performances de décodage, elle ne peut être considérée dans un contexte temps réel du fait de sa latence d'exécution et de la complexité calculatoire résultante.
+
+\subsubsection{Récapitulatif des différentes méthodes d'abaissement du plancher d'erreur}
+Dans cette section, différentes méthodes d'abaissement du plancher d'erreur sont récapitulées et comparées en terme de gains de décodage et de complexité de décodage. Une synthèse de cette comparaison est fournie dans le tableau \ref{tab:recap}.
+
+Bien évidemment, toutes ces méthodes permettent d'abaisser le plancher d'erreur. De plus, les techniques utilisant l'OSD ou le turbo décodage multiple proposent des gains aussi dans la zone de convergence. Cependant leurs complexités calculatoires les excluent d'applications sous forte contrainte d'exécution. 
+
+La concaténation avec un code BCH propose des gains intéressants dans la zone du plancher d'erreur tout en introduisant une complexité calculatoire modérée. Néanmoins, il est nécessaire d'ajouter des informations redondante (provenant du code BCH). Ceci implique une modification du rendement du code et donc un retard sur le seuil de convergence. 
+En revanche, l'utilisation d'un code RSC de rendement 1 ne possède pas cet inconvénient mais nécessite cependant aussi de modifier le schéma de codage. Cette approche ne peut donc être utilisée dans des contextes déjà standardisés. De plus, le troisième SISO impacte négativement la complexité calculatoire et la latence du décodeur.
+
+Finalement, les approches basées sur un décodage LVA successif au turbo décodage possèdent l'avantage de nécessiter uniquement l'adjonction d'un code CRC au turbo code. Des gains de performance sont observés dans le plancher d'erreur mais la complexité calculatoire ajoutée n'est pas négligeable.
+
+\begin{table}[tb]
 \centering
-\caption{Récapitulatif des différentes méthodes améliorant les performances de décodage}
+\caption{Synthèse des différentes méthodes améliorant les performances de décodage}
 \label{tab:recap}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{rlllll}
 \toprule
                   & BCH & RSC-1 & List Decoder & OSD & Décodages multiples\\
                   \cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}\cmidrule(l){6-6}
-\textbf{Localisation des gains}    &  &  &  &  &  \\
-\textbf{Nécessité  code détecteur} &  &  &  &  & \\
-\textbf{Complexité}                &  &  &  &  & \\
+\textbf{Redondance ajoutée}         & Oui  & Non & CRC & CRC & CRC \\
+\textbf{Localisation des gains}     & Plancher & Plancher & Plancher & Convergence et plancher & Convergence et plancher \\
+\textbf{Complexité}                 & \thumbsup & \thumbsmid & \thumbsmid & \thumbsdown  & \thumbsdown \\
 \bottomrule
 \end{tabular}}
 \end{table}
 
 \section{Conclusion}
-Dans ce premier chapitre, les notions permettant d'aborder le codage canal ont été présentées. Ensuite, la construction et le décodage et les performances des turbo codes ont été détaillés. Des outils permettant d'estimer les performances d'un turbo code sur le canal BI-AWGN ont été présentés. Finalement, plusieurs méthodes permettant d'améliorer les performances de décodage des turbo codes ont été rapportées. Dans le cadre de turbo codes déjà standardisés, uniquement les méthodes modifiant le processus de décodage peuvent être employées. Puisque le décodage des turbo codes est sous optimal, des optimisations sont encore possibles. D'autant plus, de nombreux standards de communications numériques présentent un code CRC concaténé avec le turbo code. Ceci permet d'envisager une plus grande diversité de décodage. Dans le chapitre suivant, des techniques de décodage tirant parti des oscillations au sein du turbo décodeur sont proposées.
+Dans ce premier chapitre, les notions permettant d'aborder le codage canal ont été successivement introduites. Puis, la construction, le décodage et les performances des turbo codes ont été détaillés. Des outils permettant d'estimer les performances d'un turbo code sur le canal BI-AWGN ont été présentés. Finalement, plusieurs méthodes permettant d'améliorer les performances de décodage des turbo codes ont été rapportées. Dans le cadre de turbo codes déjà standardisés, seules des méthodes appliquées au processus de décodage peuvent être employées. Or, comme le décodage des turbo codes est sous optimal, des optimisations doivent exister. Il est aussi à noter que de nombreux standards de communications numériques présentent un code CRC concaténé avec le turbo code. Ceci permet d'envisager une plus grande diversité de décodage. Pour l'ensemble de ces raisons, dans le chapitre suivant, afin d'améliorer les performances de décodage, des techniques de décodage tirant parti des oscillations au sein du turbo décodeur sont détaillées. 

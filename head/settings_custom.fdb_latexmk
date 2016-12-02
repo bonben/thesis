@@ -1,14 +1,10 @@
 # Fdb version 3
-["pdflatex"] 1473939667 "settings_custom.tex" "settings_custom.pdf" "settings_custom" 1473939667
-  "/etc/texmf/web2c/texmf.cnf" 1444322232 1101 af7716885e081ab43982cab7b4672c1a ""
-  "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1417527377 31088 8e088e958dd0258cc5414842768a3a00 ""
-  "/usr/share/texmf/web2c/texmf.cnf" 1417527377 31088 8e088e958dd0258cc5414842768a3a00 ""
-  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1444322324 3840967 3bb7e975f0ef25a774845c7f538bdba8 ""
+["pdflatex"] 1480096321 "settings_custom.tex" "settings_custom.pdf" "settings_custom" 1480096321
   "settings_custom.aux" 1471510820 8 a94a2480d3289e625eea47cd1b285758 ""
-  "settings_custom.tex" 1473939667 5589 be2f5a5902e3f37fba727d20bac69720 ""
+  "settings_custom.tex" 1480096321 6703 08d74e9faadf86a2901fd226d46103b8 ""
   "tail/glossaireEntries.tex" 0 -1 0 ""
   (generated)
-  "/home/titi/Dropbox/TheseTiti/head/settings_custom.log"
+  "/home/titi/Dropbox/TheseTiti/head/settings_custom.pdf"
   "settings_custom.pdf"
   "settings_custom.log"
-  "/home/titi/Dropbox/TheseTiti/head/settings_custom.pdf"
+  "/home/titi/Dropbox/TheseTiti/head/settings_custom.log"

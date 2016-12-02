@@ -52,14 +52,16 @@
 \usepackage{trig}				% fourni les fonctions trigonométriques
 
 \usepackage{lettrine}
-\pgfplotsset{compat=1.9}
+\pgfplotsset{compat=newest}
 
 \usetikzlibrary{circuits, matrix, positioning}
 % porte logique a plusieurs entrées
 \usetikzlibrary{circuits.logic.CDH}
 %\usetikzlibrary{circuits.ee.IEC}
 \usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{colorbrewer}
 
+\usepackage{pgffor}
 
 
 \definecolor{Paired-2}{RGB}{166,206,227}
@@ -161,9 +163,10 @@
 
 \usetikzlibrary{patterns}
 
-% \usetikzlibrary{external}
-% % Enable the library !!!>>> MUST be in the preamble <<<!!!!
-% \tikzexternalize
+%\usetikzlibrary{external}
+ % Enable the library !!!>>> MUST be in the preamble <<<!!!!
+%\tikzexternalize[prefix=tikz/]
+%\usepgfplotslibrary{external}
 \usepackage{version}
 \usepackage[export]{adjustbox}
 \reversemarginpar
@@ -187,3 +190,12 @@
   \noalign{\global\let\adl@draw\@dashdrawstore
            \vskip\belowrulesep}}
 \makeatother
+
+\usepackage{scalerel}
+%\def\thumbsup{\scalerel*{\includegraphics{head/down.png}}{400pt}}
+%\def\thumbsdown{\scalerel*{\includegraphics{head/up.png}}{400pt}}
+%\def\thumbsmid{\scalerel*{\includegraphics{head/mid.png}}{400pt}}
+
+\def\thumbsup{\includegraphics[width=15pt]{head/down.png}}
+\def\thumbsdown{\includegraphics[width=15pt]{head/up.png}}
+\def\thumbsmid{\includegraphics[width=15pt]{head/mid.png}}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.8)  4 NOV 2016 10:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.10.8)  8 NOV 2016 15:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -617,7 +617,7 @@ PGFPlots: reading {32s.dat}
 Here is how much of TeX's memory you used:
  21458 strings out of 493105
  548127 string characters out of 6137072
- 775975 words of memory out of 5000000
+ 779896 words of memory out of 5000000
  24556 multiletter control sequences out of 15000+600000
  7277 words of font info for 27 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -630,7 +630,7 @@ ts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmsy6.pfb>
-Output written on 32s.pdf (1 page, 76410 bytes).
+Output written on 32s.pdf (1 page, 77044 bytes).
 PDF statistics:
  39 PDF objects out of 1000 (max. 8388607)
  28 compressed objects within 1 object stream

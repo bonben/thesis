@@ -1,12 +1,12 @@
 all: pdf
 
 pdf:
-	pdflatex my_thesis
-	pdflatex my_thesis
+	pdflatex --shell-escape --enable-write-18 my_thesis
+	pdflatex --shell-escape --enable-write-18 my_thesis
 	bibtex my_thesis
-	pdflatex my_thesis
-	pdflatex my_thesis
-	pdflatex my_thesis
+	pdflatex --shell-escape --enable-write-18 my_thesis
+	pdflatex --shell-escape --enable-write-18 my_thesis
+	pdflatex --shell-escape --enable-write-18 my_thesis
 	evince my_thesis.pdf &
 
 clean:

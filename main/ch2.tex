@@ -3,6 +3,8 @@
 
 Dans ce chapitre, on présente le SC et le décodage  à la Benjamin
 
+TODO : osc : rajouter que c'est la même qq soit la taille de trame
+
 \vspace*{\fill}
 \minitocTITI
 \vspace*{\fill}
@@ -62,135 +64,223 @@ qu'à 0,1 dB du BP, bien plus complexe.
 Avant de présenter une adaptation de ces approches aux turbo codes, une étude statistique concernant les oscillations 
 de l'information extrinsèque au cours du décodage itératif des turbo codes est maintenant mené.
 
-\section{Observations statistiques des oscillations dans le processus de turbo décodage}
+\section{Observations statistiques des oscillations dans le processus turbo}
 
 \subsection{Cadre de l'étude}
-Cette étude se place dans le cadre des turbo codes binaires. Les deux standards considérés sont le standard LTE (8 
-états) et le standard CCSDS (16 états). Ces statistiques sont obtenues grâce à un décodeur utilisant l'algorithme 
-EML-MAP, itérant jusque 32 fois. Dans un premier temps, des moyennes statistiques sont présentées faisant apparaître une 
-corrélation forte entre les oscillations dans la trame et le fait que cette trame soit erronée. Ensuite, ces 
-statistiques sont présentées en fonction de l'itération courante. Finalement, les occurrences du nombre d'oscillations
-seront présentés suivant qu'un bit soit correct ou non lors de la dernière itération. Toutes ces statistiques sont 
-présentées pour plusieurs valeurs de SNR correspondant à des taux d'erreur trame valant $10^{-2}, 10^{-3}, 10^{-4}, 
-10^{-5}$.
+Le but de cette étude est d'observer le comportement d'un turbo décodeur lors de son fonctionnement afin de pouvoir 
+extraire des informations supplémentaires permettant peut-être d'améliorer ses performances de décodage.
+Les paramètres du couple codeur/décodeur pour cette étude sont les suivants :
+\begin{itemize}
+	\item Turbo code binaire,
+	\item Standards LTE (8 états) et CCSDS (16 états),
+	\item Algorithme EML-MAP itérant 32 fois.\newline
+\end{itemize}
+% Cette étude se place dans le cadre des turbo codes binaires. Les deux standards considérés sont le standard LTE (8 
+% états) et le standard CCSDS (16 états). Ces statistiques sont obtenues grâce à un décodeur utilisant l'algorithme 
+% EML-MAP, itérant 32 fois. Dans un premier temps, des moyennes statistiques sont présentées faisant apparaître une 
+% corrélation forte entre les oscillations dans la trame et le fait que cette trame soit erronée. Ensuite, ces 
+% statistiques sont présentées en fonction de l'itération courante. Finalement, les occurrences du nombre d'oscillations
+% seront présentés suivant qu'un bit soit correct ou non lors de la dernière itération. Toutes ces statistiques sont 
+% présentées pour plusieurs valeurs de SNR correspondant à des taux d'erreur trame valant $10^{-2}, 10^{-3}, 10^{-4}, 
+% 10^{-5}$. Afin de les obtenir, pour chaque SNR, 100 trames sont considérées.
 
-Au sein d'un turbo décodeur, quatre types d'oscillations des informations extrinsèques peuvent être considérées. Elles 
-peuvent survenir en sortie d'un même décodeur élémentaire entre deux itérations. Cela peut correspondre à une 
-oscillation du décodeur opérant dans l'ordre naturel (respectivement entrelacé) entre deux itérations, noté alors 
-$N\rightarrow N$ (respectivement $I\rightarrow I$). Une oscillation peut aussi se produire entre les deux dimensions. 
-Dans ce cas, un des décodeurs à un avis sur un bit et lors de la demi-itération suivante l'autre décodeur a un avis 
-opposé. Ces oscilaltions correspondent donc à des désaccord entre les deux décodeurs élémentaires. Ils sont notés 
+% Au sein d'un turbo décodeur, quatre types d'oscillations des informations extrinsèques peuvent être considérées. Elles 
+% peuvent survenir en sortie d'un même décodeur élémentaire entre deux itérations. Cela peut correspondre à une 
+% oscillation du décodeur opérant dans l'ordre naturel (respectivement entrelacé) entre deux itérations, noté alors 
+% $N\rightarrow N$ (respectivement $I\rightarrow I$). Une oscillation peut aussi se produire entre les deux dimensions. 
+% Dans ce cas, un des décodeurs à un avis sur un bit et lors de la demi-itération suivante l'autre décodeur a un avis 
+% opposé. Ces oscillations correspondent donc à des désaccord entre les deux décodeurs élémentaires. Ils sont notés 
+% $N\rightarrow I$ (respectivement $I\rightarrow N$) si la référence est le décodeur opérant dans l'ordre naturel 
+% (respectivement entrelacé).
+
+
+Dans la suite, une oscillation est définie comme un changement de signe de l'information extrinsèque associé à un bit
+d'information. Ainsi, au sein d'un turbo décodeur, quatre types d'oscillations peuvent être considérées. Elles peuvent 
+survenir en sortie d'un même SISO entre deux itérations.  Cela peut correspondre à une oscillation du décodeur opérant 
+dans l'ordre naturel (respectivement entrelacé) entre deux itérations, noté alors $N\rightarrow N$ (respectivement 
+$I\rightarrow I$). 
+
+Une oscillation peut aussi se produire entre les deux dimensions. Dans ce cas, la valeur de l'information extrinsèque 
+associée à un certain bit produite par un des décodeurs élémentaires est opposée à celle de l'autre décodeur lors de la 
+demi-itération suivante. Ces oscillations correspondent donc à des désaccord entre les deux décodeurs élémentaires. Deux 
+cas sont à considérer suivant le domaine d'opération du décodeur élémentaire servant de référence. Ils sont notés 
 $N\rightarrow I$ (respectivement $I\rightarrow N$) si la référence est le décodeur opérant dans l'ordre naturel 
 (respectivement entrelacé).
 
 La Figure \ref{fig:osc} présente ces 4 types d’oscillations des informations extrinsèques sur un schéma de turbo 
 décodeur dans lequel les étapes d'entrelacement n’apparaissent pas pour plus de simplicité.
 
-\begin{figure}[h!]
+\begin{figure}[tb]
 	\centering
 	\includegraphics[width=7cm]{main/ch2_fig/ipe/osc.pdf}
 	\caption{\label{fig:osc}Les différentes oscillations de l'information extrinsèque possibles.}
 \end{figure}
 
-\subsection{Nombre moyen d'oscillations par bit}
-Cette section présente 
+Maintenant, ces statistiques sur le nombre d'oscillations vont être détaillées. D'abord dans le cas de standard LTE et 
+ensuite, plus sommairement en raison de l'interprétation similaire des résultats dans le cadre du standard CCSDS. 
+Plusieurs valeurs de SNR sont considérés afin d'analyser les oscillations suivant le contexte de fonctionnement du 
+décodeur itératif (zones de non-convergence, de convergence et de plancher d'erreurs). Pour toutes ces statistiques, les 
+trames considérées sont au nombre de 100. Tout d'abord l'étude sera statique : les moyennes et distribution des 
+oscillations par bits seront présentés. Ensuite elle sera dynamique en considérant l'évolution des oscillations au cours 
+des itérations.
 
-\begin{figure}[!ht]
-	\begin{tikzpicture}
-		
-		\begin{groupplot}[group style={group name=lte, group size= 2 by 2, horizontal sep=2cm, vertical sep=2cm}, 
-					height=0.4\textwidth,  width=0.5\textwidth,
-					symbolic x coords={NN, II, NI, IN},
-	                xtick=data,
-	                %x tick label style= {rotate=45,anchor=north east},
-	                ylabel=Nombre d'oscillations par bit,
-	                ymin=0, ymax=31,
-	                ybar = 1.5pt, /pgf/bar width=8pt,
-	                enlarge x limits=0.15, ymajorgrids, grid style={gray!30},legend columns=2]
-		\nextgroupplot[legend to name=grouplegend]
-                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/lte_2/10-2/moyennes.dat}; 
-                \addlegendentry{Trames erronées à la dernière itération}
-        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/lte_2/10-2/moyennes.dat};  
-        		\addlegendentry{Bits erronés dans trames erronées}
-        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/lte_2/10-2/moyennes.dat}; 
-        		\addlegendentry{Bits justes dans trames erronées} 
-        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/lte_2/10-2/moyennes.dat};  
-        		\addlegendentry{Trames corrigées à la dernière itération}
-        \nextgroupplot[]
-	            \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/lte_2/10-3/moyennes.dat}; 
-	    		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/lte_2/10-3/moyennes.dat}; 
-	    		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/lte_2/10-3/moyennes.dat}; 
-	    		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/lte_2/10-3/moyennes.dat}; 
-        \nextgroupplot[]
-                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/lte_2/10-4/moyennes.dat}; 
-        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/lte_2/10-4/moyennes.dat}; 
-        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/lte_2/10-4/moyennes.dat}; 
-        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/lte_2/10-4/moyennes.dat}; 
-        \nextgroupplot[]
-                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/lte_2/10-5/moyennes.dat}; 
-        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/lte_2/10-5/moyennes.dat}; 
-        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/lte_2/10-5/moyennes.dat}; 
-        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/lte_2/10-5/moyennes.dat}; 
-        		\coordinate (bot) at (rel axis cs:1,0);
+\subsection{Standard LTE}
+\subsubsection{Nombre moyen d'oscillations par bit}
+La première statistique aisément obtenable est le nombre moyen d'oscillations par bits. Les bits peuvent être 
+catégorisés selon deux groupes principaux :
+\begin{itemize}
+	\item bits appartenant à une trame corrigée à la dernière itération,
+	\item bits appartenant à une trame erronée à la dernière itération.\newline
+\end{itemize}
+Ensuite, ce deuxième groupe peut lui-même être subdivisé :
+\begin{itemize}
+	\item bits corrects à la dernière itération dans un trame erronée à la dernière itération,
+	\item bits erronés à la dernière itération dans un trame erronée à la dernière itération. \newline
+\end{itemize}
+La Figure \ref{ch2:fig:meanlte} présente l'évolution du nombre d'oscillations par bit selon la classification qui 
+vient d'être introduite et ce, en fonction de la diminution du taux d'erreur trame pour le standard LTE. La sous-figure 
+(a) correspond à la zone de non-convergence, les sous-figures (b) et (c) à la zone de convergence et finalement la (d) à 
+la zone du plancher d'erreur. Plusieurs constations notables peuvent en être extraites. 
 
-		\end{groupplot}
+Tout d'abord, le nombre d'oscillations est le même que l'on considère comme référence le décodeur opérant dans le 
+domaine naturel ou celui opérant le domaine entrelacé. Ainsi, dans la suite, uniquement les oscillations $N\rightarrow N$ 
+et $N\rightarrow I$ seront considérées dans la suite des analyses.
+Ensuite, quelque soit la valeur du SNR, les informations extrinsèques d'une trame corrigée n'oscillent pas ou très 
+peu. En comparaison, les informations extrinsèques d'une trame erronée oscillent quant à elles environ dix fois plus.
+Cette constatation est le principe fondamental des critères d'arrêts SCR et SDR. En effet, le nombre d'oscillations 
+permet de savoir si une trame a convergé ou non.
 
-		\node[below = 0.8cm of lte c1r1.south] {(a) : FER = $10^{-2}$};
-        \node[below = 0.8cm of lte c2r1.south] {(b) : FER = $10^{-3}$};
-        \node[below = 0.8cm of lte c1r2.south] {(c) : FER = $10^{-4}$};
-        \node[below = 0.8cm of lte c2r2.south] {(d) : FER = $10^{-5}$};
-
-		\node at (lte c1r1.north) [anchor=south, xshift=3.4cm, yshift=1cm] {\ref{grouplegend}};
-	\end{tikzpicture}
-	\caption{Oscillations moyenne pour différents taux d'erreurs dtrame cibles, standard LTE \label{fig:ltemoy}}
+\begin{figure}[tb]
+	\begin{center}
+	\includegraphics[]{main/ch2_fig/tikz/m_lte.pdf}
+	\caption{Oscillations pour différents taux d'erreurs trame cibles, standard LTE \label{ch2:fig:meanlte}}
+	\end{center}
 \end{figure}
 
-\begin{figure}[!ht]
-	\begin{tikzpicture}
-		
-		\begin{groupplot}[group style={group name=ccsds, group size= 2 by 2, horizontal sep=2cm, vertical sep=2cm}, 
-					height=0.4\textwidth,  width=0.5\textwidth,
-					symbolic x coords={NN, II, NI, IN},
-	                xtick=data,
-	                %x tick label style= {rotate=45,anchor=north east},
-	                ylabel=Nombre d'oscillations par bit,
-	                ymin=0, ymax=31,
-	                ybar = 1.5pt, /pgf/bar width=8pt,
-	                enlarge x limits=0.15, ymajorgrids, grid style={gray!30},legend columns=2]
-		\nextgroupplot[legend to name=grouplegend]
-                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/ccsds_2/10-2/moyennes.dat}; 
-                \addlegendentry{Trames erronées à la dernière itération}
-        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/ccsds_2/10-2/moyennes.dat};  
-        		\addlegendentry{Bits erronés dans trames erronées}
-        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/ccsds_2/10-2/moyennes.dat}; 
-        		\addlegendentry{Bits justes dans trames erronées} 
-        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/ccsds_2/10-2/moyennes.dat};  
-        		\addlegendentry{Trames corrigées à la dernière itération}
-        \nextgroupplot[]
-	            \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/ccsds_2/10-3/moyennes.dat}; 
-	    		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/ccsds_2/10-3/moyennes.dat}; 
-	    		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/ccsds_2/10-3/moyennes.dat}; 
-	    		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/ccsds_2/10-3/moyennes.dat}; 
-        \nextgroupplot[]
-                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/ccsds_2/10-4/moyennes.dat}; 
-        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/ccsds_2/10-4/moyennes.dat}; 
-        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/ccsds_2/10-4/moyennes.dat}; 
-        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/ccsds_2/10-4/moyennes.dat}; 
-        \nextgroupplot[]
-                \addplot[fill=falseframe] table [x=X, y=AB] {main/ch2_fig/stats/ccsds_2/10-5/moyennes.dat}; 
-        		\addplot[fill=falsebit] table [x=X, y=EB] {main/ch2_fig/stats/ccsds_2/10-5/moyennes.dat}; 
-        		\addplot[fill=correctbit] table [x=X, y=CB] {main/ch2_fig/stats/ccsds_2/10-5/moyennes.dat}; 
-        		\addplot[fill=correctframe] table [x=X, y=CF] {main/ch2_fig/stats/ccsds_2/10-5/moyennes.dat}; 
-        		\coordinate (bot) at (rel axis cs:1,0);
+Toujours à partir de cette Figure, en considérant uniquement les trames erronées, il est visible que le nombre moyen 
+d’oscillations par bits (tous bits confondus) est très proche du nombre moyen d’oscillations par bits corrigés. Ceci 
+provient du fait que le nombre de bits erronés par trame erronée (BE/FE) est relativement faible. Ainsi, dans une trame 
+erronée, pour les valeurs de SNR considérés la majorité des bits sont corrigés. Plus encore, dans la zone du plancher 
+d'erreur le BE/FE est très faible (inférieur à la dizaine).
 
-		\end{groupplot}
+Il est encore plus remarquable que les bits erronés 
+oscillent plus que les bits corrigés. Plus la valeur de SNR augmente, plus cette constatation est vraie. En effet, les 
+bits erronées oscillent en moyenne environ dix fois pour l'oscillation $N\rightarrow N$ et environ 16 fois pour 
+l'oscillation $N\rightarrow I$, ce quelque soit la valeur du SNR. En revanche, le nombre d'oscillations des bits corrigés 
+diminue graduellement lorsque la valeur de SNR augmente. Ainsi, au sein des trames erronées, dans le plancher d'erreur 
+du standard LTE, les bits erronés oscillent quatre fois plus que les bits erronés.
 
-		\node[below = 0.8cm of lte c1r1.south] {(a) : FER = $10^{-2}$};
-        \node[below = 0.8cm of lte c2r1.south] {(b) : FER = $10^{-3}$};
-        \node[below = 0.8cm of lte c1r2.south] {(c) : FER = $10^{-4}$};
-        \node[below = 0.8cm of lte c2r2.south] {(d) : FER = $10^{-5}$};
+Ainsi, pour conclure, les observations liées à cette Figure, pour une raison de symétrie dans l'architecture du décodeur 
+le nombre d'oscillations par bit est lui aussi symétrique vis-à-vis de l'entrelaceur. Ainsi, uniquement deux 
+oscillations peuvent être considérées. Permettant les critères d'arrêts SDR et SCR, le nombre d’oscillation par bit est 
+un critère discriminant les trames corrigées. Finalement, si un bit est erroné, alors, en moyenne, il aura plus oscillé 
+que les bits corrigés. Afin de pouvoir améliorer le décodage, il est intéressant d'essayer d'établir si la réciproque : 
+\og Un bit ayant oscillé plus que la moyenne des oscillations est-il erroné ? \fg Or, pour ceci, ces statistiques doivent
+être présentées selon une granularité différente.
 
-		\node at (ccsds c1r1.north) [anchor=south, xshift=3.4cm, yshift=1cm] {\ref{grouplegend}};
-	\end{tikzpicture}
-	\caption{Oscillations moyenne pour différents taux d'erreurs dtrame cibles, standard CCSDS \label{fig:ccsdsmoy}}
+\subsubsection{Nombre d'oscillations par trame en fonction des itérations} 
+Dans cette partie, les oscillations sont présentées au cours des itérations. Uniquement deux valeurs de SNR sont 
+considérées afin de faciliter l'analyse. La première correspond à un taux d'erreur trame de $10^{-2}$, donc au début de 
+la zone de convergence et est présenté en Figure \ref{ch2:fig:it_lte_1}.
+
+\begin{figure}[!tb]
+	\hspace*{-.7cm}
+	\includegraphics[]{main/ch2_fig/tikz/it_lte10-2.pdf}
+	\caption{Oscillations au cours des itérations dans le cadre du standard LTE pour un taux d'erreur trame de $10^{-2}$ \label{ch2:fig:it_lte_1}}
 \end{figure}
+
+Cette Figure est divisée en six sous-figures. La première colonne traite des trames erronées à l'issue du processus 
+itératif. La seconde colonne concerne les trames corrigées. Trois quantités sont présentées : le nombre d'oscillations 
+$N\rightarrow N$, le nombre d'oscillations $N\rightarrow I$ et le nombre d'erreurs.
+
+Nous pouvons remarquer que les trames corrigées à la 32\textsuperscript{ème} itération non corrigées à l'issue de la 
+10\textsuperscript{ème} itération sont marginales. Ceci est à corroborer avec le choix réalisé dans la majorité des 
+architectures de turbo décodeur de fixer le nombre maximal d'itérations à moins de 10.
+Il est aussi remarquable que le nombre d'erreurs semble être fortement corrélé avec le nombre d'oscillations. En effet, 
+les rares trames erronées n'oscillant que peu sont celles qui ne possèdent que peu d'erreur. Plus généralement,
+le nombre d'oscillations semble correspondre au double du nombre d'erreurs.
+
+La Figure \ref{ch2:fig:it_lte_2} présente les mêmes donnés que la Figure \ref{ch2:fig:it_lte_1} mais les résultats sont
+obtenus pour un taux d'erreur trame cible de $10^{-5}$. Pour le standard LTE, ceci correspond à un fonctionnement du 
+turbo décodeur au début du plancher d'erreur. Nous pouvons remarquer que pour les trames corrigées, la convergence vers 
+la bonne solution est plus rapide : uniquement quelques itération sont nécessaires. Pour les trames erronées à l'issue 
+du processus itératif, uniquement quelques trames possèdent un nombre important d'erreurs. De
+
+\begin{figure}[!tb]
+	\hspace*{-.7cm}
+	\includegraphics[]{main/ch2_fig/tikz/it_lte10-5.pdf}
+	\caption{Oscillations au cours des itérations dans le cadre du standard LTE pour un taux d'erreur trame de $10^{-2}$ \label{ch2:fig:it_lte_2}}
+\end{figure}
+
+
+% \subsection{Nombre moyen d'oscillations par bit}
+% Cette section présente le nombre d’oscillations par bit selon la correction ou non de la trame. Pour des trames 
+% erronées, les bits corrects ou les bits erronées peuvent être considérés séparément. 
+
+% Ainsi, la Figure \ref{fig:m_lte} présente l'évolution du nombre d'oscillations par bit selon la classification qui 
+% vient d'être introduite, ce en fonction de la diminution du taux d'erreur trame pour le standard LTE. Tout d'abord, il 
+% est remarquable que quelque soit le taux d'erreur trame cible et quelque soit le type d'oscillation considéré, en 
+% moyenne, un bit d'une trame erronée oscille 10 fois plus qu'un bit d'une trame correcte. Cette constatation est le
+% principe fondamental des critères d'arrêts SCR et SDR. En effet, le nombre d'oscillations permet de savoir si une trame 
+% a convergé ou non, 
+
+% Toujours à partir de cette figure, en considérant uniquement les trames erronées il est visible que les bits erronées 
+% oscillent plus que les bits corrigés. Plus le SNR augmente et plus cette constatation est vraie.
+
+
+% \begin{figure}[!hb]%\vspace*{cm}
+% 	\includegraphics[]{main/ch2_fig/tikz/m_ccsds.pdf}
+% 	\vspace*{-0.9cm}
+% 	\caption{Oscillations pour différents taux d'erreurs trame cibles, standard CCSDS \label{fig:m_ccsds}}
+% \end{figure}
+
+% \subsection{Oscillations au cours des itérations}
+
+% \begin{figure}[!hb]
+% 	\hspace{-.7cm}
+% 	\includegraphics[]{main/ch2_fig/tikz/it_lte10-2.pdf}
+% 	\caption{Oscillations au cours des itérations dans le cadre du standard LTE pour un taux d'erreur trame de $10^{-2}$ \label{fig:it_lte_10-2}}
+% \end{figure}
+
+% \begin{figure}[!hb]
+% 	\hspace{-.7cm}
+% 	\includegraphics[]{main/ch2_fig/tikz/it_lte10-5.pdf}
+% 	\caption{Oscillations au cours des itérations dans le cadre du standard LTE pour un taux d'erreur trame de $10^{-5}$ \label{fig:it_lte_10-5}}
+% \end{figure}
+
+% \begin{figure}[!hb]
+% 	\hspace{-.7cm}
+% 	\includegraphics[]{main/ch2_fig/tikz/it_ccsds10-2.pdf}
+% 	\caption{Oscillations au cours des itérations dans le cadre du standard CCSDS pour un taux d'erreur trame de $10^{-2}$ \label{fig:it_ccsds_10-2}}
+% \end{figure}
+
+% \begin{figure}[!hb]
+% 	\hspace{-.7cm}
+% 	\includegraphics[]{main/ch2_fig/tikz/it_ccsds10-5.pdf}
+% 	\caption{Oscillations au cours des itérations dans le cadre du standard CCSDS pour un taux d'erreur trame de $10^{-5}$ \label{fig:it_ccsds_10-5}}
+% \end{figure}
+
+
+% \begin{figure}[!hb]
+% 	\hspace{-.7cm}
+% 	\includegraphics[]{main/ch2_fig/tikz/d_lte_10-2.pdf}
+% 	\caption{Distribution du nombre d'oscillations par bit LTE pour un taux d'erreur trame de $10^{-2}$ \label{fig:d_lte_10-2}}
+% \end{figure}
+
+% \begin{figure}[!hb]
+% 	\hspace{-.7cm}
+% 	\includegraphics[]{main/ch2_fig/tikz/d_lte_10-5.pdf}
+% 	\caption{Distribution du nombre d'oscillations par bit LTE pour un taux d'erreur trame de $10^{-5}$ \label{fig:d_lte_10-5}}
+% \end{figure}
+
+% \begin{figure}[!hb]
+% 	\hspace{-.7cm}
+% 	\includegraphics[]{main/ch2_fig/tikz/d_ccsds_10-2.pdf}
+% 	\caption{Distribution du nombre d'oscillations par bit CCSDS pour un taux d'erreur trame de $10^{-2}$ \label{fig:d_ccsds_10-2}}
+% \end{figure}
+
+% \begin{figure}[!hb]
+% 	\hspace{-.7cm}
+% 	\includegraphics[]{main/ch2_fig/tikz/d_ccsds_10-5.pdf}
+% 	\caption{Distribution du nombre d'oscillations par bit CCSDS pour un taux d'erreur trame de $10^{-5}$ \label{fig:d_ccsds_10-5}}
+% \end{figure}
