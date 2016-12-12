@@ -203,84 +203,61 @@ le nombre d'oscillations semble correspondre au double du nombre d'erreurs.
 La Figure \ref{ch2:fig:it_lte_2} présente les mêmes donnés que la Figure \ref{ch2:fig:it_lte_1} mais les résultats sont
 obtenus pour un taux d'erreur trame cible de $10^{-5}$. Pour le standard LTE, ceci correspond à un fonctionnement du 
 turbo décodeur au début du plancher d'erreur. Nous pouvons remarquer que pour les trames corrigées, la convergence vers 
-la bonne solution est plus rapide : uniquement quelques itération sont nécessaires. Pour les trames erronées à l'issue 
-du processus itératif, uniquement quelques trames possèdent un nombre important d'erreurs. De
+la bonne solution est plus rapide : uniquement quelques itérations sont nécessaires. Pour les trames erronées à l'issue 
+du processus itératif, des trames possédant un nombre important d'erreurs sont rares. Elles correspondent à celles 
+présentant le plus grand nombre d'oscillations. De fait, la majorité des trames erronées possèdent un faible nombre 
+d'erreurs, qui reste majoritairement constant après la cinquième itération.
 
-\begin{figure}[!tb]
+Finalement, ces nouvelles observations permettent d'observer les oscillations en fonction des itérations. Il est alors 
+observable que d'une part, pour les trames erronées, deux \og modes \fg d'oscillations sont visibles :
+\begin{itemize}
+	\item le nombre d'oscillations est très important, subi des variations au cours des oscillations mais reste dans la plage de valeurs $[200,400]$.
+	\item le nombre d'oscillations est faible et subi peu de variations.
+\end{itemize}
+
+D'autre part, il a été noté une corrélation forte entre nombre d'erreurs et nombre d'oscillations. Cependant, ces 
+observations sont réalisés au niveau trame. Il est donc maintenant nécessaire de descendre en granularité pour observer 
+la distribution des oscillations dans les trames erronées.
+
+\begin{figure}[!hb]
 	\hspace*{-.7cm}
 	\includegraphics[]{main/ch2_fig/tikz/it_lte10-5.pdf}
-	\caption{Oscillations au cours des itérations dans le cadre du standard LTE pour un taux d'erreur trame de $10^{-2}$ \label{ch2:fig:it_lte_2}}
+	\caption{Oscillations au cours des itérations dans le cadre du standard LTE pour un taux d'erreur trame de $10^{-2}$ 
+	\label{ch2:fig:it_lte_2}}
 \end{figure}
 
+\subsubsection{Distributions du nombre d'oscillations pour les trames erronées} 
+Dans cette section, la distribution des oscillations dans les trames erronées est analysé. Dans les sections précédentes,
+il a été montré que les bits erronées d'un trame erronée oscillent plus que les bits corrects. Les données présentées 
+maintenant permettent d'établir si la réciproque est vraie. 
+Pour ce faire, la Figure \ref{fig:d_lte_10-2} présente l’occurrence du nombre d'oscillations par bit pour un taux 
+d'erreur trame cible de $10^{-2}$. Cette Figure, en deux parties, considère d'abord les oscillations $N\rightarrow N$ et 
+$I\rightarrow I$ (a) puis, les oscillations $N\rightarrow I$ et $I\rightarrow N$ (b). Les occurrences sont normalisées 
+par rapport au nombre de bit total.
 
-% \subsection{Nombre moyen d'oscillations par bit}
-% Cette section présente le nombre d’oscillations par bit selon la correction ou non de la trame. Pour des trames 
-% erronées, les bits corrects ou les bits erronées peuvent être considérés séparément. 
+%À nouveau, le comportement des oscillations est semblable vis-à-vis de la référence (c'est-à-dire que l'on considère 
+%$N\rightarrow N$ ou $I\rightarrow I$). 
 
-% Ainsi, la Figure \ref{fig:m_lte} présente l'évolution du nombre d'oscillations par bit selon la classification qui 
-% vient d'être introduite, ce en fonction de la diminution du taux d'erreur trame pour le standard LTE. Tout d'abord, il 
-% est remarquable que quelque soit le taux d'erreur trame cible et quelque soit le type d'oscillation considéré, en 
-% moyenne, un bit d'une trame erronée oscille 10 fois plus qu'un bit d'une trame correcte. Cette constatation est le
-% principe fondamental des critères d'arrêts SCR et SDR. En effet, le nombre d'oscillations permet de savoir si une trame 
-% a convergé ou non, 
+Selon la Figure \ref{fig:d_lte_ni_-2} (a), $20\%$ des bits sont corrects et n'ont pas oscillé. Il est remarquable que 
+les nombres d'oscillations impairs sont sous représentés vis-à-vis des pairs. Il semblerait donc que, majoritairement, 
+la première décision prise par un SISO soit la bonne. Néanmoins, nous n'avons pu tirer d'analyse plus conséquente de 
+cette observation. La distribution des oscillations des bits erroné et relativement équirépartie. 
 
-% Toujours à partir de cette figure, en considérant uniquement les trames erronées il est visible que les bits erronées 
-% oscillent plus que les bits corrigés. Plus le SNR augmente et plus cette constatation est vraie.
+Les oscillations $N\rightarrow I$ et $I\rightarrow N$ ne présentent pas d’irrégularité comme constatée dans les cas 
+$N\rightarrow N$ et $I\rightarrow I$. L'allure de la distribution des oscillations pour les bits corrects à l'issu du 
+processus itératif semble être la composition de deux gaussiennes, l'une centrée en $0$ et l'autre en $14$. Pour les 
+bits erronés, l'allure des distributions est aussi en forme de gaussienne et centrée autour de $16$.
 
+Pour le taux d'erreur trame considéré pour cette Figure, le nombre moyen de bit erroné par trame erroné (BE/FE) vaut 
+113. Cela signifie (en considérant la taille de la trame) que $11\%$ des bits sont erronées dans une trame erronée. 
+Si le nombre d'oscillations est pris en considération, alors la probabilité de bit erroné varie de $0,1\%$ à $19,9\%$. 
+Pour les bits oscillant moins de 11 fois, cette probabilité est inférieure à la probabilité moyenne. Par contre, elle
+est supérieure à la probabilité moyenne si le bit considéré à oscillé 11 fois ou moins. Ainsi, en considérant les bits 
+ayant oscillé 15 fois ou plus, la probabilité que ces bits vaut $18\%$. Ainsi, la probabilité de tirer un bit erroné à 
+doublé. Néanmoins, les bits erronés oscillent eux aussi. De plus, comme ils sont majoritaires, les 
 
-% \begin{figure}[!hb]%\vspace*{cm}
-% 	\includegraphics[]{main/ch2_fig/tikz/m_ccsds.pdf}
-% 	\vspace*{-0.9cm}
-% 	\caption{Oscillations pour différents taux d'erreurs trame cibles, standard CCSDS \label{fig:m_ccsds}}
-% \end{figure}
-
-% \subsection{Oscillations au cours des itérations}
-
-% \begin{figure}[!hb]
-% 	\hspace{-.7cm}
-% 	\includegraphics[]{main/ch2_fig/tikz/it_lte10-2.pdf}
-% 	\caption{Oscillations au cours des itérations dans le cadre du standard LTE pour un taux d'erreur trame de $10^{-2}$ \label{fig:it_lte_10-2}}
-% \end{figure}
-
-% \begin{figure}[!hb]
-% 	\hspace{-.7cm}
-% 	\includegraphics[]{main/ch2_fig/tikz/it_lte10-5.pdf}
-% 	\caption{Oscillations au cours des itérations dans le cadre du standard LTE pour un taux d'erreur trame de $10^{-5}$ \label{fig:it_lte_10-5}}
-% \end{figure}
-
-% \begin{figure}[!hb]
-% 	\hspace{-.7cm}
-% 	\includegraphics[]{main/ch2_fig/tikz/it_ccsds10-2.pdf}
-% 	\caption{Oscillations au cours des itérations dans le cadre du standard CCSDS pour un taux d'erreur trame de $10^{-2}$ \label{fig:it_ccsds_10-2}}
-% \end{figure}
-
-% \begin{figure}[!hb]
-% 	\hspace{-.7cm}
-% 	\includegraphics[]{main/ch2_fig/tikz/it_ccsds10-5.pdf}
-% 	\caption{Oscillations au cours des itérations dans le cadre du standard CCSDS pour un taux d'erreur trame de $10^{-5}$ \label{fig:it_ccsds_10-5}}
-% \end{figure}
-
-
-% \begin{figure}[!hb]
-% 	\hspace{-.7cm}
-% 	\includegraphics[]{main/ch2_fig/tikz/d_lte_10-2.pdf}
-% 	\caption{Distribution du nombre d'oscillations par bit LTE pour un taux d'erreur trame de $10^{-2}$ \label{fig:d_lte_10-2}}
-% \end{figure}
-
-% \begin{figure}[!hb]
-% 	\hspace{-.7cm}
-% 	\includegraphics[]{main/ch2_fig/tikz/d_lte_10-5.pdf}
-% 	\caption{Distribution du nombre d'oscillations par bit LTE pour un taux d'erreur trame de $10^{-5}$ \label{fig:d_lte_10-5}}
-% \end{figure}
-
-% \begin{figure}[!hb]
-% 	\hspace{-.7cm}
-% 	\includegraphics[]{main/ch2_fig/tikz/d_ccsds_10-2.pdf}
-% 	\caption{Distribution du nombre d'oscillations par bit CCSDS pour un taux d'erreur trame de $10^{-2}$ \label{fig:d_ccsds_10-2}}
-% \end{figure}
-
-% \begin{figure}[!hb]
-% 	\hspace{-.7cm}
-% 	\includegraphics[]{main/ch2_fig/tikz/d_ccsds_10-5.pdf}
-% 	\caption{Distribution du nombre d'oscillations par bit CCSDS pour un taux d'erreur trame de $10^{-5}$ \label{fig:d_ccsds_10-5}}
-% \end{figure}
+\begin{figure}[!hb]
+	\centering
+	\includegraphics[]{main/ch2_fig/tikz/d_lte_10-2.pdf}
+	\caption{Distribution du nombre d'oscillations par bit pour un taux d'erreur trame de $10^{-2}$, pour le standard LTE \label{fig:d_lte_10-2}}
+\end{figure}
