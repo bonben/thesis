@@ -1,76 +1,20 @@
 %!TEX root = ../my_thesis.tex
-\chapter{Des oscillations du décodage itératif} % (fold)
-\label{cha:chapter_3}
+\chapter{Caratérisation et identification des erreurs résiduelles} % (fold)
 
-Dans ce chapitre, on présente le SC et le décodage  à la Benjamin
+Texte intro
 
 \vspace*{\fill}
 \minitocTITI
 \vspace*{\fill}
+\newpage
 
-\section{État de l'art} % (fold)
-\label{sec:_tat_de_l_art}
+\section{Existence des erreurs résiduelles}
+Comme présenté dans le chapitre premier, l'apparition du plancher d'erreur dépend de la distribution des mots de codes 
+possédant un faible poids \cite{distance_spectrum}. Il a été déjà remarqué dans \cite{takeshitaBCH} que les trames 
+erronées 
 
-\subsection{Convergence} 
-\label{sub:convergence}
-
-
-\subsection{Critère d'arrêt}
-\label{sub:crit_re_d_arr_t}
-
-
-
-\section{Mesures} % (fold)
-\label{sec:mesures}
-
-\subsection{Polarisation des APP}
-\label{sub:polarisation_des_app}
-
-\subsection{Nombre d'erreurs en fonction des oscillations}
-\label{sub:nombre_d_erreurs_en_fonction_des_oscillations}
-
-
-\subsubsection{Extrinsèques} 
-\label{ssub:extrins_ques}
-
-\subsection{Conclusion} % (fold)
-\label{sub:conclusion}
-
-\section{Le Self-Corrected} % (fold)
-\label{sec:le_self_corrected}
-
-\subsection{Approche originelle} % (fold)
-\label{sub:approche_originelle}
-
-\subsubsection{Pour les LDPC} % (fold)
-\label{ssub:pour_les_ldpc}
-
-\subsubsection{Transcription aux turbo codes} % (fold)
-\label{ssub:transcription_aux_turbo_codes}
-
-\subsection{Études sur différents turbo codes} % (fold)
-\label{sub:_tudes_sur_diff_rents_turbo_codes}
-avec random interleaver
-
-\subsection{Conclusion} % (fold)
-\label{sub:conclusion}
-
-\section{Oscillations pour le redécodage} % (fold)
-\label{sec:Oscillations pour le redécodage}
-
-\subsection{État de l'art} % (fold)
-\label{sub:_tat_de_l_art}
-
-\subsubsection{Correction Impulse Method} % (fold)
-\label{ssub:correction_impulse_method}
-
-\subsubsection{Propostion Benjamin LDPC} % (fold)
-\label{ssub:propostion_benjamin_ldpc}
-
-\subsection{Expérimentations} % (fold)
-\label{sub:exp_rimentations}
-
-\subsection{Conclusion} % (fold)
-\label{sub:conclusion}
-
-
+\begin{equation}
+P(m) \approx \frac{\displaystyle\sum\limits_{d, \frac{W_d}{A_d}=m} A_d\cdot \exp\left(-d R \frac{E_b}{N_0}\right)}
+                  {\displaystyle\sum\limits_{d} A_d\cdot \exp\left(-d R \frac{E_b}{N_0}\right)}
+\label{eq:be}
+\end{equation}

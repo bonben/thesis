@@ -24,31 +24,31 @@
 
         \begin{tikzpicture}
                 
-                \begin{groupplot}[group style={group name=ccsds, group size= 1 by 1, horizontal sep=2cm, vertical sep=2.2cm}, 
-                                    height=0.65\textwidth,  width=\textwidth,
+                \begin{groupplot}[group style={group name=ccsds, group size= 1 by 2, horizontal sep=2cm, vertical sep=2.2cm}, 
+                                    height=0.6\textwidth,  width=.9\textwidth,
                                     ymode = log,
                                     xmin=0, xmax=1.6, xtick={0,0.2,...,1.6},
                                     xlabel=$E_b/N_0 \text{(dB)}$, grid=both, grid style={gray!30},
-                                    tick align=outside, tickpos=left, legend pos=north east]
-                % \nextgroupplot[ylabel=FER]
-                %     \addplot[mark=o,Paired-1, restrict x to domain=0:1.5]  table [x=SNR, y=SF] {../sc_uniform/8it/8s.dat}; 
-                %     \addplot[mark=o,Paired-2, restrict x to domain=0:1.5]  table [x=SNR, y=SC] {../sc_uniform/8it/8s.dat}; 
-                %     \addplot[mark=o,Paired-3, restrict x to domain=0:1.5]  table [x=SNR, y=SF] {../sc_uniform/8it/16s.dat}; 
-                %     \addplot[mark=o,Paired-4, restrict x to domain=0:1.5]  table [x=SNR, y=SC] {../sc_uniform/8it/16s.dat};      
-                %     \addplot[mark=o,Paired-5, restrict x to domain=0:1.3]  table [x=SNR, y=SF] {../sc_uniform/8it/32s.dat}; 
-                %     \addplot[mark=o,Paired-6, restrict x to domain=0:1.3]  table [x=SNR, y=SC] {../sc_uniform/8it/32s.dat};      
-                %     \legend{8 états SF, 8 \'etats SC, 16 \'etats SF, 16 \'etats SC, 32 \'etats SF, 32 \'etats SC}
+                                    tick align=outside, tickpos=left, legend pos=south west]
+                \nextgroupplot[ylabel=FER]
+                    \addplot[mark=o,Paired-1, restrict x to domain=0:1.5]  table [x=SNR, y=SF] {../sc_uniform/8it/8s.dat}; 
+                    \addplot[mark=o,Paired-2, restrict x to domain=0:1.5]  table [x=SNR, y=SC] {../sc_uniform/8it/8s.dat}; 
+                    \addplot[mark=o,Paired-3, restrict x to domain=0:1.5]  table [x=SNR, y=SF] {../sc_uniform/8it/16s.dat}; 
+                    \addplot[mark=o,Paired-4, restrict x to domain=0:1.5]  table [x=SNR, y=SC] {../sc_uniform/8it/16s.dat};      
+                    \addplot[mark=o,Paired-5, restrict x to domain=0:1.5]  table [x=SNR, y=SF] {../sc_uniform/8it/32s.dat}; 
+                    \addplot[mark=o,Paired-6, restrict x to domain=0:1.5]  table [x=SNR, y=SC] {../sc_uniform/8it/32s.dat};      
+                    \legend{8 états EML-MAP, 8 \'etats SC EML-MAP, 16 \'etats EML-MAP, 16 \'etats SC EML-MAP, 32 \'etats EML-MAP, 32 \'etats SC EML-MAP}
             \nextgroupplot[ylabel=BER]
                     \addplot[mark=o,Paired-1, restrict x to domain=0:1.5]  table [x=SNR, y=SF_B] {../sc_uniform/8it/8s.dat}; 
                     \addplot[mark=o,Paired-2, restrict x to domain=0:1.5]  table [x=SNR, y=SC_B] {../sc_uniform/8it/8s.dat}; 
                     \addplot[mark=o,Paired-3, restrict x to domain=0:1.5]  table [x=SNR, y=SF_B] {../sc_uniform/8it/16s.dat}; 
                     \addplot[mark=o,Paired-4, restrict x to domain=0:1.5]  table [x=SNR, y=SC_B] {../sc_uniform/8it/16s.dat};      
-                    \addplot[mark=o,Paired-5, restrict x to domain=0:1.3]  table [x=SNR, y=SF_B] {../sc_uniform/8it/32s.dat}; 
-                    \addplot[mark=o,Paired-6, restrict x to domain=0:1.3]  table [x=SNR, y=SC_B] {../sc_uniform/8it/32s.dat};      
-                    \legend{8 états SF, 8 \'etats SC, 16 \'etats SF, 16 \'etats SC, 32 \'etats SF, 32 \'etats SC}
+                    \addplot[mark=o,Paired-5, restrict x to domain=0:1.5]  table [x=SNR, y=SF_B] {../sc_uniform/8it/32s.dat}; 
+                    \addplot[mark=o,Paired-6, restrict x to domain=0:1.5]  table [x=SNR, y=SC_B] {../sc_uniform/8it/32s.dat};      
+                  \legend{8 états EML-MAP, 8 \'etats SC EML-MAP, 16 \'etats EML-MAP, 16 \'etats SC EML-MAP, 32 \'etats EML-MAP, 32 \'etats SC EML-MAP}
                 \end{groupplot}
 
-                %\node[below = 1.2cm of ccsds c1r1.south] {(a) : Taux d'erreur trame};
+                \node[below = 1.2cm of ccsds c1r1.south] {(a) : Taux d'erreur trame};
                 \node[below = 1.2cm of ccsds c1r2.south] {(b) : Taux d'erreur binaire};
 
         

@@ -17,9 +17,10 @@
 %\includeonly{main/ch2}
 \begin{document}
 \frontmatter
-%\newgeometry{top=4cm,bottom=1.5cm,right=2cm,left=2cm}
-\include{head/titlepageUB}
-%\restoregeometry
+\begin{titlepage}
+%\include{head/titlepageUB}
+\includepdf[pages={1}]{head/titlepageUB.pdf}
+\end{titlepage}
 \include{head/dedication}
 \setcounter{page}{0}
 \include{head/abstracts}
@@ -49,6 +50,7 @@
 \include{main/intro}
 \include{main/ch1}
 \include{main/ch2}
+%\include{main/ch3}
 \include{main/conclu}
  
 

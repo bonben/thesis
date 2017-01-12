@@ -107,3 +107,44 @@ En partant de la définition de l’opérateur $\maxstar$ et en utilisant une di
 % \paragraph{Stabilité numérique}
 
 
+\chapter{Compléments au Chapitre Deuxième}
+\section{Standard CCSDS}\label{sec:annCCSDS}
+Cette section présente les observations statistiques obtenues avec le standard CCSDS. La Figure \ref{fig:m_ccsds} présente 
+les valeurs moyennes d'oscillations, ce pour différentes valeurs de SNR. Les Figures \ref{fig:it1_ccsds} et \ref{fig:it2_ccsds}
+présentent l'évolution des oscillations au cours des itérations pour, respectivement, un taux d'erreur trame correspondant 
+au seuil de convergence et un correspondant au plancher d'erreur. Finalement, les Figures \ref{fig:d1_ccsds} et \ref{fig:d2_ccsds} 
+présentent la distribution normalisée des oscillations pour ces deux valeurs de SNR considérées.
+\begin{figure}[tb]
+	\begin{center}
+	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/m_ccsds.pdf}
+	\caption{Nombre moyen d'oscillations pour différents taux d'erreurs trame cibles, turbo code du standard CCSDS (K=1784, R=1/3) \label{fig:m_ccsds}}
+	\end{center}
+\end{figure}
+
+\begin{figure}[!ht]
+	%\hspace*{-.7cm}	
+	\begin{center}
+	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/it_ccsds10-2.pdf}
+	\caption{Oscillations au cours des itérations dans le cadre du standard CCSDS (K=1784, R=1/3) pour un taux d'erreur trame de $10^{-2}$\label{fig:it1_ccsds}}
+	\end{center}
+\end{figure}
+
+\begin{figure}[!ht]
+	%\hspace*{-.7cm}
+	\begin{center}
+	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/it_ccsds610-7.pdf}
+	\caption{Oscillations au cours des itérations dans le cadre du standard CCSDS (K=1784, R=1/3) pour un taux d'erreur trame de $6\times10^{-7}$\label{fig:it2_ccsds}}
+	\end{center}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/d_ccsds_10-2.pdf}
+	\caption{Distribution du nombre d'oscillations par bit pour un taux d'erreur trame de $10^{-2}$, pour le turbo code du standard CCSDS (K=1784, R=1/3)\label{fig:d1_ccsds}}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/d_ccsds_610-7.pdf}
+	\caption{Distribution du nombre d'oscillations par bit pour un taux d'erreur trame de $6\times10^{-7}$, pour le turbo code du standard CCSDS (K=1784, R=1/3)\label{fig:d2_ccsds}}
+\end{figure}

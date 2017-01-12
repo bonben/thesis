@@ -1,9 +1,20 @@
-\begin{titlepage}
-  \setlength{\oddsidemargin}{-2mm}
-  \begin{center}
-    %\large
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[top=4.5cm,bottom=1.5cm,right=2cm,left=2cm]{geometry}
+\usepackage{tikz}
+\usepackage{eulervm}
+\definecolor{bleuUni}{RGB}{0, 157, 224}
+\definecolor{marronUni}{RGB}{68, 58, 49}
+\usetikzlibrary{calc}
+\begin{document}
+  \thispagestyle{empty}
+ % \setlength{\oddsidemargin}{-2mm}
+   \begin{center}
+  %   %\large
     
-    %\sffamily
+  %   %\sffamily
     
     
     %\tikzset{external/export next=false}
@@ -17,13 +28,13 @@
       \coordinate (anchorSceauB) at ($(SE)!0.25!(NE)$);
       \coordinate (anchorSceau) at (anchorSceauA |- anchorSceauB);
       
-      \node[opacity=.1] at (anchorSceau) {\includegraphics[height=7.5cm]{head/sceauUnivBord.png}};
-      \node[inner sep=5,anchor=north west] at ($(NW)!.05!(SE)$) {\includegraphics[height=2.5cm]{head/ub.jpg}};
+      \node[opacity=.1] at (anchorSceau) {\includegraphics[height=7.5cm]{sceauUnivBord.png}};
+      \node[inner sep=5,anchor=north west] at ($(NW)!.05!(SE)$) {\includegraphics[height=2.5cm]{ub.jpg}};
       
-      \node[inner sep=5,anchor=north east] at ($(NE)!.05!(SW)$) {\includegraphics[height=2.5cm]{head/TAS.jpg}};
+      \node[inner sep=5,anchor=north east] at ($(NE)!.05!(SW)$) {\includegraphics[height=2.5cm]{TAS.jpg}};
     \end{tikzpicture}
     
-    \noindent \Large{THÈSE PRÉSENTÉE\\POUR OBTENIR LE GRADE DE\\}
+    \noindent \Large{\\THÈSE PRÉSENTÉE\\POUR OBTENIR LE GRADE DE\\}
       \vspace*{1.5em}
       \noindent \Huge \textbf{DOCTEUR DE \\L'UNIVERSITÉ DE BORDEAUX\\} 
         \vspace*{1.5em}
@@ -32,7 +43,7 @@
           \noindent \Large{par \textbf{Thibaud \bsc{Tonnellier}}\\}
             \vspace*{1.5em}
             {\color{bleuUni}\hrule} \vspace*{0.2cm}
-            \noindent {\Huge \textbf{Mise en \oe uvre d'un environnement de prototypage temps réel pour l'expertise de nouveaux schémas de codage canal}} \\
+            \noindent {\Huge \textbf{Mise en \oe uvre d'un environnement de \\ prototypage temps réel pour l'expertise \\ \vspace*{.3ex} de nouveaux schémas de codage canal}} \\
             \vspace*{0.2cm} {\color{bleuUni}\hrule}
             \vspace*{1.5em}
             \begin{tabular}{rl}
@@ -64,5 +75,5 @@
           
           
           
-        \end{titlepage}
+        \end{document}
         
