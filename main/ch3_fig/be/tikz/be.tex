@@ -20,7 +20,7 @@
 \begin{tikzpicture}
 		
 		\begin{groupplot}[group style={group name=be, group size= 2 by 3, horizontal sep=1.7cm, vertical sep=2.5cm}, 
-					height=0.4\textwidth,  width=0.8\textwidth,
+					height=0.4\textwidth,  width=0.7\textwidth,
 					grid=both, grid style={gray!30},
 					colorbrewer cycle list=Spectral,
 					ybar interval=1pt, %/pgf/bar width=3pt,
@@ -70,13 +70,19 @@
  		 \node[rotate=60] at ($(axis cs:3.75,49)+(0,0)$) {\small \textcolor{Paired-5}{64}};
 
 
-		 \nextgroupplot[legend entries = {1.1dB, 1.3dB, 1.5dB}]
-		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{6}/5] {../dat/ccsds.dat};
-		 \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{7}/5] {../dat/ccsds.dat};
-		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y expr=\thisrowno{8}/5] {../dat/ccsds.dat};
-		 \node[rotate=60] at ($(axis cs:22.1,49)+(0,0)$) {\small \textcolor{Paired-1}{59}};
-		 \node[rotate=60] at ($(axis cs:7.4,49)+(0,0)$) {\small \textcolor{Paired-3}{54}};
- 		 \node[rotate=60] at ($(axis cs:8.4,43)+(0,0)$) {\small \textcolor{Paired-5}{84}};
+		% \nextgroupplot[legend entries = {1.1dB, 1.3dB, 1.5dB}]
+		% \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{6}/5] {../dat/ccsds.dat};
+		% \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{7}/5] {../dat/ccsds.dat};
+		% \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y expr=\thisrowno{8}/5] {../dat/ccsds.dat};
+		% \node[rotate=60] at ($(axis cs:22.1,49)+(0,0)$) {\small \textcolor{Paired-1}{59}};
+		% \node[rotate=60] at ($(axis cs:7.4,49)+(0,0)$) {\small \textcolor{Paired-3}{54}};
+ 		% \node[rotate=60] at ($(axis cs:8.4,43)+(0,0)$) {\small \textcolor{Paired-5}{84}};
+		\nextgroupplot[legend entries = {1.1dB, 1.2dB, 1.3dB}]
+		%\addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{1}] {../dat/ccsds_my.dat};
+		\addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{2}] {../dat/ccsds_my.dat};
+		\addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{3}] {../dat/ccsds_my.dat};
+		\addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots}] table [x=X, y expr=\thisrowno{4}*1.15] {../dat/ccsds_my.dat};
+		\node[rotate=60] at ($(axis cs:22.1,49)+(0,0)$) {\small \textcolor{Paired-1}{62}};
 				
 \end{groupplot}
 		\node[below = 0.8cm of be c1r1.south] {(a) : LTE K=528};

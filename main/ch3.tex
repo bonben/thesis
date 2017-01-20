@@ -1,5 +1,5 @@
 %!TEX root = ../my_thesis.tex
-\chapter{Caratérisation et identification des erreurs résiduelles} % (fold)
+\chapter{Caractérisation et identification des erreurs résiduelles} % (fold)
 
 Texte intro
 
@@ -10,11 +10,58 @@ Texte intro
 
 \section{Existence des erreurs résiduelles}
 Comme présenté dans le chapitre premier, l'apparition du plancher d'erreur dépend de la distribution des mots de codes 
-possédant un faible poids \cite{distance_spectrum}. Il a été déjà remarqué dans \cite{takeshitaBCH} que les trames 
-erronées 
+possédant un faible poids \cite{distance_spectrum}. Plus encore, il a été montré que la zone du plancher d'erreur émanait 
+de la présence \emph{d'erreurs résiduelles} \cite{takeshitaBCH}. 
+La Figure \ref{fig:befe} présente l'évolution pour différentes valeurs de SNR du nombre de bits erronés par trame 
+erronée pour quatre turbo codes du standard LTE et un du standard CCSDS. Dans tous les cas l'algorithme EML-MAP itérant 
+jusque 8 fois est considéré. Il est visible que dans la zone de convergence, de nombreuses erreurs à l'issu du décodage
+sont présentes. En revanche, dès lors que le décodeur fonctionne dans la zone du plancher d'erreurs, dans tous les cas
+considérés, le nombre d'erreurs binaires par trame est inférieur à 10 en moyenne. De là, vient leur nom d'erreurs résiduelles.
 
+\begin{figure}[!b]
+	\centering
+	\includegraphics[width=.8\textwidth]{main/ch3_fig/be/tikz/befe.pdf}
+	\caption{Évolution du nombre moyens d'erreurs binaires par trame erronée pour différentes valeurs de SNR et différents
+	turbo codes. Algorithme EML-MAP itérant jusque 8 fois. \label{fig:befe}}
+\end{figure}
+
+Une caractérisation de la distribution de ces erreurs 
+résiduelles a été proposée dans \cite{residual_errors}. Cette dernière est basée sur les fonctions recenseuses de poids
+(Weight Enumerator Functions ou WEF en anglais). En posant $P^{\langle ML\rangle}(m)$ la probabilité que $m$ bits soient 
+erronés dans une trame, sachant que la trame est erronée après décodage à maximum de vraisemblance, il vient :
+\[P^{\langle ML\rangle}(m) \simeq \frac{W^m~A_m^{\langle CP\rangle}(Z)\vert_{W=Z=e^{-RE_b/N_0}}}{\sum\limits_{w=1}^N W^w~A_w^{\langle CP\rangle}(Z) \vert_{W=Z=e^{-RE_b/N_0}}}\]
+où $A_w^{\langle CP\rangle}(Z)$ est le WEF conditionnel du turbo code considéré \cite{benedetto_unveiling}.
+
+De façon empirique (cf. Annexe \ref{sec:annWEF}), il a été montré qu'en considérant que les séquences d'information 
+générant un mot de code de poids $w$ ont majoritairement le même poids, l'équation précédente peut alors être transformée en : 
 \begin{equation}
-P(m) \approx \frac{\displaystyle\sum\limits_{d, \frac{W_d}{A_d}=m} A_d\cdot \exp\left(-d R \frac{E_b}{N_0}\right)}
-                  {\displaystyle\sum\limits_{d} A_d\cdot \exp\left(-d R \frac{E_b}{N_0}\right)}
+P^{\langle ML\rangle}(m) \approx \frac{\displaystyle\sum\limits_{w, \frac{W_w}{A_w}=m} A_w\cdot \exp\left(-w R \frac{E_b}{N_0}\right)}
+                  {\displaystyle\sum\limits_{w} A_w\cdot \exp\left(-w R \frac{E_b}{N_0}\right)}
 \label{eq:be}
 \end{equation}
+avec, comme déjà présenté dans le Chapitre Premier, $A_w$ le nombre de mots de codes de poids de Hamming $w$. La 
+multiplicité des bits d'information $W_w$ est la somme des poids de Hamming des $A_w$ séquences binaires générant des
+mots de codes de poids de Hamming $w$. 
+
+Ainsi, le spectre de distance d'un turbo code permet de calculer la probabilité 
+d'obtenir $m$ erreurs binaires dans un trame erroné en considérant un décodage ML pour un taux d'erreur suffisamment 
+faible et un canal AWGN. De part la présence du terme en exponentielle, plus $w$ est distant de $d_{min}$, moins la 
+multiplicité associée a un impact sur la distribution des erreurs résiduelles. Néanmoins, ceci peut être contre balancé 
+par une multiplicité très importante (de l'ordre du millier).
+
+Dans la section suivante, grâce à l'obtention des spectres de distances de différents turbo codes standardisés, une 
+comparaison est menée quant à la distribution du nombre d'erreurs dans les trames erronées dans la zone du plancher d'erreurs.
+
+
+\subsection{Distribution des erreurs résiduelles pour des turbo codes standardisés}
+L'existence des erreurs résiduelles dans la zone du plancher d'erreur vient d'être établie. Une proposition d'obtention 
+de la distribution de ces erreurs a été conjointement proposée. La Figure \ref{fig:be} présente les taux d'erreurs binaires pour 
+différents turbo codes des standards LTE et CCSDS.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{main/ch3_fig/be/tikz/be.pdf}
+	\caption{ \label{fig:be}}
+\end{figure}
+
+
