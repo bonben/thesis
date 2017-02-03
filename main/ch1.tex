@@ -757,7 +757,7 @@ Ce facteur d'échelle (SF) peut être constant au cours du processus itératif. 
 Dans \cite{scaling}, l'influence de la valeur du facteur d'échelle est étudiée afin de minimiser le BER et le FER.
 
 
-\subsection{Les turbo codes double binaires}
+\subsection{Les turbo codes double binaires}\label{sec:dbl}
 En 1999, les turbo codes non binaires ont été introduits \cite{doublebin1}. À la différence des turbo codes binaires, les turbo codes double binaires traitent $2$ bits en parallèle. Il en découle que les codeurs RSC constituants sont eux mêmes double binaires. Pour ce faire, des extensions multi binaires ont été développées. Le codeur constitutif employé est alors de rendement nominal $m/(m+1)$ avec $m$ le nombre de donnés simultanément présentes à l'entrée du codeur \cite{doublebin3}. La figure \ref{fig:encMulti} présente un tel codeur sans faire apparaître la sortie pour des soucis de lisibilité. Il est toute fois à noter qu'utiliser $m > 2$ n'apporte qu'un intérêt limité pour des RSC de mémoire 3 ou 4 \cite{Balta2013}. En effet, trop peu de diversité dans l'interconnexion ne peut être obtenus dans de tels cas.
 \begin{figure}[!h]
 	\centering
@@ -792,7 +792,7 @@ Finalement, les décisions binaires sont prises en testant le signe de :
 	L(A_k) & = \maxstar \left(L_{(1,0)}(A_k,B_k),L_{(1,1)}(A_k,B_k)\right) - \maxstar \left(L_{(0,1)}(A_k,B_k),0\right) \\
 	L(B_k) & = \maxstar \left(L_{(0,1)}(A_k,B_k),L_{(1,1)}(A_k,B_k)\right) - \maxstar \left(L_{(1,0)}(A_k,B_k),0\right) 
 \end{align*}
-puisque, par définition, $L_{(0,0)}(A_k,B_k)=0$.
+puisque, par définition, $L^e_{(0,0)}(A_k,B_k)=0$.
 
 Pour conclure, les turbo codes double binaires, tout comme leurs antécédents binaires ont été standardisés. Les principales caractéristiques de ces codes sont présentées en section suivante.
 
@@ -995,7 +995,7 @@ Ainsi, selon les valeurs ($w,A_w,W_w$) associées à un code, nous pouvons expri
 	
 C'est pourquoi, de nombreux travaux de recherche ont porté sur l'extraction des spectres de distance afin de prévoir le comportement asymptotique d'un turbo code.
 	
-\subsubsection{Méthodes d'obtention du spectre de distance de turbo codes}
+\subsubsection{Méthodes d'obtention du spectre de distance de turbo codes}\label{seq:spectre}
 Les premières méthodes visant à obtenir le spectre de distance sont basées sur des approches par force brute \cite{illuminating}. Leur principe est de considérer toutes les séquences possibles pour le premier codeur constitutif, de les entrelacer et de les coder avec le second codeur constitutif afin d'obtenir la distance du code. Cependant, pour des distances minimales conséquentes, cette recherche devient impossible à mener.
 	
 En 2001, un algorithme basé sur l'utilisation de sous codes contraints a été proposé par Garello \textit{et al.} \cite{garellodfree}. Cet algorithme permet de déterminer exactement les premiers termes du spectre. Cependant, lorsque la taille du code et la distance minimale sont conséquentes, le temps de calcul est prohibitif rendant cet algorithme difficile à exploiter.

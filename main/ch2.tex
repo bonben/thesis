@@ -69,7 +69,7 @@ parité. Des gains de performances sont observés dans la zone de convergence pe
 Min-Sum. Il n'est plus qu'à 0,1 dB du BP, bien plus complexe.
 
 Avant de présenter une adaptation de ces approches aux turbo codes, une étude statistique concernant les oscillations 
-de l'information extrinsèque au cours du décodage itératif des turbo codes est maintenant mené.
+de l'information extrinsèque au cours du décodage itératif des turbo codes est maintenant menée.
 Le but de cette étude est d'observer le comportement d'un turbo décodeur lors de son fonctionnement afin de pouvoir 
 extraire des informations supplémentaires permettant peut-être d'améliorer ses performances de décodage.
 
@@ -82,7 +82,9 @@ Les paramètres du couple codeur/décodeur pour cette étude sont les suivants :
 	\item Standards LTE (8 états) et CCSDS (16 états),
 	\item Algorithme EML-MAP itérant 32 fois.\newline
 \end{itemize}
-Ainsi un instantané du comportement d'un turbo décodeur usuel dans un contexte binaire peut être capturé. Le choix de 32 
+Ainsi un instantané du comportement d'un turbo décodeur usuel dans un contexte binaire peut être capturé. Ceci représente 
+un cas d'usage suffisamment large, permettant de tirer des conclusions générales sur tout turbo décodeur standardisé.
+Le choix de 32 
 itérations au maximum permet d'obtenir suffisamment d'amplitude quant aux oscillations afin de les visualiser aisément. 
 % Cette étude se place dans le cadre des turbo codes binaires. Les deux standards considérés sont le standard LTE (8 
 % états) et le standard CCSDS (16 états). Ces statistiques sont obtenues grâce à un décodeur utilisant l'algorithme 
@@ -313,32 +315,32 @@ d'oscillations observés.
 \end{figure}
 
 \subsection{Turbo codes du standard CCSDS}
-La même étude à été menée dans le cadre du standard CCSDS. Un rendement de 1/3 est toujours considéré. En revanche,le nombre de bits d'information est quant à 
-lui fixé à 1784.  Les visualisations graphiques de ces statistiques sont 
-déportées en Annexe \ref{sec:annCCSDS}. Toutefois une analyse comparée de ces résultats est maintenant mené.
-\paragraph*{Nombre moyen d'oscillation par bit} 
+La même étude à été menée dans le cadre du standard CCSDS. Un rendement de 1/3 est toujours considéré. En revanche, le nombre 
+de bits d'information est quant à lui fixé à 1784. Pour faciliter la lecture de l'analyse comparée des résultats suivante, 
+les visualisations graphiques de ces statistiques sont déportées en Annexe \ref{sec:annCCSDS}.
+\paragraph*{Nombre moyen d'oscillation par bit : } 
 Tout d'abord les bits erronées oscillent légèrement plus dans le contexte CCSDS que dans le contexte LTE. En effet, 
-quelque soit la valeur de SNR, 12 oscillations $N\rightarrow N$ et 16 oscillations $N\rightarrow I$ sont comptés. Elles 
+quelque soit la valeur de SNR, 12 oscillations $N\rightarrow N$ et 16 oscillations $N\rightarrow I$ sont observées. Elles 
 s'établissaient respectivement à 10 et 15 pour le turbo code du standard LTE. Les nombres d'oscillations des bits corrigés diminuent quant à eux
 avec l’augmentation de la valeur de SNR. Cependant, plus que de la valeur du taux d'erreur trame ou de la valeur de SNR,
-c'est de la position dans la courbe de performance qui dicte ce phénomène. Par exemple, le ratio entre le nombre 
+c'est la position dans la courbe de performance qui dicte ce phénomène. Par exemple, le ratio entre le nombre 
 d'oscillations pour les bit erronés et les bits corrects au sein des trames erronées vaut 1,7 pour le turbo code du 
-standard CCSDS fonctionnant à un taux d'erreur trame de $10^-6$; alors qu'il est de 1,9 pour le turbo code du 
-standard LTE fonctionnant à un taux d'erreur trame de $10^-4$. Ainsi, deux ordres de magnitude séparent ces deux mesures,
+standard CCSDS fonctionnant à un taux d'erreur trame de $10^{-6}$. Ce dernier est de 1,9 pour le turbo code du 
+standard LTE fonctionnant à un taux d'erreur trame de $10^{-4}$. Ainsi, deux ordres de magnitude séparent ces deux mesures,
 bien qu'elles correspondent toutes deux à un fonctionnement peu avant la zone du plancher d'erreur, assurant des statistiques similaires.
-\paragraph*{Comportement des oscillations au cours du processus itératif}
+\paragraph*{Comportement des oscillations au cours du processus  : }
 Pour de faibles valeurs de SNR, le turbo code du standard CCSDS requiert quelques itérations supplémentaires pour converger en comparaison de son homologue
-LTE. Cette constatation peut être imputée à l'augmentation de la longueur de contrainte entre les deux codes. Néanmoins,
+LTE. Cette constatation peut être imputée à l'augmentation de la longueur de contrainte entre les deux turbo codes. Néanmoins,
 la grande majorité des trames est encore corrigée en moins de 10 itérations. À nouveau, une forte corrélation apparaît 
 entre le nombre d'oscillations et le nombre d'erreurs. Ainsi, le nombre d'erreurs est proche de la moitié du nombre d'oscillations
 $N \rightarrow N$. Le nombre d'erreurs est plus important dans le cas du turbo code du standard CCSDS. Mais cette hausse est
-directement liée aux tailles de trames considérées, plus importante pour le turbo code du standard CCSDS.\\
+directement liée aux tailles de trames considérées, à savoir plus importante pour le turbo code du standard CCSDS.\\
 Lorsque la valeur de SNR augmente, le même comportement que celui décrit précédemment pour le turbo code du standard LTE apparaît. 
 Moins d'itérations sont nécessaires pour corriger les trames et une grande part des trames erronées à l'issu du processus de décodage 
 n'a que peu d'erreurs binaires. Néanmoins, à fort SNR, une plus grande démarcation est visible entre les trames erronées 
-avec peu d'erreurs et celles avec un nombre importants d'erreurs.
-\paragraph*{Distributions des oscillations au sein des trames erronées}
-En ce qui concerne la dernière statistique, le même commentaire est obtenu. Pour un  taux d'erreur trame 
+avec peu d'erreurs et celles contenant un nombre importants d'erreurs.
+\paragraph*{Distribution des oscillations au sein des trames erronées : }
+En ce qui concerne la dernière statistique, le constat est similaire. Pour un  taux d'erreur trame 
 cible de $6\times 10^{-7}$, le taux de bit erroné par trame erronée, ramené en pourcentage, vaut $3,1\%$. La probabilité
 d'obtenir un bit erroné est supérieur à ce taux dès que le bit considéré a oscillé plus de 6 fois. Plus encore, un bit 
 ayant oscillé plus de 11 fois a une probabilité de $16\%$ d'être erroné. Ce qui formalisé donne :
@@ -347,10 +349,10 @@ ayant oscillé plus de 11 fois a une probabilité de $16\%$ d'être erroné. Ce 
 Ainsi, la probabilité de choisir un bit erroné a crû d'un facteur 5. 
 
 Finalement, les observations réalisées dans le cadre du turbo code du standard CCSDS sont similaires à celles obtenues avec
-le turbo code du standard LTE. Le paragraphe suivant récapitule ces résultats et conclue cette section.
+le turbo code du standard LTE. Le paragraphe suivant récapitule ces résultats et conclut cette section.
 
-\subsection{Analyse et conclusions}
-De ces différentes observations statistiques, plusieurs résultats peuvent être extraits.
+\subsection{Analyse globale et conclusions}
+De ces différentes observations statistiques, plusieurs constats peuvent être énoncés.
 \begin{enumerate}
 \item Tout d'abord, il a été noté que si des oscillations surviennent lors d'une itération, alors la trame n'est pas encore 
 corrigée. 
@@ -358,14 +360,14 @@ corrigée.
 \item De fait, plus que du nombre d'états du codeur ou de l'entrelaceur, c'est du régime de fonctionnement du turbo décodeur que dépend
 le nombre d'oscillations et la distribution de ces oscillations.
 \item Si un bit oscille fortement, alors, relativement aux autres, il a plus de chance d'être erroné.
-\item Ainsi, c'est parmi les bits oscillant le plus que se trouve la majorité des bits erronés.
+\item Ainsi, c'est parmi les bits oscillant le plus que se trouve la plupart des bits erronés.
 \item Cependant, comme les bits corrigés à l'issu du processus itératif oscillent eux aussi et sont majoritaires dans la 
 trame, le nombre d'oscillation ne permet pas de prédire si un bit est erroné.
 \end{enumerate}
 
-En conclusion, l'observation des oscillations ne semble pas pouvoir permettre d'obtenir une méthode directe au sein du 
+En conclusion, l'observation des oscillations ne semble pas pouvoir permettre de proposer une méthode directe au sein du 
 turbo décodage permettant l'amélioration des performances des turbo codes. Cependant, de part la forte corrélation entre 
-le nombre d'erreurs et le nombre d'oscillations, une modification du décodage EML-MAP exploitant les oscillations est proposée 
+le nombre d'erreurs et le nombre d'oscillations, une modification du décodage EML-MAP exploitant les oscillations est décrite 
 dans la section suivante.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{L’algorithme Self-Corrected EML-MAP}

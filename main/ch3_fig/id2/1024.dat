@@ -1,0 +1,131 @@
+# -------------------------------------------------
+# ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----
+# -------------------------------------------------
+# Parameters:
+# * Simulation ------------------------------------
+#    ** Type                   = BFER
+#    ** SNR min (m)            = 1.100000 dB
+#    ** SNR max (M)            = 1.510000 dB
+#    ** SNR step (s)           = 0.200000 dB
+#    ** Type of bits           = int (32 bits)
+#    ** Type of reals          = float (32 bits)
+#    ** Inter frame level      = 1
+#    ** Seed                   = 0
+#    ** Multi-threading (t)    = 48 thread(s)
+# * Code ------------------------------------------
+#    ** Type                   = TURBO
+#    ** Info. bits (K)         = 1024
+#    ** Codeword size (N)      = 3072 + 12 (tail bits)
+#    ** Coset approach (c)     = off
+# * Source ----------------------------------------
+#    ** Type                   = RAND
+# * Encoder ---------------------------------------
+#    ** Type                   = TURBO
+#    ** Systematic encoding    = on
+#    ** Polynomials            = {013,015}
+#    ** Buffered               = on
+# * Interleaver -----------------------------------
+#    ** Type                   = LTE
+# * Modulator -------------------------------------
+#    ** Type                   = BPSK
+# * Channel ---------------------------------------
+#    ** Type                   = AWGN
+#    ** Domain                 = LLR
+# * Demodulator -----------------------------------
+#    ** Sigma square           = on
+#    ** Max type               = unused
+# * Decoder ---------------------------------------
+#    ** Type (D)               = BCJR
+#    ** Implementation         = FAST
+#    ** Num. of iterations (i) = 8
+#    ** Scaling factor         = LTE_VEC
+#    ** Max type               = MAX
+# * Monitor ---------------------------------------
+#    ** Type                   = OSCILLATION
+#    ** Frame error count (e)  = 500
+#
+# The simulation is running...
+# -------------------------------------------------------------||--------------------------------||---------------------
+#   Bit Error Rate (BER) and Frame Error Rate (FER) depending  ||     Decoder throughput and     ||  Global throughput  
+#             on the Signal Noise Ratio (SNR) Eb/N0            ||      latency (per thread)      ||  and elapsed time   
+# -------------------------------------------------------------||--------------------------------||---------------------
+# ------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+#   SNR |      FRA |       BE |       FE |      BER |      FER ||     CTHR |     ITHR |  LATENCY || SIM_CTHR |    ET/RT 
+#  (dB) |          |          |          |          |          ||   (Mb/s) |   (Mb/s) |     (us) ||   (Mb/s) | (hhmmss) 
+# ------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+   1.10 |  2132579 |    17459 |      500 | 7.99e-06 | 2.34e-04 ||     1.71 |     0.57 |  1801.00 ||    40.30 | 00h02'42  
+-- Identification stats:
+---- Extrinsic based (4,6,8,10,20,all)
+45 61 69 72 100 500 
+---- Aposterio based (4,6,8,10,20,all)
+61 87 98 112 150 500 
+---- OSC NN based (4,6,8,10,20,all)
+0 0 0 0 1 500 
+---- OSC II based (4,6,8,10,20,all)
+6 11 11 12 18 500 
+---- OSC NI based (4,6,8,10,20,all)
+3 7 12 15 19 500 
+---- OSC IN based (4,6,8,10,20,all)
+6 11 11 12 18 500 
+---- OSC ALL based (4,6,8,10,20,all)
+5 9 14 15 22 500 
+---- OSC DEC based (4,6,8,10,20,all)
+3 4 4 4 7 500 
+---- CONCAT OSC_IN and APOST based (4,6,8,10,20,all)
+40 52 61 72 109 442 
+---- Sum of Abs EXT based (4,6,8,10,20,all)
+32 40 43 47 67 500 
+---- Sum of Abs APO based (4,6,8,10,20,all)
+36 40 44 51 60 500 
+----------------------
+   1.30 | 33589852 |     7565 |      500 | 2.20e-07 | 1.49e-05 ||     1.89 |     0.63 |  1626.47 ||    47.96 | 00h35'51  
+-- Identification stats:
+---- Extrinsic based (4,6,8,10,20,all)
+207 236 246 259 294 500 
+---- Aposterio based (4,6,8,10,20,all)
+223 255 270 289 325 500 
+---- OSC NN based (4,6,8,10,20,all)
+3 4 5 6 11 500 
+---- OSC II based (4,6,8,10,20,all)
+78 96 115 126 144 500 
+---- OSC NI based (4,6,8,10,20,all)
+73 93 108 118 143 500 
+---- OSC IN based (4,6,8,10,20,all)
+78 96 115 126 144 500 
+---- OSC ALL based (4,6,8,10,20,all)
+66 91 114 127 153 500 
+---- OSC DEC based (4,6,8,10,20,all)
+20 26 27 29 42 500 
+---- CONCAT OSC_IN and APOST based (4,6,8,10,20,all)
+148 199 222 237 275 481 
+---- Sum of Abs EXT based (4,6,8,10,20,all)
+171 192 203 213 246 500 
+---- Sum of Abs APO based (4,6,8,10,20,all)
+170 192 206 217 243 500 
+----------------------
+   1.50 | 1.39e+08 |     1772 |      500 | 1.25e-08 | 3.61e-06 ||     1.92 |     0.64 |  1601.61 ||    48.88 | 02h25'08  
+-- Identification stats:
+---- Extrinsic based (4,6,8,10,20,all)
+387 415 429 438 463 500 
+---- Aposterio based (4,6,8,10,20,all)
+402 423 437 447 473 500 
+---- OSC NN based (4,6,8,10,20,all)
+10 11 12 12 23 500 
+---- OSC II based (4,6,8,10,20,all)
+151 201 220 234 274 500 
+---- OSC NI based (4,6,8,10,20,all)
+146 191 213 226 274 500 
+---- OSC IN based (4,6,8,10,20,all)
+151 201 220 234 274 500 
+---- OSC ALL based (4,6,8,10,20,all)
+149 199 226 242 291 500 
+---- OSC DEC based (4,6,8,10,20,all)
+65 76 80 83 105 500 
+---- CONCAT OSC_IN and APOST based (4,6,8,10,20,all)
+274 360 392 408 435 496 
+---- Sum of Abs EXT based (4,6,8,10,20,all)
+345 381 389 398 433 500 
+---- Sum of Abs APO based (4,6,8,10,20,all)
+345 382 392 406 434 500 
+----------------------
+# End of the simulation.

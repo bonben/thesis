@@ -42,7 +42,7 @@
 
 \usepackage[xindy]{glossaries}
 %\makeglossaries
-\makenoidxglossaries
+%\makenoidxglossaries
 \input{tail/glossaireEntries}
 
 \usepackage{stmaryrd} % ll and rrbrackets
@@ -199,3 +199,16 @@
 \def\thumbsup{\includegraphics[width=15pt]{head/down.png}}
 \def\thumbsdown{\includegraphics[width=15pt]{head/up.png}}
 \def\thumbsmid{\includegraphics[width=15pt]{head/mid.png}}
+
+\usepackage[noend]{algpseudocode}
+\usepackage{algorithm}
+\floatname{algorithm}{Algorithme}
+\renewcommand{\algorithmicrequire}{\textbf{\emph{Variables :}}}
+\renewcommand{\algorithmicfor}{\textbf{pour}}
+\renewcommand{\algorithmicdo}{\textbf{faire}}
+\renewcommand{\algorithmicif}{\textbf{si}}
+\renewcommand{\algorithmicend}{\textbf{fin}}
+\renewcommand{\algorithmicthen}{\textbf{alors}}
+\renewcommand{\algorithmicwhile}{\textbf{tant que}}
+
+%\usepackage[ruled, vlined]{algorithm2e}

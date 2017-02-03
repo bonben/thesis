@@ -1,0 +1,60 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{eulervm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{decorations.pathmorphing}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning, patterns}
+\usepackage{pgffor}
+\usepackage{amsmath}
+
+\setlength{\textwidth}{146.8mm}
+\input{../../colors}
+
+\begin{document}
+
+\begin{tikzpicture}
+		
+		\begin{groupplot}[group style={group name=be, group size= 1 by 3, horizontal sep=1.7cm, vertical sep=3cm}, 
+					height=0.5\textwidth,  width=\textwidth,
+					grid=both, grid style={gray!30},
+					%colorbrewer cycle list=Spectral,
+					ybar interval = -0.97pt, %/pgf/bar width=3pt,
+					xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+					grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4,
+					xticklabels={4, 6, 8, 10, 20},
+					x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east},  
+					ylabel=Identification (\%),
+					axis lines*=left,
+					xlabel=Profondeur de recherche,
+					 ]
+	 
+		 \nextgroupplot[legend entries = {Norme Ext~~, Norme Apost~~, Osc. II~~,	II + A}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{1}] {../dat/1024};
+		 \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{2}] {../dat/1024};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y expr=\thisrowno{3}] {../dat/1024};
+		 \addplot[draw=Paired-7, fill=Paired-7!50, postaction={pattern color = black!80,pattern=dots, samples=500}] table [x=X, y expr=\thisrowno{4}] {../dat/1024};
+
+		 		 \nextgroupplot[legend entries = {Norme Ext~~, Norme Apost~~, Osc. II~~,	II + A}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{5}] {../dat/1024};
+		 \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{6}] {../dat/1024};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y expr=\thisrowno{7}] {../dat/1024};
+		 \addplot[draw=Paired-7, fill=Paired-7!50, postaction={pattern color = black!80,pattern=dots}] table [x=X, y expr=\thisrowno{8}] {../dat/1024};
+
+		 		 \nextgroupplot[legend entries ={Norme Ext~~, Norme Apost~~, Osc. II~~,	II + A}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{9}] {../dat/1024};
+		 \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{10}] {../dat/1024};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y expr=\thisrowno{11}] {../dat/1024};
+		 \addplot[draw=Paired-7, fill=Paired-7!50, postaction={pattern color = black!80,pattern=dots}] table [x=X, y expr=\thisrowno{12}] {../dat/1024};
+				
+\end{groupplot}
+		\node[below = 1cm of be c1r1.south] {(a) : LTE K=1024, SNR=0.9dB};
+		\node[below = 1cm of be c1r2.south] {(b) : LTE K=1024, SNR=1.1dB};
+		\node[below = 1cm of be c1r3.south] {(c) : LTE K=1024, SNR=1.3dB};
+\end{tikzpicture}
+
+\end{document}

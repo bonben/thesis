@@ -1,0 +1,86 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{eulervm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{decorations.pathmorphing}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning, patterns}
+\usepackage{pgffor}
+\usepackage{amsmath}
+
+\setlength{\textwidth}{146.8mm}
+\input{../../colors}
+
+\begin{document}
+
+\begin{tikzpicture}
+		
+		\begin{groupplot}[group style={group name=be, group size= 3 by 3, horizontal sep=1.7cm, vertical sep=3cm}, 
+					height=0.5\textwidth,  width=.6\textwidth,
+					grid=both, grid style={gray!30},
+					%colorbrewer cycle list=Spectral,
+					ybar interval = -0.97pt, /pgf/bar width=-5pt,
+					xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+					grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4,
+					xticklabels={4, 6, 8, 10, 20},
+					x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east},  
+					ylabel=Identification (\%),
+					axis lines*=left,
+					xlabel=Profondeur de recherche,
+					 ]
+	 \nextgroupplot[legend entries = {Métrique Ext.~~, Métrique Apost.~~}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{1}/5.0] {../dat/528};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{2}/5.0] {../dat/528};
+
+		 		 \nextgroupplot[legend entries = {Métrique Ext.~~, Métrique Apost.~~}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{3}/5.0] {../dat/528};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{4}/5.0] {../dat/528};;
+
+		 		 \nextgroupplot[legend entries ={Métrique Ext.~~, Métrique Apost.~~}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{5}/5.0] {../dat/528};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{6}/5.0] {../dat/528};
+
+		 		 \nextgroupplot[legend entries = {Métrique Ext.~~, Métrique Apost.~~}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{1}/5.0] {../dat/2048};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{2}/5.0] {../dat/2048};
+
+
+		 		 \nextgroupplot[legend entries = {Métrique Ext.~~, Métrique Apost.~~}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{3}/5.0] {../dat/2048};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{4}/5.0] {../dat/2048};
+
+
+		 		 \nextgroupplot[legend entries ={Métrique Ext.~~, Métrique Apost.~~}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{5}/5.0] {../dat/2048};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{6}/5.0] {../dat/2048};
+
+	 
+		 \nextgroupplot[legend entries = {Métrique Ext.~~, Métrique Apost.}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{1}/5.34] {../dat/6144};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{2}/5.34] {../dat/6144};
+
+		 		 \nextgroupplot[legend entries = {Métrique Ext.~~, Métrique Apost.}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{3}/5.00] {../dat/6144};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{4}/5.00] {../dat/6144};
+
+		 \nextgroupplot[legend entries ={Métrique Ext.~~, Métrique Apost.}]
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{5}/5.00] {../dat/6144};
+		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{6}/5.0] {../dat/6144};
+				
+\end{groupplot}
+		\node[below = 1cm of be c1r1.south] {(a) : LTE K=528, SNR=1.6dB};
+		\node[below = 1cm of be c2r1.south] {(b) : LTE K=528, SNR=2.0dB};
+		\node[below = 1cm of be c3r1.south] {(c) : LTE K=528, SNR=2.4dB};
+		\node[below = 1cm of be c1r2.south] {(a) : LTE K=2048, SNR=0.9dB};
+		\node[below = 1cm of be c2r2.south] {(b) : LTE K=2048, SNR=1.1dB};
+		\node[below = 1cm of be c3r2.south] {(c) : LTE K=2048, SNR=1.3dB};
+		\node[below = 1cm of be c1r3.south] {(a) : LTE K=6144, SNR=0.4dB};
+		\node[below = 1cm of be c2r3.south] {(b) : LTE K=6144, SNR=0.6dB};
+		\node[below = 1cm of be c3r3.south] {(c) : LTE K=6144, SNR=0.8dB};
+\end{tikzpicture}
+
+\end{document}
