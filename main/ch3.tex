@@ -290,11 +290,11 @@ laquelle cette distance est plus grande.
 \subsubsection{Résultats d'identification}
 Le même protocole expérimental que celui décrit précédemment est exploité. Cependant des turbo codes du standard DVB-RCS
 sont maintenant considérés. Le décodage utilise l'algorithme EML-MAP itérant 8 fois. Le facteur de remise à l'échelle 
-vaut 0.5 pour les deux premières itérations et 0.85 pour les itérations suivantes. Les turbo codes considérés ont K=440
+vaut 0.5 pour les deux premières itérations et 0.85 pour les itérations suivantes. Les turbo codes considérés possèdent K=440
 ou K=752 symboles d'informations. Les rendements considérés valent 1/3, 3/4 et 6/7. Ceci permet de couvrir un spectre 
-relativement large des turbo codes double binaires standardisés. 
+relativement large des turbo codes double binaires à 8 états standardisés. 
 
-La Figure \ref{fig:dvb752} présente les résultats d'identifications pour les cas K=752. Les résulats pour K=440 sont 
+La Figure \ref{fig:dvb752} présente les résultats d'identifications pour les cas K=752. Les résultats pour K=440 sont 
 déportés en Annexe \ref{sec:ann3} pour une meilleure lisibilité.
 \begin{figure}[!h]
 	\centering
@@ -303,18 +303,45 @@ déportés en Annexe \ref{sec:ann3} pour une meilleure lisibilité.
 	\caption{Pourcentage d'identification pour différents turbo codes du standard DVB-RCS K=752, R=1/3, 3/4 et 6/7.
 	Décodage EML-MAP itérant 8 fois. \label{fig:dvb752}}
 \end{figure}
+Cette Figure est sous-divisée en six sous-figures. La première ligne correspond aux cas R=1/3. Les mêmes propriétés 
+identification que celles présentés dans le cas binaire apparaissent. Au fur et à mesure que la valeur du SNR croit, le 
+taux identification augmente. La métrique basée sur l'information \textit{a posteriori} présente de meilleurs statistiques
+d'identification que celle basée uniquement sur les informations extrinsèques. Cet écart diminue avec l'augmentation du SNR.
+Finalement, avec une profondeur de recherche de 20 et pour une valeur de SNR de 2.2 dB, quelque soit la métrique considérée, 
+plus de 95\% des trames erronées ont l'ensemble de leurs erreurs identifiées.
 
-analyse :
-pour cas R=1/3, même constatatio : ca identifie fort. Avec léger gain pour delta1\\
-en revanche lorsque le r augemente, grosse perte de vitesse pour delta2. \\
-n'est pas lié au double binaire mais plutot au fait que l'extrinsèque ne contient plus assez d'info. en effet, cette dernière 
-est corrréleé avec l'info parité, qui se fait de plus en plus rare au fur et a mesure que le rendement augmente.
+La deuxième ligne d'histogrammes présente quant à elle ces statistiques  pour un rendement de 3/4. Dans ce cas, la 
+métrique basée uniquement sur les informations extrinsèques possède de moins bonnes performances que celle basée sur les 
+informations \textit{a posteriori}. La même constatation est réalisée pour un rendement de 6/7. Ainsi, plus la rendement 
+augmente, moins la métrique basée sur les informations extrinsèque est pertinente. Cette constatation est amplifiée pour 
+de faibles valeurs de SNR. Cependant, dans tous les cas, la métrique basée sur les information \textit{a posteriori} 
+possède de bonnes performances d'identification des erreurs résiduelles. En effet, un taux de plus de 90\% d'identification 
+réussie est atteint dans la zone de convergence en considérant une profondeur de recherche de 20. 
+
+En reprenant le calcul permettant d'obtenir l'information extrinsèque, il apparaît que cette dernière dépend essentiellement
+de l'information de parité. Or, les turbo codes à fort rendement standardisé sont obtenues par le poinçonnage de l'information
+de parité. Ceci esquisse alors une cause probable de l'avantage obtenu par la métrique $\Delta'_1$ sur la métrique $\Delta'_2$
+lorsque le rendement augmente.
+
+\subsection{Conclusions sur les métriques d'identification}
+Faisant suite à la mise en exergue de l'existence d'erreurs résiduelles dans la région du plancher d'erreur des turbo codes,
+différents métriques permettant l'identification de ces erreurs ont été proposées. Une comparaison des performances de ces 
+différentes métriques a alors permis de sélectionner une métrique, nommée $\Delta_1$ (et $\Delta'_1$ pour son homologue 
+adapté aux turbo codes double binaires). Celle-ci est basée sur la valeur absolue de l'information \textit{a posteriori}
+et, permet d'obtenir des taux d'identification de 90\% dans la zone du plancher d'erreur pour une profondeur de recherche 
+raisonnable, ce quelque soit le turbo code standardisé considéré. Ce taux de 90\% devrait permettre d'observer des gains 
+de l'ordre d'une décade en considérant un algorithme tirant parti de cette métrique. La Section suivante a justement pour 
+objet la proposition d'un tel algorithme.
+
+\section{L'algorithme Flip'N'Check}
+Cette section présente un algorithme permettant de tirer parti de la métrique sus-présentée. Tout d'abord, le 
+principe de cet algorithme est détaillé. Ceci mène alors à la formalisation de ce dernier. Finalement, ces performances 
+sont discutés dans le cadre de divers turbo codes standardisés.
+
+\subsection{Principe de l'algorithme}
+Dans un grand nombre de standards de communication numérique, le turbo code est concaténé en série avec un code CRC. En 
+effet, à la différence d'un code LDPC, un turbo code ne peut assurer que sa décision est un mot de code. L'algorithme 
+décrit ci-après va justement conjointement les capacités de détection d'un code CRC et de la métrique d'identification
+précédente. 
 
 
-
-
-
-% Conclusion:
-% - Il faut arriver à 90\% d'identification pour gagner une décade, 99\% pour gagner deux décades. Dans le cas de gains 
-% supérieurs à une décade, difficulté de prévoir les résultats réels à moins d'avoir un pool de trame très imporetants.\\
-% - Delta1 légèrement mieux que Delta2.
