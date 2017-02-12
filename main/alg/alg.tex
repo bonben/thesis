@@ -1,0 +1,96 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\setlength{\textwidth}{146.8mm}
+
+\usepackage[ruled, linesnumbered, vlined]{algorithm2e}
+
+
+\begin{document}
+
+	\SetAlFnt{\small}
+	\begin{algorithm}[H]
+		\DontPrintSemicolon
+		%\KwResult{Write here the result }
+		\SetKwFunction{DA}{Décodage SISO$_1$ EML-MAP}
+		\SetKwFunction{DB}{Décodage SISO$_2$ EML-MAP}
+		
+		\For{i: 1 to  $I_{max}$}
+		{
+			\DA\;
+			\If{j>4}
+			{
+				\ForEach{$k \in K$}{%
+					\If{$sgn\left(\mathbf{L_{12}^{\texttt{e}\ (j)}}(k)\right) \neq sgn\left(\mathbf{L_{12}^{\texttt{e}\ (j-1)}}(k)\right)$}
+					{
+						{$\mathbf{L_{12}^{\texttt{e}\ (j)}}(k)\gets 0$}
+					}
+				}
+			}
+			\DB\;
+			\If{j>4}
+			{
+				\ForEach{$k \in K$}{%
+					\If{$sgn\left(\mathbf{L_{21}^{\texttt{e}\ (j)}}(k)\right) \neq sgn\left(\mathbf{L_{21}^{\texttt{e}\ (j-1)}}(k)\right)$}
+					{
+						{$\mathbf{L_{21}^{\texttt{e}\ (j)}}(k)\gets 0$}
+					}
+				}
+			}
+		}
+	\caption{: Self-Corrected EML-MAP}
+	\label{alg:sc1}
+	\end{algorithm}
+	
+
+		\begin{algorithm}[H]
+		\DontPrintSemicolon
+		%\KwResult{Write here the result }
+		\SetKwFunction{TD}{Turbo Décodage EML-MAP}
+		\SetKwFunction{ST}{Trie selon valeurs croissantes}
+		\SetKwFunction{SA}{Sauvegarde}
+		\SetKwFunction{CRC}{CRCheck}
+		\SetKwFunction{RT}{Restauration}
+
+		$\mathbf{(L,\hat{d})} \gets$ \TD{$\mathbf{y^s,\ y^{p},\ y^{'p}}$}\;
+		$\mathbf{idx} \gets$ \ST{$\mathbf{L}$}\;
+		\SA{$\mathbf{y^s}$}\;
+		$j \gets 0$\;
+		\While{$j<L$ et \CRC{$\mathbf{\hat{d'}}$}==false}{
+			\RT{$\mathbf{y^s}$}\;
+			$\mathbf{y^s}\left[\mathbf{idx}[j]\right] \gets \ (-1)^{\hat{d}}\times d_{min}$\;
+			$\mathbf{\hat{d'}} \gets$ \TD{$\mathbf{y^s,\ y^{p},\ y^{'p}}$}\;
+			$j\gets j+1$\;
+		}
+	\caption{: Correction Impulse Method (CIM)}
+	\end{algorithm}
+
+			\begin{algorithm}[H]
+		\DontPrintSemicolon
+		%\KwResult{Write here the result }
+		\SetKwFunction{TD}{Turbo Décodage EML-MAP}
+		\SetKwFunction{ST}{Trie selon valeurs decroissantes}
+		\SetKwFunction{SA}{Sauvegarde}
+		\SetKwFunction{CRC}{CRCheck}
+		\SetKwFunction{RT}{Restauration}
+
+		$\mathbf{(L,\hat{d},osc)} \gets$ \TD{$\mathbf{y^s,\ y^{p},\ y^{'p}}$}\;
+		$\mathbf{idx} \gets$ \ST{$\mathbf{osc}$}\;
+		\SA{$\mathbf{y^s}$}\;
+		$j \gets 0$\;
+		\While{$j<2\times L$ et \CRC{$\mathbf{\hat{d'}}$}==false}{
+			\RT{$\mathbf{y^s}$}\;
+			$\mathbf{y^s}\left[\mathbf{idx}[j]\right] \gets \ (-1)^{j {~mod~} 2} \times d_{min}$\;
+			$\mathbf{\hat{d'}} \gets$ \TD{$\mathbf{y^s,\ y^{p},\ y^{'p}}$}\;
+			$j\gets j+1$\;
+		}
+	\caption{: Forced Symbol Method, identification sur oscillation (OFSM)}
+	\end{algorithm}
+
+
+	
+	
+
+
+\end{document}

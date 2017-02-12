@@ -419,31 +419,63 @@ Dans la suite, le principe SC est appliqué à partir de la quatrième itératio
 \begin{center}
 \begin{minipage}{.6\textwidth}%
 %\vspace*{-.8cm}
-\begin{algorithm}[H]
-\caption{: Self-Corrected EML-MAP}
-\label{alg:sc1}
-\begin{algorithmic}
-\For{\emph{j} de 0 \`a it\'eration maximum}
-\State \Call{Décodage SISO$_1$ EML-MAP}{}
-%\State $\mathbf{L_{12}^{\texttt{e}\ (j)}} \gets \mathbf{L_{12}^{\texttt{e}\ (j)}}\times 0.75 $
-\If {$j>4$} \textbf{pour tout} k
-\If {$sgn(\mathbf{L_{12}^{\texttt{e}\ (j)}}(k)) \neq sgn(\mathbf{L_{12}^{\texttt{e}\ (j-1)}}(k))$}
-\State {$\mathbf{L_{12}^{\texttt{e}\ (j)}}(k)\gets 0$}
-\EndIf
-\EndIf
-\State \Call{Décodage SISO$_2$ EML-MAP}{}
-%\State $\mathbf{L_{21}^{\texttt{e}\ (j)}} \gets \mathbf{L_{21}^{\texttt{e}\ (j)}}\times 0.75 $
-\If {$j>3$} \textbf{pour tout} k
-\If {$sgn(\mathbf{L_{21}^{\texttt{e}\ (j)}}(k)) \neq sgn(\mathbf{L_{21}^{\texttt{e}\ (j-1)}}(k))$}
-\State {$\mathbf{L_{21}^{\texttt{e}\ (j)}}(k)\gets 0$}
-\EndIf
-\EndIf
-% \If {$j>3$ \textbf{et} CRC v\'erifi\'e}
-% \State \Call{Sortie boucle}{}
+% \begin{algorithm}[H]
+% \caption{: Self-Corrected EML-MAP}
+% \label{alg:sc1}
+% \begin{algorithmic}
+% \For{\emph{j} de 0 \`a it\'eration maximum}
+% \State \Call{Décodage SISO$_1$ EML-MAP}{}
+% %\State $\mathbf{L_{12}^{\texttt{e}\ (j)}} \gets \mathbf{L_{12}^{\texttt{e}\ (j)}}\times 0.75 $
+% \If {$j>4$} \textbf{pour tout} k
+% \If {$sgn(\mathbf{L_{12}^{\texttt{e}\ (j)}}(k)) \neq sgn(\mathbf{L_{12}^{\texttt{e}\ (j-1)}}(k))$}
+% \State {$\mathbf{L_{12}^{\texttt{e}\ (j)}}(k)\gets 0$}
 % \EndIf
-\EndFor
-\end{algorithmic}
-\end{algorithm}
+% \EndIf
+% \State \Call{Décodage SISO$_2$ EML-MAP}{}
+% %\State $\mathbf{L_{21}^{\texttt{e}\ (j)}} \gets \mathbf{L_{21}^{\texttt{e}\ (j)}}\times 0.75 $
+% \If {$j>3$} \textbf{pour tout} k
+% \If {$sgn(\mathbf{L_{21}^{\texttt{e}\ (j)}}(k)) \neq sgn(\mathbf{L_{21}^{\texttt{e}\ (j-1)}}(k))$}
+% \State {$\mathbf{L_{21}^{\texttt{e}\ (j)}}(k)\gets 0$}
+% \EndIf
+% \EndIf
+% % \If {$j>3$ \textbf{et} CRC v\'erifi\'e}
+% % \State \Call{Sortie boucle}{}
+% % \EndIf
+% \EndFor
+% \end{algorithmic}
+% \end{algorithm}
+	\begin{algorithm}[H]
+		\DontPrintSemicolon
+		%\KwResult{Write here the result }
+		\SetKwFunction{DA}{Décodage SISO$_1$ EML-MAP}
+		\SetKwFunction{DB}{Décodage SISO$_2$ EML-MAP}
+		
+		\For{i: 1 to  $I_{max}$}
+		{
+			\DA\;
+			\If{j>4}
+			{
+				\ForEach{$k \in K$}{%
+					\If{$sgn\left(\mathbf{L_{12}^{\texttt{e}\ (j)}}(k)\right) \neq sgn\left(\mathbf{L_{12}^{\texttt{e}\ (j-1)}}(k)\right)$}
+					{
+						{$\mathbf{L_{12}^{\texttt{e}\ (j)}}(k)\gets 0$}
+					}
+				}
+			}
+			\DB\;
+			\If{j>4}
+			{
+				\ForEach{$k \in K$}{%
+					\If{$sgn\left(\mathbf{L_{21}^{\texttt{e}\ (j)}}(k)\right) \neq sgn\left(\mathbf{L_{21}^{\texttt{e}\ (j-1)}}(k)\right)$}
+					{
+						{$\mathbf{L_{21}^{\texttt{e}\ (j)}}(k)\gets 0$}
+					}
+				}
+			}
+		}
+	\caption{: Self-Corrected EML-MAP}
+	\label{alg:sc1}
+	\end{algorithm}
 \end{minipage}
 \end{center}
 
@@ -733,23 +765,45 @@ $L$. L'algorithme \ref{alg:fsm} récapitule l'ensemble de ces opérations.
 \begin{center}
 \begin{minipage}{.7\textwidth}%
 %\vspace*{-.8cm}
-\begin{algorithm}[H]
-\caption{: Correction Impulse Method (CIM)}
-\label{alg:fsm}
-\begin{algorithmic}
-\State $\mathbf{L} \ \ \ \gets \ \ $\Call{Turbo décodage EML-MAP}{}
-\State $\textbf{idx} \gets  \ \ $\Call{Trie selon valeurs croissantes}{L}
-\State \Call{Sauvegarde de $L^s$}{}
+% \begin{algorithm}[H]
+% \caption{: Correction Impulse Method (CIM)}
+% \label{alg:fsm}
+% \begin{algorithmic}
+% \State $\mathbf{L} \ \ \ \gets \ \ $\Call{Turbo décodage EML-MAP}{}
+% \State $\textbf{idx} \gets  \ \ $\Call{Trie selon valeurs croissantes}{L}
+% \State \Call{Sauvegarde de $L^s$}{}
 
-\While{\emph{j} < L et CRC non vérifié }	
-	\State $L^s[idx[j]] \ \ \ \gets \ \ (-1)^{\hat{d}}\times d_{min}$
-	\State $\mathbf{L} \ \ \ \gets \ \ $\Call{Turbo décodage EML-MAP}{}
-	\State \Call{Vérification CRC}{$\mathbf{L}$}
-	\State \Call{Restauration de $L^s$}{}
-	\State $j \gets j+1$
-\EndWhile
-\end{algorithmic}
-\end{algorithm}
+% \While{\emph{j} < L et CRC non vérifié }	
+% 	\State $L^s[idx[j]] \ \ \ \gets \ \ (-1)^{\hat{d}}\times d_{min}$
+% 	\State $\mathbf{L} \ \ \ \gets \ \ $\Call{Turbo décodage EML-MAP}{}
+% 	\State \Call{Vérification CRC}{$\mathbf{L}$}
+% 	\State \Call{Restauration de $L^s$}{}
+% 	\State $j \gets j+1$
+% \EndWhile
+% \end{algorithmic}
+% \end{algorithm}
+		\begin{algorithm}[H]
+		\DontPrintSemicolon
+		%\KwResult{Write here the result }
+		\SetKwFunction{TD}{Turbo Décodage EML-MAP}
+		\SetKwFunction{ST}{Trie selon valeurs croissantes}
+		\SetKwFunction{SA}{Sauvegarde}
+		\SetKwFunction{CRC}{CRCheck}
+		\SetKwFunction{RT}{Restauration}
+
+		$\mathbf{(L,\hat{d})} \gets$ \TD{$\mathbf{y^s,\ y^{p},\ y^{'p}}$}\;
+		$\mathbf{idx} \gets$ \ST{$\mathbf{L}$}\;
+		\SA{$\mathbf{y^s}$}\;
+		$j \gets 0$\;
+		\While{$j<L$ et \CRC{$\mathbf{\hat{d'}}$}==false}{
+			\RT{$\mathbf{y^s}$}\;
+			$\mathbf{y^s}\left[\mathbf{idx}[j]\right] \gets \ (-1)^{\hat{d}}\times d_{min}$\;
+			$\mathbf{\hat{d'}} \gets$ \TD{$\mathbf{y^s,\ y^{p},\ y^{'p}}$}\;
+			$j\gets j+1$\;
+		}
+	\caption{: Correction Impulse Method (CIM)}
+	\label{alg:fsm}
+	\end{algorithm}
 \end{minipage}
 \end{center}
 
@@ -890,22 +944,44 @@ l'information du canal avant d'effectuer des turbo décodage successifs. L'algor
 étapes.
 \begin{center}
 \begin{minipage}{.9\textwidth}%
-\begin{algorithm}[H]
-\caption{: Forced Symbol Method, identification sur oscillation (OFSM)}
-\label{alg:osc}
-\begin{algorithmic}
-\State $\mathbf{L, osc} \ \ \ \gets \ \ $\Call{Turbo décodage EML-MAP}{}
-\State $\textbf{idx} \gets  \ \ $\Call{Trie des bits selon valeurs décroissantes}{osc}
-\State \Call{Sauvegarde de $L^s$}{}
-\While{\emph{j} $< 2\times L$ et CRC non vérifié }	
-	\State $L^s[idx[j]] \ \ \ \gets \ \ (-1)^{j\mod{2}}\times d_{min}$
-	\State $\mathbf{L} \ \ \ \gets \ \ $\Call{Turbo décodage EML-MAP}{}
-	\State \Call{Vérification CRC}{$\mathbf{L}$}
-	\State \Call{Restauration de $L^s$}{}
-	\State $j \gets j+1$
-\EndWhile
-\end{algorithmic}
-\end{algorithm}
+% \begin{algorithm}[H]
+% \caption{: Forced Symbol Method, identification sur oscillation (OFSM)}
+% \label{alg:osc}
+% \begin{algorithmic}
+% \State $\mathbf{L, osc} \ \ \ \gets \ \ $\Call{Turbo décodage EML-MAP}{}
+% \State $\textbf{idx} \gets  \ \ $\Call{Trie des bits selon valeurs décroissantes}{osc}
+% \State \Call{Sauvegarde de $L^s$}{}
+% \While{\emph{j} $< 2\times L$ et CRC non vérifié }	
+% 	\State $L^s[idx[j]] \ \ \ \gets \ \ (-1)^{j\mod{2}}\times d_{min}$
+% 	\State $\mathbf{L} \ \ \ \gets \ \ $\Call{Turbo décodage EML-MAP}{}
+% 	\State \Call{Vérification CRC}{$\mathbf{L}$}
+% 	\State \Call{Restauration de $L^s$}{}
+% 	\State $j \gets j+1$
+% \EndWhile
+% \end{algorithmic}
+% \end{algorithm}
+	\begin{algorithm}[H]
+		\DontPrintSemicolon
+		%\KwResult{Write here the result }
+		\SetKwFunction{TD}{Turbo Décodage EML-MAP}
+		\SetKwFunction{ST}{Trie selon valeurs decroissantes}
+		\SetKwFunction{SA}{Sauvegarde}
+		\SetKwFunction{CRC}{CRCheck}
+		\SetKwFunction{RT}{Restauration}
+
+		$\mathbf{(L,\hat{d},osc)} \gets$ \TD{$\mathbf{y^s,\ y^{p},\ y^{'p}}$}\;
+		$\mathbf{idx} \gets$ \ST{$\mathbf{osc}$}\;
+		\SA{$\mathbf{y^s}$}\;
+		$j \gets 0$\;
+		\While{$j<2\times L$ et \CRC{$\mathbf{\hat{d'}}$}==false}{
+			\RT{$\mathbf{y^s}$}\;
+			$\mathbf{y^s}\left[\mathbf{idx}[j]\right] \gets \ (-1)^{j {~mod~} 2} \times d_{min}$\;
+			$\mathbf{\hat{d'}} \gets$ \TD{$\mathbf{y^s,\ y^{p},\ y^{'p}}$}\;
+			$j\gets j+1$\;
+		}
+	\caption{: Forced Symbol Method, identification sur oscillation (OFSM)}
+	\label{alg:osc}
+	\end{algorithm}
 \end{minipage}
 \end{center}
 
