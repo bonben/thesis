@@ -239,7 +239,7 @@ binaires.
 	\centering
 	\hspace*{-1cm}
 	\includegraphics[width=1.05\textwidth]{main/ch3_fig/id2/tikz/lte.pdf}
-	\caption{Pourcentage d'identification pour différents turbo codes du standard LTE K=528, K= R=1/3.
+	\caption{Pourcentage d'identification pour différents turbo codes du standard LTE K=528, K=2048 et K=6144 avec R=1/3.
 	Décodage EML-MAP itérant 8 fois. \label{fig:idLTE}}
 \end{figure}
 
@@ -300,6 +300,7 @@ déportés en Annexe \ref{sec:ann3} pour une meilleure lisibilité.
 	\centering
 	\hspace*{-1cm}
 	\includegraphics[width=1.05\textwidth]{main/ch3_fig/id2/dvb/tikz/752.pdf}
+	\vspace*{-1em}
 	\caption{Pourcentage d'identification pour différents turbo codes du standard DVB-RCS K=752, R=1/3, 3/4 et 6/7.
 	Décodage EML-MAP itérant 8 fois. \label{fig:dvb752}}
 \end{figure}
@@ -338,12 +339,108 @@ Cette section présente un algorithme permettant de tirer parti de la métrique 
 principe de cet algorithme est détaillé. Ceci mène alors à la formalisation de ce dernier. Finalement, ces performances 
 sont discutés dans le cadre de divers turbo codes standardisés.
 
-\subsection{Principe de l'algorithme}
+\subsection{L'algorithme dans le cas des turbo codes binaire}
+
+\subsubsection{Principe}
 Dans un grand nombre de standards de communication numérique, le turbo code est concaténé en série avec un code CRC. En 
 effet, à la différence d'un code LDPC, un turbo code ne peut détecter si la trame décidée est réellement un mot de code. 
 L'algorithme  décrit ci-après va tirer conjointement parti des capacités de détection d'un code CRC et de la métrique 
 d'identification précédente. 
 
-Son principe est le suivant.
+Son principe est le suivant. Durant les $I_{\text{min}}$ premières itérations, le turbo décodeur itère sans que le code
+CRC ne soit vérifié. Ceci permet d'éviter les faux positifs qui peuvent survenir lorsque la mot décodé est situé à une 
+distance importante du mot de code transmis. Après l'itération $I_{\text{min}}$, si le code CRC est vérifié, le processus
+s'arrête alors. Sinon, la fiabilité de chacun des bits systématiques est caractérisé en utilisant la métrique $\Delta_1$.
+Les $q$ positions minimisant cette métrique sont alors extraits est stockés, dans $\Omega$. À partir de ces $q$ positions,
+il est possible de générer $2^q-1$ mots candidats en inversant la décision prise par le décodeur. Pour chacun de ces 
+candidats, le code CRC est testé. Si un de ces mot est un mot de code pour le CRC, alors le processus s'arrête. Sinon, 
+l'itération suivante du processus de décodage est réalisé. Le processus est alors répété jusqu'à ce qu'un mot vérifie le 
+CRC où jusqu'à ce que le nombre maximal d'itération soit atteint ($I_{TC}$). L'algorithme \ref{alg:fc_b} récapitule l'ensemble de 
+ces opérations.
+
+Dans cet algorithme, le paramètre $q$ est particulièrement important. Il détermine en effet le compromis entre performances
+de décodage et complexité calculatoire. Ce paramètre définit la taille de l'espace de recherche des positions les moins
+fiables. Une grande valeur de $q$ permet de d'identifier assurément plus d'erreurs, conformément à ce qu'il a été
+présenté en Figures \ref{fig:idLTE} et \ref{fig:dvb752}. Néanmoins, lorsque $q$ est incrémenté de 1, le nombre de 
+vérification de CRC est doublé.
+
+Dans le suite, le choix est alors fait de fixer la valeur de $q$ à 10. De la sorte, selon les statistiques d'identification 
+précédentes, une ordre de grandeur devrait être atteint sur les performances de décodages, ce sans trop impacter la complexité
+calculatoire globale du décodage.
+
+Dans la section suivante, une présentation des performances de décodage dans le cadre de turbo codes des standards LTE
+et CCSDS de rendement 1/3 est réalisé. Cet algorithme est nommé Flip'N'Check et abrégé en FNC dans la suite.
+
+\begin{center}
+\begin{minipage}{.86\textwidth}%
+\begin{algorithm}[H]
+\label{alg:fc_b}
+	\DontPrintSemicolon
+	\SetKwFunction{TD}{Itération de Turbo Décodage}
+	\SetKwFunction{G}{GenerateTestPattern}
+	\SetKwFunction{GC}{Génération du mot candidat}
+	\SetKwFunction{L}{Extraction des positions les moins fiables}
+	\SetKwFunction{R}{return}
+	\SetKwFunction{CRC}{CRCheck}
+	
+	\For{i: 1 à  $I_{min}$}{
+		\TD\;
+	}
+	\For{i: $I_{min}+1$ to  $I_{TC}$}{
+		$\left(\mathbf{\hat{{d}}}, \mathbf{L}\right)$ = \TD\;
+		\If{\CRC{$\mathbf{\hat{{d}}}$}==true}{
+			\R{$\hat{{d}}$}\;
+		}
+		\Else{
+			\For{k: 1 à K}{				
+				$\Delta_k = |L_k|$\;		%
+			}
+			$\Omega =$ \L{$\Delta$, q}\;
+			\For{j: 1 à $2^q-1$}{								
+				$\mathbf{D} =$\GC{$\Omega, j, \mathbf{\hat{d}}$}\;
+				\If{\CRC{$\mathbf{D}$}==true}{
+					\R{$\mathbf{D}$}\;
+				}
+			}
+		} %end else
+	}
+	\R{$\hat{{d}}$}\;
+	\caption{L'algorithme Flip and Check pour les turbo codes binaires}
+\end{algorithm}
+\end{minipage}
+\end{center}
 
 
+
+\subsubsection{Performances de décodage}
+Ces sections présente des résultats de simulations réalisées avec une représentation des données en virgule flottante.
+Les tailles des trames considérés pour le standard LTE sont de 528, 1024, 2048 et 6144. Afin d'éviter les problèmes de
+faux positifs liés à l'emploi du code CRC, la valeur de $I_\text{min}$ est fixée respectivement à 2, 3, 3 et 4. Le processus
+de turbo décodage peut itérer jusque 8 fois. Enfin, la valeur de $q$ pour l'algorithme FNC est fixée à 8. La Figure 
+\ref{fig:fnc_lte} présente une comparaison des performances entre décodage utilisant l'algorithme EML-MAP (courbes en 
+traits pleins) à un décodage basé sur l'algorithme FNC (courbes en pointillés).
+
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\textwidth]{main/ch3_fig/fnc/lte/tikz/lte.pdf}
+	\caption{Comparaison de performances de décodages entre EML-MAP et FNC. Standard LTE, K=528, 1024, 2048 et 6144.
+	Décodeurs itérant 8 fois. \label{fig:fnc_lte}}
+\end{figure}
+
+
+\paragraph{Comparaison avec l'état de l'art}
+Commentaire sur l'identification\\
+As tu mis une phrase sur le BER dans la section précédente ?
+
+\subsection{L'algorithme dans le cas des turbo codes binaire}
+
+\subsubsection{Les adaptations}
+
+\subsubsection{Performances de décodage}
+
+
+
+
+% Conclusion: Méthode relativement simple à mettre en oeuvre qui tire parti de l'auigmentation de la dmin du code grace a 
+% la concat.
