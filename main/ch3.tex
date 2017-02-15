@@ -71,7 +71,8 @@ hormis pour le turbo code du standard CCSDS, au moins 70\% des trames erronées 
 	\centering
 	\hspace*{-1cm}
 	\includegraphics[width=1.07\textwidth]{main/ch3_fig/be/tikz/be.pdf}
-	\caption{Distribution du nombre d'erreurs binaires pour différentes valeur de SNR et pour différents turbo codes des standards LTE et CCSDS. 
+	\caption{Distribution du nombre d'erreurs binaires pour différentes valeur de SNR et pour différents turbo codes des 
+	standards LTE et CCSDS. 
 	Décodage EML-MAP itérant 8 fois. \label{fig:be}}
 \end{figure}
 
@@ -84,7 +85,8 @@ aux mesures obtenues. Ainsi, la seule occurrence non prédite correspond à un B
 
 \begin{table}[]
 \centering
-\caption{Distribution théorique des erreurs dans le plancher d'erreur selon l'équation \ref{eq:be1} pour plusieurs turbo codes standardisés}
+\caption{Distribution théorique des erreurs dans le plancher d'erreur selon l'équation \ref{eq:be1} pour plusieurs turbo 
+codes standardisés}
 \label{tab:theo}
 \resizebox{\textwidth}{!}{
 \begin{tabular}{@{}lrrrrrrrrrrr@{}}
@@ -155,7 +157,8 @@ l'assurance du turbo décodeur sur sa décision quant à un certain bit du mot d
 	\Delta_1(k) = |L^a(k)|\text{~, avec k~}\in \llbracket0;~K \rrbracket 
 \end{equation}
 Aussi, il peut être considéré que de décorréler les informations du canal pour la métrique peut être intéressant. En effet, 
-cela permet de n'exprimer que l'avis propre du décodeur. Cette métrique est alors basé uniquement sur les informations extrinsèques et a pour formule : 
+cela permet de n'exprimer que l'avis propre du décodeur. Cette métrique est alors basé uniquement sur les informations 
+extrinsèques et a pour formule : 
 \begin{equation}
 	\Delta_2(k) = |L^e_{12}(k)+L^e_{21}(k)|
 \end{equation}
@@ -369,7 +372,7 @@ précédentes, une ordre de grandeur devrait être atteint sur les performances 
 calculatoire globale du décodage.
 
 Dans la section suivante, une présentation des performances de décodage dans le cadre de turbo codes des standards LTE
-et CCSDS de rendement 1/3 est réalisé. Cet algorithme est nommé Flip'N'Check et abrégé en FNC dans la suite.
+et CCSDS est réalisée. Cet algorithme est nommé Flip'N'Check et abrégé en FNC dans la suite.
 
 \begin{center}
 \begin{minipage}{.86\textwidth}%
@@ -420,7 +423,6 @@ de turbo décodage peut itérer jusque 8 fois. Enfin, la valeur de $q$ pour l'al
 \ref{fig:fnc_lte} présente une comparaison des performances entre décodage utilisant l'algorithme EML-MAP (courbes en 
 traits pleins) à un décodage basé sur l'algorithme FNC (courbes en pointillés).
 
-
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{main/ch3_fig/fnc/lte/tikz/lte.pdf}
@@ -428,8 +430,53 @@ traits pleins) à un décodage basé sur l'algorithme FNC (courbes en pointillé
 	Décodeurs itérant 8 fois. \label{fig:fnc_lte}}
 \end{figure}
 
+Pour ces quatre cas considérés, l'amélioration du processus de turbo décodage obtenu par l'algorithme FNC représente un
+gain en terme de FER au moins égal à un ordre de grandeur dans la zone du plancher d'erreur. Cela signifie qu'au moins 
+$90\%$ des trames erronées sont corrigées par l'approche FNC. Le Tableau \ref{tab:fnccomp} compare le taux d'erreur trame 
+attendu si l'ensemble des trames avec moins de 10 erreurs est corrigé et celui réellement obtenu avec l'algorithme FNC 
+pour $q=10$. Ces données se basent sur celles de la Figure \ref{fig:be}. Il est toutefois à noter que pour les données de 
+la Figure \ref{fig:be}, la redondance induite par le code CRC n'était pas considéré. En effet, le code CRC n'était alors 
+pas utilisé dans le décodage. En revanche dans les courbes de la Figure \ref{fig:fnc_lte} il l'est soit en tant que 
+critère d'arrêt, soit dans le processus FNC. Un décalage de la valeur du SNR par $10\times \log_{10}\left(\frac{K}{K-24}\right)$
+est alors considéré pour présenter des données comparables.
+\begin{table}[]
+\centering
+\caption{Comparaison entre les valeurs de taux d'erreur trames attendues avec une correction parfaite et celui réellement obtenu}
+\label{tab:fnccomp}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+    & \begin{tabular}[c]{@{}l@{}}\textbf{K=528}  \\ @ 2.6 dB\end{tabular} & \begin{tabular}[c]{@{}l@{}}\textbf{K=1024} \\ @ 1.6 dB\end{tabular} & \begin{tabular}[c]{@{}l@{}}\textbf{K=2048} \\ @ 1.35 dB\end{tabular} & \begin{tabular}[c]{@{}l@{}}\textbf{K=6144} \\ @ 0.82 dB\end{tabular} \\ 
+    \cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}
+FER EML-MAP     & 7 e-7           & 2.3e-06         & 3e-6             & 4e-5             \\
+BE < 10  		& 98\%            & 94\%            & 99\%             & 99\%             \\
+FER attendu     & 1.4e-8          & 1.4e-7          & 3e-8             & 4e-7             \\
+FER FNC         & 5e-8            &                 & 2e-7             & 2e-6             \\ \bottomrule
+\end{tabular}
+\end{table}
+D'après ce tableau, il est visible que pour K=528 et K=1024, l'écart entre le taux d'erreur trame attendu et celui obtenu 
+est relativement faible. En revanche, pour les deux autres longueur de trame, les performances sont un peu plus en retrait.
+Ceci s'explique essentiellement par la capacité d'identification de la métrique. En effet, en comparant avec les statistiques d'identification fournies en Figure \ref{fig:idLTE}, les identifications réussies pour ces valeurs de SNR et longueurs de trame sont plus proches de 95\%
+que des 99\%. Néanmoins, pour ces deux tailles de trames, les deux ordres de grandeurs de grandeurs de gains en terme de FER sont
+approchés pour des valeurs de SNR plus élevés que celles considérés dans ce tableau \ref{tab:fnccomp}.
 
-\paragraph{Comparaison avec l'état de l'art}
+Finalement, à la vue de ces performances obtenues vis-à-vis de celles attendues, nous pouvons statuer sur l'absence de 
+dégradations due à d'éventuels faux positifs émanant de la détection via le code CRC. Ceci provient conjointement de sa
+distance minimale suffisamment importante (provenant directement de sa taille) et de l'adaptation de $I_{\text{min}}$ en 
+fonction de la taille de la trame.
+
+Les gains en terme de taux d'erreur binaire sont moins importants que ceux présentés pour le taux d'erreur trame. En effet,
+de part son principe, l'algorithme FNC corrige les trames à faible nombre d'erreurs binaires. Ainsi, les trames erronées 
+après processus FNC possèdent un nombre important d'erreurs binaires. Néanmoins, des gains d'environ un ordre de grandeur 
+sont observés dans tous les cas considérés. 
+
+La Figure \ref{}
+
+
+Maintenant, un comparaison avec l'état de l'art sur des approches de 
+basés sur un post-traitement est dressée.
+
+\subsubsection{Comparaison avec l'état de l'art}
+
 Commentaire sur l'identification\\
 As tu mis une phrase sur le BER dans la section précédente ?
 
@@ -444,3 +491,5 @@ As tu mis une phrase sur le BER dans la section précédente ?
 
 % Conclusion: Méthode relativement simple à mettre en oeuvre qui tire parti de l'auigmentation de la dmin du code grace a 
 % la concat.
+
+CONFIRMER VALEURS TABLEAU FNC
