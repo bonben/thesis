@@ -1,0 +1,60 @@
+BIBLIOPDF/
+TheseTiti.tar.gz
+chap1.pdf
+defaultSettings.yaml
+indent.log
+main0913.zip
+my_thesis (Copie en conflit de ZenBook 2016-09-23).fdb_latexmk
+my_thesis (Copie en conflit de ZenBook 2016-09-23).fls
+my_thesis (Copie en conflit de ZenBook 2016-09-23).log
+my_thesis (Copie en conflit de ZenBook 2016-09-23).pdf
+my_thesis-figure0.md5
+my_thesis.aux
+my_thesis.auxlock
+my_thesis.bak0
+my_thesis.bbl
+my_thesis.blg
+my_thesis.fdb_latexmk
+my_thesis.fls
+my_thesis.lof
+my_thesis.log
+my_thesis.lot
+my_thesis.maf
+my_thesis.mtc
+my_thesis.mtc0
+my_thesis.mtc1
+my_thesis.mtc10
+my_thesis.mtc11
+my_thesis.mtc12
+my_thesis.mtc13
+my_thesis.mtc2
+my_thesis.mtc3
+my_thesis.mtc4
+my_thesis.mtc5
+my_thesis.mtc6
+my_thesis.mtc7
+my_thesis.mtc8
+my_thesis.mtc9
+my_thesis.out
+my_thesis.pdf
+my_thesis.sublime-workspace
+my_thesis.synctex (Copie en conflit de ZenBook 2016-09-23).gz
+my_thesis.synctex.gz
+my_thesis.toc
+sublime/
+*.md5
+*.out
+*.mtc*
+*.aux
+*.aux*
+main/*.aux
+tail/*.aux
+head/*.aux
+*.log
+.gitignore
+*.gz
+*latexmk
+*fls
+*bak
+*bak2
+*dvi

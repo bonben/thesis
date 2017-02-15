@@ -427,7 +427,7 @@ traits pleins) à un décodage basé sur l'algorithme FNC (courbes en pointillé
 	\centering
 	\includegraphics[width=\textwidth]{main/ch3_fig/fnc/lte/tikz/lte.pdf}
 	\caption{Comparaison de performances de décodages entre EML-MAP et FNC. Standard LTE, K=528, 1024, 2048 et 6144.
-	Décodeurs itérant 8 fois. \label{fig:fnc_lte}}
+	Décodeurs itérant jusqu'à 8 fois. \label{fig:fnc_lte}}
 \end{figure}
 
 Pour ces quatre cas considérés, l'amélioration du processus de turbo décodage obtenu par l'algorithme FNC représente un
@@ -469,11 +469,27 @@ de part son principe, l'algorithme FNC corrige les trames à faible nombre d'err
 après processus FNC possèdent un nombre important d'erreurs binaires. Néanmoins, des gains d'environ un ordre de grandeur 
 sont observés dans tous les cas considérés. 
 
-La Figure \ref{}
+La Figure \ref{fig:ccsds_fnc} présente les performances de l'algorithme FNC cette fois dans le contexte d'un turbo code 
+du standard CCSDS. Les conditions sont les suivants. La taille de la trame vaut 1784 et le rendement nominatif R=1/3 est 
+considéré. Le turbo décodeur itère jusque 10 fois. Le code CRC définit dans le standard CCSDS possède une longueur de 16.
+Ainsi son pouvoir de détection d'erreurs est plus faible que celui du standard LTE. Aussi, les turbo codes du 
+standard CCSDS possèdent une longueur de contrainte de 5. Cela implique que le nombre moyen d'itérations pour décoder une trame dans 
+la zone du plancher d'erreur est plus élevé que dans le contexte LTE. Suite à ces deux constatations, la valeur de 
+$I_\text{min}$ se doit d'être plus élevée que précédemment. Elle est donc fixée à 5 afin de ne pas être limitée par le code CRC. 
+Il est visible que dans ce contexte, les gains sont légèrement moins important que pour le standard LTE. Néanmoins, ces gains
+sont proches de l'ordre de grandeur.
 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\textwidth]{main/ch3_fig/fnc/ccsds/tikz/ccsds.pdf}
+	\caption{Comparaison de performances de décodages entre EML-MAP et FNC. Standard CCSDS, K=1784.
+	Décodeurs itérant jusqu'à 10 fois. \label{fig:fnc_lte}}
+\end{figure}
 
-Maintenant, un comparaison avec l'état de l'art sur des approches de 
-basés sur un post-traitement est dressée.
+Par cet exemple, nous entrevoyons une limite du principe FNC. En effet, si le code CRC définit par le standard considéré 
+possède un risque considérable d'erreur non détectée, alors ce dernier est limitant dans les gains de décodage obtenu
+avec l'algorithme FNC. Maintenant, un comparaison avec l'état de l'art de la réduction de la zone du plancher d'erreur 
+par des approches basées sur un post-traitement est dressée.
 
 \subsubsection{Comparaison avec l'état de l'art}
 
