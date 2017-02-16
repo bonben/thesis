@@ -25,24 +25,44 @@
 
 \begin{tikzpicture}
     \begin{semilogyaxis}[footnotesize, width=0.8\linewidth, height=0.6\linewidth,    
-            xmin=0, xmax=3, xtick={0,0.5,...,3},
+            xmin=0, xmax=2, xtick={0,0.5,...,2},
             %ymin=2e-6,  ymax=0.11,
             xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
         tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}]
         legend pos=north east]
-        \addplot[mark=o,Paired-5, semithick]  table [x=SNR, y=FSF] {../dat/528};
-        \addplot[mark=o,Paired-1, semithick]  table [x=SNR, y=FSF] {../dat/1024};
-        \addplot[mark=o,Paired-3, semithick]  table [x=SNR, y=FSF] {../dat/2048};
-        \addplot[mark=o,Paired-7, semithick]  table [x=SNR, y=FSF] {../dat/6144};
-        \addplot[mark=o,Paired-5!50!Paired-6, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER] {../dat/528};        
-        \addplot[mark=o,Paired-1!50!Paired-2, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER] {../dat/1024}; 
-        \addplot[mark=o,Paired-3!50!Paired-4, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER] {../dat/2048};      
-        \addplot[mark=o,Paired-7!50!Paired-8, semithick, dashed, mark options={solid}, restrict x to domain=0.4:1.4]  table [x=SNR, y=FER] {../dat/6144}; 
+        %REF
+        \addplot[mark=o,Paired-5, semithick]  table [x=SNR, y=BCH0] {../dat/bch};
+        %FNC
+        \addplot[mark=o,Paired-1, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER_FNC] {../dat/1504};
+        
+        %CIM
+        \addplot[mark=square,Paired-3, dashed, mark options={solid}]  table [x=SNR, y=CIM1] {../dat/cimShift};
+        %BCH
+        \addplot[mark=x,Paired-7, dashed, mark options={solid}]  table [x=SNR, y=BCH4] {../dat/bch};
+        \addplot[mark=+,Paired-7, dashed, mark options={solid}]  table [x=SNR, y=BCH10] {../dat/bch};
+
+        % \addplot[mark=o,Paired-5!50!Paired-6, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER] {../dat/528};        
+        % \addplot[mark=o,Paired-1!50!Paired-2, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER] {../dat/1024}; 
+        % \addplot[mark=o,Paired-3!50!Paired-4, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER] {../dat/2048};      
+        % \addplot[mark=o,Paired-7!50!Paired-8, semithick, dashed, mark options={solid}, restrict x to domain=0.4:1.4]  table [x=SNR, y=FER] {../dat/6144}; 
+
+
+        %\addplot[mark=diamond,P aired-5, semithick]  table [x=SNR, y=BCH0] {data/fig4/bch};
+        
+        % %cim
+        % \addplot[mark=triangle,Paired-9, dashed, mark options={solid}] table [x=SNR, y=CIM1] {data/fig4/cimShift};
+                
+        % %bch
+        % \addplot[mark=x,Paired-3, dashed, mark options={solid}]  table [x=SNR, y=BCH4] {data/fig4/bch};
+        % \addplot[mark=+,Paired-3, dashed, mark options={solid}]  table [x=SNR, y=BCH10] {data/fig4/bch};
+        
+        % \addplot[mark=o,Paired-7, dashed, mark options={solid}, semithick]     table [x=SNR, y=FER_FNC] {data/fig4/1504};
         
 
-        \legend{K=528, K=1024, K=2048, K=6144}
+        \legend{EML-MAP (Sans CRC), FNC (q=10), CIM(1), BCH (t=4),  BCH (t=10)}
         
     \end{semilogyaxis}
 \end{tikzpicture}  
 
 \end{document}
+
