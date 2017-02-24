@@ -1,43 +1,55 @@
 %!TEX root = ../my_thesis.tex
-\chapter{Caractérisation et identification des erreurs résiduelles} % (fold)
+\chapter{Caractérisation, identification et correction des erreurs résiduelles} % (fold)
+Ce chapitre troisième vise à présenter une méthode permettant de corriger les erreurs résiduelles rencontrées dans la zone
+du plancher d'erreur lors du décodage des turbo codes.
 
-Texte intro
+Suite à une observation de ces erreurs, une prédiction de leurs distributions basée sur la borne de l'union est proposé. 
+Ceci permet alors de les caractériser.
+
+Dans un second temps, plusieurs critères d'identification sont proposés et comparés. Ceux-ci 
+sont aussi bien adaptés aux turbo codes binaires qu'aux double binaires.
+
+Ceci mène alors à la proposition d'un algorithme permettant de corriger les erreurs résiduelles des turbo codes.
+Il a pour propriété d'abaisser drastiquement le plancher d'erreurs lors du décodage des turbo codes.
+Une comparaison avec l'état de l'art met en exergue l’intérêt de cette approche.
+
 
 \vspace*{\fill}
 \minitocTITI
 \vspace*{\fill}
 \newpage
 
-\section{Existence des erreurs résiduelles}
+\section{Analyse des erreurs résiduelles}
+\subsection{Caractérisation théorique}
 Comme présenté dans le chapitre premier, l'apparition du plancher d'erreur dépend de la distribution des mots de codes 
 possédant un faible poids \cite{distance_spectrum}. Plus encore, il a été montré que la zone du plancher d'erreur émanait 
 de la présence \emph{d'erreurs résiduelles} \cite{takeshitaBCH}. 
-La Figure \ref{fig:befe} présente l'évolution du nombre de bits erronés par trame erronée en fonction de la valeur de 
-SNR pour cinq turbo codes binaires. Quatre de ces codes  appartiennent au standard LTE, le cinquième au standard CCSDS. 
-Dans tous ces cas, un turbo décodage basé sur l'algorithme EML-MAP itérant 8 fois est considéré. Dans la zone de 
-convergence, de nombreuses erreurs à l'issue du décodage sont présentes. En revanche, dès lors que le décodeur 
+La Figure \ref{fig:befe} présente l'évolution du nombre moyen de bits erronés par trame erronée en fonction de la valeur de 
+SNR pour cinq turbo codes binaires différents. Quatre de ces codes appartiennent au standard LTE, le cinquième au standard CCSDS. 
+À chaque fois, une rendement de 1/3 et un turbo décodage basé sur l'algorithme EML-MAP itérant 8 fois sont considérés. Dans la zone de 
+convergence, de nombreuses erreurs à l'issu du décodage sont présentes. En revanche, dès lors que le décodeur 
 fonctionne dans la zone du plancher d'erreurs, le nombre moyen d'erreurs binaires par trame erronée est inférieur à 10. 
-De là, vient leur nom d'erreurs résiduelles.
+De là vient leur nom d'erreurs résiduelles.
 
 \begin{figure}[!b]
 	\centering
 	\includegraphics[width=.8\textwidth]{main/ch3_fig/be/tikz/befe.pdf}
-	\caption{Évolution du nombre moyens d'erreurs binaires par trame erronée pour différentes valeurs de SNR et différents
-	turbo codes. Algorithme EML-MAP itérant jusque 8 fois. \label{fig:befe}}
+	\caption{Évolution du nombre moyen d'erreurs binaires par trame erronée pour différentes valeurs de SNR et différents
+	turbo codes. Décodage effectué par l'algorithme EML-MAP itérant 8 fois. \label{fig:befe}}
 \end{figure}
 
 Une caractérisation de la distribution de ces erreurs 
 résiduelles a été proposée dans \cite{residual_errors}. Cette dernière est basée sur les fonctions recenseuses de poids
 (Weight Enumerator Functions ou WEF en anglais, \cite{ryan}). En posant $P^{\langle ML\rangle}(m)$ la probabilité que 
-$m$ bits soient erronés dans une trame et sachant que la trame est erronée après décodage à maximum de vraisemblance, il 
-vient :
+$m$ bits soient erronés dans une trame et sachant que la trame est erronée après un décodage à maximum de vraisemblance,
+l'expression suivante est obtenue :
 \begin{equation}
 P^{\langle ML\rangle}(m) \simeq \frac{W^m~A_m^{\langle CP\rangle}(Z)\vert_{W=Z=e^{-RE_b/N_0}}}{\sum\limits_{w=1}^N W^w~A_w^{\langle CP\rangle}(Z) \vert_{W=Z=e^{-RE_b/N_0}}}
 \label{eq:be1}
 \end{equation}
 où $A_w^{\langle CP\rangle}(Z)$ est le WEF conditionnel du turbo code considéré \cite{benedetto_unveiling}.
 
-En estimant que les séquences d'information 
+En supposant que les séquences d'information 
 générant un mot de code de poids $w$ ont majoritairement le même poids, l'équation précédente peut alors être transformée 
 en : 
 \begin{equation}
@@ -45,16 +57,16 @@ P^{\langle ML\rangle}(m) \approx \frac{\displaystyle\sum\limits_{w, \frac{W_w}{A
                   {\displaystyle\sum\limits_{w} A_w\cdot \exp\left(-w R \frac{E_b}{N_0}\right)}
 \label{eq:be2}
 \end{equation}
-avec, comme déjà présenté dans le Chapitre Premier, $A_w$ le nombre de mots de codes de poids de Hamming $w$. La 
+avec, comme déjà présenté dans le Chapitre Premier, $A_w$ le nombre de mots de code de poids de Hamming $w$. La 
 multiplicité des bits d'information $W_w$ est la somme des poids de Hamming des $A_w$ séquences binaires générant des
-mots de codes de poids de Hamming $w$. Au prix d'une faible imprécision, cette forme de l'équation permet d'utiliser 
+mots de code de poids de Hamming $w$. Au prix d'une faible imprécision, cette forme de l'équation permet d'utiliser 
 directement le spectre de distance d'un turbo code pour estimer le nombre de bits erronées dans le plancher d'erreur. Les
-résultats obtenus avec cette équation différent alors légèrement de ceux obtenus avec l'Équation \ref{eq:be1}, puisque 
+résultats obtenus avec cette équation différent alors légèrement de ceux obtenus avec l'Équation \ref{eq:be1}. En effet,
 certaines valeurs sont masquées par l'opération de moyenne : $\frac{W_w}{A_w}=m$. 
 
 Ainsi, le spectre de distance d'un turbo code permet de calculer la probabilité 
-d'obtenir $m$ erreurs binaires dans un trame erroné en considérant un décodage ML pour un taux d'erreur suffisamment 
-faible et un canal AWGN. De part la présence du terme en exponentielle, plus le poids du mot de code $w$, est distant 
+d'obtenir $m$ erreurs binaires dans une trame erronée en considérant un décodage ML pour un taux d'erreur suffisamment 
+faible et un canal AWGN. De part la présence du terme en exponentielle, plus le poids du mot de code $w$ est distant 
 de $d_{min}$, moins la multiplicité associée a un impact sur la distribution des erreurs résiduelles. Ceci peut néanmoins
 être fortement atténué par une multiplicité très importante (de l'ordre du millier, rencontré fréquemment lors des 
 expérimentations).
@@ -62,18 +74,24 @@ expérimentations).
 % Dans la section suivante, grâce à l'obtention des spectres de distances de différents turbo codes standardisés, une 
 % comparaison est menée quant à la distribution du nombre d'erreurs dans les trames erronées dans la zone du plancher 
 % d'erreurs.
-Dans la section suivante, ces résultats théoriques sont comparés à la distribution réelle du nombre d'erreurs dans les
-trames erronées de la zone du plancher d'erreur avec décodage via l'algorithme ELM-MAP.
+Dans la section suivante, ces résultats théoriques sont comparés à des distributions observées du nombre d'erreurs dans les
+trames erronées de la zone du plancher d'erreur avec un décodage basé sur l'algorithme ELM-MAP.
 
-\subsection{Distribution des erreurs résiduelles pour des turbo codes standardisés}
-L'existence des erreurs résiduelles dans la zone du plancher d'erreur vient d'être établie. Une proposition d'obtention 
-de la distribution de ces erreurs a été conjointement proposée. La Figure \ref{fig:be} présente la distribution des erreurs
-résiduelles pour 5 turbo codes du standard LTE et un du standard CCSDS. Pour chacun de ces histogrammes, 500 trames erronées
-après décodage via l'algorithme EMNL-MAP itérant 8 fois sont considérées. Il apparaît alors queo la très grande majorité 
+\subsection{Observations considérant des turbo codes standardisés}
+L'existence des erreurs résiduelles dans la zone du plancher d'erreur a été théoriquement établie. L'obtention 
+de la distribution de ces erreurs est maintenant proposée. Dans un premier temps, des turbo codes binaires de tailles de 
+trames différentes et de rendement 1/3 sont considérés. Dans un second temps, des turbo codes double binaires d'un seule 
+taille de trame mais de différents rendements sont considérés. Ainsi, un large spectre de paramètres sont exploités sans
+présenter un nombre trop conséquent de données.
+
+\subsubsection{Dans le cas de turbo codes binaires}
+
+La Figure \ref{fig:be} présente la distribution des erreurs résiduelles pour 5 turbo codes du standard LTE et un du 
+standard CCSDS. Le rendement du code est fixé à 1/3. Pour chacun de ces histogrammes, 500 trames erronées
+après décodage via l'algorithme EMNL-MAP itérant 8 fois sont considérées. Il apparaît alors que la très grande majorité 
 des trames erronées contiennent moins de 10 erreurs binaires. 
 %Ceci est conforté par la Figure \ref{fig:befe}. 
-Plus encore, 
-hormis pour le turbo code du standard CCSDS, au moins 70\% des trames erronées ont strictement moins de 5 erreurs.
+Plus encore, hormis pour le turbo code du standard CCSDS, 70\% des trames erronées ont strictement moins de 5 erreurs.
 
 \begin{figure}[!ht]
 	\centering
@@ -84,16 +102,17 @@ hormis pour le turbo code du standard CCSDS, au moins 70\% des trames erronées 
 	Décodage EML-MAP itérant 8 fois. \label{fig:be}}
 \end{figure}
 
-Sur cette Figure \ref{fig:be} sont aussi présentés les résultats théoriques obtenus pour la valeur de SNR la plus grande
+Sont aussi présentés sur la Figure \ref{fig:be} les résultats théoriques obtenus pour la valeur de SNR la plus grande
 grâce à l'équation \ref{eq:be1} et au spectre de distance calculé via la Double Impulse Method (cf. \ref{seq:spectre}).
-Ces résultats sont aussi reportés pour plus de lisibilité dans le Tableau \ref{tab:theo}. Suivant le turbo code considéré,
-des différences entre la valeur théorique et la valeur mesurée apparaissent. Néanmoins, la tendance calculée est conforme
+Ces résultats sont reportés pour plus de lisibilité dans le Tableau \ref{tab:theo}. Suivant le turbo code considéré,
+des différences entre la valeur théorique et la valeur mesurée apparaissent. Néanmoins, la tendance pour les valeurs
+calculées est conforme
 aux mesures obtenues. Ainsi, la seule occurrence non prédite correspond à un BE de 1 pour le standard CCSDS, où $0.2\%$ 
 était prédit alors que $11\%$ sont mesurés.
 
 \begin{table}[]
 \centering
-\caption{Distribution théorique des erreurs dans le plancher d'erreur selon l'équation \ref{eq:be1} pour plusieurs turbo 
+\caption{Distribution théorique des erreurs dans le plancher d'erreur selon l'équation \ref{eq:be1} pour différents turbo 
 codes standardisés}
 \label{tab:theo}
 \resizebox{\textwidth}{!}{
@@ -110,8 +129,8 @@ CCSDS R=1/3, K=1784 @ 1.3dB & 0.2\%  & 48.1\% & 27.9\% & 0.2\%  & 0.1\% & 22.3\%
 \end{table}
 
 Afin de présenter la déviation entre la théorie développée dans la première section de ce Chapitre et les mesures 
-effectuées, un calcul d'erreur quadratique moyenne (EQM, Équation \ref{eq:eqm}) est effectué pour chacun des turbo codes 
-et est présenté dans le tableau \ref{tab:eqm}.
+effectuées, un calcul d'erreur quadratique moyenne (EQM, Équation \ref{eq:eqm}) est effectué pour chacun des turbo codes. 
+Les valeurs obtenues sont récapitulées dans le tableau \ref{tab:eqm}.
 
 \begin{equation}
 	EQM = \sqrt{\cfrac{1}{N}\sum\limits_{i=1}^N\bigl(T_i-M_i\bigr)^2}
@@ -120,16 +139,16 @@ et est présenté dans le tableau \ref{tab:eqm}.
 
 Les valeurs d'EQM sont alors comprises entre 3.8 et 9.5, impliquant que les valeurs théoriques et mesurées sont 
 relativement proches. Ainsi même si des écarts apparaissent, ces équations permettent de prédire l'allure de la distribution
-des erreurs binaires dans la zone du plancher d'écart. Cet écart s'explique par le fait que les Équations \ref{eq:be1} 
-et \ref{eq:be2} ne sont vraies que dans le cas d'un décodage ML, ne pouvant être effectué dans le contexte des turbo codes.
+des erreurs binaires dans la zone du plancher d'écart. Les écarts s'expliquent par le fait que les Équations \ref{eq:be1} 
+et \ref{eq:be2} ne sont vraies que dans le cas d'un décodage ML. Or ce dernier ne peut pas être effectué dans le contexte des turbo codes.
 
 Plus le ratio $\frac{W_d}{A_d}$ des premiers termes du spectre de distance du code est faible, plus le nombre moyen de 
 bit erronés par trame erronée dans le plancher d'erreur sera faible lui aussi. Pour les turbo codes 
-standardisés, les ratios $\frac{W_d}{A_d}$ sont habituellement faibles. Ceci implique alors un distribution des erreurs 
+standardisés, les ratios $\frac{W_d}{A_d}$ sont habituellement faibles. Ceci implique alors une distribution des erreurs 
 binaires dans le plancher d'erreur centrée sur les faibles nombres d'erreurs.
 \begin{table}[b]
 \centering
-\caption{Erreur quadratique moyenne entre théorie et simulations Monte-Carlo}
+\caption{Erreur quadratique moyenne entre les valeurs théoriques et les simulations Monte-Carlo}
 \label{tab:eqm}
 \resizebox{.4\textwidth}{!}{
 \begin{tabular}{@{}lr@{}}
@@ -146,35 +165,45 @@ CCSDS R=1/3, K=1784 @ 1.3dB & 6.9 \\
 \end{tabular}}
 \end{table}
 
-Finalement, lorsqu'un processus de décodage échoue dans le plancher d'erreur, la trame produite est très proche dans du 
-mot de code transmis. Cette constatation semble être vraie pour tout turbo code standardisé, incluant les turbo codes
+Maintenant, une analyse similaire vient confirmer étendre ces résultats dans le contexte de turbo codes double binaires.
+
+\subsubsection{Dans le cas de turbo codes double binaires}
+TODO la même chose : \\
+Distribution des erreurs pour 4 turbo doubles binaires. K=1/3 1/2 3/4 6/7 (=0.33, 0.5, 0.75, 0.85)
+																			0.17    0.25   0.1  2/3 aurait été mieux ?	
+Spectre en annexe.\\
+tableau EQM\\
+
+
+
+Finalement, lorsqu'un processus de décodage itératif échoue dans le plancher d'erreur, la trame résultante est très proche du 
+mot de code transmis. Cette constatation semble vraie pour tout turbo code standardisé, incluant les turbo codes
 double binaires. Dans la section suivante, différents critères d'identification de ces erreurs résiduelles sont 
 proposés et comparés.
 \newpage
 \section{Comparaison de critères d'identification}
 Dans cette section, une comparaison de plusieurs métriques permettant l'identification des erreurs résiduelles est 
-proposée. Ces différentes métriques sont basées sur des quantités internes du turbo décodeur.\\
-Suite aux résultats obtenus dans le Chapitre précédent, d'office, des métriques utilisant des oscillations ne sont 
-pas considérées. Ainsi, seules des métriques prenant en compte l'amplitude d'informations internes au turbo décodeurs 
-sont exploitées.
+proposée. Ces différentes métriques sont basées sur des quantités internes du turbo décodeur qui seront détaillées ci-après.\\
+Suite aux résultats obtenus dans le chapitre deuxième des métriques reposant sur des oscillations sont écartées. Ainsi, 
+seules des métriques prenant en compte l'amplitude d'informations internes au turbo décodeurs sont privilégiées.
 
-\subsection{Les différentes métriques considérées}
+\subsection{Les différentes métriques considérées pour les turbo codes binaires}
 Dans le Chapitre précédent, il a été introduit que le module de l'information \textit{a posteriori} peut être vu comme 
-l'assurance du turbo décodeur sur sa décision quant à un certain bit du mot décodé. Ainsi, un première métrique pouvant 
+l'assurance du turbo décodeur sur sa décision quant à un certain bit du mot décodé. Ainsi, une première métrique pouvant 
 être établie est la suivante :
 \begin{equation}
 	\Delta_1(k) = |L^a(k)|\text{~, avec k~}\in \llbracket0;~K \rrbracket 
 \end{equation}
-Aussi, il peut être considéré que de décorréler les informations du canal pour la métrique peut être intéressant. En effet, 
-cela permet de n'exprimer que l'avis propre du décodeur. Cette métrique est alors basée uniquement sur les informations 
-extrinsèques et a pour formule : 
+Par ailleurs, il peut être considéré que de décorréler les informations du canal pour la métrique peut être intéressant. En effet, 
+cela permet d'exprimer seulement l'avis propre au décodeur. Cette métrique est alors uniquement basée sur les informations 
+extrinsèques et a pour expression : 
 \begin{equation}
 	\Delta_2(k) = |L^e_{12}(k)+L^e_{21}(k)|
 \end{equation}
-D'autre part, il peut être intéressant de considérer une norme, au sens mathématique. L'évaluation d'uniquement la norme 1 
-(distance deManhattan) est suffisante puisque son emploi vis à ordonner des positions. En effet, l'ordre est 
-conservé quelque soit la norme p ($p \in \mathbb{N} $) employée. Les deux équations précédentes deviennent alors 
-respectivement :
+D'autre part, il peut être intéressant de considérer une norme au sens mathématique. L'évaluation de la norme 1 
+(distance de Manhattan) est suffisante puisque son emploi vis à ordonner des positions. En effet, l'ordre est 
+conservé quelque soit la norme p ($p \in \mathbb{N} $) employée. Les expressions des deux équations précédentes deviennent 
+alors respectivement :
 \begin{equation}
 	\Delta_3(k) = |y^s(k)| + |L^e_{12}(k)| + |L^e_{21}(k)|
 \end{equation}
@@ -183,42 +212,40 @@ et
 	\Delta_4(k) = |L^e_{12}(k)| + |L^e_{21}(k)|
 \end{equation}
 
-%Pour toutes les métriques sus-cités, l'obtention des positions les moins fiables est réalisé en considérant celles pour 
-%lesquelles les métriques sont les plus faibles.
 Pour l'ensemble de ces métriques, les positions les moins fiables sont extraites en identifiant les positions les 
 minimisant.
 
 \subsubsection{Résultats d'identification}
-Afin de comparer ces différentes métriques, des statistiques d'identification vont être dressées. Le protocole 
+Afin de comparer ces différentes métriques, des statistiques d'identification vont être exploitées. Le protocole 
 expérimental est le suivant. Après chaque itération du processus de turbo décodage, les $n$ positions les moins fiables
-dans la trame sont extraites grâce à chacune des métriques. Si l'ensemble des erreurs est présent dans ces $n$ éléments,
-alors l'identification est dite réussie. Les turbo codes considérés sont les mêmes que dans la section précédente, à 
-savoir des turbo codes binaires du standard LTE et du standard CCSDS. Plusieurs valeurs de SNR sont étudiées. Afin 
-d'obtenir des données valides, 500 trames erronées après un décodage utilisant 8 itérations de l'algorithme EML-MAP sont
+dans la trame sont identifiées grâce à chacune de ces métriques. Si l'ensemble des erreurs est présent dans ces $n$ éléments,
+alors l'identification est considérée comme réussie. Les turbo codes considérés sont des turbo codes binaires du standard LTE.
+Plusieurs valeurs de SNR sont successivement étudiées. Afin 
+d'obtenir des données valides, 500 trames erronées après un décodage par l'algorithme EML-MAP itérant 8 fois sont
 observées.
 
-La Figure \ref{fig:id1024} présente les résultats pour le turbo code K=1024 et R=1/3. Les profondeurs de recherches 
+La Figure \ref{fig:id1024} présente les résultats pour le turbo code LTE avec K=1024 et R=1/3. Les profondeurs de recherches 
 considérées $n$ s'étalent de 4 à 20. Il apparaît tout d'abord que 
 les deux critères d'identification basés sur une norme ($\Delta_3$ et $\Delta_4$) présentent les moins bonnes performances.
  Ceci peut être interprété en remarquant que les normes ne permettent pas d'identifier les
-cas où chacun des deux décodeurs possède un avis décidé (forte amplitude) mais différents (signes opposés). Les deux 
-autres métriques identifient en revanche ces cas possibles. La même constatation est faite pour d'autre turbo codes. 
+cas où chaque décodeur possède un avis ferme (forte amplitude) mais différent l'un de l'autre (signes opposés). Les deux 
+autres métriques identifient en revanche ces cas possibles. La même constatation est faite pour d'autres turbo codes. 
 Ainsi, l'utilisation d'une norme (au sens mathématique) est écartée dans la suite, ce au profit des métriques $\Delta_1$ 
 et $\Delta_2$.
 
-Ces deux dernières possèdent des performances proches avec un avantage pour la métrique $\Delta_1$. Le pouvoir 
+Ces deux dernières possèdent des performances proches avec un avantage pour la métrique $\Delta_1$. Il est à noter que le pouvoir 
 d'identification de ces deux métriques augmente lorsque la valeur de SNR augmente. Ceci est corrélé avec la diminution du 
-nombre d'erreurs binaires par trame constatée dans la section précédente.
+nombre moyen d'erreurs binaires par trame constatée dans la section précédente.
 
 Toujours en considérant la Figure \ref{fig:id1024}, selon la profondeur de recherche employée et pour une valeur de SNR 
 de 1.1 dB, entre 10 et 30\% des trames ont l'ensemble de leurs erreurs binaires identifiées. Ces taux ne 
 permettent pas de proposer une correction intéressante. En effet, en supposant que ces 30\% de trames dont les erreurs sont 
-identifiées soient effectivement corrigées par un mécanisme utilisant cette métrique, le taux d'erreur trame passerait alors 
-de $2.3\times 10^{-4}$ à $1.6\times 10^{-4}$. L'amélioration sur la courbe de performance ne serait alors pas remarquée.
+identifiées soient effectivement corrigées par un mécanisme basé sur cette métrique, le taux d'erreur trame passerait alors 
+de $2.3\times 10^{-4}$ à $1.6\times 10^{-4}$. L'amélioration des performances serait alors toute relative.
 
 En considérant maintenant une valeur de SNR de 1.3 dB, le taux d'identification maximal atteint 65\% pour $n=20$ avec la 
-métrique $\Delta_1$. Le taux d'erreur trame résultant de l'utilisation de cette métrique passerait alors de 
-$1.5\times 10^{-5}$ à $5.2\times 10^{-6}$. Cette fois, des gains apparaîtraient réellement. D'après les données de la 
+métrique $\Delta_1$. Le taux d'erreur trame résultant passerait alors de 
+$1.5\times 10^{-5}$ à $5.2\times 10^{-6}$. Cette fois, des gains substantiels sont possibles. D'après les données de la 
 Figure \ref{fig:be}, dans ce même cas expérimental, 71\% des trames ont 20 erreurs ou moins. 
 L'emploi de la métrique $\Delta_1$, semble alors permettre d'identifier l'ensemble des erreurs de 91\% des trames ayant 
 moins de 20. Ce taux s'établit à 83\% pour la métrique $\Delta_2$. 
@@ -226,33 +253,34 @@ moins de 20. Ce taux s'établit à 83\% pour la métrique $\Delta_2$.
 %En effet, seules de rares trames à faibles erreurs binaires n'ont pas eu la position 
 % de leurs erreurs identifiées. Ainsi, les performances de la métrique sont d'autant plus importantes que le nombre de bits
 % erronés par trames erronées est faible. Cette assertion est vérifiée avec la valeur de SNR la plus élevée considérée.
-Il apparaît donc que seules de rares trames à faible nombre d'erreurs binaire n'aient pas eu l'ensemble de leurs erreurs
-identifiées. Il est alors attendu que plus la valeur de SNR croisse, plus le nombre d'erreur binaire par trame erroné 
-baisse et donc que les métriques identifient encore plus d'erreurs.
+Il apparaît donc que seules de rares trames à faible nombre d'erreurs binaires n'ont pas l'ensemble de leurs erreurs
+identifiées. Il est alors attendu que plus la valeur de SNR augmente, plus le nombre d'erreur binaire par trame erroné 
+baisse. Par conséquent, les métriques identifient encore plus d'erreurs.
 
-Ceci est vérifié, pour une valeur de SNR de 1.5 dB. Avec seulement une profondeur de recherche fixée à $10$, 87,6\% des 
+Ceci est vérifié, pour une valeur de SNR de 1.5 dB. Avec une profondeur de recherche fixée à $10$, 87,6\% des 
 trames erronées ont l'intégralité de leurs erreurs identifiées grâce à la métrique $\Delta_2$. Ce taux atteint 89,4\% avec 
 la métrique $\Delta_1$. Pour cette valeur de SNR, 93.8\% des trames possède 10 erreurs ou moins. Ainsi, les métriques 
 permettent une identification quasiment parfaite de la position des erreurs résiduelles. Finalement, si chaque trame 
-erronée dont la totalité des erreurs sont identifiées est corrigée, le taux trame résultant passe de 
-$3.6\times 10^{-6}$ à une valeur comprise entre $3.8\times 10^{-7}$ et $4.4\times 10^{-7}$ suivant la métrique employée.
+erronée dont la totalité des erreurs sont identifiées est corrigée, le taux d'erreur trame résultant passe de 
+$3.6\times 10^{-6}$ à une valeur comprise entre $3.8\times 10^{-7}$ et $4.4\times 10^{-7}$ suivant la métrique $\Delta_1$ 
+ou $\Delta_2$ employée.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.75\textwidth]{main/ch3_fig/id2/tikz/1024.pdf}
 	\caption{Pourcentage d'identification pour le turbo code du standard LTE K=1024, R=1/3.
 	Décodage EML-MAP itérant 8 fois. \label{fig:id1024}}
-		\vspace*{-1cm}
+		%\vspace*{-1cm}
 \end{figure}
-\newpage
+%\newpage
 La Figure \ref{fig:idLTE} présente les statistiques d'identification réussies pour trois autres turbo codes du standard 
-LTE. Dans les trois cas considérés, les constations faites lors de l'analyse de la Figure \ref{fig:id1024} peuvent être 
-réitérées. Ces histogrammes valident la pertinence des métriques $\Delta_1$ et $\Delta_2$ pour l'identification des bits 
-erronés lors du processus itératif de décodage. Dans tous les cas, pour des valeurs correspondant à un fonctionnement des 
+LTE. Dans les trois cas considérés, les observations faites lors de l'analyse de la Figure \ref{fig:id1024} peuvent être 
+vérifiées. Ces histogrammes valident donc la pertinence des métriques $\Delta_1$ et $\Delta_2$ pour l'identification des bits 
+erronés lors du processus itératif de décodage. Dans tous les cas, pour des valeurs de SNR correspondant à un fonctionnement des 
 turbo décodeurs dans la zone du plancher d'erreur, au moins 90\% des trames erronées ont l'ensemble de leurs erreurs 
-identifiées par la métrique $\Delta_1$ avec un profondeur de recherche de taille 6.
+identifiées par la métrique $\Delta_1$ pour un profondeur de recherche de taille 6.
 
-Dans la section suivante, les métriques proposées sont étendues et caractérisées dans le contexte de turbo codes double 
+Dans la section suivante, les métriques proposées sont étendues et caractérisées pour des turbo codes double 
 binaires.
 
 \begin{figure}[!h]
@@ -265,37 +293,37 @@ binaires.
 
 \subsection{Extension des critères d'identification aux turbo codes double binaires}
 Le décodage des turbo codes double binaires a été détaillé en section \ref{sec:dbl}. Pour rappel, lors de ce décodage par
-l'algorithme EML-MAP, 4 valeurs extrinsèques sont échangées par symbole. En réalité, dans un but de simplification de 
-l'architecture matérielle associée, ce ne sont que trois valeurs qui sont échangées puisqu'une normalisation vis-à-vis de 
+l'algorithme EML-MAP, 4 valeurs extrinsèques sont échangées pour chaque symbole. En réalité, dans un but de simplification de 
+l'architecture matérielle associée, seules trois valeurs sont échangées puisqu'une normalisation vis-à-vis de 
 la probabilité d'obtenir le symbole $\mathbf{0}$ est réalisée. 
 
-La généralisation des métriques $\Delta_1$ et $\Delta_2$ au cas double binaire n'est pas trivial. Dans la suite, une 
-extension permettant d'atteindre une identification au moins aussi bonne que celle présentée précédemment est déroulée.
+La généralisation des métriques $\Delta_1$ et $\Delta_2$ au cas double binaire n'est pas triviale. Dans la suite, une 
+extension permettant d'atteindre une identification au moins aussi bonne que celle présentée précédemment est décrite.
 L'équation de la métrique $\Delta_1$ dans le cas binaire peut être exprimée de la sorte : 
 \begin{align*}
 \Delta_1(k) &= |L^a(k)|\\
 			&= |l^a_0(k)-l^a_1(k)|,
 \end{align*}
-où $l^a_b(k)$ représente la log-vraisemblance (LL) \textit{a posteriori} que le bit considéré prenne la valeur b. 
-C'est-à-dire, 
-$l^a_b(k) = log\left(P(\hat{b_k} = b)\right)$. Ceci peut alors être vu comme la distance entre les deux LLs de chaque 
+où $l^a_b(k)$ représente la log-vraisemblance (LL) \textit{a posteriori} que le bit considéré prenne la valeur b, 
+c'est-à-dire, 
+$l^a_b(k) = log\left(P(\hat{b_k} = b)\right)$. Ceci peut alors être interprété comme la distance entre les deux LLs de chaque 
 symbole
 binaire possible (0 et 1). L'extension directe au cas double binaire devrait alors considérer le calcul de 6 distances 
 analogues puisque le
 nombre de symboles est porté à 4 ($\mathbf{0}, \mathbf{1}, \mathbf{2}, \text{~et~} \mathbf{3}$). Une combinaison 
-de ces 6 distances serait nécessaire pour caractériser chaque symbole avec une valeur scalaire. Cette valeur refléterait 
-alors la fiabilité du symbole considérée. Cependant, de tels calculs s'avèrent complexes à entreprendre. Il est alors 
-proposé de ne considérer que les deux symboles les plus probables $S_{M_x}$ et $S_{M_y}$ qui maximisent $l^a_s$ :
+de ces 6 distances serait alors nécessaire pour caractériser chaque symbole avec une valeur scalaire. Cette valeur 
+refléterait la fiabilité du symbole considérée. Cependant, de tels calculs s'avèrent complexes à entreprendre. Nous proposons
+donc de considérer uniquement les deux symboles les plus probables $S_{M_x}$ et $S_{M_y}$ qui maximisent $l^a_s$ :
 \begin{align*}
 S_{M_x}(k) &= \argmax\limits_{s\in\llbracket0;3\rrbracket}\left(l^a_s(k)\right) \\
 S_{M_y}(k) &= \argmax\limits_{s\in\llbracket0;3\rrbracket\setminus{S_{M_x}(k)}}\left(l^a_s(k)\right)
 \end{align*}
-La métrique s'exprime alors :
+La métrique a alors pour expression :
 \begin{equation}
 	\Delta'_1(k) = l^a_{S_{M_x}}(k)-l^a_{S_{M_y}}(k)
 \end{equation}
 
-Avec un raisonnement similaire, la métrique analogue à $\Delta_2$ s'exprime alors : 
+À l'aide d'un raisonnement similaire, la métrique analogue à $\Delta_2$ a pour expression: 
 \begin{equation}
 	\Delta'_2(k) = l^{e,\text{sum}}_{S_{M_x}}(k)-l^{e,\text{sum}}_{S_{M_y}}(k),
 \end{equation}
@@ -306,69 +334,69 @@ S_{M_y}(k) &= \argmax\limits_{s\in\llbracket0;3\rrbracket\setminus{S_{M_x}(k)}}\
 \end{align*}
 et $l^{e,\text{sum}}_s(k) = \sum\limits_{p=1}^2l^e_{s,p}(k)$.
 
-Ces métrique peuvent s'interpréter comme suit. Pour un position donnée $k$, si les LLs des deux symboles les 
-plus probables sont proches l'un de l'autre, la position $k$ est considérée comme moins fiable qu'une position pour
-laquelle cette distance est plus grande.
+Ces métriques peuvent s'interpréter comme suit. Pour une position donnée $k$, si les LLs des deux symboles les 
+plus probables sont proches l'un de l'autre, la position $k$ est considérée comme étant moins fiable qu'une position pour
+laquelle cette distance serait plus grande.
 
 \subsubsection{Résultats d'identification}
-Le même protocole expérimental que celui décrit précédemment est exploité. Cependant des turbo codes du standard DVB-RCS
+Le même protocole expérimental que celui décrit dans le cas de turbo codes binaires est exploité. Cependant des turbo codes du standard DVB-RCS
 sont maintenant considérés. Le décodage utilise l'algorithme EML-MAP itérant 8 fois. Le facteur de remise à l'échelle 
 vaut 0.5 pour les deux premières itérations et 0.85 pour les itérations suivantes. Profitant de la circularité du treillis, 
-un processus de décodage par passage de message est employé. Les tailles de trames considérés sont K=440
+un processus de décodage par passage de message est employé. Les tailles de trame considérées sont K=440
 et K=752 symboles d'informations. Les turbo codes choisis ont des rendements valant 1/3, 3/4 et 6/7. Ceci permet de 
-couvrir un spectre relativement large des turbo codes double binaires à 8 états standardisés. 
+couvrir un spectre relativement exhaustif des turbo codes double binaires à 8 états standardisés. 
 
 La Figure \ref{fig:dvb752} présente les résultats d'identifications pour les cas K=752. Les résultats pour K=440 sont 
-déportés en Annexe \ref{sec:ann3} pour une meilleure lisibilité.
+déportés en Annexe \ref{sec:ann3} pour une meilleure lisibilité du document.
 \begin{figure}[!h]
 	\centering
 	\hspace*{-1cm}
 	\includegraphics[width=1.05\textwidth]{main/ch3_fig/id2/dvb/tikz/752.pdf}
-	\vspace*{-1em}
+	%\vspace*{-1em}
 	\caption{Pourcentage d'identification pour différents turbo codes du standard DVB-RCS K=752, R=1/3, 3/4 et 6/7.
 	Décodage EML-MAP itérant 8 fois. \label{fig:dvb752}}
 \end{figure}
-Cette Figure est sous-divisée en six sous-figures. La première ligne correspond aux cas R=1/3. Les mêmes propriétés 
-d'identification que celles présentés dans le cas binaire apparaissent. Au fur et à mesure que la valeur du SNR croit, le 
-taux identification augmente. La métrique basée sur l'information \textit{a posteriori} présente de meilleurs statistiques
-d'identification que celle basée uniquement sur les informations extrinsèques. Cet écart diminue avec l'augmentation du SNR.
-Finalement, avec une profondeur de recherche de 20 et pour une valeur de SNR de 2.2 dB, quelque soit la métrique considérée, 
-plus de 95\% des trames erronées ont l'ensemble de leurs erreurs identifiées.
+Cette Figure est divisée en six sous-figures. La première ligne correspond aux cas R=1/3. Les mêmes propriétés 
+d'identification que celles présentées dans le cas binaire apparaissent. Au fur et à mesure que la valeur du SNR croît, le 
+taux identification augmente. La métrique basée sur l'information \textit{a posteriori} $\Delta'_1$ présente de meilleurs statistiques
+d'identification que celle basée uniquement sur les informations extrinsèques $\Delta'_2$. Cet écart diminue avec l'augmentation du SNR.
+Finalement, pour une profondeur de recherche de 20 et pour une valeur de SNR de 2.2 dB, quelque soit la métrique considérée, 
+plus de 95\% des trames erronées ont l'ensemble de leurs erreurs identifié.
 
 La deuxième ligne d'histogrammes présente quant à elle ces statistiques  pour un rendement de 3/4. Dans ce cas, la 
-métrique basée uniquement sur les informations extrinsèques possède de moins bonnes performances que celle basée sur les 
-informations \textit{a posteriori}. La même constatation est réalisée pour un rendement de 6/7. Ainsi, plus la rendement 
-augmente, moins la métrique basée sur les informations extrinsèque est pertinente. Cette constatation est amplifiée pour 
-de faibles valeurs de SNR. Ainsi, dans tous les cas, la métrique basée sur les information \textit{a posteriori} 
-possède de bonnes performances d'identification des erreurs résiduelles. Un taux d'identification réussie de plus de 
-90\% est en effet atteint dans la zone de convergence en considérant une profondeur de recherche de 20. 
+métrique basée uniquement sur les informations extrinsèques $\Delta'_2$ possède de moins bonnes performances que celle basée sur les 
+informations \textit{a posteriori} $\Delta'_1$. La même constatation est réalisée pour un rendement de 6/7. Ainsi, plus le rendement 
+augmente, moins la métrique basée sur les informations extrinsèque s'avère pertinente. Cette constatation est amplifiée pour 
+de faibles valeurs de SNR. Ainsi, dans tous les cas, la métrique basée sur les information \textit{a posteriori} $\Delta'_1$
+possède de bonnes performances d'identification des erreurs résiduelles. Il est à noter qu'un taux d'identification réussie de plus de 
+90\% est atteint dans la zone du plancher d'erreur en considérant une profondeur de recherche de 20. 
 
 En reprenant le calcul permettant d'obtenir l'information extrinsèque, il apparaît que cette dernière dépend 
 essentiellement de l'information de parité. Or, les forts rendements sont obtenus par poinçonnage 
-de l'information de parité. Ceci esquisse alors une cause probable de l'avantage obtenu par la métrique $\Delta'_1$ sur 
-la métrique $\Delta'_2$ lorsque le rendement augmente : comme le nombre de symboles de parité diminue avec l'augmentation 
-du rendement, la métrique $\Delta'_2$ est porteuse de moins d'information que la la métrique $\Delta'_1$ lorsque le 
-rendement augmente. Cette constatation doit se transposer aux cas binaire.
+de l'information de parité. Ceci est la cause probable de de la pertinence la métrique $\Delta'_1$ vis-à-vis de la
+la métrique $\Delta'_2$ lorsque le rendement augmente. En effet, comme le nombre de symboles de parité diminue avec l'augmentation 
+du rendement, la métrique $\Delta'_2$ est porteuse de moins d'information que la métrique $\Delta'_1$. Cette constatation 
+doit normalement se transposer aux cas de turbo codes binaire.
 
 \subsection{Conclusions sur les métriques d'identification}
 Faisant suite à la mise en exergue de l'existence d'erreurs résiduelles dans la région du plancher d'erreur des turbo codes,
-différentes métriques permettant l'identification de ces erreurs ont été proposées. Une comparaison des performances de ces 
-différentes métriques a permis de sélectionner une métrique, nommée $\Delta_1$ (et $\Delta'_1$ pour son homologue 
-adaptée aux turbo codes double binaires). En considérant la valeur absolue de l'information \textit{a posteriori}
-elles permettent d'identifier la totalité des erreurs d'une trame erronée dans 90\% des cas dans la zone du plancher 
+différentes métriques permettant l'identification de ces erreurs ont été étudiées. Une comparaison des performances de ces 
+différentes métriques a permis de converger vers une métrique, nommée $\Delta_1$ (et $\Delta'_1$ pour son homologue 
+adaptée aux turbo codes double binaires). En considérant la valeur absolue de l'information \textit{a posteriori}, cette
+métrique permet d'identifier la totalité des erreurs d'une trame erronée dans 90\% des cas dans la zone du plancher 
 d'erreur pour une profondeur de recherche raisonnable, ce quelque soit le turbo code standardisé considéré. Ce taux devrait
-permettre d'observer des gains de l'ordre d'une décade en considérant un algorithme tirant parti de cette métrique. 
+permettre d'observer des gains de l'ordre d'une décade en considérant un algorithme capable d'exploiter cette métrique. 
 La Section suivante a justement pour 
-objet la proposition d'un tel algorithme.
+objet la proposition d'un tel algorithme de décodage.
 
-\section{L'algorithme Flip'N'Check}
+\section{L'algorithme de décodage Flip'N'Check}
 Cette section présente un algorithme permettant de tirer parti de la métrique sus-présentée.
 %  Tout d'abord, le 
 % principe de cet algorithme est détaillé. Ceci mène alors à la formalisation de ce dernier. Finalement, ces performances 
 % sont discutés dans le cadre de divers turbo codes standardisés.
 Dans un premier temps, le principe de cet algorithme est détaillé. Dans un second temps ses performances sont discutés 
 dans le cadre de différents turbo codes standardisés.
-\subsection{Dans le cas des turbo codes binaire}
+\subsection{Application aux turbo codes binaire}
 
 \subsubsection{Principe}
 Dans un grand nombre de standards de communication numérique, le turbo code est concaténé en série avec un code CRC. En 
@@ -611,7 +639,7 @@ performances de décodage. Finalement, cette méthode peut s'adapter à des turb
 correcteur d'erreur y est concaténé en série. Maintenant, une adaptation aux turbo codes double binaires est détaillée.
 
 
-\subsection{Dans le cas des turbo codes double binaire}
+\subsection{Applications aux turbo codes double binaire}
 Cette section propose une transposition de l'algorithme FNC au cas double binaire. Après avoir décrit les transformations 
 nécessaires, l'algorithme adapté au turbo codes double binaire est exprimé. Enfin, une présentation des performances obtenues 
 est réalisée.
@@ -659,15 +687,16 @@ soit pas celui décodé.
             \toprule
             		& $S_{M_x}$	& $S_{M_x}\cup S_{M_y}$	& $S_{M_x}\cup S_{M_y}\cup S_{M_z}$ & $S_{M_x}\cup S_{M_y}\cup S_{M_z}\cup S_{M_t}$ \\
             \cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}
-            i=3     &	0\%		&			& 			&			\\
-            i=4     &	0\%		&			& 			&			\\
-            i=5     &	0\%		&			& 			&			\\
-            i=6     &	0\%		&			& 			&			\\
-            i=7     &	0\%		&			& 			&			\\
-            i=8     &	0\%		&			& 			&			\\
+            i=3     &	0\%		&	96\%	& 	3\%		&	1\%		\\
+            i=4     &	0\%		&	96\%	& 	3\%		&	1\%		\\
+            i=5     &	0\%		&	97\%	& 	3\%		&	0\%		\\
+            i=6     &	0\%		&	97\%	& 	3\%		&	0\%		\\
+            i=7     &	0\%		&	97\%	& 	3\%		&	0\%		\\
+            i=8     &	0\%		&	97\%	& 	2\%		&	1\%	\\
             \bottomrule
         \end{tabular}%}
 \end{table}
+ 
 Par les données présentées dans ce tableau, il apparaît que dans la très grande majorité des cas, le symbole transmis 
 correspond au symbole le deuxième plus probable. Considérer les deux symboles les moins probables ne permet alors 
 d'augmenter la probabilité de fournir le bon mot de code que d'une part marginale alors que la complexité calculatoire
@@ -749,7 +778,7 @@ des performances de décodage dans le contexte des standards DVB-RCS et DVB-RCS2
 \subsubsection{Performances de décodage}
 Dans cette section le résultat de simulations Monte Carlo réalisés avec une représentation des données en virgule
 flottante sont détaillés. Un canal AWGN est toujours considéré. En revanche, la modulation est maintenant une QPSK. Le 
-nombre d'itérations maximum réalisées par le turbo décodeur est fixé à 8 \textcolor{purple}{et $I_{\text{min}}$ vaut 3}.
+nombre d'itérations maximum réalisées par le turbo décodeur est fixé à 8 et $I_{\text{min}}$ vaut 3.
 Comme dans le cas binaire, la valeur de $q$ est fixée à 10. Dans le standard DVB-RCS, les tailles de trame s'étalent 
 de quelques dizaines d'octets à 200 octets. Sept rendements différents sont définis allant de 1/3 à 6/7. Le code CRC 
 considéré dans ce standard est de longueur 16. La Figure \ref{fig:fnc_dvb1_440} compare les performances du turbo décodage
@@ -757,19 +786,69 @@ conventionnel et du celles de l'algorithme FNC pour K=440 symboles et pour diff�
 ainsi que grâce à l'algorithme FNC, dans la zone du plancher d'erreur, le turbo code de rendement 1/2 possède de 
 meilleures performances que celles obtenues pour le turbo code de rendement 1/3 avec un décodage conventionnel EML-MAP. 
 Plus généralement, pour des valeurs de SNR moyennes à élevées, quelque soit le rendement du code, l'algorithme FNC apporte 
-des gains au moins égaux à un ordre de grandeur. En terme de SNR, cela correspond à des gains de 0.4 dB à plus de 0.6 dB.
+des gains au moins égaux à un ordre de grandeur. En terme de SNR, cela correspond à des gains allant de 0.4 dB à plus de 
+0.6 dB.
 
-Pour les autres 
+Pour les autres tailles de trames de standard, les gains sont tout aussi conséquents et équivalents. Pour confirmer ces
+dires, des courbes de performances présentant le taux d'erreur trame obtenu avec l'algorithme FNC sont présentés en 
+Annexe \ref{ann:fnc}. Il apparaît que la pente de la courbe dans la zone du plancher d'erreur est modifiée, l'inflexion
+est moins importante grâce à l'algorithme FNC.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{main/ch3_fig/fnc/dvb/tikz/dvb1_440.pdf}
 	\caption{Comparaison de performances de décodages entre EML-MAP et FNC. Standard DVB-RCS, K=440, Rendement de 1/3 à 
-	6/7.	Décodeurs itérant jusqu'à 8 fois. \label{fig:fnc_dvb1_440}}
+	6/7. Décodeurs itérant jusqu'à 8 fois. \label{fig:fnc_dvb1_440}}
+\end{figure}
+En 2012, le successeur du standard DVB-RCS a été publié. Le code correcteur considéré est toujours un turbo code double
+binaire. En revanche, afin d'améliorer les performances de corrections, la longueur de contrainte des codes constituants
+est augmentée. Des turbo codes 16 états sont alors considérés. Un nouvel entrelaceur ARP ainsi que des tailles de trame
+plus conséquentes sont définis. La taille du code CRC concaténé en série double, pour passer à une profondeur de 32. 
+Enfin de nouveaux schémas de poinçonnage sont ajoutés. De la sorte, ces turbo codes font 
+partis des codes correcteurs les plus performants et flexibles standardisés. La complexité calculatoire de ce code a
+toutefois doublé en comparaison de celle du turbo code de la génération précédente. 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\textwidth]{main/ch3_fig/fnc/dvb2/tikz/dvb2.pdf}
+	\caption{Comparaison de performances de décodages entre EML-MAP et FNC. Standard DVB-RCS 2, K=752, Rendement de 1/2 à 
+	4/5. Décodeurs itérant jusqu'à 8 fois. \label{fig:fnc_dvb2_752}}
 \end{figure}
 
-\newpage
+La Figure \ref{fig:fnc_dvb2_752} présente une comparaison des performances de décodage pour le standard DVB-RCS 2 avec
+K=752. Différents rendements sont considérés : 1/2, 2/3, 3/4 et 4/5. Les autres paramètres de la simulation restent les
+même que pour le cas 8 états.
+Tout d'abord, en considérant un décodage conventionnel, il apparaît que les performances de ce code surpassent très largement 
+celles du DVB-RCS. En effet, les points d'inflexions des différentes courbes de performances apparaissent 2 à 3 décades
+plus bas. La zone du plancher d'erreur correspond alors à des taux d'erreur trame de l'ordre de $10^{-7}$. Ceci entraîne
+un temps nécessaire pour les simulations Monte-Carlo conséquent. D'autant plus, le FNC visant à abaisser le plancher 
+d'erreur, apercevoir une trame erronée devient alors extrêmement rare. Ainsi les courbes obtenues n'ont compté que 30 
+trames erronées avec l'algorithme FNC.
+
+Il apparaît que même dans un contexte de turbo code très performants, des gains conséquents dans la zone du plancher d'erreur 
+sont obtenus grâce à l'emploi de l'algorithme FNC. À nouveau, un changement de la pente de la courbe dans cette zone est
+visible. Ceci à pour conséquence de fournir des gains approchant la décade dans certains cas comme pour R=4/5. Dans d'autres
+cas, comme pour R=1/2, les gains dépassent légèrement l'ordre de magnitude.
+% PERFS++
+
 \section{Conclusions}
+Dans ce troisième chapitre, une étude sur les erreurs résiduelles des turbo codes a été menée. Dans un premier temps,
+leur existence a été caractérisée grâce aux spectres de distances des turbo codes. Ces erreurs étant responsables de 
+la zone du plancher d'erreur, des propositions de critères d'identifications ont alors été comparés.
+
+Cette comparaison a permis de mettre en exergue une métrique, permettant d'identifier de façon quasi systématique
+les erreurs résiduelles à l'issue du processus de turbo décodage. À partir de celle-ci, un algorithme, nommé Flip'N'Check
+a été proposé. Cet algorithme tire parti de l'augmentation de la distance minimale obtenue via la concaténation en série 
+d'un code détecteur d'erreur et d'un turbo code. Un tel schéma de codage est couramment rencontré dans les standards de 
+communications. Le principe de cet algorithme repose sur l'identification des positions les moins fiables dans la séquence en train 
+d'être décodée. De là, différents mots de codes candidats sont générés puis vérifiés en utilisant le code détecteur d'erreurs.
+Des gains d'au moins une décade ont été observés, ce, quelque soit le turbo code standardisé considéré. Ainsi, des gains
+de performances conséquents sont observables pour des turbo codes binaires à 8 ou 16 états ainsi que pour des turbo codes 
+double binaires eux aussi à 8 ou 16 états. La complexité calculatoire additionnelle nécessaire à cet algorithme est modérée.
+Cela le rend alors intéressant face à l’état de l'art de la réduction du plancher d'erreurs des turbo codes.
+
+Dans le chapitre suivant, après une étude des architectures matérielles de turbo décodeurs, des propositions d'implémentation 
+de l'algorithme Flip'N'Check sont étudiées.
 
 
 % Conclusion: Méthode relativement simple à mettre en oeuvre qui tire parti de l'auigmentation de la dmin du code grace a 

@@ -21,7 +21,7 @@
 
 
 \begin{document}
-
+ 
 
 \begin{tikzpicture}
     \begin{semilogyaxis}[footnotesize, width=0.8\linewidth, height=0.6\linewidth,    
@@ -33,7 +33,8 @@
         %REF
         \addplot[mark=o,Paired-5, semithick]  table [x=SNR, y=BCH0] {../dat/bch};
         %FNC
-        \addplot[mark=o,Paired-1, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER_FNC] {../dat/1504};
+        %\addplot[mark=o,Paired-1, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER_FNC] {../dat/1504};
+        \addplot[mark=o,Paired-1, semithick, dashed, mark options={solid}]  table [x=SNR, y=FNC_NEW] {../dat/1504};
         
         %CIM
         \addplot[mark=square,Paired-3, dashed, mark options={solid}]  table [x=SNR, y=CIM1] {../dat/cimShift};
