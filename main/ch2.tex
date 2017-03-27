@@ -730,7 +730,7 @@ codes. Cet algorithme, peu coûteux à mettre en œuvre permet d'obtenir, sans m
 de convergence. Toutefois, cette approche suppose quelques contraintes afin que les gains énoncés soient
  conséquents. D'une part, le nombre maximal d'itérations se doit d'être plus important que dans les schémas de 
  décodage courants. Cependant, grâce à l'utilisation d'un critère d'arrêt, le nombre moyen d'itération employé reste 
- similaire. 
+ similaire. Ce travail a fait l'objet d'une publication en conférence nationale \citemine{gretsi}.
 
  D'autre part, afin d'observer des gains aussi en terme de taux d'erreur trame, il est nécessaire que le 
  nombre d'état du codeur soit supérieur à 8. Aucune proposition n'a pu être fournie, quant à la cause de ce phénomène. 
@@ -997,11 +997,11 @@ précédemment.
 	\centering
 	\includegraphics[width=.8\textwidth]{main/ch2_fig/tikz/redec_osc.pdf}
 	\vspace*{.3cm}
-	\caption{\label{fig:osc}Comparaison des performances de décodage entre les algorithme EML-MAP et FSM pour plusieurs 
+	\caption{\label{fig:cmp_osc}Comparaison des performances de décodage entre les algorithme EML-MAP et FSM pour plusieurs 
 	profondeurs de recherche. Turbo code du standard LTE (K=1504, R=1/3).}
 \end{figure}
 
-La Figure \ref{fig:osc} présente les performances de décodage obtenues en exploitant le principe de décodages successifs selon une 
+La Figure \ref{fig:cmp_osc} présente les performances de décodage obtenues en exploitant le principe de décodages successifs selon une 
 métrique basée sur le nombre d'oscillations. Un turbo code du standard LTE est considéré avec des paquets de 1504 bits et un 
 rendement 1/3. Chaque turbo décodage peut effectuer jusqu'à 32 itérations. La notation OFSM(L) signifie qu'au plus L 
 positions différentes seront saturées dans les deux directions. Différents algorithmes sont utilisés au sein du

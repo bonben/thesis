@@ -1,0 +1,81 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{eulervm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots} 
+\usetikzlibrary{matrix, positioning}
+\usepackage{pgffor}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\input{../../../colors}
+\usetikzlibrary{backgrounds}
+
+\setlength{\textwidth}{146.8mm}
+
+
+\begin{document}
+
+\newsavebox{\mybox}
+\savebox{\mybox}{%
+\begin{tikzpicture}
+    \begin{semilogyaxis}[footnotesize, width=.45\textwidth, height=.35\textwidth,    
+            xmin=1.15, xmax=1.35, xtick={1.2,1.3},
+            %ymin=2e-6,  ymax=0.11,
+            %label=$E_b/N_0 \text{(dB)}$, ylabel=FER,  
+            ytick={2e-6, 1e-6, 4e-7}, yticklabels={$2.10^{-6}$, $10^{-6}$, $4.10^{-7}$},
+            extra y ticks={3e-7, 4e-7, 5e-7, 6e-7, 7e-7, 8e-7, 9e-7}, extra y tick style={yticklabels={}, black!25},
+            grid=both, grid style={gray!30}, 
+        tick align=inside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}] 
+       % legend pos=north east, %yticklabels={,,},
+        /pgfplots/table/ignore chars={|}, yticklabel pos=left, 
+         axis background/.style =   {shade, top color=white, bottom color=white}
+        ] 
+
+        %\addplot[mark=o,Dark2-1, semithick]  table [x=Eb/N0, y=FER,  restrict x to domain=0.9:1.2] {../../0.0_1.5_crc24_ref.txt};
+        \addplot[mark=o,Dark2-2, semithick]  table [x=Eb/N0, y=FER,  restrict x to domain=0.9:1.4] {../../min/dat/0.0_1.3_fnc10_crc24_min5.txt};
+
+        \addplot[mark=o,Dark2-3, semithick]  table [x=Eb/N0, y=FER,  restrict x to domain=0.9:1.4] {../dat/0.0_1.3_fnc10_crc24_min5_s2.txt};
+        \addplot[mark=o,Dark2-5, semithick]  table [x=Eb/N0, y=FER,  restrict x to domain=0.9:1.4] {../dat/0.0_1.5_fnc10_crc24_min6_step2.txt};
+        \addplot[mark=o,Dark2-4, semithick]  table [x=Eb/N0, y=FER,  restrict x to domain=0.9:1.4] {../dat/0.0_1.5_fnc10_crc24_min4_step2.txt};
+        \addplot[mark=o,Dark2-6, semithick]  table [x=Eb/N0, y=FER,  restrict x to domain=0.9:1.4] {../dat/0.0_1.5_fnc10_crc24_min4_step2_max6.txt};
+        
+        
+    \end{semilogyaxis}
+\end{tikzpicture}  
+}
+
+
+
+\begin{tikzpicture}
+    \begin{semilogyaxis}[footnotesize, width=\textwidth, height=0.6\textwidth,    
+            xmin=0, xmax=1.5, xtick={0,0.2,...,1.5},
+            %ymin=2e-6,  ymax=0.11,
+            xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
+        tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}] 
+        legend pos=north east,
+        /pgfplots/table/ignore chars={|}
+        ]  
+
+        \addplot[mark=o,Dark2-1, semithick]  table [x=Eb/N0, y=FER] {../../0.0_1.5_crc24_ref.txt};
+        \addplot[mark=o,Dark2-2, semithick]  table [x=Eb/N0, y=FER] {../../min/dat/0.0_1.3_fnc10_crc24_min5.txt};
+
+        \addplot[mark=o,Dark2-3, semithick]  table [x=Eb/N0, y=FER] {../dat/0.0_1.3_fnc10_crc24_min5_s2.txt};
+        \addplot[mark=o,Dark2-5, semithick]  table [x=Eb/N0, y=FER] {../dat/0.0_1.5_fnc10_crc24_min6_step2.txt};
+        \addplot[mark=o,Dark2-4, semithick]  table [x=Eb/N0, y=FER] {../dat/0.0_1.5_fnc10_crc24_min4_step2.txt};
+        \addplot[mark=o,Dark2-6, semithick]  table [x=Eb/N0, y=FER] {../dat/0.0_1.5_fnc10_crc24_min4_step2_max6.txt};
+        
+        \draw (axis cs: 0.4,1e-5)node{\usebox{\mybox}};
+        \node[coordinate] (A) at (axis cs:1.25,6e-7) {};
+        \draw[black, rotate=-45] (A) ellipse (0.1 and 3.5); 
+        \addplot [<-, black, sharp plot, update limits=false] coordinates{(0.75,1e-6) (1.14,1e-6)};
+
+        \legend{Reference, FNC10 it 5 6 7 8,  FNC10 it 5 7, FNC10 it 6 8, FNC10 it 4 6 8, FNC10 it 4 6}  
+          
+    \end{semilogyaxis}
+\end{tikzpicture}  
+ 
+\end{document}

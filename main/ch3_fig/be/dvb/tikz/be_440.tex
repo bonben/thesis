@@ -1,0 +1,122 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{eulervm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{decorations.pathmorphing}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning, patterns}
+\usepackage{pgffor}
+\usepackage{amsmath}
+
+\setlength{\textwidth}{146.8mm}
+\input{../../../colors}
+
+\begin{document}
+
+\begin{tikzpicture}
+		
+		\begin{groupplot}[group style={group name=be, group size= 2 by 4, horizontal sep=1.5cm, vertical sep=2.5cm}, 
+					height=0.38\textwidth,  width=0.7\textwidth,
+					grid=both, grid style={gray!30},
+					colorbrewer cycle list=Spectral,
+					ybar interval=1pt, %/pgf/bar width=3pt,
+					xmin=1, xmax=22, xtick={1,2,...,22}, ymin=0,  ytick={0,10,...,45}, ymax=45, 
+					grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.1)},anchor=south},legend columns=4,
+					xticklabels={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,>20},
+					 x tick label style={shift={(axis cs:1.3,0)},anchor=east,rotate=60},
+					 ylabel=PDF (\%),
+					     restrict y to domain*=0:45, % Cut values off at 14
+    visualization depends on=rawy\as\rawy, % Save the unclipped values
+    after end axis/.code={ % Draw line indicating break 
+            \draw [ultra thick, white, decoration={snake, amplitude=1pt}, decorate] (rel axis cs:0,0.95) -- (rel axis cs:1,0.95);
+        },
+    axis lines*=left,
+    clip=false 
+					 ]
+	 
+		\nextgroupplot[legend entries = {1.2dB, 1.6dB, 2.0dB}]
+		\addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y=YB_12] {../dat/440_13};
+		\addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y=YB_16] {../dat/440_13};
+		\addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y=YB_20] {../dat/440_13};
+		\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-2!50 }, update limits=false] table[x=X, y=13_be] {../dat/th440_w};
+		%\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-4 }, update limits=false] table[x=X, y=13_be] {../dat/th440};
+		\addplot [<-, black, very thin, sharp plot, update limits=false] coordinates{(10.95,60) (11.4,60)} node [right] {{\footnotesize $55$}};
+
+		\nextgroupplot[legend entries = {1.2dB, 1.6dB, 2.0dB}]
+		\addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y=YS_12] {../dat/440_13};
+		\addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y=YS_16] {../dat/440_13};
+		\addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y=YS_20] {../dat/440_13};
+		\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-2!50 }, update limits=false] table[x=X, y=13_se] {../dat/th440_w};
+ 		%\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-4 }, update limits=false] table[x=X, y=13_se] {../dat/th440};
+ 		\addplot [<-, black, very thin, sharp plot, update limits=false] coordinates{(7.95,60) (8.4,60)} node [right] {{\footnotesize $58$}};
+
+ 		\nextgroupplot[legend entries = {1.6dB, 2.0dB, 2.4dB}]
+		\addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y=YB_16] {../dat/440_12};
+		\addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y=YB_20] {../dat/440_12};
+		\addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y=YB_24] {../dat/440_12};
+		\node[rotate=60] at ($(axis cs:11.75,47)+(0,0)$) {\small \textcolor{Paired-5}{43}}; 
+		\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-2!50 }, update limits=false] table[x=X, y=12_be] {../dat/th440_w};
+		%\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-4 }, update limits=false] table[x=X, y=12_be] {../dat/th440};
+		\addplot [<-, black, very thin, sharp plot, update limits=false] coordinates{(10.95,60) (11.4,60)} node [right] {{\footnotesize $65$}};
+
+		\nextgroupplot[legend entries = {1.6dB, 2.0dB, 2.4dB}]
+		\addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y=YS_16] {../dat/440_12};
+		\addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y=YS_20] {../dat/440_12};
+		\addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y=YS_24] {../dat/440_12};
+		\node[rotate=60] at ($(axis cs:8.75,48)+(0,0)$) {\small \textcolor{Paired-5}{47}}; 
+		\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-2!50 }, update limits=false] table[x=X, y=12_se] {../dat/th440_w};
+		%\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-4 }, update limits=false] table[x=X, y=12_se] {../dat/th440};
+		\addplot [<-, black, very thin, sharp plot, update limits=false] coordinates{(7.95,60) (8.4,60)} node [right] {{\footnotesize $69$}};
+
+		\nextgroupplot[legend entries = {3.2dB, 3.6dB, 4.0dB}]
+		\addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y=YB_32] {../dat/440_34};
+		\addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y=YB_36] {../dat/440_34};
+		\addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y=YB_40] {../dat/440_34};
+		\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-2!50 }, update limits=false] table[x=X, y=34_be] {../dat/th440_w};
+		%\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-4 }, update limits=false] table[x=X, y=34_be] {../dat/th440};
+		\addplot [<-, black, very thin, sharp plot, update limits=false] coordinates{(4.95,60) (5.4,60)} node [right] {{\footnotesize $70$}};
+
+		\nextgroupplot[legend entries = {3.2dB, 3.6dB, 4.0dB}]
+		\addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y=YS_32] {../dat/440_34};
+		\addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y=YS_36] {../dat/440_34};
+		\addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y=YS_40] {../dat/440_34};
+		\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-2!50 }, update limits=false] table[x=X, y=34_se] {../dat/th440_w};
+		%\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-4 }, update limits=false] table[x=X, y=34_se] {../dat/th440};
+		\addplot [<-, black, very thin, sharp plot, update limits=false] coordinates{(4.95,60) (5.4,60)} node [right] {{\footnotesize $73$}};
+
+		\nextgroupplot[legend entries = {4.4dB, 4.8dB, 5.2dB}]
+		\addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y=YB_44] {../dat/440_67};
+		\addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y=YB_48] {../dat/440_67};
+		\addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y=YB_52] {../dat/440_67};
+		\node[rotate=60] at ($(axis cs:5.25,48)+(0,0)$) {\small \textcolor{Paired-3}{47}}; 
+		\node[rotate=60] at ($(axis cs:5.95,48)+(0,0)$) {\small \textcolor{Paired-5}{61}}; 
+		\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-2!50 }, update limits=false] table[x=X, y=67_be] {../dat/th440_w};
+		%\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-4 }, update limits=false] table[x=X, y=67_be] {../dat/th440};
+		\addplot [<-, black, very thin, sharp plot, update limits=false] coordinates{(4.95,60) (5.4,60)} node [right] {{\footnotesize $80$}};
+
+		\nextgroupplot[legend entries = {4.4dB, 4.8dB, 5.2dB}]
+		\addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y=YS_44] {../dat/440_67};
+		\addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y=YS_48] {../dat/440_67};
+		\addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y=YS_52] {../dat/440_67};
+ 		\node[rotate=60] at ($(axis cs:5.25,48)+(0,0)$) {\small \textcolor{Paired-3}{49}}; 
+		\node[rotate=60] at ($(axis cs:5.95,48)+(0,0)$) {\small \textcolor{Paired-5}{65}}; 
+		\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-2!50 }, update limits=false] table[x=X, y=67_se] {../dat/th440_w};
+		%\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-4 }, update limits=false] table[x=X, y=67_se] {../dat/th440};
+		\addplot [<-, black, very thin, sharp plot, update limits=false] coordinates{(4.95,60) (5.4,60)} node [right] {{\footnotesize $86$}};
+				
+\end{groupplot}
+		\node[below = 0.7cm of be c1r1.south] {(a) : DVB-RCS - K=440 R=1/3 - BE};
+		\node[below = 0.7cm of be c2r1.south] {(b) : DVB-RCS - K=440 R=1/3 - SE};
+		\node[below = 0.7cm of be c1r2.south] {(c) : DVB-RCS - K=440 R=1/2 - BE};
+		\node[below = 0.7cm of be c2r2.south] {(d) : DVB-RCS - K=440 R=1/2 - SE};
+		\node[below = 0.7cm of be c1r3.south] {(e) : DVB-RCS - K=440 R=3/4 - BE};
+		\node[below = 0.7cm of be c2r3.south] {(f) : DVB-RCS - K=440 R=3/4 - SE};
+		\node[below = 0.7cm of be c1r4.south] {(g) : DVB-RCS - K=440 R=6/7 - BE};
+		\node[below = 0.7cm of be c2r4.south] {(h) : DVB-RCS - K=440 R=6/7 - SE};
+\end{tikzpicture}  
+
+\end{document}

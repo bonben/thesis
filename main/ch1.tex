@@ -694,7 +694,7 @@ Le principe du décodage à maximum \textit{a posteriori} symbole par symbole es
 Cependant, si nous prenons en compte la représentation sous forme de treillis du codeur RSC, ce calcul est strictement 
 équivalent à celui des probabilités de transitions formulé par : 
 \[\hat{m_k} = \argmax_{i\in\{0,1\}} \sum\limits_{(s,s')\in\Gamma_{k,i}}P(s_{k-1}=s, s_{k}=s',\mathbf{y}),\]
-où $\Gamma_{k,i}$ représente l'ensemble des chemins de la ${k^{ième}}$ section de treillis pour lesquels $u_k=i$. 
+où $\Gamma_{k,i}$ représente l'ensemble des chemins de la ${k^\text{ième}}$ section de treillis pour lesquels $u_k=i$. 
 
 En exploitant les propriétés du treillis et la relation de Bayes, la probabilité jointe peut s'écrire sous la forme d'un 
 produit de trois termes. Tout d'abord, $\mathbf{y}$ peut être décomposé en trois sous séquences : le passé exprimé par 
@@ -1171,7 +1171,7 @@ En reprenant l'équation \ref{eq:perr}, nous pouvons finalement écrire :
 \end{equation}
 Cette équation donne donc une borne supérieure quant à la probabilité d'erreur mot en utilisant un décodeur ML. En 
 découle son équivalent binaire exprimé par :
-\begin{equation} \label{eq:uboundfer}
+\begin{equation} \label{eq:uboundber}
 	P_{b} \le \sum\limits_w \frac{W_w}{K} Q\left(\sqrt{\frac{2wRE_b}{N_0}}\right)
 \end{equation} 
 où $W_w$ est la somme des poids de Hamming des $A_w$ séquences binaires générant  des mots de codes de poids de Hamming $w$.
@@ -1408,7 +1408,7 @@ les $\cal{L}$ séquences les plus probables correspondant à des chemins dans le
 \cite{mlla}.
 Dans le cadre du décodage de turbo codes par liste, trois principales approches peuvent être appliquées :
 \begin{enumerate}
-	\item \textbf{Intersection de liste : } Chacun des codes constituants est décodé selon un algorithme pat liste. Dès 
+	\item \textbf{Intersection de liste : } Chacun des codes constituants est décodé selon un algorithme par liste. Dès 
 	que l'intersection des deux ensembles de liste consiste en une seule séquence, le décodage s'arrête. Cette séquence 
 	est alors la sortie du décodeur \cite{sadowPair}. 
 	\item \textbf{LVA post turbo : }  Le LVA peut aussi être réalisé en dehors du processus itératif usuel. Dans ce cas, 

@@ -1,0 +1,6 @@
+#!/bin/zsh
+for var in "$@"
+do
+	sed -i -e '1,4s/^/#/ ; /Es\/N0/ s/#/ /' $var
+done
+
