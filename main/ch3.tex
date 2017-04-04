@@ -198,34 +198,34 @@ l'algorithme EML-MAP itérant 8 fois où le facteur de remise à l'échelle vaut
 au cours des itérations suivantes. 100 trames erronées après décodage sont considérées pour les expérimentations. Comme 
 dans le cas de turbo codes 
 binaires, il apparaît que la très grande majorité des trames contiennent au plus 10 erreurs binaires. En ce qui concerne 
-le nombre d'erreur symbole, la distribution est semblable mais décalée vers la gauche de 1 à 3 erreurs suivant le turbo 
+le nombre d'erreurs symboles, la distribution est semblable mais décalée vers la gauche de 1 à 3 erreurs suivant le turbo 
 code considéré. Ceci est conforme avec le fait qu'une erreur symbole corresponde à 1 ou 2 erreurs binaires. 
 
 Afin de comparer ces données expérimentales avec des valeurs théoriques, l'équation \ref{eq:se} est utilisée avec les 
-spectres de distance obtenus grâce à la méthode DIM pour ces différents turbo codes. Ces spectres de distances sont 
-présentées en Annexe \ref{sec:ann3}. Les résultats théoriques sont obtenus pour la valeur de SNR la plus grande considérée
-pour chacun des turbo codes et reportés sur la Figure \ref{fig:be_dvb440}. Il apparaît alors, qu'à nouveau, les équations
+spectres de distance obtenus grâce à la méthode DIM pour les différents turbo codes. Ces spectres de distances sont 
+présentés en Annexe \ref{sec:ann3}. Les résultats théoriques sont calculés en considérant la valeur de SNR la plus élevée 
+considérée pour les simulations et sont reportés sur la Figure \ref{fig:be_dvb440}. Il apparaît alors, qu'à nouveau, les équations
 \ref{eq:be2} et \ref{eq:se} permettent de prédire la distribution des erreurs dans la zone du plancher d'erreur. 
-Toutes les valeurs d’occurrence maximale sont correctement prédites que ce soit pour les erreurs binaires ou les 
-erreurs symbole. Des écarts apparaissent pour les faibles nombre d'erreurs. Ceci s'explique encore pour la validité des
-différents équations uniquement dans le cas d'un décodage ML, non réalisable pour des turbo codes de taille conséquente.
-Ainsi, dans le cas d'un décodage EML-MAP, une certain étalement des erreurs apparaît.
+Nous pouvons constater que toutes les valeurs d’occurrence maximale sont correctement prédites que ce soit pour les erreurs binaires ou les 
+erreurs symboles. Des écarts apparaissent pour les faibles nombre d'erreurs. Ceci s'explique là encore par la validité des
+différents équations dans le cas d'un décodage ML, non réaliste pour des turbo codes de taille conséquente.
+Ainsi, dans le cas d'un décodage EML-MAP, la distribution observée des erreurs est plus étalée que celle prédite.
 
-La même étude a été mené dans le cas des turbo codes du standard DVB-RCS avec K=752. Les résultats numériques ainsi
-que leurs spectres de distance sont présentés en Annexe \ref{sec:ann3} pour des rendements valant 1/3, 1/2, 3/4 et 6/7. 
-Ces autres résultats confirment ceux discutés ici. Ainsi, la prédiction théorique de la distribution des erreurs binaires 
+La même étude a été menée dans le cas des turbo codes du standard DVB-RCS avec K=752. Les résultats numériques ainsi
+que leurs spectres de distance sont fournis en Annexe \ref{sec:ann3} pour des rendements valant 1/3, 1/2, 3/4 et 6/7. 
+Ces résultats complémentaires confirment ceux détaillés dans cette sous-section. Ainsi, la prédiction théorique de la distribution des erreurs binaires 
 ou symboles est valide ce quelque soit le turbo code considéré. Il peut être binaire ou double binaire, de petite ou grande
 taille de trame et à faible ou fort rendement.
 \begin{figure}[!ht] 
 	\centering
 	\hspace*{-1cm}
 	\includegraphics[width=1.05\textwidth]{main/ch3_fig/be/dvb/tikz/be_440.pdf}
-	\caption{Distribution du nombre d'erreurs binaires et symboles pour différentes valeur de SNR et pour différents turbo codes des 
-	standards DVB-RCS pour K=440.	Décodage EML-MAP itérant 8 fois. \label{fig:be_dvb440}}
+	\caption{Distribution du nombre d'erreurs binaires et symboles pour différentes valeur de SNR et pour différents turbo codes du 
+	standard DVB-RCS pour K=440.	Décodage EML-MAP itérant 8 fois. \label{fig:be_dvb440}}
 \end{figure}
 
-Finalement, lorsqu'un processus de décodage itératif échoue dans le plancher d'erreur, la trame résultante est très proche du 
-mot de code transmis. Cette constatation semble vraie pour tout turbo code standardisé, incluant les turbo codes
+Finalement, lorsqu'un processus de décodage itératif échoue au niveau du plancher d'erreur, la trame résultante est très proche du 
+mot de code transmis. Cette constatation semble se réaliser pour tout turbo code standardisé, incluant les turbo codes
 double binaires. Dans la section suivante, différents critères d'identification de ces erreurs résiduelles sont 
 proposés et comparés.
 \newpage
@@ -456,35 +456,35 @@ Cette section présente un algorithme permettant de tirer parti de la métrique 
 %  Tout d'abord, le 
 % principe de cet algorithme est détaillé. Ceci mène alors à la formalisation de ce dernier. Finalement, ces performances 
 % sont discutés dans le cadre de divers turbo codes standardisés.
-Dans un premier temps, le principe de cet algorithme est détaillé. Dans un second temps ses performances sont évaluées 
+Dans un premier temps, le principe de cet algorithme est détaillé. Dans un second temps, ses performances sont évaluées 
 pour différents turbo codes standardisés.
 
 
-\subsection{Principe général de l'algorithme}
+\subsection{Principe général de l'algorithme Flip'N'Check}
 Afin de faciliter la compréhension de l'algorithme présenté ci après, ses concepts clefs sont maintenant introduits.
-L'algorithme décrit repose sur trois actions successives. Tout d'abord les positions les moins fiables dans la trame 
+L'algorithme décrit repose sur trois actions successives et complémentaires. Tout d'abord, les positions les moins fiables dans la trame 
 décodée sont identifiées grâce à la métrique présentée dans la section précédente. Ensuite, différents mots candidats sont générés
-à partir de ces positions. Finalement, grâce à un code détecteur d'erreur le bon mot de code est identifié.
+à partir de ces positions. Finalement, grâce à un code détecteur d'erreurs le bon mot de code est identifié.
 
 Dans un grand nombre de standards de communications numériques, le turbo code est concaténé en série avec un code CRC. En 
 effet, à la différence d'un code LDPC, un turbo code ne peut détecter si la trame décidée correspond à un mot de code. 
-C'est pourquoi l'algorithme  décrit ci-après va tirer conjointement parti des capacités de détection d'un code CRC et de la métrique 
+C'est pourquoi l'algorithme  décrit ci-après va exploiter conjointement les capacités de détection d'un code CRC et la métrique 
 d'identification proposée.
 
 L'utilisation d'un code CRC implique une baisse de rendement due à l'ajout d'information de redondance. Ceci résulte alors 
-en un retard de la convergence. Ce retard peut se calculer et vaut $10\times \log_{10}\left(\frac{K}{K-\text{Taille}_\text{CRC}}\right)$ dB.
+en un retard de la convergence de décodage. Ce retard peut se calculer et vaut $10\times \log_{10}\left(\frac{K}{K-\text{Taille}_\text{CRC}}\right)$ dB.
 Ainsi, bien évidemment, plus la taille du CRC est importante, plus ce retard de convergence est important. De même,
 pour une taille fixe du code CRC, plus la taille de la trame est faible, plus l'impact du code CRC sur le rendement est 
-faible. Dans les 
-standards de communication numérique utilisant des turbo codes, la taille du code CRC varie de 16 bits à 32 bits.
-Ainsi, il est d'une taille 16 pour les standards CCSDS et DVB-RCS, d'une taille de 24 pour le standard LTE et de taille
-32 pour le standard DVB-RCS2. Aussi, suivant la taille de la trame considéré, le retard de convergence induit par le code 
-CRC sera plus important que K est petit. Le tableau \ref{tab:crcShift} présente ces valeurs de retard de convergence en 
-dB pour différentes tailles de trames du standard LTE. 
+important. Dans les 
+standards de communications numériques utilisant des turbo codes, la taille du code CRC varie de 16 bits à 32 bits.
+Ainsi, il est d'une taille de 16 bits pour les standards CCSDS et DVB-RCS, d'une taille de 24 bits pour le standard LTE et d'une taille
+de 32 bits pour le standard DVB-RCS2. Aussi, suivant la taille de la trame considéré, le retard de convergence induit par le code 
+CRC sera plus important lorsque K est petit. Le tableau \ref{tab:crcShift} récapitule l'impact en dB du retard de convergence
+pour différentes tailles de trames du standard LTE. 
 
 \begin{table}[!b]
     \centering
-    \caption{Exemples de calculs de décalage de convergence pour différents turbo codes du standard LTE}
+    \caption{Calculs du décalage de convergence pour différents turbo codes du standard LTE}
     \label{tab:crcShift}
     %\resizebox{\linewidth}{!}{
         \begin{tabular}{rllll}
@@ -496,10 +496,10 @@ dB pour différentes tailles de trames du standard LTE.
         \end{tabular}%}
 \end{table}
 
-En revanche, l'impact en terme de taux d'erreur trame, et donc pour une valeur de SNR constante, ne peut être calculé par 
-avance car il dépend de la pente de la courbe de performance.
-Dans la suite, pour chaque standard utilisé, le code CRC associé à ce standard est utilisé. Dans le cas d'un décodage par l'algorithme 
-EML-MAP, il est utilisé en tant que critère d'arrêt. Pour l'algorithme FNC, son emploi est nécessaire. Le rendement exact
+En revanche, l'impact en terme de taux d'erreur trame, pour une valeur de SNR constante, ne peut être prédéterminé car il 
+dépend des performances de décodage.
+Dans la suite, pour chaque standard utilisé, le code CRC associé à ce standard est exploité. Dans le cas d'un décodage par l'algorithme 
+EML-MAP, il est également utilisé en tant que critère d'arrêt. Pour l'algorithme FNC, son emploi est nécessaire. Le rendement exact
 le comptabilisant est alors considéré dans tous les cas. Par exemple, pour un turbo code du standard LTE
 de rendement 1/3, le rendement exact vaut  $\frac{K~-~24}{3\times K~+~3\times 4}$.
 

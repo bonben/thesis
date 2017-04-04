@@ -1,0 +1,71 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{eulervm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+\usepackage{pgffor}
+\usepackage{amsmath}
+
+\input{../../colors}
+
+\setlength{\textwidth}{146.8mm}
+
+
+\begin{document}
+
+\begin{tikzpicture}
+\begin{groupplot}[	group style={group name=minX, group size= 3 by 1, horizontal sep=1.2cm, vertical sep=2.3cm}, 
+					width=0.4\textwidth, height=0.55\textwidth,  
+					xlabel=$E_b/N_0 \text{(dB)}$,  
+					tick align=outside, tickpos=left,
+					grid=both, grid style={gray!30},
+					/pgfplots/table/ignore chars={|},
+					ymode=log
+					]
+
+	\nextgroupplot[xmin=1.8, xmax=2.6, xtick={1.8,2.0,...,2.6}, ylabel=FER]
+        \addplot[mark=o,Set1-1, semithick                  ]  table [x=Eb/N0, y=FER] {../prec/ref_8.txt};                   \label{c1}
+        \addplot[mark=o,Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/fnc_8_8b.txt};    \label{c2}
+        \addplot[mark=o,Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/fnc_8_7b.txt};    \label{c3}
+        \addplot[mark=o,Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/fnc_8_6b.txt};    \label{c4}
+        \addplot[mark=o,Set1-5, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/fnc_8_5b.txt};    \label{c5}
+        \addplot[mark=o,Set1-7, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/fnc_8_4b.txt};    \label{c6}
+
+
+     \nextgroupplot[xmin=1.0, xmax=1.4, xtick={1.0,1.1,...,1.4}]
+ 
+
+     \nextgroupplot[xmin=0.6, xmax=1.1, xtick={0.6,0.7,...,1.5}]
+
+\end{groupplot}
+
+% legend
+\path (minX c1r1.north west|-current bounding box.north)--
+      coordinate(legendpos)
+      (minX c3r1.north east|-current bounding box.north);
+\matrix[
+    matrix of nodes,
+    anchor=south,
+    draw,
+    inner sep=0.2em,
+    draw
+  ]at([yshift=3ex]legendpos)
+  {
+    \ref{c1} & TC conventionnel        	& [5pt]
+	\ref{c2} & FNC $q_{10}, I_\text{min}= I_{\text{m}_\text{o}}, b_\Delta=8$	& [5pt]
+	\ref{c3} & FNC $q_{10}, I_\text{min}= I_{\text{m}_\text{o}}, b_\Delta=7$	\\
+	\ref{c4} & FNC $q_{8}, I_\text{min}= I_{\text{m}_\text{o}}, b_\Delta=6$	& [5pt]
+	\ref{c5} & FNC $q_{7}, I_\text{min}= I_{\text{m}_\text{o}}, b_\Delta=5$	& [5pt]
+	\ref{c6} & FNC $q_{6}, I_\text{min}= I_{\text{m}_\text{o}}, b_\Delta=4$	\\};
+
+
+	\node[below = 1.3cm of minX c1r1.south] {(a) : K=528};
+	\node[below = 1.3cm of minX c2r1.south] {(b) : K=2048};
+	\node[below = 1.3cm of minX c3r1.south] {(c) : K=6144};
+\end{tikzpicture}
+\end{document}

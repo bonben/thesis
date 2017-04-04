@@ -1,11 +1,11 @@
 %!TEX root = ../my_thesis.tex
 \chapter{Des oscillations du décodage itératif} % (fold)
-Ce chapitre deuxième étudie et vise à exploiter les oscillations inhérentes au décodage itératif de turbo codes. 
+Ce chapitre deuxième étudie et vise à exploiter les oscillations de métriques impliquées dans le décodage itératif de turbo codes. 
 
 Dans un premier temps, les oscillations sont définies et observées statistiquement. De là, des premières conclusions sont
 énoncées quant à l'exploitation de ces oscillations dans un but d'améliorer les performances de décodage de turbo codes.
 
-Ensuite, une adaptation pour les turbo code d'un algorithme originellement proposé pour le décodage des codes LDPC est 
+Ensuite, une adaptation pour les turbo codes d'un algorithme originellement proposé pour le décodage des codes LDPC est 
 établie. Ses performances selon différents contextes sont déterminés et discutés.
 
 Finalement, une tentative d'utilisation de l'observation des oscillations est considérée en dernière section dans un 
@@ -29,8 +29,8 @@ cours du processus itératif. Les auteurs classifient alors le comportement des 
 	\item Tous les bits convergents rapidement et de la même manière vers une solution stable.
 	\item La plupart des bits convergent rapidement vers une solution stable alors que les autres convergent de manière 
 	différente (croissance plus lente).
-	\item Les valeurs des LLRs oscillent, croisant ou non le seuil de décision (0). Dans ce cas, l'allure de l'évolution
-	des valeurs des LLRs est sinusoïdale.
+	\item Les valeurs des LLRs oscillent, croisant ou non le seuil de décision (0). Dans ce cas, l'évolution
+	des valeurs des LLRs est d'allure sinusoïdale.
 \end{enumerate}
 De ces constatations, les auteurs proposent un critère d'arrêt pour le processus itératif basé sur la valeur moyenne des 
 LLRs. Une comparaison est faite par rapport à un seuil prédéterminé. Cependant, la valeur de ce seuil ne peut être 
@@ -83,7 +83,7 @@ Les paramètres du couple codeur/décodeur pour cette étude sont les suivants :
 	\item Algorithme EML-MAP itérant 32 fois.\newline
 \end{itemize}
 Ainsi un instantané du comportement d'un turbo décodeur usuel dans un contexte binaire peut être capturé. Ceci représente 
-un cas d'usage suffisamment large, permettant de tirer des conclusions générales sur tout turbo décodeur standardisé.
+un cas d'usage suffisamment large, permettant de tirer des conclusions générales sur tout turbo décodeur  binaire standardisé.
 Le choix de 32 
 itérations au maximum permet d'obtenir suffisamment d'amplitude quant aux oscillations afin de les visualiser aisément. 
 % Cette étude se place dans le cadre des turbo codes binaires. Les deux standards considérés sont le standard LTE (8 
@@ -106,16 +106,16 @@ itérations au maximum permet d'obtenir suffisamment d'amplitude quant aux oscil
 
 
 Dans la suite, une oscillation est définie comme un changement de signe de l'information extrinsèque associée à un bit
-d'information. Ainsi, au sein d'un turbo décodeur, quatre types d'oscillations peuvent être considérées. La Figure 
-\ref{fig:osc} illustre les 4 types d’oscillations pour l'information extrinsèque sur un schéma de turbo décodeur dans 
+d'information. Dans cette étude, quatre types d'oscillations peuvent être considérées. La Figure 
+\ref{fig:osc} illustre ces 4 types d’oscillations pour l'information extrinsèque sur un schéma de turbo décodeur dans 
 lequel les étapes d'entrelacement n’apparaissent pas pour plus de simplicité.
 
-Comme deux décodeurs élémentaires sont présents, une symétrie centrale apparaît sur ce schéma nous permettant de simplifier
-cette présentation. Considérons donc uniquement le décodeur élémentaire opérant dans le domaine naturel. Ce dernier 
-fournit lors de l'itération $j$ un avis sur le signe de chacun des bits de la trame. À l'itération $j+1$, cet avis peut
-changer. Cette oscillation est notée $N\rightarrow N$, car elle est le résultat de deux itérations de calcul dans le 
-domaine naturel. Après entrelacement, cette information extrinsèque est utilisé par le décodeur du domaine entrelacé 
-pour produire une nouvelle information extrinsèque. Une nouvelle oscillation peut donc subvenir. Elle est notée $N\rightarrow I$
+Le schéma de la Figure \ref{fig:osc} présente une symétrie centrale. Ceci nous permet de simplifier
+sa présentation. Considérons donc uniquement le décodeur élémentaire opérant dans le domaine naturel. Ce dernier 
+fournit lors de l'itération $j$ un avis sur le signe de chacun des bits de la trame, exprimé par l'information extrinsèque $\mathbf{L_{12}^{\texttt{e}\ (j)}}$. À l'itération $j+1$, cet avis $\left(\mathbf{L_{12}^{\texttt{e}\ (j+1)}}\right)$) peut
+changer. Cette oscillation est notée $N\rightarrow N$, car elle est le résultat de deux itérations de calcul dans le est util
+domaine naturel. Après entrelacement, cette information extrinsèque est utilisée par le décodeur du domaine entrelacé 
+pour produire une nouvelle information extrinsèque, $\mathbf{L_{21}^{\texttt{e}\ (j+1)}}$. Une nouvelle oscillation peut donc subvenir. Elle est notée $N\rightarrow I$
 car la référence est le domaine naturel et est obtenue dans le domaine entrelacé. Cette dernière oscillation peut être 
 interprétée comme un désaccord entre les deux décodeurs élémentaires. Les oscillations $I\rightarrow I$ et $I\rightarrow N$
 s'obtiennent naturellement par symétrie.
@@ -154,7 +154,7 @@ considéré a une taille de trame de 1024 bits d'information pour un rendement 1
 la zone du plancher d'erreur. Plusieurs constations notables peuvent en être extraites. 
 
 Tout d'abord, le nombre moyen d'oscillations est le même que nous considérions comme référence le décodeur opérant dans le 
-domaine naturel ou celui opérant le domaine entrelacé. Ainsi, dans la suite, uniquement les oscillations $N\rightarrow N$ 
+domaine naturel ou celui opérant dans le domaine entrelacé. Ainsi, dans la suite, uniquement les oscillations $N\rightarrow N$ 
 et $N\rightarrow I$ seront détaillées dans la suite des analyses.
 De plus, quelque soit la valeur du SNR, les informations extrinsèques d'une trame corrigée n'oscillent pas ou très 
 peu. En comparaison, les informations extrinsèques d'une trame erronée oscillent quant à elles environ dix fois plus.
@@ -174,12 +174,12 @@ provient du fait que le nombre de bits erronés par trame erronée (BE/FE) est r
 est largement inférieur à 100 dans la zone de convergence. Il est inférieur à 10 dans la zone du plancher d'erreur. Cela
 signifie que dans une trame erronée, la majorité des bits est corrigé. 
 
-Il est encore plus remarquable que les bits erronés oscillent plus que les bits corrigés. Plus la valeur de SNR augmente, 
-plus cette constatation est vérifiée. Nous pouvons constater sur la Figure \ref{ch2:fig:meanlte} que les bits erronées 
+Il est encore plus remarquable que les LLR des bits erronés oscillent plus que ceux des bits corrigés. Plus la valeur de SNR augmente, 
+plus cette constatation est vérifiée. Nous pouvons constater sur la Figure \ref{ch2:fig:meanlte} que les LLR des bits erronées 
 oscillent environ dix fois pour l'oscillation $N\rightarrow N$ et environ seize fois pour 
-l'oscillation $N\rightarrow I$, ce quelque soit la valeur du SNR. En revanche, le nombre moyen d'oscillations des bits corrigés 
+l'oscillation $N\rightarrow I$, ce quelque soit la valeur du SNR. En revanche, le nombre moyen d'oscillations des LLR des bits corrigés 
 diminue graduellement lorsque la valeur de SNR augmente. Ainsi, au sein des trames erronées, au niveau du plancher d'erreur 
-du turbo code du standard LTE, les bits erronés oscillent quatre fois plus que les bits corrigés.
+du turbo code du standard LTE, les LLR des bits erronés oscillent quatre fois plus que ceux des bits corrigés.
 
 Pour conclure les observations résultant de la Figure \ref{ch2:fig:meanlte}, pour une raison de symétrie dans l'architecture 
 du décodeur, le nombre d'oscillations par bit est lui aussi symétrique vis-à-vis de l'entrelaceur. Ainsi, seuls deux types 
@@ -209,7 +209,8 @@ Les résultats pour un taux d'erreur trame de $10^{-2}$ sont présentés dans la
 Figure est divisée en six sous-figures. La première colonne traite des trames erronées à l'issue du processus 
 itératif. La seconde colonne concerne les trames corrigées. Deux types d'oscillations sont présentées : le nombre d'oscillations 
 $N\rightarrow N$, le nombre d'oscillations $N\rightarrow I$. Conjointement à ceci, le nombre d'erreurs associé est aussi 
-présenté.
+présenté. Pour chacune de ces sous figures, chaque courbe représente l'évolution du nombre d'oscillations
+pour une trame donnée. Cent trames erronées et cent trames corrigées sont présentées sur cette figure.
 
 Nous pouvons remarquer que les trames corrigées à la 32\textsuperscript{ème} itération alors qu'elles ne l'étaient pas à 
 l'issue de la 10\textsuperscript{ème} itération sont marginales. Ceci est à corroborer avec le choix réalisé dans la majorité des 
@@ -249,7 +250,7 @@ la distribution des oscillations au sein des trames erronées.
 
 \subsubsection{Distributions des oscillations au sein des trames erronées} 
 Dans cette section, la distribution des oscillations dans les trames erronées est analysée. Dans les sections précédentes,
-il a été montré que les bits erronés d'une trame erronée oscillent plus que les bits corrects. La présente analyse permet
+il a été mis en évidence que les bits erronés d'une trame erronée oscillent plus que les bits corrects. La présente analyse permet
 d'établir si la réciproque est vraie. Pour ce faire, la Figure \ref{fig:d_lte_10-2} présente l’occurrence du nombre d'oscillations par bit pour un taux 
 d'erreur trame cible de $10^{-2}$. Cette Figure, composée de deux histogrammes, considère d'abord les oscillations $N\rightarrow N$ et 
 $I\rightarrow I$ (a) puis, les oscillations $N\rightarrow I$ et $I\rightarrow N$ (b). Les occurrences sont normalisées 
@@ -272,10 +273,10 @@ bits erronés, l'allure des distributions est également de forme gaussienne et 
 mettre en corrélation avec le bruit additif lui-même gaussien utilisé sur le canal.
 
 Pour le taux d'erreur trame considéré dans cette analyse, le nombre moyen de bit erroné par trame erroné (BE/FE) vaut 
-113. Cela signifie (en considérant la taille de la trame, à savoir 1024) que $11\%$ des bits sont erronées dans une trame erronée. 
+113. Cela signifie (en considérant la taille de la trame, à savoir 1024) qu'en moyenne $11\%$ des bits sont erronées dans une trame erronée. 
 Si le nombre d'oscillations est pris en considération, alors la probabilité de bit erroné varie de $0,1\%$ à $19,9\%$. 
 Pour les bits oscillant moins de 11 fois, cette probabilité est inférieure à la probabilité moyenne. Par contre, elle
-est supérieure à la probabilité moyenne si le bit considéré a oscillé 11 fois ou plus. Ainsi, en considérant les bits 
+est supérieure à la probabilité moyenne si le bit considéré a oscillé 11 fois ou plus. Plus encore, en considérant les bits 
 ayant oscillé 15 fois ou plus, la probabilité qu'ils soient erronés vaut $18\%$. La probabilité d'obtenir un bit 
 erroné a alors quasiment doublé. Ces observations sont formalisées dans les équations suivantes :
 \[P_{i \in K} (\textnormal{bit } i \textnormal{ est en erreur}) = 11 \%\]
@@ -382,13 +383,13 @@ adaptation pour le décodage des turbo codes est proposée. Les performances de 
 Le décodage des codes LDPC, comme le décodage des turbo codes repose sur un processus itératif. Pour les codes LDPC,
 chaque itération est composée de trois étapes : 
 \begin{enumerate}
-	\item Calcul des nœuds de parité ($\beta$),
-	\item Calcul des nœuds de variable ($\alpha$).
-	\item Calcul de l'information \textit{a posteriori} ($\gamma$),
+	\item Calcul des nœuds de parité,% ($\beta$),
+	\item Calcul des nœuds de variable,% ($\alpha$).
+	\item Calcul de l'information \textit{a posteriori}.% ($\gamma$),
 \end{enumerate}
 Le principe du Self-Corrected est de détecter les messages non fiables échangés lors du décodage itératif et de les \og 
 effacer \fg. Cela correspond à fixer à 0 les valeurs LLRs associées à ces messages. Ainsi, la valeur d'un nœud de 
-variables ($\alpha$) est effacée si son signe a changé par rapport à l’itération précédente. Dans le cas contraire, sa 
+variables  est effacée si son signe a changé par rapport à l’itération précédente. Dans le cas contraire, sa 
 valeur est transmise, sans modification, aux nœuds de 
 parité. De la sorte, le décodeur détecte les messages non fiables et les écarte du processus de décodage. Hormis cette 
 étape, les autres étapes de cet algorithme sont les mêmes que celles d'un algorithme de propagation de croyance.
@@ -450,7 +451,7 @@ Dans la suite, le principe SC est appliqué à partir de la quatrième itératio
 		\SetKwFunction{DA}{Décodage SISO$_1$ EML-MAP}
 		\SetKwFunction{DB}{Décodage SISO$_2$ EML-MAP}
 		
-		\For{i: 1 to  $I_{max}$}
+		\For{j: 1 à  $I_{max}$}
 		{
 			\DA\;
 			\If{j>4}
@@ -488,7 +489,7 @@ constituant un turbo code. Il permet aussi de décorréler l'impact de l'étape 
 décodage. 
 
 L'étude est menée sur des turbo codes binaires à 8, 16 et 32 états. Pour les deux premiers, le codeur du standard LTE
-et celui du standard CCSDS sont respectivement considérés. Leurs générateurs en octal sont $\{13,15\}$ et $\{23,33\}$. Le 
+et celui du standard CCSDS sont respectivement considérés. Leurs polynômes générateurs en octal sont $\{13,15\}$ et $\{23,33\}$. Le 
 turbo code à 32 états présentant les meilleures propriétés de distance a quant à lui pour générateur $\{43,63\}$. C'est 
 celui-ci que nous avons retenu.
 
@@ -508,8 +509,8 @@ temps de simulation.
 	\vspace*{-.1cm}
 \end{figure}
 
-Au niveau du taux d'erreur trame, nous pouvons remarquer que l'algorithme SC a des performances moindres que celles de
-l'algorithme EML-MAP pour un turbo code à 8 états. Pour le un turbo code à 16 états, les performances sont équivalentes. 
+Au niveau du taux d'erreur trame, nous pouvons remarquer que l'algorithme SC a des performances moins intéressantes que celles de
+l'algorithme EML-MAP pour un turbo code à 8 états. Pour le turbo code à 16 états, les performances sont équivalentes. 
 Enfin, pour le turbo code à 32 états, un léger gain apparaît en faveur de l'algorithme SC.
 En revanche, quant au taux d'erreur binaire, des gains apparaissent pour les turbo codes à 16 et à 32 états. Les performances 
 sont les mêmes pour le turbo code à 8 états.
@@ -530,7 +531,7 @@ la correction apporte des gains lorsque la longueur de contrainte augmente. La s
 
 La Figure \ref{fig:sc32it} reprend la même étude mais en fixant cette fois le nombre maximal d'itérations à 32. Maintenant,
 quelque soit le nombre d'états, des gains sont obtenus à la fois en terme de taux d'erreur trame et en taux d'erreur binaire.\\
-Dans les deux cas, nous pouvons montrer que le taux d'erreur dans le zone de convergence est équivalent entre un turbo code de  
+Dans les deux cas, nous pouvons montrer que le taux d'erreur dans la zone de convergence est équivalent entre un turbo code de  
 longueur de contrainte $L$ décodé via l'algorithme EML-MAP itérant 32 fois et un turbo code de longueur de contrainte 
 $2\times L$ décodé via l'algorithme SC EML-MAP itérant 32 fois. En résumé, en utilisant un entrelaceur uniforme et en 
 fixant le nombre maximal d'itérations à 32, les gains obtenus dans la zone de convergence en utilisant l'algorithme SC 
@@ -564,7 +565,7 @@ C'est aussi à partir de cette itération que le principe SC commence à être u
 Dans ce contexte, il apparaît que les gains obtenus grâce au principe Self-Corrected, exprimés en terme de dB, sont similaires à ceux de la 
 section précédente. Ainsi, en considérant 32 itérations, les gains correspondent à un ordre de grandeur en 
 terme de taux d'erreur trame et de taux d'erreur binaire dans la zone de convergence vis-à-vis de l'algorithme EML-MAP. 
-Ils gains permettent d'obtenir les mêmes performances en terme de FER que celles obtenues en considérant l'algorithme 
+Ces gains permettent d'obtenir les mêmes performances en terme de FER que celles obtenues en considérant l'algorithme 
 MAP itérant 10 fois. La complexité calculatoire de l’algorithme MAP 
 est largement supérieure à celle de l'algorithme EML-MAP. En effet, ce premier requiert l’emploi de fonctions complexes 
 tels que des logarithmes, des exponentielles et des opérations de multiplication. Ainsi, le coût en latence qui est dû 
@@ -607,25 +608,25 @@ génie -- c'est-à-dire en connaissant la trame transmise -- est considérée \c
 
 
 \subsubsection{Turbo code double binaire}
-Des tentatives d'extension du principe Self-Correct de l'information extrinsèque au cas des turbo codes double binaires 
-ont été menées. Cependant, lors du décodage d'un tel code, trois valeurs de LRV sont échangées entre les décodeurs 
-élémentaires pour un symbole. Chacun de ces LRV représente alors respectivement la probabilité que le symbole 1, le symbole 
+Des tentatives d'extension du principe Self-Corrected de l'information extrinsèque au cas des turbo codes double binaires 
+ont été menées. Cependant, lors du décodage d'un tel code, trois valeurs de LLR sont échangées entre les décodeurs 
+élémentaires pour un symbole. Chacun de ces LLR représente alors respectivement la probabilité que le symbole 1, le symbole 
 2 ou le symbole 3 ait été émis rapporté à la probabilité que le symbole 0 ait été émis. 
 
-Dans le cas binaire, le principe Self-Correct peut être interprété de la sorte : \og lorsqu'un des décodeurs élémentaire 
+Dans le cas binaire, le principe Self-Corrected peut être interprété de la sorte : \og lorsqu'un des décodeurs élémentaire 
 change d'avis sur la valeur d'un bit d'une itération à l'autre, sa contribution au processus itératif est annulée pour 
-le bit considéré \fg. Dans un contexte double binaire, la décision correspond à 0 si les trois LRV sont négatifs et à 
+le bit considéré \fg. Dans un contexte double binaire, la décision correspond à 0 si les trois LLR sont négatifs et à 
 l'index du maximum sinon. Ainsi, l'élément déclencheur de la correction SC peut être le changement de l'index du maximum 
-parmi ces trois LRV.
+parmi ces trois LLR.
 
 \og L'annulation de la contribution \fg ~dans le cadre binaire ne peut avoir différentes interprétations. En effet, cela 
-correspond forcement à passer la valeur du LRV considéré à 0. Ainsi le poids de la probabilité que le bit soit 0 et 
+correspond forcement à passer la valeur du LLR considéré à 0. Ainsi le poids de la probabilité que le bit soit 0 et 
 le poids de la probabilité que le bit soit 1 sont les mêmes. En revanche, dans le cas double binaire l'interprétation n'est 
 pas aussi triviale, car 4 probabilités sont simultanément considérées. Ainsi, plusieurs interprétations sont possibles. Pour plus 
 de clarté, un exemple illustrant ces propositions est présenté dans le tableau \ref{tab:exsc}. L'approche Self-Corrected 
-peut donc affecter valeurs des informations extrinsèques en 
+peut donc affecter les valeurs des informations extrinsèques 
 \begin{itemize}
-	\item les assignant toutes trois à la même valeur (a):
+	\item en les assignant toutes trois à la même valeur (a):
 	\begin{itemize}
 		\item si la valeur 0 est choisie, alors seul le canal contribue au calcul des métriques de branche,
 		\item si une autre valeur est choisie, elle n'aura toute fois pas d'impact en raison de l’opération 
@@ -637,23 +638,25 @@ peut donc affecter valeurs des informations extrinsèques en
 		\item répétition de la valeur médiane (c),
 		\item répétition de la valeur minimale (d) et (e).
 	\end{itemize}
-	\item usant d'une autre remise à l'échelle (f).
-	\item inhibant le calcul nouvellement effectué par le décodeur (g).\\
+	\item en usant d'une remise à l'échelle supplémentaire (f).
+	\item en inhibant le calcul nouvellement effectué par le décodeur (g).\\
 \end{itemize}
 
 L'ensemble de ces propositions a été mise en œuvre et évalué par des simulations Monte-Carlo. Les turbo codes des standards 
-DVB-RCS et DVB-RCS2 ont été considérés. Aucun gain significatif n'a été relevé, quelques soient les rendements de code ou les tailles de 
+DVB-RCS et DVB-RCS2 ont été considérés. Aucun gain significatif n'a été relevé, quels que soient les rendements de code ou les tailles de 
 trames considérés. Dans le meilleur des cas, un gain d'un facteur 2 apparaît en terme de taux d'erreur trame. 
 
 \begin{table}[t]
 	\centering
-	\begin{tabular}{llrrrrrrr}
+	\begin{tabular}{lrrrrrrrrr}
 		\toprule
-		    It n & It n+1 & a & b & c & d &e &f &g\\ 
-		 \cmidrule(r){1-1} \cmidrule(r){2-2} \cmidrule(l){3-9} 
-		 7 & 6 & 0 & 8 & 6 & 2 & 6 & 6  & 7 \\
-		 5 & 8 & 0 & 8 & 6 & 6 & 2 & 4,5 & 5 \\
-		 2 & 2 & 0 & 2 & 2 & 2 & 2 & 1,5 & 2 \\
+			&\multicolumn{2}{l}{Valeur initiale} & \multicolumn{7}{r}{Propositions} \\
+			\cmidrule(r){2-3} \cmidrule(r){4-10} 
+		   & It n & It n+1 & a & b & c & d &e &f &g\\ 
+		 \cmidrule(r){2-2} \cmidrule(r){3-3} \cmidrule(l){4-10} 
+		$L^e_\mathbf{1}(k)$& 7 & 6 & 0 & 8 & 6 & 2 & 6 & 6  & 7 \\
+		$L^e_\mathbf{2}(k)$& 5 & 8 & 0 & 8 & 6 & 6 & 2 & 4,5 & 5 \\
+		$L^e_\mathbf{3}(k)$& 2 & 2 & 0 & 2 & 2 & 2 & 2 & 1,5 & 2 \\
 		\bottomrule
 	\end{tabular}
 	\caption{Exemples des différentes interprétations considérées pour la correction de l'information extrinsèque pour les turbo codes doubles binaires}
@@ -666,7 +669,7 @@ est sans doute à mettre en corrélation avec la constatation énoncée dans \ci
 indique que l'un des avantages des turbo codes double binaires vis-à-vis de leurs homologues binaires est le plus faible 
 écart au niveau des performances de décodages entre l’algorithme EML-MAP et l'algorithme MAP. Ainsi, dans le cas double 
 binaire, la sous optimalité de l'algorithme ML-MAP vis-à-vis de l'algorithme MAP 
-est moins important. Les gains pouvant être obtenus par un algorithme visant à corriger la sous optimalité pour de tels 
+est moins importante. Les gains pouvant être obtenus par un algorithme visant à corriger la sous optimalité pour de tels 
 codes ne peuvent être donc que plus faibles.
 
 À la vue des faibles gains obtenus via cette tentative de transposition, l'étude a été interrompue
@@ -708,7 +711,7 @@ inchangée ou 0.
 En résumé l'essentiel de la complexité matérielle introduite par le principe SC consiste en un effort supplémentaire de mémorisation. Par bit 
 d'information, deux bits additionnels sont nécessaires. De plus, comme ces deux bits sont 
 requis à l'itération suivante et non à la demi-itération suivante, la taille totale de la mémoire additionnelle 
-représente $2\times 2 \times 2 \times K$ bits. En comparaison, une architecture séquentielle de turbo décodeur requiert le stockage
+représente $2 \times 2 \times K$ bits. En comparaison, une architecture séquentielle de turbo décodeur requiert le stockage
 de  l'information du canal et de l'information extrinsèque. D'après \cite{livre_declercq}, un choix de quantification 
 usuel considère l'utilisation de 6 bits pour l'information provenant du canal et de 7 bits pour l'information extrinsèque.
 Il est donc nécessaire de stocker au total $(3\times 6)K + 7 K$ bits. L'effort de mémorisation relatif au bon 
@@ -752,10 +755,10 @@ Des performances sont présentées. Une adaptation considérant le nombre d'osci
 
 \subsection{État de l'art : Correction Impulse Method}
 L'approche Correction Impulse Method (CIM) est basée sur l'application de turbo décodages successifs. Tout d'abord, un turbo décodage 
-classique est réalisé. Si la trame n'est pas corrigée, alors une extraction des positions les moins fiables est effectuée. 
+classique est réalisé. Si la trame n'est pas corrigée, alors une identification des positions les moins fiables est effectuée. 
 L'extraction est réalisée en prenant en considération les informations \textit{a posteriori} obtenues lors de la dernière 
 itération. Plus la valeur absolue de l'information \textit{a posteriori} est faible, moins la décision prise par le 
-décodeur est fiable. Une liste de positions non fiables est alors extraite. Tour à tour, la valeur de l'information systématique provenant du canal 
+décodeur est considérée comme fiable. Une liste de positions non fiables est alors extraite. Tour à tour, la valeur de l'information systématique provenant du canal 
 associée aux positions concernées est saturée à une valeur supérieure à la distance minimale du code. Le signe de cette 
 valeur de saturation prend le signe opposé au mot obtenu lors du premier turbo décodage. Un nouveau turbo décodage est alors
 appliqué. Si le décodage est correct, le processus est stoppé. Sinon, une nouvelle valeur d'information systématique provenant du canal est saturée
@@ -817,8 +820,8 @@ la différence entre la plus grande valeur de LLR et la deuxième plus grande va
 réalisés pour chaque position identifiée. Ainsi, les trois sens de saturation associés aux trois autres symboles possibles 
 en excluant le symbole décodé sont considérés. Le nombre maximal de turbo décodages vaut alors $3\times L + 1$.
 
-Dans cette publication, des simulations ayant pour cadre des turbo codes binaire et double binaires à 8 états, de 
-rendement 1/3 et 1/2 et avec une taille d'information binaire de 1504 bits. L'algorithme EML-MAP itérant au maximum 16 fois est
+Dans cette publication, le cadre des simulations consiste en des turbo codes binaire et double binaires à 8 états, de 
+rendement 1/3 et 1/2 et avec une taille d'information de 1504 bits. L'algorithme EML-MAP itérant au maximum 16 fois est
 employé. Plusieurs nombres de décodages supplémentaires sont considérés, allant de 1 à la taille de la trame. Dans tous 
 les cas, des gains dans les zone de convergence apparaissent, augmentant avec $L$. Cependant, les gains les plus significatifs
 se trouvent dans la zone du plancher d'erreur. Dans le cas binaire, avec $L=1$, les gains atteignent un ordre de grandeur. 
@@ -850,7 +853,7 @@ que l'approche de turbo décodages successifs ne soit pas impactée par le code 
 	\centering
 	\includegraphics[width=.8\textwidth]{main/ch2_fig/tikz/redec_fsm.pdf}
 	\vspace*{.3cm}
-	\caption{\label{fig:fsm}Comparaison des performances de décodage entre les algorithme EML-MAP et FSM avec plusieurs 
+	\caption{\label{fig:fsm}Comparaison des performances de décodage entre les algorithme EML-MAP et FSM (recopiés de \cite{cim} et rejoués) avec plusieurs 
 	profondeurs de recherche. Turbo code du standard LTE (K=1504, R=1/3).}
 \end{figure}
 
@@ -859,14 +862,16 @@ de rendement 1/3 et de taille de trame 1504. Un entrelaceur DRP (cf. \ref{sec:en
 jusqu'à 16 fois. La notation CIM(L) signifie qu'au maximum L différentes positions dans la trame peuvent être saturées. 
 Ces différentes courbes sont présentées en pointillé.
 
-Une reproduction des résultats a été tentée. Cependant, les paramètres de l'entrelaceur DRP ne sont pas fournis. 
+Une reproduction des résultats a été tentée. Cependant, dans \cite{cim} les paramètres de l'entrelaceur DRP ne sont pas fournis. 
 L'entrelaceur LTE a alors été utilisé. Ce dernier est basé sur une permutation QPP. Les propriétés de distance du turbo 
 code résultant sont donc normalement aussi bonnes que celles obtenues avec l'entrelaceur DRP. Dans \cite{cim}, un critère 
 d'arrêt génie est considéré. Afin de statuer sur un système réaliste, le code CRC du standard LTE est utilisé comme 
-critère d'arrêt. Enfin, dernière différence dans cette tentative de reproduction des résultats, le turbo décodeur peut 
-itérer au maximum 32 fois. C'est pourquoi un léger avantage dans la zone de convergence apparaît mais cette augmentation du nombre 
-d'itérations n'a pas d'impact sur la zone du plancher d'erreur puisque elle dépend principalement des propriétés 
-de distance du code.
+critère d'arrêt. 
+% Enfin, dernière différence dans cette tentative de reproduction des résultats, le turbo décodeur peut 
+% itérer au maximum 32 fois. C'est pourquoi un léger avantage dans la zone de convergence apparaît mais cette augmentation du nombre 
+% d'itérations n'a pas d'impact sur la zone du plancher d'erreur puisque elle dépend principalement des propriétés 
+% de distance du code.
+Finalement, dans la tentative pour rejouer les résultats, la méthode FSM \cite{fsm} est employé, ceci étant censé améliorer les performances puisque considérant les deux sens de saturation.
 
 Sans turbo décodages successifs, les performances de décodage sont semblables. Un léger gain en convergence apparaît 
 sur  la courbe pleine provenant de l'augmentation du nombre d'itérations. En considérant $L=1$, les performances dans la
@@ -878,7 +883,7 @@ performances de décodage sont similaires. En revanche dans la tentative de repr
 d'erreur arrive dès 1.2 dB alors que dans \cite{cim}, l'inflexion de la courbe est bien moins marquée permettant à ce 
 schéma de décodage d'atteindre un FER de $4.10^{-9}$ pour une valeur de SNR de 1.5 dB alors qu'elle n'est que de $8.10^{-8}$
 dans notre cas. Si la valeur de $L$ augmente, des résultats similaires sont observés. Pour la référence, 
-l'inflexion diminue, le plancher d'erreur se voit dramatiquement abaissée fournissant des gains importants en utilisant
+l'inflexion diminue, le plancher d'erreur se voit drastiquement abaissée fournissant des gains importants en utilisant
 cette méthode. Cependant, dans notre tentative de reproduction des résultats ce comportement n’apparaît pas, la zone du 
 plancher d'erreur se trouvant être dans la plage de taux d'erreur $[10^{-8}~;~10^{-7}]$. Plusieurs valeurs de saturation 
 ont aussi été considérées, sans succès sur l'amélioration des performances :
@@ -925,14 +930,14 @@ constatés sont similaires.
 %la zone du plancher d'erreur.
 
 Néanmoins, le principe de décodage successif est attrayant car relativement facile à mettre en œuvre pour une implémentation logicielle.
-Pour pour des communications ayant une faible contrainte de latence, ce principe permet d'apporter une solution relativement
+Pour des communications ayant une faible contrainte de latence, ce principe permet d'apporter une solution relativement
 simple pour abaisser le plancher d'erreur. 
 Dans la section suivante, une métrique basée sur les oscillations au sein du turbo décodeur est alors proposée. Les performances
 résultantes sont comparées avec les performances présentées dans cette section.
 
 \subsection{Utilisation de métriques basée sur les oscillations}
 La Section \ref{sec:observ} a mis en exergue une corrélation entre le nombre d'erreurs à l'issu du décodage et 
-le nombre d'oscillations durant le processus itératif. Ainsi, la proposition faite dans cette section en découle. Elle 
+le nombre d'oscillations sur la valeur des informations extrinsèques durant le processus itératif. Ainsi, la proposition faite dans cette section en découle. Elle 
 consiste à identifier les positions dans la trame qui ont le plus oscillé avant de réaliser, à partir de cette liste, des turbo décodages successifs.
 
 En effet, il parait intuitif de statuer que saturer l'information du canal d'un bit oscillant fortement lors du 
@@ -990,15 +995,14 @@ l'introduction d'un facteur d'échelle réduit l'amplitude des valeurs de l'info
 l'avis du décodeur et donc de réduire son impact sur le décodage à la demi-itération suivante. Ceci a pour effet de 
 réduire les oscillations puisque le poids des information calculées à la demi-itération précédente est lui même réduit. 
 Ainsi, l'algorithme EML-MAP possède de meilleures performances de base que l'algorithme ML-MAP. Cependant, la réduction 
-des oscillations au sein du processus itératif a pour effet de rendre moins discrétisant la métrique induite 
+des oscillations au sein du processus itératif a pour effet de rendre moins discriminante la métrique induite 
 précédemment.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=.8\textwidth]{main/ch2_fig/tikz/redec_osc.pdf}
 	\vspace*{.3cm}
-	\caption{\label{fig:cmp_osc}Comparaison des performances de décodage entre les algorithme EML-MAP et FSM pour plusieurs 
-	profondeurs de recherche. Turbo code du standard LTE (K=1504, R=1/3).}
+	\caption{\label{fig:cmp_osc}Comparaison des performances de décodage entre les algorithme EML-MAP, FSM(16) et différents 0FSM(32). Turbo code du standard LTE (K=1504, R=1/3).}
 \end{figure}
 
 La Figure \ref{fig:cmp_osc} présente les performances de décodage obtenues en exploitant le principe de décodages successifs selon une 
@@ -1016,13 +1020,13 @@ processus itératif. Sont considérés les algorithmes
 max-log-MAP avec ou sans remise à l'échelle et avec ou sans principe Self-Corrected de l'information extrinsèque.
 
 Lorsque l'algorithme EML-MAP est employé, les décodages successifs permettent un léger gain dans la zone de convergence 
-et dans la zone du plancher d'erreur. Ce gain correspond à un facteur 3. Si maintenant l'algorithme SC EML-MAP 
+et dans la zone du plancher d'erreur. Ce gain correspond à un facteur 3 en terme de taux d'erreur. Si maintenant l'algorithme SC EML-MAP 
 est  choisi, une nouvelle amélioration dans la zone de convergence apparaît. Celle-ci correspond au gain apporté par le 
-principe Self-Correct de l'information extrinsèque au premier décodage. Si maintenant la remise à l'échelle n'est plus 
+principe Self-Corrected de l'information extrinsèque au premier décodage. Si maintenant la remise à l'échelle n'est plus 
 considérée (algorithme SC ML-MAP), alors les gains sont constants dans la zone de convergence. En revanche, ils augmentent dans 
 la zone du plancher d'erreur. Ainsi, des gains à la fois dans la zone de convergence et dans le plancher d'erreur 
-approchent l'ordre de grandeur. Finalement,sans modification de l'information extrinsèque 
-(algorithme ML-MAP), une retard important sur le seuil de converge apparaît. Celui-ci représente presque 0.2 dB en terme 
+approchent l'ordre de grandeur. Finalement, sans modification de l'information extrinsèque 
+(algorithme ML-MAP), un décalage important sur le seuil de converge apparaît. Celui-ci représente presque 0.2 dB en terme 
 de valeur de SNR. En revanche, cette courbe de performance rejoint celle obtenue avec le principe SC dans la zone du 
 plancher d'erreur. 
 
@@ -1032,8 +1036,8 @@ d'identification par les oscillations seules n'apporte pas de gains suffisants p
 \section{Conclusions}
 Dans ce deuxième chapitre, une étude des oscillations internes au processus de décodage itératif des turbo codes a été 
 menée. Dans un premier temps, des observations statistiques ont permis d'observer de fortes corrélations entre des oscillations
-et des erreurs. Cependant, il n'y a pas pour autant d'implication entre ces oscillations et les erreur. Cette dernière constatation 
-rend délicat une possibilité d'identification de la position des erreurs grâce à l'observation des oscillations.
+et des erreurs. Cependant, il n'y a pas pour autant d'implication entre ces oscillations et les erreurs. Cette dernière constatation 
+rend délicate une possibilité d'identification de la position des erreurs grâce à l'observation des oscillations.
 
 Cependant, une utilisation de cette observation est proposée afin de corriger l'information extrinsèque échangée au 
 cours du processus itératif. L'algorithme résultant a été proposé pour les turbo codes binaires, aucune adaptation intéressante 

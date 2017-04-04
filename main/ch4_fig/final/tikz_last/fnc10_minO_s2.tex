@@ -1,0 +1,48 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{eulervm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+\usepackage{pgffor}
+\usepackage{amsmath}
+
+\input{../../colors}
+
+\setlength{\textwidth}{146.8mm}
+
+
+\begin{document}
+
+\begin{tikzpicture}
+    \begin{semilogyaxis}[footnotesize, width=\linewidth, height=0.6\linewidth,    
+                    xmin=0, xmax=2.6, xtick={0,0.5,...,3},
+                    ymax=1,
+					xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  
+					tick align=outside, tickpos=left,
+					grid=both, grid style={gray!30},
+					/pgfplots/table/ignore chars={|},
+					legend pos=north east
+					]
+
+		\addplot[mark=o,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../528/ref.txt};     
+        \addplot[mark=o,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m3.txt};
+        \addplot[mark=o,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m3_M8_s2.txt};
+
+
+        \addplot[mark=triangle,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../2048/ref.txt};
+        \addplot[mark=triangle,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5.txt};
+        \addplot[mark=triangle,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5_M8_s2.txt};
+
+        \addplot[mark=square,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../6144/ref.txt};
+        \addplot[mark=square,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5.txt};
+
+
+        \legend{TC conventionnel, FNC $q_{10}$ - $ I_{\text{min}} = I_{\text{m}_\text{o}}$, FNC $q_{10}$ - $ I_{\text{min}} = I_{\text{m}_\text{o}}$ - Pas=2}
+    \end{semilogyaxis}
+\end{tikzpicture}
+\end{document}
