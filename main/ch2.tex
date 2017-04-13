@@ -1,6 +1,6 @@
 %!TEX root = ../my_thesis.tex
 \chapter{Des oscillations du décodage itératif} % (fold)
-Ce chapitre deuxième étudie et vise à exploiter les oscillations de métriques impliquées dans le décodage itératif de turbo codes. 
+Ce deuxième chapitre étudie et vise à exploiter les oscillations de métriques impliquées dans le décodage itératif de turbo codes. 
 
 Dans un premier temps, les oscillations sont définies et observées statistiquement. De là, des premières conclusions sont
 énoncées quant à l'exploitation de ces oscillations dans un but d'améliorer les performances de décodage de turbo codes.
@@ -23,21 +23,21 @@ sous-optimaux. \og Convergent-ils toujours ? Sous quelles conditions ? \fg
 
 Peu après, il a été montré par des arguments géométriques que la convergence de ces algorithmes vers la solution à 
 maximum de vraisemblance ou vers une solution stable n'est pas garantie \cite{richardson_geometry}.
-Dans \cite{reid_convergence}, l'évolution de la valeur des LLRs associés aux informations \textit{a posteriori} est présentée au 
-cours du processus itératif. Les auteurs classifient alors le comportement des LLRs lors du décodage de trames selon 3 modes : 
+Dans \cite{reid_convergence}, l'évolution de la valeur des LLR associés aux informations \textit{a posteriori} est présentée au 
+cours du processus itératif. Les auteurs classifient alors le comportement des LLR lors du décodage de trames selon 3 modes : 
 \begin{enumerate}
 	\item Tous les bits convergents rapidement et de la même manière vers une solution stable.
 	\item La plupart des bits convergent rapidement vers une solution stable alors que les autres convergent de manière 
 	différente (croissance plus lente).
-	\item Les valeurs des LLRs oscillent, croisant ou non le seuil de décision (0). Dans ce cas, l'évolution
-	des valeurs des LLRs est d'allure sinusoïdale.
+	\item Les valeurs des LLR oscillent, croisant ou non le seuil de décision (0). Dans ce cas, l'évolution
+	des valeurs des LLR est d'allure sinusoïdale.
 \end{enumerate}
 De ces constatations, les auteurs proposent un critère d'arrêt pour le processus itératif basé sur la valeur moyenne des 
-LLRs. Une comparaison est faite par rapport à un seuil prédéterminé. Cependant, la valeur de ce seuil ne peut être 
+LLR. Une comparaison est faite par rapport à un seuil prédéterminé. Cependant, la valeur de ce seuil ne peut être 
 obtenue que de manière empirique. %Afin d'améliorer les 
 %performances 
 
-D'autres critères d'arrêt basés sur l'analyse des changements de signe des informations produites par les décodeur 
+D'autres critères d'arrêt basés sur l'analyse des changements de signe des informations produites par les décodeurs 
 élémentaires avaient déjà été proposés dans la littérature. Le Sign Change Ratio (SCR) \cite{fossorier_scr} est une 
 approximation du critère basée sur la Cross Entropy (CE) \cite{hagenauer_ce}. Le principe consiste à compter le nombre de 
 changement de signes $C(i)$ des informations extrinsèques produites par le second SISO entre l'itération $i$ et $i-1$. 
@@ -83,7 +83,7 @@ Les paramètres du couple codeur/décodeur pour cette étude sont les suivants :
 	\item Algorithme EML-MAP itérant 32 fois.\newline
 \end{itemize}
 Ainsi un instantané du comportement d'un turbo décodeur usuel dans un contexte binaire peut être capturé. Ceci représente 
-un cas d'usage suffisamment large, permettant de tirer des conclusions générales sur tout turbo décodeur  binaire standardisé.
+un cas d'usage suffisamment large, permettant de tirer des conclusions sur les turbo décodeurs binaires standardisé.
 Le choix de 32 
 itérations au maximum permet d'obtenir suffisamment d'amplitude quant aux oscillations afin de les visualiser aisément. 
 % Cette étude se place dans le cadre des turbo codes binaires. Les deux standards considérés sont le standard LTE (8 
@@ -153,8 +153,8 @@ considéré a une taille de trame de 1024 bits d'information pour un rendement 1
 (a) correspond à la zone de non-convergence, les sous-figures (b) et (c) à la zone de convergence et finalement la (d) à 
 la zone du plancher d'erreur. Plusieurs constations notables peuvent en être extraites. 
 
-Tout d'abord, le nombre moyen d'oscillations est le même que nous considérions comme référence le décodeur opérant dans le 
-domaine naturel ou celui opérant dans le domaine entrelacé. Ainsi, dans la suite, uniquement les oscillations $N\rightarrow N$ 
+Tout d'abord, le nombre moyen d'oscillations est le même que nous considérions comme référence, le décodeur opérant dans le 
+domaine naturel, ou celui opérant dans le domaine entrelacé. Ainsi, dans la suite, uniquement les oscillations $N\rightarrow N$ 
 et $N\rightarrow I$ seront détaillées dans la suite des analyses.
 De plus, quelque soit la valeur du SNR, les informations extrinsèques d'une trame corrigée n'oscillent pas ou très 
 peu. En comparaison, les informations extrinsèques d'une trame erronée oscillent quant à elles environ dix fois plus.
@@ -210,7 +210,7 @@ Figure est divisée en six sous-figures. La première colonne traite des trames 
 itératif. La seconde colonne concerne les trames corrigées. Deux types d'oscillations sont présentées : le nombre d'oscillations 
 $N\rightarrow N$, le nombre d'oscillations $N\rightarrow I$. Conjointement à ceci, le nombre d'erreurs associé est aussi 
 présenté. Pour chacune de ces sous figures, chaque courbe représente l'évolution du nombre d'oscillations
-pour une trame donnée. Cent trames erronées et cent trames corrigées sont présentées sur cette figure.
+pour une trame donnée. Cent trames erronées et cent trames corrigées y sont présentées.
 
 Nous pouvons remarquer que les trames corrigées à la 32\textsuperscript{ème} itération alors qu'elles ne l'étaient pas à 
 l'issue de la 10\textsuperscript{ème} itération sont marginales. Ceci est à corroborer avec le choix réalisé dans la majorité des 
@@ -218,6 +218,15 @@ architectures de turbo décodeur de fixer le nombre maximal d'itérations à moi
 Il est aussi remarquable que le nombre d'erreurs semble être fortement corrélé avec le nombre d'oscillations. En effet, 
 les rares trames erronées n'oscillant que peu sont celles qui ne possèdent que peu d'erreurs. Plus généralement,
 le nombre d'oscillations semble correspondre au double du nombre d'erreurs.
+
+\begin{figure}[!h]
+	\hspace*{-.7cm}
+	\begin{center}
+	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/it_lte10-5.pdf}
+	\caption{Oscillations au cours du processus itératif dans le cadre du standard LTE (K=1024, R=1/3) pour un taux d'erreur trame de $10^{-5}$ 
+	\label{ch2:fig:it_lte_2}}
+	\end{center}
+\end{figure}
 
 La Figure \ref{ch2:fig:it_lte_2} détaille le même type d'information que la Figure \ref{ch2:fig:it_lte_1} mais pour un 
 taux d'erreur trame cible de $10^{-5}$. Pour le standard LTE, ceci correspond à un fonctionnement du 
@@ -239,14 +248,7 @@ D'autre part, une corrélation forte entre le nombre d'erreurs et le nombre d'os
 cette analyse a été menée au niveau trame. Il est donc maintenant nécessaire de descendre de niveau de granularité pour observer 
 la distribution des oscillations au sein des trames erronées.
 
-\begin{figure}[!t]
-	\hspace*{-.7cm}
-	\begin{center}
-	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/it_lte10-5.pdf}
-	\caption{Oscillations au cours du processus itératif dans le cadre du standard LTE (K=1024, R=1/3) pour un taux d'erreur trame de $10^{-5}$ 
-	\label{ch2:fig:it_lte_2}}
-	\end{center}
-\end{figure}
+
 
 \subsubsection{Distributions des oscillations au sein des trames erronées} 
 Dans cette section, la distribution des oscillations dans les trames erronées est analysée. Dans les sections précédentes,
@@ -258,6 +260,12 @@ par rapport au nombre de bit d'information total par trame.
 
 %À nouveau, le comportement des oscillations est semblable vis-à-vis de la référence (c'est-à-dire que l'on considère 
 %$N\rightarrow N$ ou $I\rightarrow I$). 
+
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=.8\textwidth]{main/ch2_fig/tikz/d_lte_10-2.pdf}
+	\caption{Distribution du nombre d'oscillations par bit pour un taux d'erreur trame de $10^{-2}$, pour le turbo code du standard LTE (K=1024, R=1/3) \label{fig:d_lte_10-2}}
+\end{figure}
 
 Dans Figure \ref{fig:d_lte_10-2} (a), $20\%$ des bits sont corrects et n'ont pas oscillé. Il est à noter que 
 les nombres d'oscillations impairs sont sous représentés vis-à-vis des nombres d'oscillations pairs. Il semblerait que, 
@@ -272,26 +280,23 @@ autour de $14$ oscillations. Pour les
 bits erronés, l'allure des distributions est également de forme gaussienne et centrée autour de $16$ oscillations. Cette allure sont à
 mettre en corrélation avec le bruit additif lui-même gaussien utilisé sur le canal.
 
-Pour le taux d'erreur trame considéré dans cette analyse, le nombre moyen de bit erroné par trame erroné (BE/FE) vaut 
-113. Cela signifie (en considérant la taille de la trame, à savoir 1024) qu'en moyenne $11\%$ des bits sont erronées dans une trame erronée. 
-Si le nombre d'oscillations est pris en considération, alors la probabilité de bit erroné varie de $0,1\%$ à $19,9\%$. 
-Pour les bits oscillant moins de 11 fois, cette probabilité est inférieure à la probabilité moyenne. Par contre, elle
-est supérieure à la probabilité moyenne si le bit considéré a oscillé 11 fois ou plus. Plus encore, en considérant les bits 
-ayant oscillé 15 fois ou plus, la probabilité qu'ils soient erronés vaut $18\%$. La probabilité d'obtenir un bit 
-erroné a alors quasiment doublé. Ces observations sont formalisées dans les équations suivantes :
+Pour le taux d'erreur trame considéré dans cette analyse, le nombre moyen de bits erronés par trame erronée (BE/FE) vaut 
+113. En ramenant ceci à la taille de la trame, en moyenne, $11\%$ des bits sont erronées dans une trame erronée. 
+Si le nombre d'oscillations est considéré, la probabilité de bit erroné varie de $0,1\%$ à $19,9\%$. Il apparaît alors 
+que les bits ayant oscillé moins de 11 fois ont une probabilité d'être erronés inférieure à la probabilité moyenne. Plus encore, 
+en considérant les bits ayant oscillé 15 fois ou plus, la probabilité qu'ils soient erronés vaut $18\%$. La probabilité 
+d'obtenir un bit erroné a alors quasiment doublé. 
+% Pour les bits oscillant moins de 11 fois, cette probabilité est inférieure à la probabilité moyenne. Par contre, elle
+% est supérieure à la probabilité moyenne si le bit considéré a oscillé 11 fois ou plus. Plus encore, en considérant les bits 
+% ayant oscillé 15 fois ou plus, la probabilité qu'ils soient erronés vaut $18\%$. La probabilité d'obtenir un bit 
+% erroné a alors quasiment doublé. 
+Ces observations sont formalisées dans les équations suivantes :
 \[P_{i \in K} (\textnormal{bit } i \textnormal{ est en erreur}) = 11 \%\]
 \[P_{i \in K} (\textnormal{bit } i \textnormal{ est en erreur}\ |\ \textnormal{OSC}(i) > 15 ) = 18 \%.\]
 Néanmoins, les bits erronés oscillent eux aussi. De plus, comme ils sont majoritaires, il n'existe pas de 
 nombre d'oscillations permettant d'obtenir une probabilité d'obtenir un bit erroné supérieure à celle d'obtenir un bit
 correct. C'est à dire qu'il n'existe pas $n$ tel que : 
 \[P_{i \in K} (\textnormal{bit } i \textnormal{ est en erreur}\ |\ \textnormal{OSC}(i) > n ) > 50 \%.\]
-
-
-\begin{figure}[!t]
-	\centering
-	\includegraphics[width=.8\textwidth]{main/ch2_fig/tikz/d_lte_10-2.pdf}
-	\caption{Distribution du nombre d'oscillations par bit pour un taux d'erreur trame de $10^{-2}$, pour le turbo code du standard LTE (K=1024, R=1/3) \label{fig:d_lte_10-2}}
-\end{figure}
 
 La distribution des oscillations est maintenant présentée en Figure \ref{fig:d_lte_10-5} pour un  taux d'erreur trame 
 cible de $10^{-5}$. De part la rapidité de convergence, une seule gaussienne est maintenant visible : celle centrée autour 
@@ -388,7 +393,7 @@ chaque itération est composée de trois étapes :
 	\item Calcul de l'information \textit{a posteriori}.% ($\gamma$),
 \end{enumerate}
 Le principe du Self-Corrected est de détecter les messages non fiables échangés lors du décodage itératif et de les \og 
-effacer \fg. Cela correspond à fixer à 0 les valeurs LLRs associées à ces messages. Ainsi, la valeur d'un nœud de 
+effacer \fg. Cela correspond à fixer à 0 les valeurs LLR associées à ces messages. Ainsi, la valeur d'un nœud de 
 variables  est effacée si son signe a changé par rapport à l’itération précédente. Dans le cas contraire, sa 
 valeur est transmise, sans modification, aux nœuds de 
 parité. De la sorte, le décodeur détecte les messages non fiables et les écarte du processus de décodage. Hormis cette 
@@ -495,7 +500,7 @@ celui-ci que nous avons retenu.
 
 La Figure \ref{fig:sc8it} présente à la fois le taux d'erreur binaire et le taux d'erreur trame pour les trois turbo 
 codes sus-mentionnés. La trame traitée par le turbo codeur se compose de 1504 bits. Le décodage est réalisé par
-l'algorithme EML-MAP ou par l’algorithme Self-Corrected EML-MAP.
+l'algorithme EML-MAP ou par l’algorithme Self-Corrected EML-MAP, suivant l'algorithme ci-dessus.
 Dans les deux cas, le facteur de remise à l'échelle des informations extrinsèques vaut $0,75$ tout au long du processus itératif.
 Le nombre maximal d'itérations est fixé à 8. Un critère d'arrêt basé sur un CRC de 24 bits est utilisé afin de réduire le
 temps de simulation.
@@ -694,7 +699,7 @@ de pouvoir être utilisée lors de la demi-itération suivante.
 
 \begin{figure}[!t]
 	\centering
-	\includegraphics[width=\textwidth]{main/ch2_fig/ipe/sc_arch3.pdf}
+	\includegraphics[width=\textwidth]{main/ch2_fig/ipe/sc_arch4.pdf}
 	\vspace*{.3cm}
 	\caption{\label{fig:sc_arch}Architecture matérielle d'un turbo décodeur séquentiel intégrant le principe Self-Corrected de l'information 
 	extrinsèque.}
@@ -853,7 +858,7 @@ que l'approche de turbo décodages successifs ne soit pas impactée par le code 
 	\centering
 	\includegraphics[width=.8\textwidth]{main/ch2_fig/tikz/redec_fsm.pdf}
 	\vspace*{.3cm}
-	\caption{\label{fig:fsm}Comparaison des performances de décodage entre les algorithme EML-MAP et FSM (recopiés de \cite{cim} et rejoués) avec plusieurs 
+	\caption{\label{fig:fsm}Comparaison des performances de décodage entre les algorithme EML-MAP et FSM (recopiées de [80] et rejouées) avec plusieurs 
 	profondeurs de recherche. Turbo code du standard LTE (K=1504, R=1/3).}
 \end{figure}
 
@@ -929,7 +934,8 @@ constatés sont similaires.
 %aisément. Cependant, seules les performances dans la zone de convergence sont présentées, ne permettant pas de statuer sur
 %la zone du plancher d'erreur.
 
-Néanmoins, le principe de décodage successif est attrayant car relativement facile à mettre en œuvre pour une implémentation logicielle.
+Néanmoins, le principe de décodage successif est attrayant car relativement facile à mettre en œuvre pour une 
+implémentation logicielle, car la mise en mémoire tampon des données n'est pas un problème.
 Pour des communications ayant une faible contrainte de latence, ce principe permet d'apporter une solution relativement
 simple pour abaisser le plancher d'erreur. 
 Dans la section suivante, une métrique basée sur les oscillations au sein du turbo décodeur est alors proposée. Les performances
@@ -1002,7 +1008,7 @@ précédemment.
 	\centering
 	\includegraphics[width=.8\textwidth]{main/ch2_fig/tikz/redec_osc.pdf}
 	\vspace*{.3cm}
-	\caption{\label{fig:cmp_osc}Comparaison des performances de décodage entre les algorithme EML-MAP, FSM(16) et différents 0FSM(32). Turbo code du standard LTE (K=1504, R=1/3).}
+	\caption{\label{fig:cmp_osc}Comparaison des performances de décodage entre les algorithme EML-MAP, FSM(16) et différents OFSM(32). Turbo code du standard LTE (K=1504, R=1/3).}
 \end{figure}
 
 La Figure \ref{fig:cmp_osc} présente les performances de décodage obtenues en exploitant le principe de décodages successifs selon une 

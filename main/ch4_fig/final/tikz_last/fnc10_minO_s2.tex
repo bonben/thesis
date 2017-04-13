@@ -19,7 +19,7 @@
 \begin{document}
 
 \begin{tikzpicture}
-    \begin{semilogyaxis}[footnotesize, width=\linewidth, height=0.6\linewidth,    
+    \begin{semilogyaxis}[footnotesize, width=\linewidth, height=0.65\linewidth,    
                     xmin=0, xmax=2.6, xtick={0,0.5,...,3},
                     ymax=1,
 					xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  
@@ -40,6 +40,8 @@
 
         \addplot[mark=square,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../6144/ref.txt};
         \addplot[mark=square,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5.txt};
+        \addplot[mark=square,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5_M8_s2.txt};
+
 
 
         \legend{TC conventionnel, FNC $q_{10}$ - $ I_{\text{min}} = I_{\text{m}_\text{o}}$, FNC $q_{10}$ - $ I_{\text{min}} = I_{\text{m}_\text{o}}$ - Pas=2}

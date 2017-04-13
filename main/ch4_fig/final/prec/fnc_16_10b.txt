@@ -1,7 +1,7 @@
-#Run command:
-#./aff3ct_10 -p "16" --sim-type "BFER" --cde-type "TURBO" -K "528" -N "1584" -e "75" -m "0.0" -M "2.41" -s "0.2" --dec-type "LTE" -i "8" --itl-type "LTE" --dec-sf "LTE_VEC" -t "6" --dec-max "MAX" --crc-type "FAST" --crc-poly "24-LTEA" --dec-fnc --sim-pyber "LTE 528 i8 FNC p16 10b" 
-#Curve name:
-#LTE 528 i8 FNC p16 10b
+##Run command:
+##./aff3ct_10 -p "16" --sim-type "BFER" --cde-type "TURBO" -K "528" -N "1584" -e "75" -m "0.0" -M "2.41" -s "0.2" --dec-type "LTE" -i "8" --itl-type "LTE" --dec-sf "LTE_VEC" -t "6" --dec-max "MAX" --crc-type "FAST" --crc-poly "24-LTEA" --dec-fnc --sim-pyber "LTE 528 i8 FNC p16 10b" 
+##Curve name:
+##LTE 528 i8 FNC p16 10b
 # -------------------------------------------------
 # ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----
 # -------------------------------------------------

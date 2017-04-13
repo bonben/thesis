@@ -1,13 +1,15 @@
 %!TEX root = ../my_thesis.tex
 
 \chapter{Contexte et état de l'art}
-Ce premier chapitre expose les concepts de base du codage canal ainsi que les turbo codes.
+Ce premier chapitre expose les concepts de base du codage de canal ainsi que les turbo codes.
 
-Dans la première section, les notions essentielles des codes correcteurs d'erreurs sont présentées. Elles couvrent le concept 
+Dans la première section, les notions essentielles des codes correcteurs d'erreurs sont présentées. Sont notamment 
+présentés le concept 
 d'information dans le cadre des télécommunications, la théorie de l'information de Claude Shannon ainsi que
 quelques codes correcteurs élémentaires.
 
-Dans la seconde section, les turbo codes convolutifs sont définis. Es d'abord détaillé leur construction, puis leur décodage. 
+Dans la seconde section, les turbo codes convolutifs sont définis. D'abord leur construction, puis leur décodage est 
+détaillé. 
 Les performances des turbo codes standardisés sont succinctement exposées. Ceci amène la prédiction des performances 
 asymptotiques des turbo codes. Finalement, différentes méthodes permettant d'améliorer les performances des turbo codes 
 standardisés sont décrites. 
@@ -49,7 +51,7 @@ d'atteindre le destinataire alors que le second dégrade le message transmis.
 
 Les deux théorèmes fondamentaux de Shannon définissent deux limites théoriques. L'une, quant au codage de source, 
 consiste à obtenir le maximum de concision dans l'expression d'un message, mais n'est pas traité dans ce manuscrit. 
-L'autre limite concerne le codage canal qui vise à rendre robuste un message face aux perturbations du canal et demeure au 
+L'autre limite concerne le codage de canal qui vise à rendre robuste un message face aux perturbations du canal et demeure au 
 cœur de ces travaux de thèse. Avant de détailler ce second principe, il est nécessaire de définir la mesure de l'information.
 %---------------------------------------%
 \subsection{La mesure de l'information}
@@ -102,7 +104,7 @@ L'expression de l'information mutuelle peut être formulée en utilisant l'entro
 	\label{eq:imut}
 \end{equation}
 %---------------------------------------%
-\subsection{Le codage canal}
+\subsection{Le codage de canal}
 Dans le cadre de ce manuscrit, seuls sont considérés des canaux de transmission causaux sans effet mémoire et stationnaires. 
 En d'autres termes, la sortie du canal à l'instant $t$ ne dépend que de son entrée en l'instant $t$.\\
 Considérons maintenant que $X$ soit la variable aléatoire à l'entrée du canal et $Y$ la variable aléatoire à sa sortie.
@@ -117,13 +119,13 @@ petit que possible. Or, ce terme, dépend du canal. Plus le canal est bruité, p
 source doit alors être modifié pour que la communication satisfasse une contrainte de qualité. Ceci constitue le codage 
 canal. Son principe est d'ajouter de la redondance en quantité suffisante pour éviter toute ambiguïté lors du décodage.
 
-\subsubsection{Le théorème du codage canal}
+\subsubsection{Le théorème du codage de canal}
 Le second théorème de Shannon énonce : quel que soit $\epsilon > 0$, il existe un code de taille $N$, avec $N$ \
 suffisamment grand, tel que si $R<C$ -- avec R le rendement du code et $C$ la capacité du canal -- la probabilité
 d'erreur après décodage soit inférieure à $\epsilon$. 
 
 Ce théorème fournit donc une mesure de la performance d'un système de communication. Un système atteignant la capacité 
-du canal peut être considéré comme optimal. Dès lors, le but du codage canal est de définir des codes permettant de 
+du canal peut être considéré comme optimal. Dès lors, le but du codage de canal est de définir des codes permettant de 
 s'approcher au plus près de cette limite théorique tout en assurant un décodage relativement simple.
 
 Ainsi, le schéma présenté en Figure \ref{fig:paradigme} se doit d'être modifié en prenant en compte ce codage. Aussi,
@@ -138,7 +140,7 @@ nouveaux éléments.
 	\caption{\label{fig:paradigme2} Schéma fondamental de communication (ou paradigme de Shannon)}
 \end{figure}
 
-La source génère un flux de bits $\mathbf{m}$ qui constitue le message à envoyer. Le codeur canal transforme ce message 
+La source génère un flux de symboles $\mathbf{m}$ qui constitue le message à envoyer. Le codeur canal transforme ce message 
 en un mot de code $\mathbf{c}$. Ceci est fait en ajoutant de la redondance au message. Ainsi, $H(m)>H(c)$. Le rapport $R$
 entre la taille du mot présent à l'entrée de l'encodeur et la taille du mot codé est appelé le rendement du code. Le mot 
 de code est ensuite mis en forme par le modulateur afin d'être transmis via le canal.\\
@@ -161,7 +163,7 @@ Ce canal modélise notamment très bien le bruit thermique qui est une des sourc
 %Certes, ce canal n'est pas un modèle très fin quant à la quali mais permet tout de même de comparer de manière
 %juste différents schémas de codage.
 
-La loi liant la sortie $y_i$ d'un canal AWGN à son entrée $x_i$ est de la forme $y_i=x_i+n_i$ avec $n_i$ une variable 
+La loi liant la sortie $y_i$ d'un canal AWGN à son entrée $x_i$ est de la forme $y_i=x_i+n_i$ avec $N_i$ une variable 
 indépendante et identiquement distribuée suivant une loi normale (ou gaussienne) centrée en zéro et de variance $\sigma^2 = \frac{N_0}{2}$. Nous avons donc
 $N_i \sim \mathcal{N}(0,\ \sigma^2)$ et il vient :
 %La densité de probabilité de N est alors : $p(Z) = \frac{1}{\sqrt{2\pi \sigma^2}}\cdot \exp(-{\frac{Z^2}{2\sigma^2}})$
@@ -182,7 +184,7 @@ exprimé en shannon par symbole émis, avec P la puissance du signal émis.
 \subsection{Les familles de codes correcteurs}
 Les codes correcteurs d'erreur largement utilisés dans les différents standards de communications numériques 
 sont habituellement classifiés en deux familles distinctes. Il s'agit des codes en blocs et des codes convolutifs. Par définition, 
-les codes convolutifs calculent la redondance de manière continue à mesure que le flot de données arrive alors que des codes en blocs génèrent la redondance par blocs de données.
+les codes convolutifs calculent la redondance de manière continue à mesure que le flot de données arrive alors que les codes en blocs génèrent la redondance par blocs de données.
 \subsubsection{Codes en blocs linéaires}
 Historiquement, les premiers codes correcteurs d'erreurs découverts furent les codes en blocs linéaires. La théorie 
 mathématique les définissant est basée sur les corps de Galois. Dans la suite, la majorité des opérations se dérouleront 
@@ -217,11 +219,11 @@ $d_H(c, c') = P_H(c+c')$.
 
 Le principe du décodage par maximum de vraisemblance consiste en la recherche du mot de code $\hat{c}$ le plus 
 vraisemblable, c'est à dire celui qui est à la distance de Hamming minimale du mot de code reçu $r$. C'est à dire trouver 
-$\hat{c}$, tel que \[d_H(r,\hat{c}) \leq d_H(r,\hat{c}) \forall c \neq \hat{c} \in C.\]
+$\hat{c}$, tel que \[d_H(r,\hat{c}) \leq d_H(r,\hat{c})\qquad \forall c \neq \hat{c} \in C.\]
 
 Il vient donc assez naturellement que les performances de décodage d'un code sont dépendantes des distances de Hamming 
 séparant les différents mots de code. La valeur minimale de cet ensemble de distances est appelée \emph{la distance minimale du code}, 
-notée $d_{min}$. \[d_{min}=\min\limits_{c,c'\in C, c\ne c'}d_h(c, c').\] Comme le code est linéaire, la distance minimale 
+notée $d_{min}$. \[d_{min}=\min\limits_{c,~c'\in C,~c\ne c'}d_h(c, c').\] Comme le code est linéaire, la distance minimale 
 est aussi égale au poids minimal des mots de code non nuls. Ainsi, le poids des mots de code (excepté le mot 
 de code nul) est compris entre $d_{min}$ et $n$. Le nombre de mots de code de poids de Hamming $d$ est appelé 
 \emph{multiplicité} et est noté $A_d$.
@@ -348,11 +350,11 @@ dans la section suivante.
 
 
 %---------------------------------------%
-\subsection{Les performance d'un code}
+\subsection{Les performances d'un code}
 Dans cette section, les performances d'un code sont discutées. Tout d'abord sont présentées les limites théoriques qui 
 découlent des résultats présentés dans la section \ref{ss:cod_canal}. Ensuite, ces limites théoriques sont comparées aux 
 performances de décodage en fonction du rapport signal à bruit.
-\subsubsection{Limite de Shannon}
+\subsubsection{La limite de Shannon}
 En reprenant l'équation \ref{eq:capacity}, comme pour un canal AWGN, $\sigma^2 = N_0/2$ avec $N_0$ la densité spectrale du bruit et comme 
 $P=R E_b$, avec $E_b$ l'énergie moyenne par bit d'information, nous pouvons écrire :
 \[C=\frac{1}{2}\log_2(1+\frac{2RE_b}{N_0}).\]
@@ -402,7 +404,7 @@ il peut être exprimé comme le rapport entre l'énergie moyenne par élément b
 spectrale mono-latérale du bruit ($N_0$).
 
 En l'absence de codage, le rapport signal à bruit à l'entrée du récepteur est égal à $\frac{E_b}{N_0}$. En revanche, 
-dans le cadre d'un codage canal de rendement R, la probabilité d'erreur sur le canal est fonction de $\frac{RE_b}{N_0}$.
+dans le cadre d'un codage de canal de rendement R, la probabilité d'erreur sur le canal est fonction de $\frac{RE_b}{N_0}$.
 
 Pour une modulation numérique BPSK dont les symboles sont émis sur un canal BI-AWGN, la probabilité d'erreur binaire est
 donnée par 
@@ -880,9 +882,9 @@ Dans \cite{scaling}, l'influence de la valeur du facteur d'échelle est étudié
 En 1999, les turbo codes non binaires ont été introduits \cite{doublebin1}. À la différence des turbo codes binaires, les 
 turbo codes double binaires traitent $2$ bits en parallèle. Il en découle que les codeurs RSC constituants sont eux mêmes 
 double binaires. Pour ce faire, des extensions multi binaires ont été développées. Le codeur constitutif employé est alors 
-de rendement nominal $m/(m+1)$ avec $m$ le nombre de donnés simultanément présentes à l'entrée du codeur \cite{doublebin3}. 
+de rendement nominal $n/(n+1)$ avec $n$ le nombre de donnés simultanément présentes à l'entrée du codeur \cite{doublebin3}. 
 La figure \ref{fig:encMulti} présente un tel codeur sans faire apparaître la sortie pour des soucis de lisibilité. Il est 
-toute fois à noter qu'utiliser $m > 2$ n'apporte qu'un intérêt limité pour des RSC de mémoire 3 ou 4 \cite{Balta2013}. En 
+toute fois à noter qu'utiliser $n > 2$ n'apporte qu'un intérêt limité pour des RSC de mémoire 3 ou 4 \cite{Balta2013}. En 
 effet, trop peu de diversité dans l'interconnexion ne peut être obtenus dans de tels cas.
 \begin{figure}[!h]
 	\centering
@@ -907,7 +909,7 @@ Selon \cite{doublebinadvantages}, les avantages des turbo codes double binaires 
 \end{itemize}
 
 Dans la littérature, l'entrée des codeurs constituants est dénoté par le couple $(A_k,B_k)$. Les sorties correspondantes 
-sont notées $(Y_k,W_k)$. Si la trame a coder contient $K$ bits, alors $K/2$ symboles sont codés. Dans ce cas, nous avons 
+sont notées $(Y_k,W_k)$. Si la trame à coder contient $K$ bits, alors $K/2$ symboles sont codés. Dans ce cas, nous avons 
 $k \in \llbracket 0, K/2-1\rrbracket$.
 
 L'emploi de codes double binaires permet un entrelacement des données sur deux niveaux. Le premier agit au niveau 
@@ -938,7 +940,7 @@ principales caractéristiques de ces codes sont présentées en section suivante
 
 \subsection{Les turbo codes standardisés}
 Peu après la publication des premiers résultats confirmant les performances de décodage des turbo codes, plusieurs 
-comités de standardisation se sont intéressé à cette nouvelle famille de code correcteur d'erreurs.
+comités de standardisation se sont intéressés à cette nouvelle famille de code correcteur d'erreurs.
 
 Ainsi, en 1999, le Comité Consultatif pour les Systèmes de Données Spatiales (CCSDS, qui regroupe différentes agences 
 spatiales à travers le monde), propose dans leur livre de recommandations d'employer un turbo code à 16 états dans le cadre 
@@ -1325,7 +1327,7 @@ approche résulte en un abaissement du plancher d'erreurs. Ceci s'explique par u
 du code via la concaténation série. En revanche, la convergence est retardée en raison de la baisse du rendement global 
 provenant de l'ajout de redondance supplémentaire. Par construction, le nombre de bits de redondance nécessaires pour 
 qu'un code BCH corrige $t$ erreurs a pour expression : \[R_{BCH} = t \times \lceil \log_2 K\rceil.\]
-Ainsi, plus K est grand, moins l'impacte sur le rendement est important. De plus, la complexité calculatoire d'un 
+Ainsi, plus K est grand, moins l'impact sur le rendement est important. De plus, la complexité calculatoire d'un 
 décodeur dur BCH est raisonnable. À titre d'exemple, un schéma de codage équivalent a été choisi dans le cadre du 
 standard DVB-S2 où  un code LDPC est concaténé avec un code BCH.
 
@@ -1521,7 +1523,7 @@ calculatoire ajoutée n'est pas négligeable.
 \end{table}
 
 \section{Conclusion}
-Dans ce premier chapitre, les notions permettant d'aborder le codage canal ont été successivement introduites. Puis, la 
+Dans ce premier chapitre, les notions permettant d'aborder le codage de canal ont été successivement introduites. Puis, la 
 construction, le décodage et les performances des turbo codes ont été détaillés. Des outils permettant d'estimer les 
 performances d'un turbo code sur le canal BI-AWGN ont été présentées. Finalement, plusieurs méthodes permettant d'améliorer 
 les performances de décodage des turbo codes ont été rapportées. Dans le cadre de turbo codes déjà standardisés, seules 

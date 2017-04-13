@@ -1,0 +1,58 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{eulervm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+\usepackage{pgffor}
+\usepackage{amsmath}
+
+\input{../../colors}
+
+\setlength{\textwidth}{146.8mm}
+
+
+\begin{document}
+
+\begin{tikzpicture}
+    \begin{semilogyaxis}[footnotesize, width=\textwidth, height=0.65\textwidth,    
+                    xmin=0.2, xmax=2.6, xtick={0,0.5,...,3},
+                    ymax=1,
+					xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  
+					tick align=outside, tickpos=left,
+					grid=both, grid style={gray!30},
+					/pgfplots/table/ignore chars={|},
+					legend pos=north east
+					]
+
+%528
+        \addplot[mark=o, Set1-1, semithick                              ]  table [x=Eb/N0, y=FER] {../528/ref.txt};         \label{tc_float}
+        \addplot[mark=o, Set1-1, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m3.txt};    \label{fnc_float}
+
+        \addplot[mark=o, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../prec_2/528_ref_16_6.2.txt};     \label{tc_16b}
+        \addplot[mark=o, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/fnc_16_16b.txt}; \label{fnc_16b}
+
+        \addplot[mark=o, Set1-3, semithick                              ]  table [x=Eb/N0, y=FER] {../prec_2/528_ref_8_5.1.txt};      \label{tc_8b}
+        \addplot[mark=o, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec_2/528_fnc_8_ref_5.1.txt};   \label{fnc_8b}
+
+%2048
+        \addplot[mark=triangle, Set1-1, semithick                              ]  table [x=Eb/N0, y=FER] {../2048/ref.txt};
+        \addplot[mark=triangle, Set1-1, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5.txt};
+
+        \addplot[mark=triangle, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../prec_2/2048_ref_16_6.2.txt};
+        %\addplot[mark=triangle, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/fnc_16_16b.txt};
+
+        \addplot[mark=triangle, Set1-3, semithick                              ]  table [x=Eb/N0, y=FER] {../prec_2/2048_ref_8_5.1.txt};      
+        \addplot[mark=triangle, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec_2/2048_fnc_8_ref_5.1.txt};   
+
+%6144
+        \addplot[mark=square, Set1-1, semithick                              ]  table [x=Eb/N0, y=FER] {../6144/ref.txt};
+        \addplot[mark=square, Set1-1, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5.txt};
+
+    \end{semilogyaxis}
+\end{tikzpicture}
+\end{document}

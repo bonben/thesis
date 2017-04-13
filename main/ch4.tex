@@ -4,11 +4,11 @@
 Texte Intro
 
 - Etat de l'art des archi mat de tdec pour voir comment interfaecer une architecture matérielle de l'algorithme FNC avec
-des turbo décodeurs de la littérature.
-- Etude des impacts des paramètres
-- Cas d'étude : Architecture matérielle adaptée à un turbo décodeur seq FB-SW
-- Projections sur l'extension à d'autres ordonnancements de tdec
-- cl
+des turbo décodeurs de la littérature.\\
+- Etude des impacts des paramètres\\
+- Cas d'étude : Architecture matérielle adaptée à un turbo décodeur seq FB-SW\\
+- Projections sur l'extension à d'autres ordonnancements de tdec\\
+- Concl
 \vspace*{\fill}
 \minitocTITI
 \vspace*{\fill}
@@ -288,7 +288,8 @@ trame dégrade les performances de décodage en comparaison avec l’application
  pire des cas.
 
 \begin{figure}[!h]
-	\centering 
+	\centering
+	\vspace*{-1em} 
 	\hspace*{-.075\textwidth}
 	\includegraphics[width=1.1\textwidth]{main/ch4_fig/final/tikz_last/fnc10_onlyX.pdf}
 	\caption{Comparaison des performances de décodage de l'algorithme FNC pour $q=10$ et appliqué à une seule itération. 
@@ -308,6 +309,7 @@ importante que dans le cas précédent.
 
 \begin{figure}[!h]
 	\centering
+	%\vspace*{1em} 
 	\includegraphics[width=.9\textwidth]{main/ch4_fig/final/tikz_last/fnc10_minO_s2.pdf}
 	\caption{Performances de l'algorithme FNC appliqué toutes les deux itérations ($I_\text{FNC}$) pour différentes 
 	valeurs de K, $q=10$.
@@ -374,8 +376,9 @@ l'emploi du principe FNC avec une représentation des données en virgule fixe. 
 décodage sont conservés malgré le changement de représentation de l'information.}
 
 \begin{figure}[!h]
+	\vspace*{-.5cm}
 	\centering
-	\includegraphics[width=.9\textwidth]{main/ch4_fig/final/tikz_last/fnc10_format_refs.pdf}
+	\includegraphics[width=.9\textwidth]{main/ch4_fig/final/tikz_last/fnc10_format_refs_2.pdf}
 	\caption{Comparaison des performances de l'algorithme FNC $q=10$ pour différents turbo codes du standard LTE, 
 	suivant la représentation de l'information choisie.
 	Turbo décodeur basé sur l'algorithme EML-MAP itérant au plus 8 fois.
@@ -391,7 +394,7 @@ les performances de décodage sont strictement identiques. A partir de $b_{\Delt
 performances de décodage apparaît. Cette dernière augmente fortement pour $b_{\Delta} = 4$. Dans ce cas, la dynamique 
 de la métrique $\Delta$ n'est plus suffisante pour réussir à ordonner correctement les positions problématiques.
 
-\begin{figure}[!t]
+\begin{figure}[!h]
 	\hspace*{-.075\textwidth}
 	\includegraphics[width=1.1\textwidth]{main/ch4_fig/final/tikz_last/fnc10_format_8b.pdf}
 	\caption{Performances de l'algorithme FNC pour différents turbo codes du standard LTE, selon la dynamique $b_{\Delta}$ 
@@ -400,8 +403,8 @@ de la métrique $\Delta$ n'est plus suffisante pour réussir à ordonner correct
 	\label{fig:fnc_format_8b}}
 \end{figure}
 
-En conclusion, pour un turbo décodeur utilisant 8 bits pour ses métriques internes, \textcolor{blue}{fixer la valeur de $b_{\Delta}$ 
-à 6} permet de limiter la dynamique des données en entrée de l'algorithme FNC tout en fournissant 
+En conclusion, pour un turbo décodeur utilisant 8 bits pour ses métriques internes, \textcolor{blue}{fixer la valeur de 
+$b_{\Delta}$ à 6} permet de limiter la dynamique des données en entrée de l'algorithme FNC tout en fournissant 
 rigoureusement les mêmes performances de décodage que celles obtenues sans saturation.
 
 \subsection{Conclusion}
@@ -413,3 +416,120 @@ utilisant l'algorithme FNC devra choisir les valeurs de ces différents paramèt
 La section suivante présente une architecture matérielle pour l'algorithme FNC dans le contexte d'un turbo décodeur 
 séquentiel basé sur l'ordonnancement Backward-Forward-Sliding-Window. L'impact sur la complexité matérielle des 
 paramètres précédents sera alors étudiée.
+
+\textcolor{blue}{Refaire la conclusion, en listant les paramètres optimaux, ceux modifiables et leur impact sur les 
+performances}
+
+
+\section{Implémentation matérielle de l'algorithme FNC}
+Cette section présente une architecture matérielle pour l'algorithme FNC. Cette architecture se doit de pouvoir 
+s'adapter aux turbo décodeurs existants, afin d’abaisser le plancher d'erreurs des différents turbo codes présents dans 
+les différents standards de communications. Cependant, il a été vu dans la première section de ce chapitre qu'une 
+grande diversité dans les choix architecturaux pour les turbo décodeurs sont possibles. Dans cette section est alors 
+uniquement présenté une architecture adapté à l'ordonnancement BF-SW, correspondant à un cas de référence. La section 
+prochaine présentera des projections quant à l'adaptation de cette architecture matérielle à des turbo décodeurs plus 
+complexes et plus rapides. Dans un premier temps, l'ordonnancement du système est présenté.
+
+\textcolor{blue}{Mieux dire : on choisi les paramètres tels que meilleures performances de décodage, ie application à 
+toutes les itérations}
+
+\subsection{Principe et ordonnancement de l'architecture matérielle}
+L'algorithme FNC est un algorithme de post-traitement en regard des calculs des décodeurs SISO. En effet, l'information 
+\textit{a posteriori} doit être obtenue pour pouvoir calculer la métrique de l'algorithme FNC. Cependant, durant les 
+opérations de l'algorithme FNC, le processus de turbo décodage peut continuer et être effectué en parallèle. Afin de 
+limiter l'impact sur la latence du décodeur, si une application de l'algorithme FNC est considérée après chaque 
+itération de turbo décodage, dans le cas d'un turbo décodeur exploitant un ordonnancement BF-SW avec une taille de 
+fenêtre la plus petite possible ($W\rightarrow 0$), le processus FNC doit être effectué en $2\times K$ cycles. Ceci est 
+représenté par la Figure \ref{fig:fnc_tc}.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics{main/ch4_fig/ipe/fnc_tc.pdf}
+	\caption{Ordonnancement du système représentant le processus FNC connecté à un turbo décodeur conventionnel. \label{fig:fnc_tc}}
+\end{figure}
+
+\begin{figure}[!b]
+	\centering
+	\includegraphics{main/ch4_fig/ipe/fnc_schedul.pdf}
+	\caption{Ordonnancement des opérations successives de l'architecture FNC \label{fig:fnc_schedul}}
+\end{figure}
+
+De la sorte, le principe FNC est appliqué à partir de l'itération $i$. Durant les K premiers cycles d'horloge, le 
+décodeur SISO fourni au bloc FNC la métrique $\Delta$ conjointement avec le mot décidé $\hat{d}$. Le \textit{trieur 
+$\Delta$} trie donc les métriques $\Delta$ afin d'extraire les $q$ positions les moins fiables. Dans le cas de 
+l’ordonnancement BF-SW, les K métriques $\Delta$ sont fournies séquentiellement durant K cycles d'horloge. En même 
+temps, le mot décidé $\hat{d}$ est mémorisé dans la \textit{mémoire de bits décidés}, permettant de générer lors de 
+l'étape suivante les $2^q-1$ mots candidats. Ceci est réalisé lors des K cycles suivant lors de l'utilisation par le 
+\textit{générateur de mots} de ces deux ensembles de données. Le \textit{générateur de mots} produit à la volée ces 
+$2^q-1$ mots candidats qui les transmet aux \textit{unités de vérification de CRC en parallèle}. Finalement, si un mot 
+vérifiant le CRC est trouvé, ce mot est régénéré et fourni en sorti du bloc FNC. Cette régénération permet d'éviter le 
+stockage des $2^q-1$ mots candidats et nécessite K cycles d'horloge supplémentaires. Ainsi, si un mot valide au sens du
+code CRC est trouvé, le processus FNC requiert au total $3\times K$ coups d'horloge, puis le processus de turbo décodage 
+s'arrête. Sinon, il requiert $2\times K$ cycles d'horloge et le processus de turbo décodage continue. Ceci est géré par 
+une \textit{unité de contrôle}. La Figure 
+\ref{fig:fnc_schedul} présente cette succession d'opérations réalisée par l'élément de calcul du FNC. Le schéma bloc 
+présentant l'interconnexion entre les différentes unités de cette proposition d'architecture est fourni en Figure 
+\ref{fig:fnc_arch}. 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics{main/ch4_fig/ipe/fnc_arch.pdf}
+	\caption{Interconnexion des différentes unités de l'architecture FNC \label{fig:fnc_arch}}
+\end{figure}
+
+\subsection{Détail des unités composant l'architecture matérielle}
+Dans cette sous-section, les différentes unités composant l'architecture matérielle pour l'algorithme FNC présenté dans 
+la section précédente sont détaillés.
+\paragraph*{Mémoire de bits décidés :} Le principe du l'algorithme FNC est de générer $2^q-1$ mots candidats $D$ à partir 
+du mot généré à l'itération courante par le turbo décodeur $\hat{d}$. Cependant, cette génération n'est possible 
+qu'après avoir effectué  l'identification des positions les moins fiables dans ce mot décidé. Ainsi, ce dernier doit 
+être mémorisé. Cette unité peut donc être implémenté par une mémoire simple port de taille $K$. Puisque les données en 
+mémoire sont accédées de façon linéaire, il aussi possible d'implémenter cette mémorisation par un registre à décalage 
+de profondeur $K$.
+\paragraph*{Trieur de métrique $\Delta$ :} De la même manière que les décisions du turbo décodeur arrivent 
+séquentiellement, une nouvelle métrique $\Delta$ est fournie à chaque cycle d'horloge. Afin de trier ces métriques au
+fil de l'eau, un tri par insertion est considéré. La nouvelle valeur de la métrique $\Delta$ est alors successivement 
+comparé avec les  valeurs correspondant aux $q$ positions les moins fiables. Suivant le résultat de ces comparaisons, 
+les valeurs de $\Delta$ et leur positions associées sont mises à jour. La complexité matérielle de cette unité dépend donc 
+à la fois de $q$ et de la quantification de $\Delta$ (pour rappel, noté $\Delta_b$). Il a été vu que 5 bits 
+pour $\Delta_b$ permet d'assurer les performances optimales. Finalement, pour l'implémentation de ce bloc, un effort de 
+$q\times(\Delta_b + \lceil log_2{K} \rceil)$ bits de mémorisation est nécessaire. Les éléments de calculs consistent 
+essentiellement en $q$ comparateurs d'une taille de $\Delta_b$ bits.
+\paragraph*{Générateur de mots candidats :} Cette unité génère tous les mots candidats en même temps, de manière 
+séquentielle, en combinant le mot décodé et les positions des bits les moins fiables. Pour ce faire, lorsque la position 
+du bit courant coïncide avec une position minimisant la métrique $\Delta$, la valeur de ce bit est inversé avant d'être
+transmis à l'unité de vérification des codes CRC. Ceci peut être implémenté en utilisant $2^q$ portes ou-exclusif dont 
+une des entrées est commandé par un réseau de portes ou comparant la position courante et les positions les moins 
+fiables. Ainsi, sa complexité est conditionné par le choix de la valeur de $q$.
+\paragraph*{Unités de vérification de CRC en parallèle :} Puisque le choix a été fait d'assurer les vérifications 
+des $2^q - 1$ mots candidats en K cycles d'horloge, $2^q - 1$ décodeurs de CRC séquentiels sont implémentés en parallèle.
+Conformément au polynôme générateur du code CRC du standard LTE ($g_{CRC24A}$), chaque décodeur de CRC nécessite 24 
+bascules D Flip-Flop et 13 portes ou-exclusif. En effet, un code CRC est basé sur un registre à décalage à rétroaction linéaire (LFSR) dont la boucle de retour consiste en des opération ou-exclusif entre le bit d'entrée et les valeurs des 
+bascules D Flip-Flop. La complexité calculatoire de cette unité dépend entièrement de $q$ et y est lié par une loi exponentielle.
+\paragraph*{Unité de contrôle :} La dernière unité a pour rôle d'implémenter une machine à 3 états permettant de 
+déterminer la phase courante du processus FNC. Pour rappel, celles-ci sont le tri des métriques $\Delta$, la 
+vérification des différents mots candidats par les décodeurs de CRC et la régénération du mot candidat valide. Aussi, 
+cette unité à pour rôle de mettre à jour un compteur permettant à chaque unité d'avoir connaissance du la position dans 
+le mot du bit  en train d'être exploité.
+
+La section suivante présente des résultats d'implémentations de cette architecture matérielle sur une cible FPGA (Field-Programmable Gate Array, ou réseau de portes programmables)
+
+\subsection{Résultats d'implémentation sur cibles FPGA}
+Cette section présente des résultats d'implémentation après placement et routage sur des cibles FPGA. L'architecture 
+matérielle  présentée en Figure \ref{fig:fnc_arch} est décrite en VHDL et implémentée sur deux cibles différentes. 
+Cette description est générique avec $q$ et $K$. Cela signifie que l'architecture FNC peut être générée pour n'importe 
+quelle taille de trame de turbo code binaire et n'importe quel nombre de position les moins fiables identifiées. Dans
+tous les cas, 
+l'architecture générée est conforme au bit près avec le modèle logiciel ayant permis d'obtenir les courbes de 
+performances présentées au cours de ce chapitre.
+
+Pour la plus grande valeur de K du standard LTE (K=6144) un bloc RAM est utilisé sur le FPGA. Cela signifie que le 
+l'architecture proposée ne nécessite qu'un seul bloc RAM, ce quelle que soit la taille de trame considérée. Dans la 
+suite, uniquement le cas K=6144 est alors considéré, représentant le scénario de pire cas.
+
+La valeur de $\Delta_b$ est fixée à 5. Cette valeur a été déterminée comme optimale car elle permet de ne pas avoir de 
+dégradation de performances de décodage tout en réduisant le chemin critique de cette architecture. Ceci sera conforté
+par des données de fréquence atteignables présentées plus loin.
+
+Les performances de décodage de l'algorithme FNC dépendent de la valeur du paramètre $q$. Il en est de même pour la
+complexité matérielle de l'architecture décrite. Le tableau \ref{tab:fnc_impl_res} présente les résultats d'implémentation pour 
