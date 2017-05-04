@@ -80,7 +80,8 @@ trames erronées de la zone du plancher d'erreur avec un décodage basé sur l'a
 \subsection{Observations considérant des turbo codes standardisés}
 Une méthode proposant de prédire théoriquement la distribution des erreurs résiduelles dans la zone du plancher d'erreur 
 a été  établie. L'obtention 
-de la distribution réelle de ces erreurs est maintenant réalisé et elle est comparée avec cette méthode. Dans un premier temps, des turbo codes binaires de tailles de 
+de la distribution réelle de ces erreurs est maintenant réalisé et elle est comparée avec cette méthode. Dans un premier 
+temps, des turbo codes binaires de tailles de 
 trames différentes et de rendement 1/3 sont considérés. Dans un second temps, des turbo codes double binaires de deux
 tailles de trame mais de différents rendements sont considérés. Ainsi, un large spectre de paramètres est exploité sans
 présenter un nombre trop conséquent de données.
@@ -98,7 +99,8 @@ présenter un nombre trop conséquent de données.
 La Figure \ref{fig:be} présente la distribution des erreurs résiduelles pour 5 turbo codes du standard LTE et un du 
 standard CCSDS. Le rendement du code est fixé à 1/3. Pour chacun de ces histogrammes, 500 trames erronées
 après décodage via l'algorithme EML-MAP itérant 8 fois sont considérées. 
-Pour chacun des turbo codes, trois valeurs de SNR sont présentées. La première correspond à un fonctionnement du turbo code dans la zone de convergence. La seconde valeur correspond au point d'inflexion de la courbe de performance et la troisième à la
+Pour chacun des turbo codes, trois valeurs de SNR sont présentées. La première correspond à un fonctionnement du turbo 
+code dans la zone de convergence. La seconde valeur correspond au point d'inflexion de la courbe de performance et la troisième à la
 zone du plancher d'erreur. Conformément aux résultats de la Figure \ref{fig:befe}, lorsque la valeur de SNR augmente, la 
 distribution des erreurs se concentre sur de faibles nombre d'erreurs binaires.
 Il apparaît alors que pour la troisième valeur de SNR, la très grande majorité 
@@ -828,14 +830,14 @@ S_{M_z}(k) &= \argmax\limits_{s\in\llbracket0;3\rrbracket\setminus{\{S_{M_x}(k)}
 S_{M_t}(k) &= \{0,1,2,3\}\setminus{\{S_{M_x}(k), S_{M_y}(k), S_{M_z}(k)\}}
 \end{align*}
 Le tableau \ref{tab:symb} présente des statistiques quant au symbole réellement transmis en fonction des valeurs 
-\textit{a posteriori} associé à ce symbole lorsqu'il est erroné à l'issue de l'itération courante. Ces statistiques ont été obtenues pour différents turbo
-codes du standard DVB-RCS. Ce tableau présente le nombre de fois où pour chaque trame erronée l'ensemble des erreurs 
-correspond au symbole $S_{M_x}$, au symbole $S_{M_y}$ ou au symbole $S_{M_x}$, en continuant de la sorte en 
-unissant les ensembles. Cela permet de déduire les symboles à considérer lors de la génération des 
+\textit{a posteriori} associées à ce symbole lorsqu'il est erroné à l'issue de l'itération courante. 
+Ces statistiques ont été obtenues pour différents turbo codes du standard DVB-RCS. 
+Cela permet de déduire les symboles à considérer lors de la génération des 
 mots candidats. Nous pouvons constater que la première colonne vaut toujours 0\% puisque le symbole le plus probable correspond au
-symbole décodé. Cependant, il est à noter que si l'information \textit{a posteriori} doit être reconstruite (cas où le 
-décodeur SISO fournit en sortie l'information extrinsèque et le vecteur décidé) le facteur de remise à l'échelle doit 
-être bien pris en compte pour calculer l'index des symboles. En effet, l'identification via la métrique $\Delta'$ est correct
+symbole décodé. 
+Cependant, si pour obtenir $S_{M_\xi}$ l'information \textit{a posteriori} doit être reconstruite 
+(cas où le décodeur SISO fournit en sortie l'information extrinsèque et le vecteur décidé), il est important de ne pas 
+ommetre le facteur de remise à l'échelle. En effet, l'identification via la métrique $\Delta'$ est correct
 en raison du faible écart entre les valeurs \textit{a posteriori}. Ainsi, une légère modification dans leurs calculs 
 modifie grandement la trame décodée. Il serait alors possible d'aboutir à ce que le symbole le plus probable estimé ne
 soit pas celui décodé.
@@ -846,7 +848,7 @@ soit pas celui décodé.
     %\resizebox{\linewidth}{!}{
         \begin{tabular}{lrrrr}
             \toprule
-            		& $S_{M_x}$	& $S_{M_x}\cup S_{M_y}$	& $S_{M_x}\cup S_{M_y}\cup S_{M_z}$ & $S_{M_x}\cup S_{M_y}\cup S_{M_z}\cup S_{M_t}$ \\
+            		& $S_{M_x}$	& $S_{M_y}$	& $S_{M_z}$ & $S_{M_t}$ \\
             \cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}
             i=3     &	0\%		&	96\%	& 	3\%		&	1\%		\\
             i=4     &	0\%		&	96\%	& 	3\%		&	1\%		\\
@@ -859,7 +861,7 @@ soit pas celui décodé.
 \end{table}
  
 À la lecture du tableau, il apparaît que dans la très grande majorité des cas, le symbole transmis 
-correspond au symbole le deuxième plus probable. Cela implique que considérer les deux symboles les moins probables ne 
+correspond au symbole le deuxième plus probable. Cela implique que considérer plus que deux symboles ne 
 permet alors pas d'augmenter de manière significative la probabilité de fournir le bon mot de code alors que la complexité 
 calculatoire résultante serait tout à fait notable.
 
@@ -887,10 +889,13 @@ Dans le contexte de turbo codes double binaires, l'algorithme FNC nécessite don
 Ceci provient directement de la manipulation de symboles. Cependant, l'opération d'extraction nécessaire des deux symboles 
 les plus probables correspond à une manipulation pour l'hypothétique correction de deux bits. Dès lors, la complexité globale
 de l'algorithme par bit décodé n'est que peu modifiée.\\
-Afin de réaliser ces deux extractions de valeurs maximales (correspondant aux lignes 9, 10 et 13 de l'algorithme 
-\ref{alg:fc_db}), un réseau de tri doit être utilisé. Dans ce cas, pour chaque symbole, 5 comparaisons sont nécessaires.
-En utilisant la décision du turbo décodeur, il serait possible de réduire le nombre de comparaison à 3. Mais dans ce cas,
-de la logique combinatoire supplémentaire sera nécessaire afin de sélectionner les entrées de ces 3 comparateurs. Comme ces opérations
+Ces deux extractions de valeurs maximales correspondant aux lignes 9, 10 et 13 de l'algorithme \ref{alg:fc_db}) 
+correspondent à un tri entre 4 valeurs.
+% Afin de réaliser ces deux extractions de valeurs maximales (correspondant aux lignes 9, 10 et 13 de l'algorithme 
+% \ref{alg:fc_db}), un réseau de tri doit être utilisé. Dans ce cas, pour chaque symbole, 5 comparaisons sont nécessaires.
+% En utilisant la décision du turbo décodeur, il serait possible de réduire le nombre de comparaison à 3. Mais dans ce cas,
+% de la logique combinatoire supplémentaire sera nécessaire afin de sélectionner les entrées de ces 3 comparateurs. 
+Comme ces opérations
 ne sont réalisées qu'une fois par itération, leur impact sur la complexité calculatoire globale reste faible. Dans la suite de 
 cette sous-section, une présentation
 des performances de décodage dans le contexte des standards DVB-RCS et DVB-RCS2 est réalisée.
@@ -950,7 +955,7 @@ conventionnel avec celles de l'algorithme FNC pour K=440 symboles et pour diffé
 % meilleures performances que celles obtenues pour le turbo code de rendement 1/3 avec un décodage conventionnel EML-MAP. 
 % Plus généralement, pour des valeurs de SNR moyennes à élevées, quelque soit le rendement du code, l'algorithme FNC apporte 
 % des gains au moins égaux à un ordre de grandeur. 
-Il apparaît que grâce à l'algorithme FNC, dans la zone du plancher d'erreur quelque soit le rendement du code, l'algorithme FNC apporte 
+Il apparaît que grâce à l'algorithme FNC, dans la zone du plancher d'erreur, quelque soit le rendement du code, l'algorithme FNC apporte 
 des gains au moins égaux à un ordre de grandeur. 
 En terme de SNR, cela correspond à des gains allant de 0.4 dB à plus de 
 0.6 dB.

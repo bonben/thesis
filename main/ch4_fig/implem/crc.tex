@@ -1,0 +1,88 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{eulervm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+\usepackage{pgffor}
+\usepackage{amsmath}
+
+\input{../colors}
+
+\setlength{\textwidth}{146.8mm}
+
+
+\begin{document}
+\begin{tikzpicture}
+     \pgfplotsset{
+        %scale only axis,
+        %scaled x ticks=base 10:3,
+        %xmin=0, xmax=0.06,
+        y axis style/.style={
+           yticklabel style=#1,
+           ylabel style=#1,
+           y axis line style=#1,
+           ytick style=#1
+        }
+    }
+
+    \begin{axis}[   axis y line*=right,
+                    y axis style=Set1-1!75!black,
+                    %ymin=0, ymax=80,
+                    xlabel=Degré de parallélisme du CRC ($Q$),
+                    xtick={1,8,24,48},
+                    %scaled y ticks=base 10:-3,
+                    ylabel=Équivalent portes \bsc{Nand-2},
+                    grid=both, grid style={Set1-1!10},
+                ]
+
+        \addplot[smooth,mark=x,Set1-1] coordinates  {(1 ,206  )
+                                                     (2 ,244 )
+                                                     (8 ,380 )
+                                                     (24,658 ) 
+                                                     (48 ,1055 )
+                                                    };
+       % \addplot[dashed, Set1-1, domain=1:48] {122*x};                                                    
+    \end{axis}
+     \begin{axis}[  axis y line*=left,
+                    axis x line=none,
+                    %ymin=0, ymax=100,
+                    ylabel=$\sim$ Efficacité énergétique,
+                    y axis style=Set1-2!75!black,
+                    grid=both, grid style={Set1-2!10},
+                ]
+
+        \addplot[smooth,mark=x,Set1-2] coordinates  {(1 ,0.004854368932  )
+                                                     (2 ,0.00819672131148 )
+                                                     (8 ,0.0210526315789 )
+                                                     (24,0.0364741641337 ) 
+                                                     (48,0.0454976303318 )
+                                                    };
+
+    \end{axis}
+
+
+    % \begin{axis}[  axis y line=none,
+    %                 axis x line=none,
+    %                 %ymin=0, ymax=100,
+    %                 %ylabel=$\sim$ Efficacité énergétique,
+    %                 %y axis style=Set1-2!75!black,
+    %                 %grid=both, grid style={Set1-2!10},
+    %             ]
+
+    %     \addplot[smooth,mark=square,Set1-4] coordinates  {  (1 ,206  )
+    %                                                         (2 ,122)
+    %                                                         (8 ,47.5)
+    %                                                         (24,27.4) 
+    %                                                         (48,22)
+    %                                                 };
+
+    % \end{axis}
+
+\end{tikzpicture}
+
+\end{document}

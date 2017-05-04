@@ -31,25 +31,26 @@
 					ylabel=Identification (\%),
 					axis lines*=left,
 					xlabel=Profondeur de recherche,
+					legend entries = {Met. Apost.~($\Delta_1$)~, Met. Ext.~($\Delta_2$)~ , Norme Apost.~($\Delta_3$)~, Norme Ext.~($\Delta_4$)~}
 					 ]
 	 
-		 \nextgroupplot[legend entries = {Met. Ext.~($\Delta_2$)~ , Met. Apost.~($\Delta_1$)~, Norme Ext.~($\Delta_4$)~, Norme Apost.~($\Delta_3$)~}]
-		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{1}/5] {../dat/1024};
+	\nextgroupplot[]
 		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{2}/5] {../dat/1024};
-		 \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y expr=\thisrowno{3}/5] {../dat/1024};
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{1}/5] {../dat/1024};
 		 \addplot[draw=Paired-7, fill=Paired-7!50, postaction={pattern color = black!80,pattern=dots, samples=500}] table [x=X, y expr=\thisrowno{4}/5] {../dat/1024};
+		 \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y expr=\thisrowno{3}/5] {../dat/1024};
 
-		 		 \nextgroupplot[legend entries = {Met. Ext.~($\Delta_2$)~ , Met. Apost.~($\Delta_1$)~, Norme Ext.~($\Delta_4$)~, Norme Apost.~($\Delta_3$)~}]
-		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{5}/5] {../dat/1024};
+	\nextgroupplot[]
 		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{6}/5] {../dat/1024};
-		 \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y expr=\thisrowno{7}/5] {../dat/1024};
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{5}/5] {../dat/1024};
 		 \addplot[draw=Paired-7, fill=Paired-7!50, postaction={pattern color = black!80,pattern=dots}] table [x=X, y expr=\thisrowno{8}/5] {../dat/1024};
-
-		 		 \nextgroupplot[legend entries = {Met. Ext.~($\Delta_2$)~ , Met. Apost.~($\Delta_1$)~, Norme Ext.~($\Delta_4$)~, Norme Apost.~($\Delta_3$)~}]
-		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{9}/5] {../dat/1024};
+		 \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y expr=\thisrowno{7}/5] {../dat/1024};
+		
+	\nextgroupplot[]
 		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{10}/5] {../dat/1024};
-		 \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y expr=\thisrowno{11}/5] {../dat/1024};
+		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{9}/5] {../dat/1024};
 		 \addplot[draw=Paired-7, fill=Paired-7!50, postaction={pattern color = black!80,pattern=dots}] table [x=X, y expr=\thisrowno{12}/5] {../dat/1024};
+		 \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=crosshatch dots }] table [x=X, y expr=\thisrowno{11}/5] {../dat/1024};
 				
 \end{groupplot}
 		\node[below = 1cm of be c1r1.south] {(a) : LTE K=1024, R=1/3, SNR=1.1dB (FER=$2.3\times10^{-4}$)};

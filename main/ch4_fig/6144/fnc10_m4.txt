@@ -1,0 +1,87 @@
+#Run command:
+#./aff3ct -p "32" --sim-type "BFER" --cde-type "TURBO" -K "6144" -N "18432" -e "75" -m "0.0" -M "1.11" -s "0.1" --dec-type "LTE" -i "8" --itl-type "LTE" --dec-sf "LTE_VEC" -t "48" --dec-max "MAX" --dec-fnc --crc-type "FAST" --crc-poly "24-LTEA" --dec-fnc-q "10" --dec-fnc-ite-M "8" --dec-fnc-ite-m "4" --sim-pyber "LTE 6144 i8 FNC10 m4" 
+#Curve name:
+#LTE 6144 i8 FNC10 m4
+# -------------------------------------------------
+# ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----
+# -------------------------------------------------
+# Parameters:
+# * Simulation ------------------------------------
+#    ** Type                     = BFER
+#    ** SNR min (m)              = 0.000000 dB
+#    ** SNR max (M)              = 1.110000 dB
+#    ** SNR step (s)             = 0.100000 dB
+#    ** Type of bits             = int (32 bits)
+#    ** Type of reals            = float (32 bits)
+#    ** Inter frame level        = 1
+#    ** Seed                     = 0
+#    ** Multi-threading (t)      = 48 thread(s)
+# * Code ------------------------------------------
+#    ** Type                     = TURBO
+#    ** Info. bits (K)           = 6120 + 24 (CRC)
+#    ** Codeword size (N)        = 18432 + 12 (tail bits)
+#    ** Coset approach (c)       = off
+# * Source ----------------------------------------
+#    ** Type                     = RAND
+# * CRC -------------------------------------------
+#    ** Type                     = FAST
+#    ** Name                     = 24-LTEA
+#    ** Polynomial (hexadecimal) = 0x864cfb
+#    ** Size (in bit)            = 24
+#    ** Add CRC in the code rate = off
+# * Encoder ---------------------------------------
+#    ** Type                     = TURBO
+#    ** Systematic encoding      = on
+#    ** Polynomials              = {013,015}
+#    ** Buffered                 = on
+# * Interleaver -----------------------------------
+#    ** Type                     = LTE
+# * Modulator -------------------------------------
+#    ** Type                     = BPSK
+#    ** Bits per symbol          = 1
+#    ** Sampling factor          = 1
+# * Channel ---------------------------------------
+#    ** Type                     = AWGN
+#    ** Domain                   = LLR
+# * Demodulator -----------------------------------
+#    ** Sigma square             = on
+#    ** Max type                 = unused
+# * Decoder ---------------------------------------
+#    ** Type (D)                 = BCJR
+#    ** Implementation           = FAST
+#    ** Num. of iterations (i)   = 8
+#    ** Scaling factor           = LTE_VEC
+#    ** Max type                 = MAX
+#    ** Self-corrected           = off
+#    ** Flip aNd Check (FNC)     = on
+#    ** FNC q                    = 10
+#    ** FNC ite min              = 4
+#    ** FNC ite max              = 8
+#    ** FNC ite step             = 1
+# * Monitor ---------------------------------------
+#    ** Frame error count (e)    = 75
+#    ** Bad frames tracking      = off
+#    ** Bad frames replay        = off
+#
+# The simulation is running...
+# ----------------------------------------------------------------------||--------------------------------||---------------------
+#       Bit Error Rate (BER) and Frame Error Rate (FER) depending       ||     Decoder throughput and     ||  Global throughput  
+#                    on the Signal Noise Ratio (SNR)                    ||      latency (per thread)      ||  and elapsed time   
+# ----------------------------------------------------------------------||--------------------------------||---------------------
+# -------|-------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+   Es/N0 | Eb/N0 |      FRA |       BE |       FE |      BER |      FER ||     CTHR |     ITHR |  LATENCY || SIM_CTHR |    ET/RT 
+#   (dB) |  (dB) |          |          |          |          |          ||   (Mb/s) |   (Mb/s) |     (us) ||   (Mb/s) | (hhmmss) 
+# -------|-------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+   -4.79 |  0.00 |      122 |    91696 |      122 | 1.22e-01 | 1.00e+00 ||     0.07 |     0.02 | 2.52e+05 ||     2.50 | 00h00'00  
+   -4.69 |  0.10 |      124 |    67732 |      121 | 8.89e-02 | 9.76e-01 ||     0.13 |     0.04 | 1.40e+05 ||     4.49 | 00h00'00  
+   -4.59 |  0.20 |      130 |    40429 |      118 | 5.06e-02 | 9.08e-01 ||     0.13 |     0.04 | 1.40e+05 ||     4.64 | 00h00'00  
+   -4.49 |  0.30 |      185 |    19729 |      107 | 1.74e-02 | 5.78e-01 ||     0.14 |     0.05 | 1.29e+05 ||     5.25 | 00h00'00  
+   -4.39 |  0.40 |      505 |     8397 |       84 | 2.71e-03 | 1.66e-01 ||     0.18 |     0.06 | 1.03e+05 ||     7.15 | 00h00'01  
+   -4.29 |  0.50 |     2436 |     5282 |       83 | 3.53e-04 | 3.41e-02 ||     0.26 |     0.09 | 69864.98 ||    11.60 | 00h00'03  
+   -4.19 |  0.60 |    41805 |     1465 |       75 | 5.70e-06 | 1.79e-03 ||     0.38 |     0.13 | 48124.99 ||    16.97 | 00h00'45  
+   -4.09 |  0.70 |   686189 |     1993 |       75 | 4.73e-07 | 1.09e-04 ||     0.57 |     0.19 | 32114.61 ||    24.60 | 00h08'34  
+   -3.99 |  0.80 |  2487994 |     1455 |       75 | 9.52e-08 | 3.01e-05 ||     0.95 |     0.32 | 19446.19 ||    38.06 | 00h20'05  
+   -3.89 |  0.90 |  5719664 |      979 |       75 | 2.79e-08 | 1.31e-05 ||     1.83 |     0.61 | 10057.93 ||    64.13 | 00h27'24  
+   -3.79 |  1.00 | 23693888 |      653 |       75 | 4.49e-09 | 3.17e-06 ||     3.25 |     1.08 |  5679.23 ||    94.13 | 01h17'22  
+   -3.69 |  1.10 | 1.08e+08 |     1761 |       75 | 2.65e-09 | 6.94e-07 ||     4.74 |     1.58 |  3891.08 ||   123.47 | 04h28'53  
+# End of the simulation.

@@ -28,28 +28,28 @@
 					ymode=log
 					]
 
-	\nextgroupplot[xmin=1.4, xmax=2.6, xtick={1,4,1.8,...,2.6}, ylabel=FER]
+	\nextgroupplot[xmin=1.4, xmax=2.6, xtick={1.4,1.8,...,2.6}, ylabel=FER]
     \addplot[mark=o, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../prec/528_FP_16_bits_6.3_ref.txt};   
     \addplot[mark=o, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/528_FP_16_bits_6.3_FNC10.txt};
 
-   % \addplot[mark=o, Set1-3, semithick                              ]  table [x=Eb/N0, y=FER] {../prec/528_FP_8_bits_5.2_ref.txt};     
-   % \addplot[mark=o, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/528_FP_8_bits_5.2_FNC10.txt}; 
+   \addplot[mark=o, Set1-3, semithick                              ]  table [x=Eb/N0, y=FER] {../prec/528_FP_8_bits_5.2_ref.txt};     
+   \addplot[mark=o, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/528_FP_8_bits_5.2_FNC10.txt}; 
 
-   % \addplot[mark=o, Set1-5, semithick                              ]  table [x=Eb/N0, y=FER] {../prec/528_FP_8_bits_5.1_ref.txt};     
-   % \addplot[mark=o, Set1-5, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/528_FP_8_bits_5.1_FNC10.txt}; 
+   %\addplot[mark=o, Set1-5, semithick                              ]  table [x=Eb/N0, y=FER] {../prec/528_FP_8_bits_5.1_ref.txt};     
+   %\addplot[mark=o, Set1-5, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/528_FP_8_bits_5.1_FNC10.txt}; 
 
   \nextgroupplot[xmin=0.8, xmax=1.4, xtick={0.8,1.0,...,1.4}]
-    \addplot[mark=triangle, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../prec/2048_FP_16_bits_6.3_ref.txt};   \label{c1}  
-    \addplot[mark=triangle, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/2048_FP_16_bits_6.3_FNC10.txt}; \label{c2}
+    \addplot[mark=triangle, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../prec/2048_FP_16_bits_6.3_ref.txt};    \label{c1}  
+    \addplot[mark=triangle, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/2048_FP_16_bits_6.3_FNC10.txt};  \label{c2}
 
     \addplot[mark=triangle, Set1-3, semithick                              ]  table [x=Eb/N0, y=FER] {../prec/2048_FP_8_bits_5.2_ref.txt};     \label{c3}
-    \addplot[mark=triangle, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/2048_FP_8_bits_5.2_FNC10.txt}; \label{c4}
+    \addplot[mark=triangle, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/2048_FP_8_bits_5.2_FNC10.txt};   \label{c4}
 
     \addplot[mark=triangle, Set1-5, semithick                              ]  table [x=Eb/N0, y=FER] {../prec/2048_FP_8_bits_5.1_ref.txt};     \label{c5}
-    \addplot[mark=triangle, Set1-5, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/2048_FP_8_bits_5.1_FNC10.txt}; \label{c6}
+    \addplot[mark=triangle, Set1-5, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/2048_FP_8_bits_5.1_FNC10.txt};   \label{c6}
  
 
-  \nextgroupplot[xmin=0.5, xmax=1.1, xtick={0.5,0.6,0.7,...,1.5}]
+  \nextgroupplot[xmin=0.5, xmax=1.1, xtick={0.5,0.7,...,1.1}]
 
     \addplot[mark=square, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../prec/6144_FP_16_bits_6.3_ref.txt};     
     \addplot[mark=square, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../prec/6144_FP_16_bits_6.3_FNC10.txt}; 

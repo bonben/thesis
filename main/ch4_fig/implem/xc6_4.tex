@@ -1,0 +1,89 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{eulervm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+\usepackage{pgffor}
+\usepackage{amsmath}
+
+\input{../colors}
+
+\setlength{\textwidth}{146.8mm}
+
+
+\begin{document}
+
+% \begin{tikzpicture}
+%     \begin{axis}[footnotesize, width=\textwidth, height=0.65\textwidth,    
+%                 xmin=0.2, xmax=2.6, xtick={0,0.5,...,3},
+%                 ymax=1,
+% 				xlabel=$q$, ylabel=FER,  
+% 				tick align=outside, tickpos=left,
+% 				grid=both, grid style={gray!30},
+% 				legend pos=north east
+% 				]
+
+       
+
+%     \end{axis}
+% \end{tikzpicture}
+
+
+\begin{tikzpicture}
+    \pgfplotsset{
+        scale only axis,
+        %scaled x ticks=base 10:3,
+        %xmin=0, xmax=0.06,
+        y axis style/.style={
+            yticklabel style=#1,
+            ylabel style=#1,
+            y axis line style=#1,
+            ytick style=#1
+       }
+    }
+
+    \begin{axis}[   axis y line*=right,
+                    y axis style=Set1-1!75!black,
+                    %ymin=0, ymax=80,
+                    xlabel=$q$,
+                    scaled y ticks=base 10:-3,
+                    ylabel=Paires,
+                    grid=both, grid style={Set1-1!10},
+                ]
+
+        \addplot[smooth,mark=x,Set1-1] coordinates  {(4 ,610  )
+                                                     (5 ,1038 )
+                                                     (6 ,1844 )
+                                                     (7 ,3127 ) 
+                                                     (8 ,5731 )
+                                                     (9 ,10850)
+                                                     (10,23720)
+                                                    };
+    \end{axis}
+
+    \begin{axis}[   axis y line*=left,
+                    axis x line=none,
+                    %ymin=0, ymax=100,
+                    ylabel=$f$ (MHz),
+                    y axis style=Set1-2!75!black,
+                    grid=both, grid style={Set1-2!10},
+                ]
+        \addplot[only marks,mark=*,Set1-2] coordinates{ (4 ,293)
+                                                        (5 ,230)
+                                                        (6 ,216)
+                                                        (7 ,207) 
+                                                        (8 ,172)
+                                                        (9 ,132)
+                                                        (10,103)
+                                                        };
+    \end{axis}
+
+
+\end{tikzpicture}
+
+\end{document}

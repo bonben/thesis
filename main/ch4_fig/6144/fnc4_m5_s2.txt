@@ -1,7 +1,7 @@
-#Run command:
-#./aff3ct -p "32" --sim-type "BFER" --cde-type "TURBO" -K "6144" -N "18432" -e "50" -m "0.0" -M "1.11" --dec-type "LTE" -i "8" --itl-type "LTE" --dec-sf "LTE_VEC" -t "48" --dec-max "MAX" --dec-fnc --crc-type "FAST" --crc-poly "24-LTEA" --dec-fnc-q "4" --dec-fnc-ite-M "8" --dec-fnc-ite-m "5" --dec-fnc-ite-s "2" --sim-pyber "LTE 6144 i8 FNC4 it5+7" 
-#Curve name:
-#LTE 6144 i8 FNC4 it5+7
+##Run command:
+##./aff3ct -p "32" --sim-type "BFER" --cde-type "TURBO" -K "6144" -N "18432" -e "50" -m "0.0" -M "1.11" --dec-type "LTE" -i "8" --itl-type "LTE" --dec-sf "LTE_VEC" -t "48" --dec-max "MAX" --dec-fnc --crc-type "FAST" --crc-poly "24-LTEA" --dec-fnc-q "4" --dec-fnc-ite-M "8" --dec-fnc-ite-m "5" --dec-fnc-ite-s "2" --sim-pyber "LTE 6144 i8 FNC4 it5+7" 
+##Curve name:
+##LTE 6144 i8 FNC4 it5+7
 # -------------------------------------------------
 # ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----
 # -------------------------------------------------
