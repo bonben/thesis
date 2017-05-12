@@ -18,33 +18,89 @@
 
 \begin{document}
 
+% \begin{tikzpicture}
+%     \begin{semilogyaxis}[footnotesize, width=\linewidth, height=0.65\linewidth,    
+%                     xmin=0, xmax=2.6, xtick={0,0.5,...,3},
+%                     ymax=1,
+% 					xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  
+% 					tick align=outside, tickpos=left,
+% 					grid=both, grid style={gray!30},
+% 					/pgfplots/table/ignore chars={|},
+% 					legend pos=north east
+% 					]
+
+% 		  \addplot[mark=o,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../528/ref.txt};     
+%         \addplot[mark=o,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m3.txt};
+%         \addplot[mark=o,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m3_M8_s2.txt};
+
+
+%         \addplot[mark=triangle,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../2048/ref.txt};
+%         \addplot[mark=triangle,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5.txt};
+%         \addplot[mark=triangle,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5_M8_s2.txt};
+
+%         \addplot[mark=square,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../6144/ref.txt};
+%         \addplot[mark=square,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5.txt};
+%         \addplot[mark=square,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5_M8_s2.txt};
+
+
+
+%         \legend{TC conventionnel, FNC $q_{10}$ - $ I_{\text{min}} = I_{\text{m}_\text{o}}$, FNC $q_{10}$ - $ I_{\text{min}} = I_{\text{m}_\text{o}}$ - Pas=2}
+%     \end{semilogyaxis}
+% \end{tikzpicture}
+% \end{document}
+
+
+
 \begin{tikzpicture}
-    \begin{semilogyaxis}[footnotesize, width=\linewidth, height=0.65\linewidth,    
-                    xmin=0, xmax=2.6, xtick={0,0.5,...,3},
-                    ymax=1,
-					xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  
-					tick align=outside, tickpos=left,
-					grid=both, grid style={gray!30},
-					/pgfplots/table/ignore chars={|},
-					legend pos=north east
-					]
+\begin{groupplot}[  group style={group name=minX, group size= 3 by 1, horizontal sep=1.2cm, vertical sep=1.5cm}, 
+                    width=0.4\textwidth, height=0.55\textwidth, 
+                    xlabel=$E_b/N_0 \text{(dB)}$,   
+                    tick align=outside, tickpos=left,
+                    grid=both, grid style={gray!30},
+                    /pgfplots/table/ignore chars={|},
+                    ymode=log
+                    ]
 
-		\addplot[mark=o,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../528/ref.txt};     
-        \addplot[mark=o,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m3.txt};
-        \addplot[mark=o,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m3_M8_s2.txt};
+    %\nextgroupplot[xmin=1.2, xmax=2.8, xtick={1.2,1.6,2.0,...,2.6}]
+    \nextgroupplot[xmin=0.4, xmax=2.6, ylabel=FER, ymax=2]
+        \addplot[mark=triangle,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../528/ref.txt}; \label{c1}      
+        \addplot[mark=square, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m3.txt}; \label{c2}
+        \addplot[mark=o,Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m3_M8_s2.txt}; \label{c3}
 
-
+     %\nextgroupplot[xmin=0.8, xmax=1.5, xtick={0.9,1.0,...,1.5}]
+    \nextgroupplot[xmin=0.4, xmax=1.4, xtick={0.4,0.6,...,1.4}, ymax=2]
         \addplot[mark=triangle,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../2048/ref.txt};
-        \addplot[mark=triangle,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5.txt};
-        \addplot[mark=triangle,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5_M8_s2.txt};
+        \addplot[mark=square,Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5.txt};
+        \addplot[mark=o,Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5_M8_s2.txt};
 
-        \addplot[mark=square,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../6144/ref.txt};
-        \addplot[mark=square,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5.txt};
-        \addplot[mark=square,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5_M8_s2.txt};
+     % \nextgroupplot[xshift=0.25\textwidth, xmin=0.6, xmax=1.2, xtick={0.6,0.7,...,1.5}]
+    \nextgroupplot[ xmin=0.2, xmax=1.1, xtick={0.2,0.4,...,1.5}, ymax=2]
+        \addplot[mark=triangle,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../6144/ref.txt};
+        \addplot[mark=square,Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5.txt};
+        \addplot[mark=o,Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5_M8_s2.txt};
+        
 
 
+\end{groupplot}
 
-        \legend{TC conventionnel, FNC $q_{10}$ - $ I_{\text{min}} = I_{\text{m}_\text{o}}$, FNC $q_{10}$ - $ I_{\text{min}} = I_{\text{m}_\text{o}}$ - Pas=2}
-    \end{semilogyaxis}
+% legend
+\path (minX c1r1.north west|-current bounding box.north)--
+      coordinate(legendpos)
+      (minX c3r1.north east|-current bounding box.north);
+\matrix[
+    matrix of nodes,
+    anchor=south,
+    draw,
+    inner sep=0.2em,
+    draw
+  ]at([yshift=3ex]legendpos)
+  {
+    \ref{c1} & TC conventionnel         & [5pt]
+    \ref{c2} & FNC Pas=1 & [5pt]
+    \ref{c3} & FNC Pas=2 & [5pt]\\};
+
+    \node[below = 1.3cm of minX c1r1.south] {(a) : K=528};
+    \node[below = 1.3cm of minX c2r1.south] {(b) : K=2048};
+    \node[below = 1.3cm of minX c3r1.south] {(c) : K=6144};
 \end{tikzpicture}
 \end{document}

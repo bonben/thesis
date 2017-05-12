@@ -37,9 +37,11 @@
 \usetikzlibrary{shapes,arrows}
 \usetikzlibrary{calc} 
 
+\usepackage{array}
 \usepackage{longtable} %pour la liste des notations
 
 \usepackage[xindy]{glossaries}
+\usepackage[toc,page]{appendix}
 %\makeglossaries
 %\makenoidxglossaries
 \input{tail/glossaireEntries}
@@ -197,3 +199,14 @@
 \newcites{mine}{Publications}
 
 \DecimalMathComma
+
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+\makeatletter
+\AtBeginDocument{\let\book@l@chapter\l@chapter}
+\newcommand{\demotechaptersintoc}{%
+  \addtocontents{toc}{\let\protect\l@chapter\protect\l@section}%
+}
+\newcommand{\promotechaptersintoc}{%
+  \addtocontents{toc}{\let\protect\l@chapter\protect\book@l@chapter}%
+}

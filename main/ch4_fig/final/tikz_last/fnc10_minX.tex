@@ -19,7 +19,7 @@
 \begin{document}
 
 \begin{tikzpicture}
-\begin{groupplot}[	group style={group name=minX, group size= 3 by 1, horizontal sep=1.2cm, vertical sep=2.3cm}, 
+\begin{groupplot}[	group style={group name=minX, group size= 3 by 2, horizontal sep=1.2cm, vertical sep=1.5cm}, 
 					width=0.4\textwidth, height=0.55\textwidth, 
 					xlabel=$E_b/N_0 \text{(dB)}$,   
 					tick align=outside, tickpos=left,
@@ -29,38 +29,73 @@
 					]
 
 	%\nextgroupplot[xmin=1.2, xmax=2.8, xtick={1.2,1.6,2.0,...,2.6}]
-    \nextgroupplot[xmin=1.8, xmax=2.6, xtick={1.8,2.0,...,2.6},ylabel=FER]
-		\addplot[mark=o,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../528/ref.txt};      \label{c1}
-        \addplot[mark=o,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m2.txt}; \label{c2}
-        \addplot[mark=o,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m3.txt}; \label{c3}
-        \addplot[mark=o,Set1-4, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m4.txt}; \label{c4}
-        \addplot[mark=o,Set1-5, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m5.txt}; \label{c5}
-        \addplot[mark=o,Set1-7, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m6.txt}; \label{c6}
-        \addplot[mark=o,Set1-8, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m7.txt}; \label{c7}
-        \addplot[mark=o,Set1-9, semithick]  table [x=Eb/N0, y=FER] {../528/fnc10_m8.txt}; \label{c8}
+    \nextgroupplot[xmin=0.4, xmax=2.6, ylabel=FER, ymax=2]
+        \addplot[mark=triangle,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../528/ref.txt};      
+        \addplot[mark=o,Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m2.txt}; 
+        \addplot[mark=o,Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m3.txt}; 
+        \addplot[mark=o,Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m4.txt}; 
+        \addplot[mark=o,Set1-5, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m5.txt}; 
+        \addplot[mark=o,Set1-7, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m6.txt}; 
+        \addplot[mark=o,Set1-8, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m7.txt}; 
+        \addplot[mark=o,Set1-9, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m8.txt}; 
+
+
+     %\nextgroupplot[xmin=0.8, xmax=1.5, xtick={0.9,1.0,...,1.5}]
+    \nextgroupplot[xmin=0.4, xmax=1.4, xtick={0.4,0.6,...,1.4}, ymax=2]
+        \addplot[mark=triangle,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../2048/ref.txt};
+        \addplot[mark=o,Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m2.txt};
+        \addplot[mark=o,Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m3.txt};
+        \addplot[mark=o,Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m4.txt};
+        \addplot[mark=o,Set1-5, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5.txt};
+        \addplot[mark=o,Set1-7, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m6.txt};
+        \addplot[mark=o,Set1-8, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m7.txt};
+        \addplot[mark=o,Set1-9, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m8.txt}; 
+
+     % \nextgroupplot[xshift=0.25\textwidth, xmin=0.6, xmax=1.2, xtick={0.6,0.7,...,1.5}]
+    \nextgroupplot[ xmin=0.2, xmax=1.1, xtick={0.2,0.4,...,1.5}, ymax=2]
+        \addplot[mark=triangle,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../6144/ref.txt};
+        \addplot[mark=o,Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m2.txt};
+        \addplot[mark=o,Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m3.txt};
+        \addplot[mark=o,Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m4.txt};
+        \addplot[mark=o,Set1-5, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5.txt};
+        \addplot[mark=o,Set1-7, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m6.txt};
+        \addplot[mark=o,Set1-8, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m7.txt};
+        \addplot[mark=o,Set1-9, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m8.txt}; 
+
+
+
+    \nextgroupplot[xmin=1.8, xmax=2.6, xtick={1.8,2.0,...,2.6},ylabel=FER (Zoom)]
+		\addplot[mark=triangle,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../528/ref.txt};      \label{c1}
+        \addplot[mark=o,Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m2.txt}; \label{c2}
+        \addplot[mark=o,Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m3.txt}; \label{c3}
+        \addplot[mark=o,Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m4.txt}; \label{c4}
+        \addplot[mark=o,Set1-5, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m5.txt}; \label{c5}
+        \addplot[mark=o,Set1-7, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m6.txt}; \label{c6}
+        \addplot[mark=o,Set1-8, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m7.txt}; \label{c7}
+        \addplot[mark=o,Set1-9, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m8.txt}; \label{c8}
 
 
      %\nextgroupplot[xmin=0.8, xmax=1.5, xtick={0.9,1.0,...,1.5}]
     \nextgroupplot[xmin=1.0, xmax=1.4, xtick={1.0,1.1,...,1.4}]
         \addplot[mark=triangle,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../2048/ref.txt};
-        \addplot[mark=triangle,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m2.txt};
-        \addplot[mark=triangle,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m3.txt};
-        \addplot[mark=triangle,Set1-4, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m4.txt};
-        \addplot[mark=triangle,Set1-5, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5.txt};
-        \addplot[mark=triangle,Set1-7, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m6.txt};
-        \addplot[mark=triangle,Set1-8, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m7.txt};
-        \addplot[mark=triangle,Set1-9, semithick]  table [x=Eb/N0, y=FER] {../2048/fnc10_m8.txt}; 
+        \addplot[mark=o,Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m2.txt};
+        \addplot[mark=o,Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m3.txt};
+        \addplot[mark=o,Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m4.txt};
+        \addplot[mark=o,Set1-5, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5.txt};
+        \addplot[mark=o,Set1-7, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m6.txt};
+        \addplot[mark=o,Set1-8, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m7.txt};
+        \addplot[mark=o,Set1-9, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m8.txt}; 
 
      % \nextgroupplot[xshift=0.25\textwidth, xmin=0.6, xmax=1.2, xtick={0.6,0.7,...,1.5}]
     \nextgroupplot[ xmin=0.6, xmax=1.1, xtick={0.6,0.7,...,1.5}]
-        \addplot[mark=square,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../6144/ref.txt};
-        \addplot[mark=square,Set1-2, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m2.txt};
-        \addplot[mark=square,Set1-3, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m3.txt};
-        \addplot[mark=square,Set1-4, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m4.txt};
-        \addplot[mark=square,Set1-5, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5.txt};
-        \addplot[mark=square,Set1-7, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m6.txt};
-        \addplot[mark=square,Set1-8, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m7.txt};
-        \addplot[mark=square,Set1-9, semithick]  table [x=Eb/N0, y=FER] {../6144/fnc10_m8.txt}; 
+        \addplot[mark=triangle,Set1-1, semithick]  table [x=Eb/N0, y=FER] {../6144/ref.txt};
+        \addplot[mark=o,Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m2.txt};
+        \addplot[mark=o,Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m3.txt};
+        \addplot[mark=o,Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m4.txt};
+        \addplot[mark=o,Set1-5, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5.txt};
+        \addplot[mark=o,Set1-7, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m6.txt};
+        \addplot[mark=o,Set1-8, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m7.txt};
+        \addplot[mark=o,Set1-9, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m8.txt}; 
 \end{groupplot}
 
 % legend
@@ -76,16 +111,16 @@
   ]at([yshift=3ex]legendpos)
   {
     \ref{c1} & TC conventionnel        	& [5pt]
-	\ref{c2} & FNC $q_{10}, I_\text{min}=2$	& [5pt]
-	\ref{c3} & FNC $q_{10}, I_\text{min}=3$	& [5pt]
-	\ref{c4} & FNC $q_{10}, I_\text{min}=4$	\\
-	\ref{c5} & FNC $q_{10}, I_\text{min}=5$	& [5pt]
-	\ref{c6} & FNC $q_{10}, I_\text{min}=6$	& [5pt]
-	\ref{c7} & FNC $q_{10}, I_\text{min}=7$ 	& [5pt]
-	\ref{c8} & FNC $q_{10}, I_\text{min}=8$ 	\\};
+	\ref{c2} & FNC $I_\text{min}=2$	& [5pt]
+	\ref{c3} & FNC $I_\text{min}=3$	& [5pt]
+	\ref{c4} & FNC $I_\text{min}=4$	\\
+	\ref{c5} & FNC $I_\text{min}=5$	& [5pt]
+	\ref{c6} & FNC $I_\text{min}=6$	& [5pt]
+	\ref{c7} & FNC $I_\text{min}=7$ 	& [5pt]
+	\ref{c8} & FNC $I_\text{min}=8$ 	\\};
 
-	\node[below = 1.3cm of minX c1r1.south] {(a) : K=528};
-	\node[below = 1.3cm of minX c2r1.south] {(b) : K=2048};
-	\node[below = 1.3cm of minX c3r1.south] {(c) : K=6144};
+	\node[below = 1.3cm of minX c1r2.south] {(a) : K=528};
+	\node[below = 1.3cm of minX c2r2.south] {(b) : K=2048};
+	\node[below = 1.3cm of minX c3r2.south] {(c) : K=6144};
 \end{tikzpicture}
 \end{document}

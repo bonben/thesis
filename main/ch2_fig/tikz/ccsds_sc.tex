@@ -30,7 +30,7 @@
                                     ymode = log,
                                     ymin=1e-9, ymax=1.3,
                                     xmin=0, xmax=1.3, xtick={0,0.2,...,1.6},
-                                    xlabel=$E_b/N_0 \text{(dB)}$, ylabel=Taux d'erreurs Trame et Binaire, grid=both, grid style={gray!30},
+                                    xlabel=$E_b/N_0 \text{(dB)}$, ylabel=BER et FER, grid=both, grid style={gray!30},
                                     tick align=outside, tickpos=left, legend pos=south west]
                     \addplot[mark=o,Paired-1]  table [x=SNR, y=BER] {../sc/emlmap.dat};
                     \addplot[mark=o,Paired-3]  table [x=SNR, y=BER] {../sc/sc_emlmap.dat};

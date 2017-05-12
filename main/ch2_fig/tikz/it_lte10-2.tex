@@ -36,25 +36,25 @@
 					colorbrewer cycle list=Spectral,
 					xlabel = Itérations
 					]
-		\nextgroupplot[ylabel=Oscillations]
+		\nextgroupplot[ylabel=Oscillations $N\rightarrow N$]
 			\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {../chevelures/lte/10-2/nn_f.dat}; }	
 		\nextgroupplot[xmax=25, xtick={0,5,...,25}, width=0.5\textwidth]
 			\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {../chevelures/lte/10-2/nn_c.dat}; }	
-		\nextgroupplot[ylabel=Oscillations]
+		\nextgroupplot[ylabel=Oscillations $N\rightarrow I$]
 			\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {../chevelures/lte/10-2/ni_f.dat}; }	
 		\nextgroupplot[xmax=25, xtick={0,5,...,25}, width=0.5\textwidth]
 			\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {../chevelures/lte/10-2/ni_c.dat}; }
-		\nextgroupplot[ylabel=Erreurs]
+		\nextgroupplot[ylabel=Nombre d'erreurs binaires]
 			\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {../chevelures/lte/10-2/err_f.dat}; }	
 		\nextgroupplot[xmax=25, xtick={0,5,...,25}, width=0.5\textwidth]
 			\foreach \n in {0,...,99}{\addplot+[mark=none]  table [x=Ite, y=f\n] {../chevelures/lte/10-2/err_c.dat}; }		
 \end{groupplot}
-		\node[below = 1cm of chev_lte c1r1.south] {(a) : Trames erronées : Oscillations $N\rightarrow N$};
-        \node[below = 1cm of chev_lte c2r1.south] {(b) : Tr. corrigées : Oscillations $N\rightarrow N$};
-		\node[below = 1cm of chev_lte c1r2.south] {(c) : Trames erronées : Oscillations $N\rightarrow I$};
-        \node[below = 1cm of chev_lte c2r2.south] {(d) : Tr. corrigées : Oscillations $N\rightarrow I$};
-        \node[below = 1cm of chev_lte c1r3.south] {(e) : Trames erronées : Erreurs};
-        \node[below = 1cm of chev_lte c2r3.south] {(f) : Tr. corrigées : Erreurs};
+		\node[below = 1cm of chev_lte c1r1.south] {(a) : Trames erronées};
+        \node[below = 1cm of chev_lte c2r1.south] {(b) : Trames corrigées};
+		\node[below = 1cm of chev_lte c1r2.south] {(c) : Trames erronées};
+        \node[below = 1cm of chev_lte c2r2.south] {(d) : Trames corrigées};
+        \node[below = 1cm of chev_lte c1r3.south] {(e) : Trames erronées};
+        \node[below = 1cm of chev_lte c2r3.south] {(f) : Trames corrigées};
 \end{tikzpicture}
 
 \end{document}

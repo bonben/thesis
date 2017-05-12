@@ -30,12 +30,12 @@ leurs sources dans les publications de Harry Nyquist \cite{nyquist_telegraph} et
 chercheurs eux aussi au sein des laboratoires de Bell alors qu'ils visent à augmenter la vitesse de transmission des signaux sur 
 les lignes de télégraphe. 
 
-Hartley est sans doute le premier à employer le mot d'information dans un contexte technique ou scientifique. Cette 
+Hartley est sans doute le premier à employer le mot information dans un contexte technique ou scientifique. Cette 
 quantité mesurable reflète alors la capacité d'un récepteur à distinguer un message émis par une 
 source plutôt qu'un autre.
 
-En posant deux théorèmes fondamentaux, les travaux de Claude Shannon permettent d'ouvrir la voie à la théorie de 
-l'information. Tout d'abord, ils dressent le modèle d'une communication, connu aussi sous le nom de 
+En posant deux théorèmes fondamentaux, Claude Shannon ouvre la voie à la théorie de 
+l'information. Tout d'abord, il dresse le modèle d'une communication, connu aussi sous le nom de 
 \emph{paradigme de Shannon} dans lequel une source génère un message pour un destinataire. La source et le 
 destinataire sont séparés par un canal, média de transmission du message. 
 %Ce média est caractérisé par un phénomène de propagation (qui permet au message d'atteindre le destinataire) et par un phénomène de perturbation (qui dégrade le message transmis). 
@@ -45,14 +45,14 @@ d'atteindre le destinataire alors que le second dégrade le message transmis.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=10cm]{main/ch1_fig/shParadigm.pdf}
-	\caption{\label{fig:paradigme} Schéma simplifié d'une communication}
+	\caption{\label{fig:paradigme} Schéma simplifié d'une communication.}
 \end{figure}
 
 
-Les deux théorèmes fondamentaux de Shannon définissent deux limites théoriques. L'une, quant au codage de source, 
-consiste à obtenir le maximum de concision dans l'expression d'un message, mais n'est pas traité dans ce manuscrit. 
+Les deux théorèmes fondamentaux de Shannon définissent deux limites théoriques. L'une, relative au codage de source, 
+consiste à obtenir le maximum de concision dans l'expression d'un message, mais n'est pas traitée dans ce manuscrit. 
 L'autre limite concerne le codage de canal qui vise à rendre robuste un message face aux perturbations du canal et demeure au 
-cœur de ces travaux de thèse. Avant de détailler ce second principe, il est nécessaire de définir la mesure de l'information.
+cœur de ces travaux de thèse. Avant de détailler le codage de canal, il est nécessaire de définir la mesure de l'information.
 %---------------------------------------%
 \subsection{La mesure de l'information}
 \subsubsection{Variable aléatoire}
@@ -84,20 +84,20 @@ Considérons maintenant une deuxième variable aléatoire $Y$ dont les réalisat
 $m=\card(\mathcal{Y})$.
 \paragraph*{Entropie conjointe}
 En étendant la définition précédente, l'entropie conjointe de deux variables aléatoires est définie par : 
-\[H(X, Y) = - \sum\limits_{i=1}^n\sum\limits_{j=1}^m P(X=x_i, Y=y_j) \log P(X=x_i, Y=y_j).\]
+\[H(X, Y) = - \sum\limits_{i=1}^n\sum\limits_{j=1}^m P(X=x_i, Y=y_j) \times \log P(X=x_i, Y=y_j).\]
 Elle mesure la quantité moyenne d'information contenue dans un système de deux variables aléatoires. 
 Ainsi, naturellement, $H(X, Y) \geq \max \left[H(X), H(Y)\right]$.
 \paragraph*{Entropie conditionnelle} 
 $H(X|Y=y_j)$ est l'entropie de la variable $X$ sachant que la variable $Y$ prend la valeur $y_j$ et est définie par :
-\[H(X|Y=y_j) = - \sum \limits_{i=1}^n P(X=x_i|Y=y_j)\log P(X=x_i|Y=y_j)\]
+\[H(X|Y=y_j) = - \sum \limits_{i=1}^n P(X=x_i|Y=y_j)\times \log P(X=x_i|Y=y_j)\]
 En calculant la moyenne de $H(X|Y=y_j)$ pour tout $y_j\in \mathcal{Y}$ est obtenue l'entropie conditionnelle de $X$ sachant $Y$ : 
-\[H(X|Y) = \sum\limits_{j=1}^m P(Y=y_j) H(X|Y=y_j).\] Elle décrit l'incertitude restante sur la variable aléatoire $X$ 
+\[H(X|Y) = \sum\limits_{j=1}^m P(Y=y_j)\times H(X|Y=y_j).\] Elle décrit l'incertitude restante sur la variable aléatoire $X$ 
 lorsque la variable aléatoire $Y$ est connue.
 \paragraph*{Information mutuelle}
 L’information mutuelle mesure la quantité d'information partagée entre $X$ et $Y$. En d'autres termes, elle mesure la 
 dépendance entre ces deux variables. Ainsi, l'information mutuelle est nulle si et seulement si les variables sont 
 indépendantes et elle croît lorsque leur degré de dépendance augmente.
-\[I(X;Y) = \sum\limits_{i=1}^n\sum\limits_{j=1}^m P(X=x_i,Y=y_j) \log\left(\frac{P(X=x_i, Y=y_j)}{P(X=x_i)P(Y=y_j)}\right),\]
+\[I(X;Y) = \sum\limits_{i=1}^n\sum\limits_{j=1}^m P(X=x_i,Y=y_j) \times \log\left(\frac{P(X=x_i, Y=y_j)}{P(X=x_i)P(Y=y_j)}\right),\]
 L'expression de l'information mutuelle peut être formulée en utilisant l'entropie conditionnelle
 \begin{equation}
 	I(X;Y) = H(X) - H(X|Y).
@@ -132,12 +132,12 @@ Ainsi, le schéma présenté en Figure \ref{fig:paradigme} se doit d'être modif
 afin de rendre possible la propagation de l'information à travers le canal, il est nécessaire de mettre en forme le flux 
 de données. Par exemple, dans le cas d'une communication sans fil, ce flux doit être représenté par un signal haute 
 fréquence afin de pouvoir être émis par une antenne de taille raisonnable. Ceci est le rôle du modulateur.
-La Figure \ref{fig:paradigme2} présente une chaîne de communication numérique classique prenant en compte ces deux
+La Figure \ref{fig:paradigme2} présente une chaîne de communications numériques classique prenant en compte ces deux
 nouveaux éléments.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=12cm]{main/ch1_fig/shParadigm2.pdf}
-	\caption{\label{fig:paradigme2} Schéma fondamental de communication (ou paradigme de Shannon)}
+	\caption{\label{fig:paradigme2} Schéma fondamental de communication (ou paradigme de Shannon).}
 \end{figure}
 
 La source génère un flux de symboles $\mathbf{m}$ qui constitue le message à envoyer. Le codeur canal transforme ce message 
@@ -163,9 +163,9 @@ Ce canal modélise notamment très bien le bruit thermique qui est une des sourc
 %Certes, ce canal n'est pas un modèle très fin quant à la quali mais permet tout de même de comparer de manière
 %juste différents schémas de codage.
 
-La loi liant la sortie $y_i$ d'un canal AWGN à son entrée $x_i$ est de la forme $y_i=x_i+n_i$ avec $N_i$ une variable 
+La loi liant la sortie $y_i$ d'un canal AWGN à son entrée $x_i$ est de la forme $y_i=x_i+n_i$ avec $N$ une variable 
 indépendante et identiquement distribuée suivant une loi normale (ou gaussienne) centrée en zéro et de variance $\sigma^2 = \frac{N_0}{2}$. Nous avons donc
-$N_i \sim \mathcal{N}(0,\ \sigma^2)$ et il vient :
+$N \sim \mathcal{N}(0,\ \sigma^2)$ et il vient :
 %La densité de probabilité de N est alors : $p(Z) = \frac{1}{\sqrt{2\pi \sigma^2}}\cdot \exp(-{\frac{Z^2}{2\sigma^2}})$
 %et donc
 \begin{equation}
@@ -182,13 +182,13 @@ exprimé en shannon par symbole émis, avec P la puissance du signal émis.
 
 %---------------------------------------%
 \subsection{Les familles de codes correcteurs}
-Les codes correcteurs d'erreur largement utilisés dans les différents standards de communications numériques 
+Les codes correcteurs d'erreurs utilisés dans les standards de communications numériques 
 sont habituellement classifiés en deux familles distinctes. Il s'agit des codes en blocs et des codes convolutifs. Par définition, 
 les codes convolutifs calculent la redondance de manière continue à mesure que le flot de données arrive alors que les codes en blocs génèrent la redondance par blocs de données.
 \subsubsection{Codes en blocs linéaires}
 Historiquement, les premiers codes correcteurs d'erreurs découverts furent les codes en blocs linéaires. La théorie 
 mathématique les définissant est basée sur les corps de Galois. Dans la suite, la majorité des opérations se dérouleront 
-dans le corps de Galois à 2 éléments noté $GF_2$.
+dans le corps de Galois à 2 éléments noté $GF_2$.\vspace*{-1em}
 \paragraph*{Définition}
 Un code en bloc est une application $g$ de $GF_2^k$ dans $GF_2^n$, avec $k<n$, qui à un vecteur $m$ de taille $k$ associe
 un autre vecteur $c$ de taille $n$. L'ensemble des $2^k$ vecteurs $c$ est appelé code $C$. Chaque vecteur $c$ du code $C$ est appelé \textit{mot de code}. 
@@ -207,7 +207,7 @@ nous codons un message $m$ de taille $k$ par un code en bloc linaire $C(n,k)$, t
 transmis sur un canal bruité sans effet mémoire, le démodulateur à décision dure fournit au décodeur le vecteur $r$, de 
 taille $n$ représentant le mot reçu. Celui-ci peut s'écrire de la forme \[r=c+e\] avec $e$
 un vecteur ligne dont les composantes binaires correspondent aux éventuelles erreurs de transmission. La détection 
-d'erreur se fait alors en calculant le \emph{syndrome} : \[s = r\text{H}^t = (c+e)\text{H}^t = e_text{H}^t.\]
+d'erreur se fait alors en calculant le \emph{syndrome} : \[s = r\text{H}^t = (c+e)\text{H}^t = e\text{H}^t.\]
 $s=0$ si et seulement si $r$  est un mot du code. Si $s \ne 0$, alors il existe des erreurs de transmission. La 
 réciproque n'est pas vraie car la combinaison linéaire de deux mots de code est aussi un mot du code. Il s'agit de la 
 conséquence directe de la linéarité de $g$.
@@ -223,7 +223,7 @@ $\hat{c}$, tel que \[d_H(r,\hat{c}) \leq d_H(r,\hat{c})\qquad \forall c \neq \ha
 
 Il vient donc assez naturellement que les performances de décodage d'un code sont dépendantes des distances de Hamming 
 séparant les différents mots de code. La valeur minimale de cet ensemble de distances est appelée \emph{la distance minimale du code}, 
-notée $d_{min}$. \[d_{min}=\min\limits_{c,~c'\in C,~c\ne c'}d_h(c, c').\] Comme le code est linéaire, la distance minimale 
+notée $d_{min}$. \[d_{min}=\min\limits_{c,~c'\in C,~c\ne c'}d_H(c, c').\] Comme le code est linéaire, la distance minimale 
 est aussi égale au poids minimal des mots de code non nuls. Ainsi, le poids des mots de code (excepté le mot 
 de code nul) est compris entre $d_{min}$ et $n$. Le nombre de mots de code de poids de Hamming $d$ est appelé 
 \emph{multiplicité} et est noté $A_d$.
@@ -234,12 +234,12 @@ de code, $c' = \{c_1, ..., c_j, ..., c_{n-1}, c_0\}$ est aussi un mot de code.
 
 Ces codes sont souvent représentés sous forme polynomiale. Or, en électronique numérique, une division polynomiale dans $GF$ est aisément 
 réalisable à partir de registres à décalage. Ils ont donc été particulièrement étudiés et sont présents aujourd'hui dans 
-de nombreux standards de communication numériques. Nous pouvons par exemple citer les codes BCH du nom de leurs inventeurs Bose, 
+de nombreux standards de communications numériques. Nous pouvons par exemple citer les codes BCH du nom de leurs inventeurs Bose, 
 Ray-Chaudhuri et Hocquenghem \cite{bose1960class}. Ils ont la particularité de pouvoir être construits en fonction du pouvoir 
 de correction visé.
 
 Une autre catégorie de codes cycliques est largement utilisée dans les standards de communication actuels. Il s'agit des 
-codes à redondance cyclique (CRC) \cite{crc} qui possèdent un fort pouvoir de détection d'erreurs.
+codes à redondance cyclique (CRC) \cite{crc} qui possèdent un fort pouvoir de détection d'erreurs, mais aucun pouvoir de correction. 
 
 %---------------------------------------%
 \subsubsection{Codes convolutifs}
@@ -254,23 +254,23 @@ sous la forme $m=\sum_k m_kD^k$. De la même manière, le mot codé devient $c=\
 alors l'instant auquel $m_k$ et $c_k$ apparaissent à l'entrée et à la sortie du codeur, respectivement. $c_k$ peut aussi 
 être exprimé comme une combinaison linéaire des $\nu$ précédents éléments du message : $c_k = \sum\limits_{j=0}^\nu g_jm_{k-j}$.
 La suite d'éléments $g_j$ est appelée séquence génératrice du code. Elle est souvent exprimée en octal. $\nu$ représente le 
-nombre d'éléments de mémorisation à l'intérieur du codeur.
+nombre d'éléments de mémorisation à l'intérieur du codeur.\vspace*{-1em}
 
 \paragraph*{Exemple}
 Soit le codeur convolutif de rendement $R=1/2$, de mémoire $\nu = 2$ présenté en Figure \ref{fig:encConv}. Ses deux 
 séquences génératrices définissant les sorties $c_1$ et $c_2$ sont respectivement $G_1 = (5)_8$ et $G_2 = (7)_8$.
-\begin{figure}[!h]
+\begin{figure}[!b]
 	\centering
 	\includegraphics[width=6cm]{main/ch1_fig/encConv.pdf}
-	\caption{\label{fig:encConv} Exemple de codeur convolutif}
+	\caption{\label{fig:encConv} Exemple de codeur convolutif.}
 \end{figure}
 Puisque $\nu = 2$, ce codeur peut être dans $2^\nu$ états différents. Ainsi, un codeur convolutif peut être vu comme une 
 machine de Mealy. Ce diagramme d'états, présenté en Figure \ref{fig:stateMachine}, montre les  $2^{\nu+1}$ 
 différentes transitions entre les $2^{\nu}$ états internes. 
-\begin{figure}[!h]
+\begin{figure}[!t]
 	\centering
 	\includegraphics[width=5cm]{main/ch1_fig/stateMachine.pdf}
-	\caption{\label{fig:stateMachine} Machine d'états associée au codeur convolutif de la Figure \ref{fig:encConv}}
+	\caption{\label{fig:stateMachine} Machine d'états associée au codeur convolutif de la Figure \ref{fig:encConv}.}
 \end{figure}
 
 \paragraph*{Représentation en treillis}
@@ -287,7 +287,7 @@ codage d'une séquence, la connexion entre les différents nœuds est nommée ch
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=10cm]{main/ch1_fig/trellis.pdf}
-	\caption{\label{fig:trellis} Diagramme en treillis du codeur convolutif de la Figure \ref{fig:encConv}}
+	\caption{\label{fig:trellis} Diagramme en treillis du codeur convolutif de la Figure \ref{fig:encConv}.}
 \end{figure}
 
 \paragraph*{Terminaison}\label{par:term}
@@ -296,8 +296,8 @@ taille infinie. Néanmoins, dans le contexte de protocoles de communications num
 prédéfinie. 
 Se pose alors la question de la fermeture du treillis, impactant les performances de décodage.
 %C'est pourquoi la fermeture du treillis est nécessaire de part son impact non négligeable sur les performances de décodage. 
-Trois solutions de terminaisons sont à considérer et ont été proposées dans la littérature :
-\begin{itemize}
+Trois solutions de terminaisons ont été proposées dans la littérature :
+\begin{enumerate}
 	\item pas de terminaison. L'état final ne peut donc être connu par le décodeur. Ainsi, les derniers symboles encodés
 	      sont moins bien protégés. 
 	\item forcer l'encodeur à finir dans un état connu. 
@@ -311,7 +311,7 @@ Trois solutions de terminaisons sont à considérer et ont été proposées dans
 	      l'état 0). Cet état porte le nom d'état de circulation \cite{circular}. Le treillis peut alors être vu comme un 
 	      cercle. Tous les bits ont la même protection et ce sans induire une modification du rendement. Par contre, 
 	      un pré-codage du message est nécessaire afin d'identifier l'état de circulation.
-\end{itemize}
+\end{enumerate}
 %Finalement, lorsqu'un code convolutif est terminé, il peut être vu comme un code en bloc.
 
 \paragraph*{Code systématique et récursif}
@@ -319,17 +319,17 @@ Les codes convolutifs peuvent être classés selon 2 critères principaux. Ils s
 %Dans le cadre des turbo codes convolutifs, ce sont justement des codes systématiques et récursifs qui sont concaténés en parallèle. 
 Comme pour les codes en blocs linéaires, un code est dit \emph{systématique} lorsque la séquence 
 d'information apparaît dans le mot de code. La matrice génératrice contient donc la matrice identité. 
+\begin{figure}[!b]
+	\centering
+	\includegraphics[width=12cm]{main/ch1_fig/encRSC.pdf}
+	\caption{\label{fig:encRSC} Exemple de codeur convolutif récursif systématique et le treillis associé.}
+\end{figure}
 
 Un code convolutif est dit \emph{récursif} si une rétroaction est présente au sein du codeur, en amont de ses registres à décalages. Cela 
 implique qu'au moins un des termes de la séquence génératrice est fractionnel. 
 
 Ainsi, la version systématique récursive du codeur présenté en Figure \ref{fig:encConv} est donné en Figure 
 \ref{fig:encRSC}. Une représentation en treillis de ce code est également fournie. Sa matrice génératrice est $G(D) = \left[ 1 ~~\frac{1+D^2}{1+D+D^2} \right]$. 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=12cm]{main/ch1_fig/encRSC.pdf}
-	\caption{\label{fig:encRSC} Exemple de codeur convolutif récursif systématique et le treillis associé}
-\end{figure}
 Nous pouvons remarquer une similitude avec le treillis présenté dans la Figure \ref{fig:trellis} : pour chaque branche,
 les mêmes sorties sont présentes et elles relient les mêmes nœuds. En revanche, les bits d'informations qui y sont 
 associés différent. Généralement, les codeurs récursifs ont des propriétés de distance plus favorables que les codeurs
@@ -338,7 +338,7 @@ non-récursifs.
 \paragraph*{Décodeur}\label{sec:ml}
 Pour le décodage de codes convolutifs, deux principaux algorithmes de décodage sont proposés dans la littérature. Les 
 deux types de décodeur sont basés sur l'exploration du treillis associé au code. Le premier est le décodeur à maximum de 
-vraisemblance par séquence, implanté par l'algorithme de Viterbi \cite{viterbi}, \cite{viterbi2} et \cite{forney73viterbi}. 
+vraisemblance par séquence, implanté par l'algorithme de Viterbi \cite{forney73viterbi}, \cite{viterbi} et \cite{viterbi2}. 
 Le second est le décodeur à maximum {\it a posteriori} bit à bit, implémenté par l'algorithme BCJR \cite{bcjr}. Le premier 
 minimise la probabilité d'erreur sur la séquence considérée.
 %. Pour ce faire, il effectue l'estimation optimale de la suite des états interne du codeur à partir de la suite de symboles codés reçus à travers le canal perturbé.
@@ -356,16 +356,16 @@ découlent des résultats présentés dans la section \ref{ss:cod_canal}. Ensuit
 performances de décodage en fonction du rapport signal à bruit.
 \subsubsection{La limite de Shannon}
 En reprenant l'équation \ref{eq:capacity}, comme pour un canal AWGN, $\sigma^2 = N_0/2$ avec $N_0$ la densité spectrale du bruit et comme 
-$P=R E_b$, avec $E_b$ l'énergie moyenne par bit d'information, nous pouvons écrire :
-\[C=\frac{1}{2}\log_2(1+\frac{2RE_b}{N_0}).\]
+$P=R\times E_b$, avec $E_b$ l'énergie moyenne par bit d'information, nous pouvons écrire :
+\[C=\frac{1}{2}\log_2\left(1+\frac{2RE_b}{N_0}\right).\]
 Selon le théorème de Shannon, des communications fiables sont possibles sur un canal de transmission si et seulement si $R < C$. Ainsi,
 $2R < \log_2\left(1+\frac{2RE_b}{N_0}\right)$, ce qui donne 
 \begin{equation}\label{eq:shlimit}
 	\frac{2^{2R}-1}{2R}<\frac{E_b}{N_0}.
 \end{equation}
-En faisant tendre $R$ vers $0$, nous avons \[\frac{E_b}{N_0}>\ln 2 = -1.59 \text{dB}.\]
+En faisant tendre $R$ vers $0$, nous avons \[\frac{E_b}{N_0}>\ln 2 = -1,59~\text{dB}.\]
 En considérant un canal AWGN, aucun système ne peut transmettre de l'information de manière fiable pour un rapport 
-signal à bruit inférieur à $-1.6\text{dB}.$
+signal à bruit inférieur à $-1,6~\text{dB}.$
 
 \subsubsection{Capacité du canal BI-AWGN}
 La limite préalablement présentée considère un alphabet infini et réel présent à l'entrée du canal. Or, lorsqu'une 
@@ -374,7 +374,7 @@ modulation à changement de phase binaire (BPSK), chaque bit du mot de code est 
 contraint sur son entrée est appelé canal AWGN à entrée binaire (BI-AWGN). Sa capacité, en utilisant l'équation 
 \ref{eq:imut} et selon \cite[Chapitre 8]{ryan}, est donnée par : 
 \begin{equation}\label{eq:softlimit}
-	C_{BI-AWGN} = - \int\limits_{-\infty}^{\infty} p(y) \log_2\left(p(y)\right)dy - 0.5\log_2\left(2\pi e \sigma^2\right),
+	C_{BI-AWGN} = - \int\limits_{-\infty}^{\infty} p(y) \log_2\left(p(y)\right)dy - 0,5\log_2\left(2\pi e \sigma^2\right),
 \end{equation}
 avec 
 \begin{align*}
@@ -391,12 +391,12 @@ en fonction du rapport signal à bruit ($E_b/N_0$, en dB) sont fournies en Figur
 Nous pouvons remarquer que pour de faibles rendements, la capacité du canal BI-AWGN est très proche de celle du canal 
 AWGN non contraint. Ces courbes sont les limites du rapport signal à bruit à partir des quelles des communications sans 
 erreur sont possibles, pour un rendement de codage donné et en considérant des paquets de taille infinie. Pour des 
-tailles finies, les codes modernes se situent très près de ces limites, à environ $0.5$ dB.
+tailles finies, les codes modernes se situent très près de ces limites, à environ $0,5$ dB.
 \begin{figure}[!h]
 	\centering
 	\input{main/ch1_fig/capacity.tikz}
 	\caption{\label{fig:capacity} Capacité du canal en fonction du rapport signal à bruit pour le canal AWGN non contraint 
-	et pour le canal AWGN à entrée binaires}
+	et pour le canal AWGN à entrée binaires.}
 \end{figure}
 \subsubsection{Gain de codage}
 La probabilité d'erreur sur le canal de transmission est fonction du rapport signal à bruit. Comme esquissé précédemment, 
@@ -418,7 +418,7 @@ supérieur à $8~\text{dB}$.
 
 D'après la Figure \ref{fig:capacity}, il existe un code de rendement $\frac{1}{2}$ qui permet d'obtenir une probabilité 
 d'erreur binaire très faible (par exemple, de l'ordre de $10^{-4}$) pour peu que le rapport signal à bruit soit supérieur 
-à $0.19~\text{dB}$. D'après le théorème de Shannon, la zone située à gauche de cette limite n'est pas atteignable.
+à $0,19~\text{dB}$. D'après le théorème de Shannon, la zone située à gauche de cette limite n'est pas atteignable.
 
 Considérons le cas du code convolutif systématique et récursif (RSC) de matrice génératrice 
 $G(D) = \left[ 1 ~~\frac{1+D^2}{1+D+D^2} \right]$ (présenté en Figure \ref{fig:encRSC}). 
@@ -442,7 +442,7 @@ calculatoire raisonnable. Ces derniers sont détaillés dans la section suivante
 \begin{figure}[!h]
 	\centering
 	\input{main/ch1_fig/berBPSK.tikz}
-	\caption{\label{fig:berBPSK} Probabilité d'erreur de la modulation BPSK sur le canal BI-AWGN, du code RSC de matrice génératrice $G(D) = \left[ 1 ~~\frac{1+D^2}{1+D+D^2} \right]$ et la limite de Shannon pour la canal AWGN et un rendement de 1/2} 
+	\caption{\label{fig:berBPSK} Probabilité d'erreur de la modulation BPSK sur le canal BI-AWGN, du code RSC de matrice génératrice $G(D) = \left[ 1 ~~\frac{1+D^2}{1+D+D^2} \right]$ et la limite de Shannon pour la canal AWGN et un rendement de 1/2.} 
 \end{figure}
 		
 		
@@ -476,13 +476,13 @@ A partir des années 70, la NASA standardise les codes concaténés pour des app
 est présenté en Figure \ref{fig:nasa}. Dans un premier temps le message est traité par un codeur de Reed-Solomon (RS) \cite{RS}. 
 Il s'agit d'une généralisation des codes BCH évoqués précédemment. Le mot de code résultant est alors entrelacé, puis fournit à un 
 codeur convolutif. Une fois que ce mot de code est transmis à travers le canal puis démodulé, il est décodé par un 
-décodeur de Viterbi, désentrelacé et décodé par un décodeur RS. L'étape d'entrelacement et de désentrelacement 
+décodeur de Viterbi, désentrelacé et décodé par un décodeur de RS. L'étape d'entrelacement et de désentrelacement 
 permet de brasser les salves d'erreurs, présentes en sortie du décodeur de Viterbi. Ce schéma de codage permet d'obtenir 
-des gains de codage d'environ $7~\text{dB}$ dans le cas d'un canal AWGN pour une probabilité d'erreur de $10^{-5}$.
+des gains de codage d'environ $7~\text{dB}$ dans le cas d'un canal BI-AWGN pour une probabilité d'erreur de $10^{-5}$.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=12cm]{main/ch1_fig/nasa.pdf}
-	\caption{\label{fig:nasa} Principe de concaténation série standardisé par la NASA}
+	\caption{\label{fig:nasa} Principe de concaténation série standardisé par la NASA.}
 \end{figure}
 
 À la fin des années 80, Hagenauer et Hoeher proposent la concaténation série de codeurs convolutifs \cite{hagenauerConcatenated}.
@@ -493,17 +493,17 @@ C'est alors que Berrou remarque que le BER de ces symboles reconstruits est inf�
 Cette constatation n'avait alors jamais été décrite dans la littérature. Il restait alors à remplacer les codeurs constitutifs 
 par des versions systématiques. Ainsi, la sortie du second décodeur pouvait être réinjectée à l'entrée du premier.
 Mais les codes convolutifs systématiques ont des propriétés moins intéressantes que les codes convolutifs non-systématiques, 
-à moins qu'il s’agisse d'un code convolutif récursif systématique, dit RSC. L'étude des codes RSC fut donnée à Punya Thitimajshima
+à moins qu'il s’agisse d'un code convolutif récursif systématique (RSC). L'étude des codes RSC fut donnée à Punya Thitimajshima
 dans le cadre de sa thèse \cite{rscTheseTelecom}.
 
 L'idée de la \emph{concaténation parallèle} est concomitante à la démarche d'implémentation matérielle de la 
 concaténation série des codes RSC. En effet, une architecture matérielle de schéma concaténé en série -- de part les 
 différents rendements des codes constituants -- nécessite différentes horloges. La concaténation parallèle simplifie ce
-problème puisque les deux codeurs constitutifs et les deux décodeurs constitutifs fonctionnent avec la même horloge. De plus,
+problème puisque les deux codeurs constitutifs et les deux décodeurs constitutifs fonctionnent de manière synchronisée. De plus,
 cette nouvelle structure permet aussi, à rendement égal, d'obtenir plus de symboles redondants pour un des deux codeurs 
-élémentaires 
+élémentaires.
 %qu'avec une concaténation classique (série)
-. Par exemple, pour obtenir un code concaténé de rendement 1/3, 
+Par exemple, pour obtenir un code concaténé de rendement 1/3, 
 dans le cas d'une concaténation parallèle, les deux codeurs auront un rendement 1/2. En revanche, pour une
 concaténation série, l'un aura un rendement 1/2 et l'autre un rendement 2/3. En effet, si $R_p$ est le rendement 
 global obtenu pour la concaténation parallèle de 2 codeurs de rendement $R_1$ et $R_2$ et $R_s$ celui obtenu pour une 
@@ -511,7 +511,7 @@ concaténation série, ils ont respectivement pour expression :
 \[R_p = \frac{R_1 \times R_2}{R_1 + R_2 - R_1 \times R_2} \ \ \ \text{et} \ \ \ R_s = R_1 \times R_2\]
 Finalement, cette plus grande diversité, provenant d'un plus grand nombre d'information redondante par information 
 systématique, permet d'obtenir un seuil de convergence qui se produit à plus faible SNR. Ce 
-seuil de convergence permet au schéma concaténé en parallèle de s'approcher à seulement 0.7 dB de la limite de Shannon 
+seuil de convergence permet au schéma concaténé en parallèle de s'approcher à seulement $0,7$ dB de la limite de Shannon 
 \cite{berrouTC}. Néanmoins, les schémas concaténés en série permettent d'obtenir des distances minimales plus 
 importantes impliquant de meilleures performances asymptotiques \cite{declercq2014channel}. Dans la littérature, afin de distinguer
 ces deux types de turbo codes, les notations PCCC pour codes convolutifs concaténés en parallèle et SCCC pour codes
@@ -524,18 +524,18 @@ traités dans la suite de cette section.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=8cm]{main/ch1_fig/turboEnc.pdf}
-	\caption{\label{fig:turboEnc} Schéma générique d'un codeur de turbo code}
+	\caption{\label{fig:turboEnc} Schéma générique d'un codeur de turbo code.}
 \end{figure}
 
 
 \subsubsection{Codeur convolutif récursif}
 Depuis les travaux de Forney, la concaténation de codes repose sur le codage de la séquence d'information par de multiples codeurs 
-constitutifs à faible complexité calculatoire au niveau du décodeur. Dans le cadre des turbo codes convolutifs, il s'agit de codes RSC à 4, 8 ou 16 états.
+constitutifs, ayant une faible complexité calculatoire au niveau du décodeur. Dans le cadre des turbo codes convolutifs, il s'agit de codes RSC à 4, 8 ou 16 états.
 Augmenter le nombre d'états du codeur revient à accroître la distance minimale du code mais implique aussi une augmentation 
 de la complexité calculatoire du décodeur. Les meilleurs codes RSC de rendement 1/2 adaptés aux turbo codes ont été identifiés 
 et leurs distances minimales ont été calculées dans \cite{RSCdist}. Ces résultats sont reportés dans le tableau \ref{tab:bestRSC}. 
 Les distances minimales sont relativement faibles. Dès lors, les performances asymptotiques des turbo codes résultent de l'étape 
-d'entrelacement. 
+d'entrelacement. \vspace*{3ex}
 
 \begin{table}[h]
 	\centering
@@ -547,7 +547,7 @@ d'entrelacement.
 		$\mathbf{G(D)}$                & $\left[1,\frac{1+D+D^2}{1+D^2}\right]$ & $\left[1,\frac{1+D+D^3}{1+D^2+D^3}\right]$ & $\left[1,\frac{1+D^3+D^4}{1+D+D^2+D^4}\right]$ \\
 		$\mathbf{d_{min}/A_{d_{min}}}$ & 5/2                                    & 6/1                                        & 7/3                                            \\ \bottomrule
 	\end{tabular}
-	\caption{Codeurs RSC usuellement utilisés pour des turbo codes à 4, 8 et 16 états avec leur distance minimale et la multiplicité associée}
+	\caption{Codeurs RSC usuellement utilisés pour des turbo codes à 4, 8 et 16 états avec leur distance minimale et la multiplicité associée.}
 	\label{tab:bestRSC}
 \end{table}
 
@@ -606,7 +606,8 @@ La première ligne correspond au poinçonnage de l'information redondante produi
 celle produite dans l'ordre entrelacé. Un 1 signifie que le symbole est gardé, un 0 qu'il est poinçonné. Ainsi, à partir 
 d'un turbo code de rendement natif de $\frac{1}{3}$, les matrices de poinçonnage \ref{eq:mat1a} à \ref{eq:mat1c} élèvent 
 son rendement à respectivement  $\frac{2}{5}$, $\frac{1}{2}$ et $\frac{2}{3}$. Cette construction aisée de codes à 
-rendements plus élevés est un atout indéniable vis-à-vis des codes en blocs.
+rendements plus élevés est un atout indéniable vis-à-vis des codes en blocs. Il est cependant à noter que les matrices 
+de poinçonnage modifient les propriétés du code. Tout comme les entrelaceurs elles doivent être sélectionnées avec soin.\vspace*{-1em}
 
 \begin{subequations}\label{eq:mat}
 	\begin{minipage}{0.25\textwidth}
@@ -643,7 +644,7 @@ Comme exprimé précédemment, l'innovation majeure des turbo codes est d'obteni
 d'erreurs proche de la limite de Shannon tout en proposant un principe de décodage relativement simple. De par la présence 
 de la phase d'entrelacement, un décodage MAP est trop complexe. En effet, cela impliquerait des calculs sur un treillis 
 composé d'un trop grand nombre d'états. Ainsi en même temps que Berrou \textit{et al.} proposent la construction des turbo 
-codes, ils introduisent une méthode de décodage non optimale mais à faible complexité \cite{berrouTC}. Cette technique est 
+codes, ils introduisent une méthode de décodage sous-optimale mais à faible complexité \cite{berrouTC}. Cette technique est 
 basée sur un processus itératif. D'abord, chaque code RSC est traité par un décodeur associé. Mais, comme le code est systématique 
 et que chaque sous-code provient du même mot d'information (présenté dans un ordre différent), les informations produites 
 par les deux décodeurs peuvent être combinées. Ainsi, l'information délivrée par l'un des décodeurs est utilisée par le 
@@ -654,8 +655,8 @@ est désormais introduit.
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=10cm]{main/ch1_fig/TurboDec.pdf}
-	\caption{\label{fig:turboDec} Structure d'un décodeur de turbo code}
+	\includegraphics[width=9cm]{main/ch1_fig/TurboDec.pdf}
+	\caption{\label{fig:turboDec} Structure d'un décodeur de turbo code.}
 \end{figure}
 
 %
@@ -685,7 +686,8 @@ modifiée fournit des probabilités \textit{a posteriori}, la notation APP renco
 
 Il a été montré que l'algorithme SOVA possède une complexité calculatoire au moins deux fois plus faible que celle de 
 l'algorithme APP \cite{robertson1995comparison}. Néanmoins, cette faible complexité calculatoire s'accompagne d'une 
-dégradation des performances de décodage. C'est pourquoi, en pratique, l'algorithme APP est retenu lors de l'implémentation 
+dégradation des performances de décodage. Celle-ci s’établit d'un facteur deux à un facteur 10 suivant le nombre d'itérations
+considérées \cite{oscarThese}. C'est pourquoi, en pratique, l'algorithme APP est retenu lors de l'implémentation 
 du décodeur SISO. Les calculs menés par l'un des décodeurs doivent être explicités. Cependant, afin de faciliter la 
 lecture de cette section, les calculs intermédiaires sont déportés en Annexe \ref{append:app}.
 
@@ -694,7 +696,6 @@ Le principe du décodage à maximum \textit{a posteriori} symbole par symbole es
 	\label{eq:maprule}
 	\hat{m_k} = \argmax\limits_{u_k\in\{0,1\}} P(u_k| \mathbf{y}).	
 \end{equation}
-
 Cependant, si nous prenons en compte la représentation sous forme de treillis du codeur RSC, ce calcul est strictement 
 équivalent à celui des probabilités de transitions formulé par : 
 \[\hat{m_k} = \argmax_{i\in\{0,1\}} \sum\limits_{(s,s')\in\Gamma_{k,i}}P(s_{k-1}=s, s_{k}=s',\mathbf{y}),\]
@@ -850,7 +851,7 @@ Dans le cadre du linear-log-APP, le terme logarithmique est approximé par une f
 	\maxstar(x,y)=\max(x,y) + \begin{cases} 0 \qquad\text{si~~} |x-y| > T \\
 	a(|y-x|-T) \qquad\text{si~~} |x-y| \leq T, \end{cases}
 \end{equation}
-avec $a=0.24904$ et $T=2.5068$.
+avec $a=0,24904$ et $T=2,5068$.
 
 Finalement, la dernière approximation consiste à ne pas ajouter de terme de correction. Ainsi, l'opérateur $\maxstar$ est 
 remplacé uniquement par l'opérateur $\max$. Cette approximation, appelée max-log-APP (ML-APP) est celle à plus faible 
@@ -863,33 +864,34 @@ donc des performances optimales. Des comparaisons des impacts de ces approximati
 \begin{figure}[!h]
 	\centering
 	\input{main/ch1_fig/logapprox.tikz}
-	\caption{\label{fig:logapprox} Fonctions des correction des différentes approximations de l'algorithme log-APP} 
+	\caption{\label{fig:logapprox} Fonctions de corrections des différentes approximations de l'algorithme log-APP.} 
 \end{figure}
 
-Cependant, en 2000, il a été proposé d'utiliser un facteur d'échelle sur l'information extrinsèque avant qu'elle soit 
-utilisée par le décodeur SISO suivant \cite{enhancedmlmap}. Cette méthode, appelée enhanced-max-log-APP (EML-APP), est 
+En 2000, afin de réduire l'impact de l'approximation, il a été proposé d'utiliser un facteur d'échelle sur l'information extrinsèque avant qu'elle soit 
+consommée par le décodeur SISO \cite{enhancedmlmap}. Cette méthode, appelée enhanced-max-log-APP (EML-APP), est 
 inspirée de \cite{HagenHoerViter} dans le cadre de l'algorithme SOVA. En effet, il avait été remarqué que les valeurs 
 des LLR calculés par les décodeurs SISO étaient sur-évaluées.
 Ce facteur d'échelle (SF) peut être constant au cours du processus itératif. Dans ce cas, la valeur de $0,75$ est 
 souvent choisie. En effet, elle peut être facilement réalisée en sommant un décalage vers la gauche de 2 et un décalage 
 vers la gauche de 1. Autrement, la remise à l'échelle peut être adaptative. Le facteur évolue alors de $0,5$ pour la 
-première itération jusqu'à $1.0$ pour la dernière. En moyenne, grâce à l'utilisation de ce facteur, les performances de 
-décodage avec l'EML-APP ne se situent plus qu'à $0.1$ dB de celles du log-APP.
-Dans \cite{scaling}, l'influence de la valeur du facteur d'échelle est étudiée afin de minimiser le BER et le FER.
+première itération jusqu'à $1,0$ pour la dernière. En moyenne, grâce à l'utilisation de ce facteur, les performances de 
+décodage avec l'EML-APP ne se situent plus qu'à $0,1$ dB de celles du log-APP.
+Dans \cite{scaling}, l'influence de la valeur du facteur d'échelle est étudiée afin de minimiser le taux d'erreur binaire
+(BER) et le taux d'erreur trame (FER).
 
 
 \subsection{Les turbo codes double binaires}\label{sec:dbl}
 En 1999, les turbo codes non binaires ont été introduits \cite{doublebin1}. À la différence des turbo codes binaires, les 
 turbo codes double binaires traitent $2$ bits en parallèle. Il en découle que les codeurs RSC constituants sont eux mêmes 
 double binaires. Pour ce faire, des extensions multi binaires ont été développées. Le codeur constitutif employé est alors 
-de rendement nominal $n/(n+1)$ avec $n$ le nombre de donnés simultanément présentes à l'entrée du codeur \cite{doublebin3}. 
+de rendement nominal $n/(n+1)$ avec $n$ le nombre de donnés binaires simultanément présentes à l'entrée du codeur \cite{doublebin3}. 
 La figure \ref{fig:encMulti} présente un tel codeur sans faire apparaître la sortie pour des soucis de lisibilité. Il est 
-toute fois à noter qu'utiliser $n > 2$ n'apporte qu'un intérêt limité pour des RSC de mémoire 3 ou 4 \cite{Balta2013}. En 
+toutefois à noter qu'utiliser $n > 2$ n'apporte qu'un intérêt limité en terme de performances de décodage pour des RSC de mémoire 3 ou 4 \cite{Balta2013}. En 
 effet, trop peu de diversité dans l'interconnexion ne peut être obtenus dans de tels cas.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=10cm]{main/ch1_fig/encMulti.pdf}
-	\caption{\label{fig:encMulti} Structure générique d'un codeur RSC $m$-binaire et de taille de contrainte $\nu +1$}
+	\caption{\label{fig:encMulti} Structure générique d'un codeur RSC $m$-binaire et de taille de contrainte $\nu +1$.}
 \end{figure}
 
 Pour le cas double binaire, le rendement des codes constituants est donc $2/3$. Le rendement nominal du turbo code obtenu 
@@ -899,12 +901,12 @@ constituant, afin d'obtenir un turbo code de rendement $1/3$.
 Selon \cite{doublebinadvantages}, les avantages des turbo codes double binaires sont les suivants : 
 \begin{itemize}
 	%\item meilleure convergence,
-	\item plus grande distance minimale,
-	\item moindre poinçonnage : puisque le turbo code est de rendement nominal 1/2, moins de poinçonnage -- comparativement 
+	\item une plus grande distance minimale,
+	\item un moindre poinçonnage : puisque le turbo code est de rendement nominal 1/2, moins de poinçonnage -- comparativement 
 	aux turbo codes binaires -- est nécessaire pour atteindre de forts rendements,
-	\item latence réduite : puisque les données sont traitées par groupe de deux bien qu'il y ait plus de calculs par 
+	\item une latence réduite : puisque les données sont traitées par groupe de deux bien qu'il y ait plus de calculs par 
 	tranche de treillis à mener,
-	\item robustesse du décodeur : la dégradation au niveau des performances entre l'algorithme MAP et ses versions 
+	\item une meilleure robustesse du décodeur : la dégradation au niveau des performances entre l'algorithme MAP et ses versions 
 	simplifiées est moins importante que dans le cadre binaire.
 \end{itemize}
 
@@ -925,7 +927,7 @@ probabilité qu'un symbole 0 soit émis. Ceci est exprimé par :
 \begin{equation*}
 	L_{(a,b)}(A_k,B_k) = \ln\frac{P(A_k=a,B_k=b|\mathbf{y})}{P(A_k=0,B_k=0|\mathbf{y})},
 \end{equation*}
-avec (a,b) valant (0,1), (1,0) ou (1,1).
+avec $(a,b)$ valant $(0,1)$, $(1,0)$ ou $(1,1)$.
 
 Il en suit que lors du processus itératif, trois valeurs extrinsèques sont échangées par tranche du treillis.
 Finalement, les décisions binaires sont prises en testant le signe de : 
@@ -940,13 +942,11 @@ principales caractéristiques de ces codes sont présentées en section suivante
 
 \subsection{Les turbo codes standardisés}
 Peu après la publication des premiers résultats confirmant les performances de décodage des turbo codes, plusieurs 
-comités de standardisation se sont intéressés à cette nouvelle famille de code correcteur d'erreurs.
+comités de standardisation se sont intéressés à cette nouvelle famille de codes correcteurs d'erreurs.
 
 Ainsi, en 1999, le Comité Consultatif pour les Systèmes de Données Spatiales (CCSDS, qui regroupe différentes agences 
 spatiales à travers le monde), propose dans leur livre de recommandations d'employer un turbo code à 16 états dans le cadre 
-des communications avec l'espace lointain \cite{ccsdsBluebook}. 
-
-Aujourd'hui, nous retrouvons des turbo codes essentiellement dans des contextes de télécommunication mobile et de diffusion 
+des communications avec l'espace lointain \cite{ccsdsBluebook}. Aujourd'hui, nous retrouvons des turbo codes essentiellement dans des contextes de télécommunication mobile et de diffusion 
 vidéo numérique.
 
 Depuis la fin des années 90, le 3GPP a adopté un turbo code à 8 états dans le cadre de la technologie de téléphonie 
@@ -969,28 +969,28 @@ par courant porteur en ligne. Ces trois turbo codes sont similaires à celui du 
 
 Dans la suite de ce manuscrit, les standards CCSDS, LTE, DVB-RCS et DVB-RCS2 seront utilisés comme cadre applicatif, car 
 à eux 4 ils représentent une diversité conséquente quant aux turbo codes usités. Le tableau \ref{tab:std} récapitule les 
-propriété de ces turbo codes. Les treillis associés aux codeurs RSC élémentaires des turbo codes de chacun de ces standard 
+propriétés de ces turbo codes. Les treillis associés aux codeurs RSC élémentaires des turbo codes de chacun de ces standard 
 sont présentés en Figure \ref{fig:treillisstd}. Les performances de décodage de ces turbos codes sont présentées, de manière 
 non exhaustive, en Figures \ref{fig:ferstdlte} à \ref{fig:ferstdDVB2}. Pour toutes ces simulations Monte Carlo, 100 trames 
 erronées ont été obtenues par point de SNR. L'algorithme de décodage est l'EML-APP avec comme facteur d'échelle $0,75$ 
 durant 8 itérations.
 
-\begin{table}[h]
+\begin{table}[b]
 	\centering
-	\caption{Les turbo codes standardisés considérés au long de ce manuscrit}
+	\caption{Les turbo codes standardisés considérés au long de ce manuscrit.}
 	\label{tab:std}
 	\begin{tabular}{@{}rllll@{}}
 		\toprule
 		& \multicolumn{2}{l}{Binaire} & \multicolumn{2}{l}{Double binaire} \\ 
 		\cmidrule(l){2-3}\cmidrule(l){4-5}
 		                        & \textbf{LTE}          & \textbf{CCSDS}          & \textbf{DVB-RCS}      & \textbf{DVB-RCS2}      \\
-		\cmidrule(l){2-2}\cmidrule(l){3-5}%\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}
+		\cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}
 		Type de communication                  & Mobiles       &  \multicolumn{3}{c}{Satellitaires}                 \\
-		\cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}
+		\cmidrule(l){2-2}\cmidrule(l){3-5}%\cmidrule(l){4-4}\cmidrule(l){5-5}
 		Nombre d'états         & 8                     & 16                      & 8                     & 16                     \\
-		\cmidrule(l){2-3}\cmidrule(l){4-5}
-		Terminaison du treillis    &     \multicolumn{2}{c}{Retour à l'état 0}               &                \multicolumn{2}{c}{Circulaire}                    \\
 		\cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}
+		Terminaison du treillis    &     \multicolumn{2}{c}{Retour à l'état 0}               &                \multicolumn{2}{c}{Circulaire}                    \\
+		\cmidrule(l){2-3}\cmidrule(l){4-5}
 		Tailles de trame (bits) & $40 \rightarrow 6144$ & $1784 \rightarrow 8920$ & $96 \rightarrow 1728$ & $128 \rightarrow 3008$ \\
 		\cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}
 		Rendements              & Rate-Matching         & $1/6 \rightarrow 1/2$   & $1/3 \rightarrow 6/7$ & $1/3 \rightarrow 7/8$  \\ \bottomrule
@@ -1016,7 +1016,7 @@ durant 8 itérations.
 			\includegraphics[width=0.48\textwidth]{main/ch1_fig/dvbrcs2_3.pdf}
 			\label{sub:dvbrcs2}
 		}
-		\caption{Treillis associés aux codeurs RSC élémentaires des turbo codes du tableau \ref{tab:std}}
+		\caption{Treillis associés aux codeurs RSC élémentaires des turbo codes du tableau \ref{tab:std}.}
 		\label{fig:treillisstd}
 	\end{center}
 \end{figure}
@@ -1067,25 +1067,25 @@ durant 8 itérations.
 		}
 																																																																																																																																									
 		\caption{Taux d'erreur trame pour le standard LTE pour deux rendements et différentes tailles de trame. Décodage 
-		par l'algorithme EML-MAP effectuant 8 itérations}
+		par l'algorithme EML-MAP effectuant 8 itérations.}
 		\label{fig:ferstdlte}
 	\end{center}
 \end{figure}
 
 \begin{figure}[h]
 	\begin{center}
-		\subfloat[DVB-RCS - K=220]{
-			\input{main/ch1_fig/std/vierge.tikz}
-			\label{sub:dvbrcs220}
+		\subfloat[DVB-RCS - K=440]{
+			\input{main/ch1_fig/std/dvb440.tikz}
+			\label{sub:dvbrcs440}
 		}	   
 
 		\subfloat[DVB-RCS - K=752]{
-			\input{main/ch1_fig/std/vierge.tikz}
+			\input{main/ch1_fig/std/dvb752.tikz}
 			\label{sub:dvbrcs752}
 		}
 																																																																																																																																									
 		\caption{Taux d'erreur trame pour le standard DVB-RCS pour plusieurs rendements et deux tailles de trame. 
-		Décodage par l'algorithme EML-MAP effectuant 8 itérations}
+		Décodage par l'algorithme EML-MAP effectuant 8 itérations.}
 		\label{fig:ferstdDVB1}
 	\end{center}
 \end{figure}
@@ -1093,9 +1093,9 @@ durant 8 itérations.
 
 \begin{figure}[h]
 \centering
-			\input{main/ch1_fig/std/vierge.tikz}	
+			\input{main/ch1_fig/std/ccsds.tikz}	
 		\caption{Taux d'erreur trame pour le standard CCSDS pour deux rendements et deux tailles de trame. 
-		Décodage par l'algorithme EML-MAP effectuant 8 itérations, critère d’arrêt génie}
+		Décodage par l'algorithme EML-MAP effectuant 8 itérations, critère d’arrêt génie.}
 		\label{fig:ferstdCCSDS}
 \end{figure}
 
@@ -1103,7 +1103,7 @@ durant 8 itérations.
 \centering
 			\input{main/ch1_fig/std/vierge.tikz}	
 		\caption{Taux d'erreur trame pour le standard DVB-RCS2. Décodage par l'algorithme EML-MAP effectuant 
-		8 itérations, critère d’arrêt génie}
+		8 itérations, critère d’arrêt génie.}
 		\label{fig:ferstdDVB2}
 \end{figure}
 
@@ -1112,10 +1112,10 @@ A partir des Figures \ref{fig:ferstdlte} à \ref{fig:ferstdDVB2}, nous pouvons r
 des turbo codes peuvent être différenciées selon trois régions :
 \begin{itemize}
 	\item La première zone, correspondant aux faibles valeurs de SNR est nommé \og zone de non convergence \fg. Pour de 
-	telles valeurs de SNR, le système codé peut-être moins performant que le système de transmission codée.
+	telles valeurs de SNR, le système codé peut-être moins performant que le système de transmission non codé.
 	\item Passé le seuil de convergence, une faible augmentation du SNR implique une baisse significative du taux d'erreur. 
 	Cette zone est nommée \og waterfall region \fg  en anglais.
-	\item Enfin, dans la région du \og plancher d'erreur \fg, la courbe de performance s’aplatit : le taux d'erreur baisse 
+	\item Enfin, dans la région du \og plancher d'erreurs \fg, la courbe de performance s’aplatit : le taux d'erreur baisse 
 	légèrement lorsque le SNR augmente.
 \end{itemize}
 
@@ -1123,10 +1123,10 @@ Afin d'obtenir des codes approchant la capacité du canal, il est nécessaire qu
 %Cependant, cette méthode n'est pas détaillée dans ce manuscrit.
 
 Dans la zone de convergence, l'augmentation du nombre d'itérations améliore les performances. En revanche, dans la zone 
-du plancher d'erreur, seulement quelques itérations sont nécessaires et les suivantes n'amènent qu'un gain marginal en 
+du plancher d'erreurs, seulement quelques itérations sont nécessaires et les suivantes n'amènent qu'un gain marginal en 
 terme de performances.
 
-Le plancher d'erreur peut limiter l'utilisation des turbo codes pour des applications nécessitant de très faibles taux 
+Le plancher d'erreurs peut limiter l'utilisation des turbo codes pour des applications nécessitant de très faibles taux 
 d'erreur. Comme cette zone de gain asymptotique est essentiellement influencée par la distance minimale de Hamming du 
 code, le problème du plancher d'erreurs est discuté dans la section suivante.
 
@@ -1134,11 +1134,11 @@ code, le problème du plancher d'erreurs est discuté dans la section suivante.
 
 \subsubsection{Performances asymptotiques sur canal BI-AWGN}
 Nous avons préalablement expliqué qu'en raison de l'étape d'entrelacement, un décodage ML de turbo codes n'est pas possible (cf. \ref{sec:ml}). 
-Ainsi, les méthodes de décodage itératives employées sont sous-optimales. Cependant elles approchent les performances du décoage ML 
+Ainsi, les méthodes de décodage itératives employées sont sous-optimales. Cependant elles approchent les performances du décodage ML 
 pour des valeurs de SNR moyennes à élevées.
 Dans cette section, nous allons estimer les performances d'un décodeur ML pour un turbo code utilisé sur le canal BI-AWGN.
 
-Puisque les codes constituant et l'entrelaceur d'un turbo code sont linéaires, lui-même l'est sous réserve d'omettre la 
+Puisque les codes constituants et l'entrelaceur d'un turbo code sont linéaires, lui-même l'est sous réserve d'omettre la 
 séquence de terminaison. Cette propriété de linéarité combinée à la symétrie du canal considéré implique que la probabilité 
 d'erreur sachant qu'un certain mot de code $\mathbf{c}$ a été émis est la même que si un autre mot de code $\mathbf{c'}$ 
 était transmis. Ceci permet de simplifier l'analyse en considérant que le mot de code tout à zéro ($\mathbf{0}$) est transmis.
@@ -1152,7 +1152,7 @@ Ainsi, la probabilité qu'un mot soit erroné vaut :
 Ceci correspond au fait que le décodeur choisisse le mot de code $\mathbf{\hat{c}}$ alors que $\mathbf{0}$ est transmis.
 
 Soit $m(\mathbf{c})$ la représentation après transmission du mot de code $\mathbf{c}$. Nous pouvons alors écrire 
-$m(\mathbf{0}) = (\sqrt{E_c},\sqrt{E_c},...,\sqrt{E_c})$, avec $E_c = RE_b$.\\
+$m(\mathbf{0}) = (\sqrt{E_c},\sqrt{E_c},...,\sqrt{E_c})$, avec $E_c = R\times E_b$.\\
 Posons $P_w$ la probabilité que le bruit blanc gaussien implique que le vecteur reçu $\mathbf{r}$ soit plus près de  
 $m(\mathbf{\hat{c}})$ que de $m(\mathbf{0})$, avec $m(\mathbf{\hat{c}}) = (\sqrt{E_c},-\sqrt{E_c},...,\sqrt{E_c})$ et 
 $w$ le nombre de positions différant de $m(\mathbf{0})$.
@@ -1172,12 +1172,12 @@ En reprenant l'équation \ref{eq:perr}, nous pouvons finalement écrire :
 \begin{equation} \label{eq:uboundfer}
 	P_{cw} \le \sum\limits_w A_w Q\left(\sqrt{\frac{2wRE_b}{N_0}}\right)
 \end{equation}
-Cette équation donne donc une borne supérieure quant à la probabilité d'erreur mot en utilisant un décodeur ML. En 
+Cette équation donne donc une borne supérieure quant à la probabilité d'erreur trame en utilisant un décodeur ML. En 
 découle son équivalent binaire exprimé par :
 \begin{equation} \label{eq:uboundber}
 	P_{b} \le \sum\limits_w \frac{W_w}{K} Q\left(\sqrt{\frac{2wRE_b}{N_0}}\right)
 \end{equation} 
-où $W_w$ est la somme des poids de Hamming des $A_w$ séquences binaires générant  des mots de codes de poids de Hamming $w$.
+où $W_w$ est la somme des poids de Hamming des $A_w$ séquences binaires générant des mots de code de poids de Hamming $w$.
 	
 Ainsi, selon les valeurs ($w,A_w,W_w$) associées à un code, nous pouvons exprimer des bornes quant aux performances 
 obtenues avec un décodeur ML. Les valeurs ($w,A_w,W_w$) se nomment spectre de distance du code et les bornes sont les 
@@ -1213,20 +1213,21 @@ d'entrée non-nulle. En encodant cette séquence d'entrée, un mot de code non-n
 de code est alors une borne supérieure de la distance minimale du code. Cependant, cette méthode propose des résultats 
 probants uniquement pour des codes possédant de faibles $d_{min}$ \cite{yocComparisonMethods}.
 	
-Enfin, en 2005, Crozier \textit{et al.} ont développé deux méthodes améliorées, découlant de la précédente \cite{crozierDIM}. 
+Enfin, en 2005, Crozier \textit{et al.} ont proposé deux améliorations, découlant du travail précédent \cite{crozierDIM}. 
 Une première impulsion est placée à une position $i$ dans la partie systématique du mot de code. Une seconde est ajoutée 
 à une position $j$. Ensuite le décodage est mené et les distances et multiplicités associées sont relevées de la même 
 manière que dans \cite{garelloAllZero}. Les auteurs considèrent que placer la seconde impulsion dans la zone $\llbracket i; i+2D\rrbracket$, 
 avec D la distance minimale du code estimée est suffisant. Cependant, dans \cite{yocComparisonMethods}, il est précisé 
 que la fiabilité de cette méthode est accrue si $j \in \llbracket i; K-1\rrbracket$. Pis encore, selon nos expérimentations, 
 dans le cas de turbo codes non circulaires, afin d’approcher au plus près les résultats fournis par la méthode \cite{garellodfree}, 
-imposer $i \in \llbracket 0; K-1\rrbracket$ et $j \in \llbracket i; N\rrbracket$ semblent offrir le meilleur compromis.
+imposer $i \in \llbracket 0; K-1\rrbracket$ et $j \in \llbracket i; N\rrbracket$ semblent offrir le meilleur compromis
+entre la finesse des résultats et le temps de simulation.
 	
-\paragraph*{Exemples de prévision du plancher d'erreur}
+\paragraph*{Exemples de prévision du plancher d'erreurs}
 En utilisant la méthode de la double impulsion de Crozier \cite{crozierDIM} ou la méthode utilisant les sous-codes 
 contraints de Garello \cite{garellodfree}, nous pouvons calculer les spectres de distance pour les différents turbo codes standardisés.
 
-Le tableau \ref{tab:spectre} présente les premiers termes du spectre de distance pour le turbo code du standard LTE pour 
+Le tableau \ref{tab:spectre} présente les premiers termes du spectre de distance pour trois turbo code du standard LTE :
 $K \in \{528; 2048; 6144\}$ et $R=1/3$. Nous pouvons remarquer que les multiplicités sont faibles et que les distances 
 minimales sont globalement croissantes avec $K$.
 
@@ -1249,7 +1250,7 @@ minimales sont globalement croissantes avec $K$.
 
 \begin{table}[]
 \centering
-\caption{Spectre de distance pour trois turbo codes du standard LTE}
+\caption{Spectre de distance pour trois turbo codes du standard LTE.}
 \label{tab:spectre}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{rllllllll}
@@ -1271,7 +1272,7 @@ En utilisant ces données et l'équation \ref{eq:uboundfer}, nous pouvons ajoute
 performance, en terme de taux d'erreur trame, est parallèle à la borne de l'union lorsque le décodeur est en régime asymptotique. Pour K=528 et K=2048, 
 elle est située à un facteur d'approximativement 2 de la borne de l'union. Pour K=6144, cet écart 
 est un peu plus important et représente un facteur 4. L'écart à la borne de l'union s'explique par la sous-optimalité de 
-l'algorithme de décodage conjointement avec le faible nombre d'itération employé.
+l'algorithme de décodage conjointement avec le faible nombre d'itération employé, à savoir 10.
 
 
 %très proche de la borne de l'union lorsque les SNR sont suffisamment élevés.
@@ -1281,16 +1282,16 @@ l'algorithme de décodage conjointement avec le faible nombre d'itération emplo
 	\input{main/ch1_fig/std/lte13bound.tikz}
 	\label{fig:ubound}
 	\caption{Bornes de l'union et performances de décodages par l'algorithme EML-MAP effectuant 8 itérations pour trois 
-	turbo codes du standard LTE}
+	turbo codes du standard LTE.}
 \end{figure}
 		
-\subsection{Les méthodes d'abaissement du plancher d'erreur}
-Afin d'abaisser le plancher d'erreur des turbo codes, différentes méthodes peuvent être employées. 
+\subsection{Les méthodes d'abaissement du plancher d'erreurs}
+Afin d'abaisser le plancher d'erreurs des turbo codes, différentes méthodes peuvent être employées. 
 \subsubsection{Modification des paramètres des turbo codes}
 Dans un premier temps, la longueur de contrainte des codeurs convolutifs peut être augmentée. C'est notamment l'une des 
 stratégies employée lors de la ratification de la seconde version du standard DVB-RCS. En effet, les codeurs convolutifs 
-sont passés de 8 états à 16 états. Il en résulte un plancher d'erreur abaissé d'environ une décade. En revanche, la 
-complexité calculatoire double lorsque le nombre d'états double.
+sont passés de 8 états à 16 états. Il en résulte un plancher d'erreurs abaissé d'environ une décade. En revanche, la 
+complexité calculatoire du décodeur double lorsque le nombre d'états double.
 		
 Ainsi, hormis le paramètre de la longueur de contrainte, le spectre de distance est régi par l'entrelaceur. C'est pour 
 cela que de nombreuses recherches se sont concentrées sur la fonction d'entrelacement. De plus, l'entrelaceur n'a, 
@@ -1303,7 +1304,7 @@ conception conjointe permet d'obtenir des distance minimales très importantes p
 
 Cependant, un autre vecteur d'optimisation des performances se situe au niveau du décodage itératif. En effet, les 
 méthodes de décodage itératives sont sous-optimales. Ainsi, plusieurs méthodes de décodage effectuant des traitements 
-complémentaires après un turbo décodage usuel ont été considérées. Ces approchent peuvent résulter en l'obtention de 
+complémentaires après un turbo décodage usuel ont été considérées. Ces approches peuvent résulter en l'obtention de 
 plusieurs séquences d'information probables. Ainsi, l'utilisation d'un code détecteur d'erreurs concaténé en amont du 
 turbo codeur est une approche envisageable. Plus encore, la concaténation série de différents codes permet d’accroître 
 les performances des turbo codes. 
@@ -1318,22 +1319,24 @@ d'augmenter la distance minimale du code. Enfin, la dernière section s'intéres
 dernier est alors majoritairement employé pour sélectionner un mot de code parmi plusieurs candidats.
 \paragraph{Code BCH}
 Dès l'apparition des turbo codes, il a été remarqué que les motifs d'erreurs des turbo codes en régime asymptotique sont 
-constitués de quelques 1 séparés par des 0. Autrement dit, si pour une valeur de SNR élevée, le turbo décodeur ne 
-converge pas vers la bonne séquence d'information, alors la séquence décodée est très proche de la bonne séquence. 
+constitués d'un faible nombre de bits erronés. Autrement dit, si pour une valeur de SNR élevée, le turbo décodeur ne 
+converge pas vers la bonne séquence d'information, alors la séquence décodée est très proche du mot de code émis. 
 Partant de ce constant, Andersen propose en 1996 de concaténer un code BCH avec un turbo code \cite{andersenBCH}. La 
 Figure \ref{fig:bchc} présente cette concaténation série au niveau du codeur. Après un décodage du turbo code non 
 fructueux, un décodage dur à partir du code BCH est effectué permettant d'éliminer les erreurs résiduelles. Cette 
 approche résulte en un abaissement du plancher d'erreurs. Ceci s'explique par une augmentation de la distance minimale 
 du code via la concaténation série. En revanche, la convergence est retardée en raison de la baisse du rendement global 
-provenant de l'ajout de redondance supplémentaire. Par construction, le nombre de bits de redondance nécessaires pour 
+provenant de l'ajout de redondance supplémentaire. Par construction, le nombre de bits de redondance nécessaires ($R_{BCH}$)
+pour 
 qu'un code BCH corrige $t$ erreurs a pour expression : \[R_{BCH} = t \times \lceil \log_2 K\rceil.\]
 Ainsi, plus K est grand, moins l'impact sur le rendement est important. De plus, la complexité calculatoire d'un 
 décodeur dur BCH est raisonnable. À titre d'exemple, un schéma de codage équivalent a été choisi dans le cadre du 
 standard DVB-S2 où  un code LDPC est concaténé avec un code BCH.
 
-Afin de réduire la perte de rendement, une analyse analytique est réalisée dans \cite{narayananBCH}. Cette dernière 
+Afin de réduire la perte de rendement, une analyse empirique est réalisée dans \cite{narayananBCH}. Cette dernière 
 permet d’identifier les positions les plus souvent erronées dans la séquence d'information. Dès lors, seules ces 
-positions sont protégées par un code BCH, impliquant un surcoût moins important au niveau des bits de redondance.
+positions sont protégées par un code BCH, impliquant un surcoût moins important en terme de bits de redondance
+supplémentaires.
 
 Il est à noter que le code BCH peut aussi servir de code détecteur d'erreurs et donc de critère d’arrêt lors d'un 
 processus de décodage itératif. Ceci permet d'augmenter le nombre maximal d'itérations du turbo décodeur car le nombre 
@@ -1343,7 +1346,7 @@ d'itérations moyen n'est que peu impacté, comme décrit dans \cite{takeshitaBC
 	\begin{center}
 	\includegraphics[]{main/ch1_fig/abaiss/bch.pdf}
 	\end{center}
-	\caption{Concaténation série d'un code BCH et d'un turbo code \label{fig:bchc}}
+	\caption{\label{fig:bchc} Concaténation série d'un code BCH et d'un turbo code.}
 \end{figure}
 
 \paragraph{Code RSC de rendement 1}
@@ -1375,7 +1378,7 @@ l'activation successive des 3 décodeurs SISO.
       \includegraphics[width=0.45\textwidth]{main/ch1_fig/abaiss/precod.pdf}
       \label{sub:pre}
                          }
-    \caption{Concaténation d'un turbo code et d'un RSC de rendement 1}
+    \caption{Concaténation d'un turbo code et d'un RSC de rendement 1.}
     \label{fig:t3d}
   \end{center}
 \end{figure}
@@ -1385,7 +1388,7 @@ La troisième concaténation utilise des codes détecteurs d'erreurs CRC. La con
 turbo code est présenté en Figure \ref{fig:crc}. Cette famille de code possède un pouvoir de détection important. Ainsi, 
 ce type de détecteur est souvent défini dans les standards employant des turbo codes. Par exemple, dans le standard LTE, 
 ils permettent l'utilisation de demandes de renvoi automatique (ARQ). Dans ce cas, lorsque le récepteur détecte une 
-erreur de transmission, il peut demander une retransmission des données. L'ARQ permet une amélioration de la qualité de 
+erreur de transmission, après turbo décodage via l'utilisation du code CRC, il peut demander une retransmission des données. L'ARQ permet une amélioration de la qualité de 
 service. D'autre part, les codes CRC peuvent aussi permettre d'arrêter le processus de décodage itératif dès lors que le 
 turbo décodeur a convergé vers le bon mot de code. Des analyses comme dans \cite{detectionCRC} ont été menées afin de 
 déterminer les probabilités d'erreurs non détectées et de fausse alerte lorsque qu'une détection CRC est effectuée au 
@@ -1394,11 +1397,11 @@ cours du processus itératif.
 Dans un but d'améliorer les performances de décodage, les codes CRC ont été utilisé de diverses manières. Celles-ci sont 
 maintenant présentées.
 
-\begin{figure}[b]
+\begin{figure}[tb]
 	\begin{center}
 	\includegraphics[]{main/ch1_fig/abaiss/crc.pdf}
 	\end{center}
-	\caption{Concaténation série d'un code CRC et d'un turbo code \label{fig:crc}}
+	\caption{Concaténation série d'un code CRC et d'un turbo code. \label{fig:crc}}
 \end{figure}
 
 
@@ -1417,12 +1420,12 @@ Dans le cadre du décodage de turbo codes par liste, trois principales approches
 	il est exécuté après chaque itération ou à la fin du processus \cite{narayaList}. Les informations \textit{a posteriori} 
 	du turbo décodeur servent alors d'informations \textit{a priori} pour le LVA. Afin de déterminer la bonne séquence 
 	parmi les $\cal{L}$ séquences obtenues, un code détecteur d'erreurs est utilisé. Grâce à cette technique des gains 
-	notables, de l'ordre d'un facteur dix avec une liste de taille trois dans le plancher d'erreur, sont obtenus.
+	notables, de l'ordre d'un facteur dix avec une liste de taille trois dans le plancher d'erreurs, sont obtenus.
 	\item \textbf{LVA pré turbo : } Le décodage liste peut aussi être appliqué avant le processus itératif. Il doit alors 
 	fournir $\cal{L}$ séquences distinctes de sorties souples qui seront utilisées en tant qu'information \textit{a priori} 
 	par $\cal{L}$ turbo décodeurs distincts. A nouveau, l'identification de la bonne séquence est réalisée par un code 
 	détecteur d'erreurs. Cette méthode propose des gains aussi bien dans la zone de convergence que dans le plancher 
-	d'erreur, mais possède un surcoût calculatoire important \cite{newList}. Ces gains représentent un facteur cinq pour 
+	d'erreurs, mais possède un surcoût calculatoire important \cite{newList}. Ces gains représentent un facteur cinq pour 
 	de petites tailles de trame avec une liste de taille 16.
 \end{enumerate}
 
@@ -1440,7 +1443,7 @@ Les décodeurs associés à ces différentes utilisations du LVA sont récapitul
     \subfloat[LVA pré turbo]{
       \includegraphics[width=0.5\textwidth]{main/ch1_fig/abaiss/lva_pre.pdf}
       \label{sub:lva3}}
-    \caption{Décodeur utilisant l’algorithme de Viterbi par liste}
+    \caption{Décodeur utilisant l’algorithme de Viterbi par liste.}
     \label{fig:lva}
   \end{center}
 \end{figure}
@@ -1461,7 +1464,7 @@ que seuls des décodages de trame de petite taille peuvent être envisagés.
 \begin{center}
 	\includegraphics[]{main/ch1_fig/abaiss/osd.pdf}
 	\end{center}
-	\caption{Décodage associant un turbo code et un décodeur OSD \label{fig:osd}}
+	\caption{Décodage associant un turbo code et un décodeur OSD. \label{fig:osd}}
 \end{figure}
 
 \subparagraph{Multiples turbo décodages} Cette méthode a été présentée par Crozier et Ould-Cheikh-Mouhamedou dans 
@@ -1469,14 +1472,14 @@ que seuls des décodages de trame de petite taille peuvent être envisagés.
 n'a pas convergé vers le bon mot de code, les valeurs absolues des informations \textit{a posteriori} sont triées par 
 ordre croissant. La valeur de l'information systématique correspondant à la position la moins fiable est alors forcée à 
 une valeur supérieure à celle de la distance minimale du code. Un nouveau turbo décodage itératif est alors effectué. Le 
-résultat est vérifié grâce à un code détecteur d'erreurs. Si le bon mot n'a pas été identifié, alors, la seconde position 
+résultat est vérifié grâce à un code détecteur d'erreurs. Si le mot ne vérifie toujours pas le code détecteur d'erreurs, alors, la seconde position 
 la moins fiable est forcée à une valeur supérieure à la distance minimale du code, tout en ayant remis la position la moins 
 fiable à sa valeur originelle. Un nouveau turbo décodage itératif est alors effectué. Ce processus est répété jusqu'à ce 
 qu'un nombre prédéfini de positions testées soit atteint ou jusqu'à ce que le code détecteur d'erreurs valide le mot courant.
 
 Dans le cadre des turbo codes double binaires, les quatre possibilités de valeurs pour le couple $(A_i,B_i)$ sont 
 considérées. Les performances de décodage sont améliorées à la fois dans la zone de convergence et au niveau du plancher 
-d'erreur mais ce au prix, 
+d'erreurs mais ce au prix, 
 %d'une multiplication de la complexité calculatoire par le nombre de positions examinées. 
 d'une multiplication par $4\times L$ de la complexité calculatoire avec $L$ le nombre de positions examinées.
 
@@ -1487,47 +1490,84 @@ est conjointement employé. Cependant, bien que cette méthode présente les mei
 peut être considérée dans un contexte temps réel du fait de sa latence d'exécution et de la complexité calculatoire 
 résultante.
 
-\subsubsection{Récapitulatif des différentes méthodes d'abaissement du plancher d'erreur}
-Dans cette section, différentes méthodes d'abaissement du plancher d'erreur sont récapitulées et comparées en terme de 
+\subsubsection{Récapitulatif des différentes méthodes d'abaissement du plancher d'erreurs}
+Dans cette section, différentes méthodes d'abaissement du plancher d'erreurs sont récapitulées et comparées en terme de 
 gains de décodage et de complexité de décodage. Une synthèse de cette comparaison est fournie dans le tableau \ref{tab:recap}.
 
-Bien évidemment, toutes ces méthodes permettent d'abaisser le plancher d'erreur. De plus, les techniques utilisant l'OSD 
+Bien évidemment, toutes ces méthodes permettent d'abaisser le plancher d'erreurs. De plus, les techniques utilisant l'OSD 
 ou le turbo décodage multiple proposent des gains aussi dans la zone de convergence. Cependant leurs complexités calculatoires 
 les excluent d'applications sous forte contrainte d'exécution. 
 
-La concaténation avec un code BCH propose des gains intéressants dans la zone du plancher d'erreur tout en introduisant une
+La concaténation avec un code BCH propose des gains intéressants dans la zone du plancher d'erreurs tout en introduisant une
 complexité calculatoire modérée. Néanmoins, il est nécessaire d'ajouter des informations redondante (provenant du code BCH). 
 Ceci implique une modification du rendement du code et donc un décalage sur le seuil de convergence. 
-En revanche, l'utilisation d'un code RSC de rendement 1 ne possède pas cet inconvénient mais nécessite cependant aussi de 
-modifier le schéma de codage. Cette approche ne peut donc être utilisée dans des contextes déjà standardisés. De plus, le 
+En revanche, l'utilisation d'un code RSC de rendement 1 ne possède pas cet inconvénient mais nécessite cependant une 
+modification du schéma de codage. Cette approche ne peut donc être utilisée dans des contextes déjà standardisés. De plus, le 
 troisième SISO impacte négativement la complexité calculatoire et la latence du décodeur.
 
 Finalement, les approches basées sur un décodage LVA successif au turbo décodage possèdent l'avantage de nécessiter uniquement 
-l'adjonction d'un code CRC au turbo code. Des gains de performance sont observés dans le plancher d'erreur mais la complexité 
+l'adjonction d'un code CRC au turbo code. Des gains de performance sont observés dans le plancher d'erreurs mais la complexité 
 calculatoire ajoutée n'est pas négligeable.
+
+% \begin{table}[tb]
+% \centering
+% \caption{Synthèse des différentes méthodes améliorant les performances de décodage.}
+% \label{tab:recap}
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{rlllll}
+% \toprule
+%                   & BCH & RSC-1 & List Decoder & OSD & Décodages multiples\\
+%                   \cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}\cmidrule(l){6-6}
+% \textbf{Redondance ajoutée}         & Oui  & Non & CRC & CRC & CRC \\
+% \textbf{Localisation des gains}     & Plancher & Plancher & Plancher & Convergence et plancher & Convergence et plancher \\
+% \textbf{Complexité}                 & \thumbsup & \thumbsmid & \thumbsmid & \thumbsdown  & \thumbsdown \\
+% \bottomrule
+% \end{tabular}}
+% \end{table}
 
 \begin{table}[tb]
 \centering
-\caption{Synthèse des différentes méthodes améliorant les performances de décodage}
+\caption{Synthèse des différentes méthodes améliorant les performances de décodage.}
 \label{tab:recap}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{rlllll}
+\resizebox{\textwidth}{!}
+{%
+\begin{tabular}{rrrrrr}
 \toprule
                   & BCH & RSC-1 & List Decoder & OSD & Décodages multiples\\
-                  \cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}\cmidrule(l){6-6}
-\textbf{Redondance ajoutée}         & Oui  & Non & CRC & CRC & CRC \\
-\textbf{Localisation des gains}     & Plancher & Plancher & Plancher & Convergence et plancher & Convergence et plancher \\
-\textbf{Complexité}                 & \thumbsup & \thumbsmid & \thumbsmid & \thumbsdown  & \thumbsdown \\
+                  \cmidrule(r ){2-2}\cmidrule(r ){3-3}\cmidrule(r ){4-4}\cmidrule(r ){5-5}\cmidrule(r ){6-6}
+\begin{tabular}[r]{@{}r@{}}\textbf{Redondance} \\ \textbf{ajoutée}\end{tabular}        & Oui  & Non & CRC & CRC & CRC \\
+\begin{tabular}[r]{@{}r@{}}\textbf{Localisation} \\ \textbf{des gains}\end{tabular}    & Plancher & Plancher & Plancher &\begin{tabular}[r]{@{}r@{}}Convergence \\ et plancher\end{tabular}  & \begin{tabular}[r]{@{}r@{}}Convergence \\ et plancher\end{tabular}  \\
+\begin{tabular}[r]{@{}r@{}}\textbf{Complexité} \\ \textbf{calculatoire}\end{tabular}                   & \thumbsup & \thumbsmid & \thumbsmid & \thumbsdown  & \thumbsdown \\
 \bottomrule
 \end{tabular}}
 \end{table}
+
+
+% \begin{table}[tb]
+% \centering
+% \caption{Synthèse des différentes méthodes améliorant les performances de décodage.}
+% \label{tab:recap}
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{rrrrrr}
+% \toprule
+%                   & BCH & RSC-1 & List Decoder & OSD & Décodages multiples\\
+%                   \cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}\cmidrule(l){6-6}
+% \textbf{Redondance ajoutée}         & Oui  & Non & CRC & CRC & CRC \\
+% \begin{tabular}[r]{@{}r@{}}\textbf{Gains dans le zone} \\ \textbf{du plancher d'erreurs}\end{tabular}     & Oui & Oui & Oui & Oui & Oui \\
+% \begin{tabular}[r]{@{}r@{}}\textbf{Gains dans le zone} \\ \textbf{de convergence}\end{tabular}     & Non & Non & Non & Oui & Oui \\
+% \textbf{Complexité}                 & \thumbsup & \thumbsmid & \thumbsmid & \thumbsdown  & \thumbsdown \\
+% \bottomrule
+% \end{tabular}}
+% \end{table}
+
 
 \section{Conclusion}
 Dans ce premier chapitre, les notions permettant d'aborder le codage de canal ont été successivement introduites. Puis, la 
 construction, le décodage et les performances des turbo codes ont été détaillés. Des outils permettant d'estimer les 
 performances d'un turbo code sur le canal BI-AWGN ont été présentées. Finalement, plusieurs méthodes permettant d'améliorer 
 les performances de décodage des turbo codes ont été rapportées. Dans le cadre de turbo codes déjà standardisés, seules 
-des méthodes appliquées au processus de décodage peuvent être employées. Or, de part la sous-optimalité du turbo décodage, des améliorations peuvent encore exister. Il est aussi à noter que de nombreux standards de communications numériques 
-présentent un code CRC concaténé avec le turbo code. Ceci permet d'envisager une plus grande diversité de décodage. Pour 
+des méthodes appliquées au processus de décodage peuvent être employées. Or, de part la sous-optimalité du turbo décodage, 
+des améliorations peuvent encore exister. Il est aussi à noter que de nombreux standards de communications numériques 
+incluent un code CRC concaténé avec le turbo code. Ceci permet d'envisager une plus grande diversité de décodage. Pour 
 l'ensemble de ces raisons, dans le chapitre suivant, afin d'améliorer les performances de décodage, des techniques de 
 décodage tirant parti des oscillations au sein du turbo décodeur sont détaillées. 

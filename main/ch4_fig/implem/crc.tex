@@ -33,25 +33,25 @@
     \begin{axis}[   axis y line*=right,
                     y axis style=Set1-1!75!black,
                     %ymin=0, ymax=80,
-                    xlabel=Degré de parallélisme du CRC ($Q$),
+                    xlabel=Degré de parallélisme du CRC $Q$,
                     xtick={1,8,24,48},
                     %scaled y ticks=base 10:-3,
-                    ylabel=Équivalent portes \bsc{Nand-2},
+                    ylabel=Équivalent portes \bsc{Nand-2}  ~~~~(\ref{s}),
                     grid=both, grid style={Set1-1!10},
                 ]
 
-        \addplot[smooth,mark=x,Set1-1] coordinates  {(1 ,206  )
+        \addplot[smooth,mark=o,Set1-1] coordinates  {(1 ,206  )
                                                      (2 ,244 )
                                                      (8 ,380 )
                                                      (24,658 ) 
                                                      (48 ,1055 )
-                                                    };
+                                                    }; \label{s}
        % \addplot[dashed, Set1-1, domain=1:48] {122*x};                                                    
     \end{axis}
      \begin{axis}[  axis y line*=left,
                     axis x line=none,
                     %ymin=0, ymax=100,
-                    ylabel=$\sim$ Efficacité énergétique,
+                    ylabel=$\sim$ Efficacité énergétique ~~~~(~~\ref{f}~~) ,
                     y axis style=Set1-2!75!black,
                     grid=both, grid style={Set1-2!10},
                 ]
@@ -61,8 +61,7 @@
                                                      (8 ,0.0210526315789 )
                                                      (24,0.0364741641337 ) 
                                                      (48,0.0454976303318 )
-                                                    };
-
+                                                    }; \label{f}
     \end{axis}
 
 

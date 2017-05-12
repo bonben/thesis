@@ -29,6 +29,5 @@
 | BF-SW (W)         | K + K/W         | 2(K + K/W)      | K                      | 1            |
 | BFLY              | K               | 2K              | K/2                    | 2            |
 | BFLY-SW (W)       | K               | 2K              | K/2 = W(K/(2W))        | 2            |
---
 | BFLY-PAR (Q)      | K/Q             | 2(K/Q)          | K/(2Q)                 | 2Q           |
 | BFLY-SW-PAR (W,Q) | K/Q             | 2(K/Q)          | K/(2Q) = W(K/(2QW))    | 2Q           |

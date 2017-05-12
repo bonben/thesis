@@ -1,7 +1,9 @@
 %!TEX root = ../my_thesis.tex
 
 \appendix
-\chapter{Compléments au Chapitre Premier}
+
+\chapter{Compléments au Chapitre 1}
+
 \section{Détails des calculs de l'algorithme APP}\label{append:app}
 Cette partie vise à démontrer l'ensemble des calculs présentés dans la section \ref{sec:BCJR}.
 \subsection{Décomposition de la probabilité jointe} 
@@ -107,7 +109,7 @@ En partant de la définition de l’opérateur $\maxstar$ et en utilisant une di
 % \paragraph{Stabilité numérique}
 
 
-\chapter{Compléments au Chapitre Deuxième}
+\chapter{Compléments au Chapitre 2}
 \section{Standard CCSDS}\label{sec:annCCSDS}
 Cette section présente les observations statistiques obtenues avec le standard CCSDS. La Figure \ref{fig:m_ccsds} présente 
 les valeurs moyennes d'oscillations, ce pour différentes valeurs de SNR. Les Figures \ref{fig:it1_ccsds} et \ref{fig:it2_ccsds}
@@ -150,7 +152,7 @@ présentent la distribution normalisée des oscillations pour ces deux valeurs d
 \end{figure}
 
 
-\chapter{Compléments au Chapitre Troisième}\label{sec:ann3}
+\chapter{Compléments au Chapitre 3}\label{sec:ann3}
 \newpage
 \begin{adjustbox}{angle=90, caption={Spectres de distances de turbo codes binaires standardisés},float=table}
 \centering
@@ -255,9 +257,16 @@ présentent la distribution normalisée des oscillations pour ces deux valeurs d
 	Décodeurs itérant jusqu'à 8 fois. \label{fig:fnc_lte_ber}}
 \end{figure}
 
+% \begin{figure}[!t]
+% 	\centering
+% 	\includegraphics[width=\textwidth, draft]{main/ch3_fig/fnc/dvb/tikz/dvb1_752.pdf}
+% 	\caption{Comparaison de performances de décodages entre EML-MAP et FNC. Standard DVB-RCS, K=752. R=1/3, 1/2, 3/4 et 6/7.
+% 	Décodeurs itérant jusqu'à 8 fois. \label{fig:fnc_dvb_752}}
+% \end{figure}
+
 \begin{figure}[!t]
-	\centering
-	\includegraphics[width=\textwidth, draft]{main/ch3_fig/fnc/dvb/tikz/dvb1_752.pdf}
+\centering
+			\input{main/ch1_fig/std/vierge.tikz}	
 	\caption{Comparaison de performances de décodages entre EML-MAP et FNC. Standard DVB-RCS, K=752. R=1/3, 1/2, 3/4 et 6/7.
 	Décodeurs itérant jusqu'à 8 fois. \label{fig:fnc_dvb_752}}
 \end{figure}

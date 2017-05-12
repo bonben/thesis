@@ -1,0 +1,188 @@
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{eulervm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+\usepackage{pgffor}
+\usepackage{amsmath}
+
+\input{../../colors}
+
+\setlength{\textwidth}{146.8mm}
+
+
+\begin{document}
+
+% \begin{tikzpicture}
+%     \begin{semilogyaxis}[footnotesize, width=\textwidth, height=0.65\textwidth,    
+%                     xmin=0.2, xmax=2.6, xtick={0,0.5,...,3},
+%                     ymax=1,
+% 					xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  
+% 					tick align=outside, tickpos=left,
+% 					grid=both, grid style={gray!30},
+% 					/pgfplots/table/ignore chars={|},
+% 					legend pos=north east
+% 					]
+
+% %528
+%         \addplot[mark=o, Set1-1, semithick                              ]  table [x=Eb/N0, y=FER] {../528/ref.txt};                 \label{528_tc_f}
+%         \addplot[mark=o, Set1-1, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m3.txt};            \label{528_fnc_f}
+
+%         \addplot[mark=o, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/528_FP_16_bits_6.3_ref.txt};           \label{528_tc_16b}
+%         \addplot[mark=o, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/528_FP_16_bits_6.3_FNC10.txt};         \label{528_fnc_16b}
+
+%         \addplot[mark=o, Set1-3, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/528_FP_8_bits_5.2_ref.txt};            \label{528_tc_8b_5.2}
+%         \addplot[mark=o, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/528_FP_8_bits_5.2_FNC10.txt};          \label{528_fnc_8b_5.2}
+        
+%         \addplot[mark=o, Set1-4, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/528_FP_8_bits_5.1_ref.txt};            \label{528_tc_8b_5.1}
+%         \addplot[mark=o, Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/528_FP_8_bits_5.1_FNC10.txt};          \label{528_fnc_8b_5.1}
+
+% %2048
+%         \addplot[mark=triangle, Set1-1, semithick                              ]  table [x=Eb/N0, y=FER] {../2048/ref.txt};                     \label{2048_tc_f}
+%         \addplot[mark=triangle, Set1-1, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5.txt};                \label{2048_fnc_f}
+
+%         \addplot[mark=triangle, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/2048_FP_16_bits_6.3_ref.txt};   \label{2048_tc_16b}
+%         \addplot[mark=triangle, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/2048_FP_16_bits_6.3_FNC10.txt}; \label{2048_fnc_16b}
+
+%         \addplot[mark=triangle, Set1-3, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/2048_FP_8_bits_5.2_ref.txt};    \label{2048_tc_8b_5.2}
+%         \addplot[mark=triangle, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/2048_FP_8_bits_5.2_FNC10.txt};  \label{2048_fnc_8b_5.2}
+        
+%         \addplot[mark=triangle, Set1-4, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/2048_FP_8_bits_5.1_ref.txt};    \label{2048_tc_8b_5.1}
+%         \addplot[mark=triangle, Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/2048_FP_8_bits_5.1_FNC10.txt};  \label{2048_fnc_8b_5.1}
+
+
+
+% %6144
+%         \addplot[mark=square, Set1-1, semithick                              ]  table [x=Eb/N0, y=FER] {../6144/ref.txt};                       \label{6144_tc_f}
+%         \addplot[mark=square, Set1-1, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5.txt};                  \label{6144_fnc_f}
+
+%         \addplot[mark=square, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/6144_FP_16_bits_6.3_ref.txt};     \label{6144_tc_16b}
+%         \addplot[mark=square, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/6144_FP_16_bits_6.3_FNC10.txt};   \label{6144_fnc_16b}
+
+%         \addplot[mark=square, Set1-3, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/6144_FP_8_bits_5.2_ref.txt};      \label{6144_tc_8b_5.2}
+%         \addplot[mark=square, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/6144_FP_8_bits_5.2_FNC10.txt};    \label{6144_fnc_8b_5.2}
+        
+%         \addplot[mark=square, Set1-4, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/6144_FP_8_bits_5.1_ref.txt};      \label{6144_tc_8b_5.1}
+%         \addplot[mark=square, Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/6144_FP_8_bits_5.1_FNC10.txt};    \label{6144_fnc_8b_5.1}
+
+
+%         \coordinate (legend2) at (axis description cs:0.5,1.2);
+
+%     \end{semilogyaxis}
+
+%     % \matrix [
+%     %     draw,
+%     %     matrix of nodes,
+%     %     anchor=north east,
+%     %     fill=white,
+%     %     nodes in empty cells
+%     % ] at (legend2) {
+%     %              &                      & \small{\textbf{Flottant}}     & \small{\textbf{16 bits}}    & \small{\textbf{8 bits 5.1}}    & \small{\textbf{8 bits 5.2}}    \\
+%     %              & \hspace*{-1ex}\small{K}=528  & \ref{528_tc_float}   & \ref{528_tc_16b}   & \ref{528_tc_8b_5.1}   & \ref{528_tc_8b_5.2}   \\
+%     % \textbf{TC}  & \small{K}=2048 & \ref{2048_tc_float}  & \ref{2048_tc_16b}  & \ref{2048_tc_8b_5.1}  & \ref{2048_tc_8b_5.2}  \\
+%     %              & \small{K}=6144 & \ref{6144_tc_float}  & \ref{6144_tc_16b}  & \ref{6144_tc_8b_5.1}  & \ref{6144_tc_8b_5.2}  \\
+%     %              & \hspace*{-1ex}\small{K}=528  & \ref{528_fnc_float}  & \ref{528_fnc_16b}  & \ref{528_fnc_8b_5.1}  & \ref{528_fnc_8b_5.2}  \\
+%     % \textbf{FNC} & \small{K}=2048 & \ref{2048_fnc_float} & \ref{2048_fnc_16b} & \ref{2048_fnc_8b_5.1} & \ref{2048_fnc_8b_5.2} \\
+%     %              & \small{K}=6144 & \ref{6144_fnc_float} & \ref{6144_fnc_16b} & \ref{6144_fnc_8b_5.1} & \ref{6144_fnc_8b_5.2} \\
+%     % };
+
+%         \matrix [
+%         draw,
+%         matrix of nodes,
+%         anchor=center,
+%         fill=white,
+%         nodes in empty cells
+%     ] at (legend2) {
+%       \small{TC/FNC}                       & \small{\textbf{Flottant}}        & \small{\textbf{16 bits (C : $Q_{6.3}$)}}         & \small{\textbf{8 bits (C : $Q_{5.2}$)}}              & \small{\textbf{8 bits (C : $Q_{5.1}$)}}                \\
+%                              %& \scriptsize{~~TC/FNC}            & \scriptsize{~~TC/FNC}                & \scriptsize{~~TC/FNC}                      & \scriptsize{~~TC/FNC}                      \\
+% \hspace*{-1ex}\small{K}=528  &  \ref{528_tc_f}/\ref{528_fnc_f}  &  \ref{528_tc_16b}/\ref{528_fnc_16b}  &  \ref{528_tc_8b_5.2}/\ref{528_fnc_8b_5.2}  &  \ref{528_tc_8b_5.1}/\ref{528_fnc_8b_5.1}  \\
+%               \small{K}=2048 & \ref{2048_tc_f}/\ref{2048_fnc_f} & \ref{2048_tc_16b}/\ref{2048_fnc_16b} & \ref{2048_tc_8b_5.2}/\ref{2048_fnc_8b_5.2} & \ref{2048_tc_8b_5.1}/\ref{2048_fnc_8b_5.1} \\
+%               \small{K}=6144 & \ref{6144_tc_f}/\ref{6144_fnc_f} & \ref{6144_tc_16b}/\ref{6144_fnc_16b} & \ref{6144_tc_8b_5.2}/\ref{6144_fnc_8b_5.2} & \ref{6144_tc_8b_5.1}/\ref{6144_fnc_8b_5.1} \\
+%     };
+% \end{tikzpicture}
+% \end{document}
+
+
+
+\begin{tikzpicture}
+\begin{groupplot}[  group style={group name=minX, group size= 3 by 1, horizontal sep=1.2cm, vertical sep=1.5cm}, 
+                    width=0.4\textwidth, height=0.55\textwidth, 
+                    xlabel=$E_b/N_0 \text{(dB)}$,   
+                    tick align=outside, tickpos=left,
+                    grid=both, grid style={gray!30},
+                    /pgfplots/table/ignore chars={|},
+                    ymode=log
+                    ]
+
+    \nextgroupplot[xmin=0.4, xmax=2.6, ylabel=FER, ymax=2]
+        \addplot[mark=o, Set1-1, semithick                              ]  table [x=Eb/N0, y=FER] {../528/ref.txt};                 \label{528_tc_f}
+        \addplot[mark=o, Set1-1, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../528/fnc10_m3.txt};            \label{528_fnc_f}
+
+        \addplot[mark=triangle, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/528_FP_16_bits_6.3_ref.txt};           \label{528_tc_16b}
+        \addplot[mark=triangle, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/528_FP_16_bits_6.3_FNC10.txt};         \label{528_fnc_16b}
+
+        \addplot[mark=square, Set1-3, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/528_FP_8_bits_5.2_ref.txt};            \label{528_tc_8b_5.2}
+        \addplot[mark=square, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/528_FP_8_bits_5.2_FNC10.txt};          \label{528_fnc_8b_5.2}
+        
+        \addplot[mark=pentagon, Set1-4, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/528_FP_8_bits_5.1_ref.txt};            \label{528_tc_8b_5.1}
+        \addplot[mark=pentagon, Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/528_FP_8_bits_5.1_FNC10.txt};          \label{528_fnc_8b_5.1}
+
+
+    \nextgroupplot[xmin=0.4, xmax=1.4, xtick={0.4,0.6,...,1.4}, ymax=2]
+        \addplot[mark=o, Set1-1, semithick                              ]  table [x=Eb/N0, y=FER] {../2048/ref.txt};                     \label{2048_tc_f}
+        \addplot[mark=o, Set1-1, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../2048/fnc10_m5.txt};                \label{2048_fnc_f}
+
+        \addplot[mark=triangle, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/2048_FP_16_bits_6.3_ref.txt};   \label{2048_tc_16b}
+        \addplot[mark=triangle, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/2048_FP_16_bits_6.3_FNC10.txt}; \label{2048_fnc_16b}
+
+        \addplot[mark=square, Set1-3, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/2048_FP_8_bits_5.2_ref.txt};    \label{2048_tc_8b_5.2}
+        \addplot[mark=square, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/2048_FP_8_bits_5.2_FNC10.txt};  \label{2048_fnc_8b_5.2}
+        
+        \addplot[mark=pentagon, Set1-4, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/2048_FP_8_bits_5.1_ref.txt};    \label{2048_tc_8b_5.1}
+        \addplot[mark=pentagon, Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/2048_FP_8_bits_5.1_FNC10.txt};  \label{2048_fnc_8b_5.1}
+
+
+     % \nextgroupplot[xshift=0.25\textwidth, xmin=0.6, xmax=1.2, xtick={0.6,0.7,...,1.5}]
+    \nextgroupplot[ xmin=0.2, xmax=1.1, xtick={0.2,0.4,...,1.5}, ymax=2]
+        \addplot[mark=o, Set1-1, semithick                              ]  table [x=Eb/N0, y=FER] {../6144/ref.txt};                       \label{6144_tc_f}
+        \addplot[mark=o, Set1-1, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../6144/fnc10_m5.txt};                  \label{6144_fnc_f}
+
+        \addplot[mark=triangle, Set1-2, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/6144_FP_16_bits_6.3_ref.txt};     \label{6144_tc_16b}
+        \addplot[mark=triangle, Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/6144_FP_16_bits_6.3_FNC10.txt};   \label{6144_fnc_16b}
+
+        \addplot[mark=square, Set1-3, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/6144_FP_8_bits_5.2_ref.txt};      \label{6144_tc_8b_5.2}
+        \addplot[mark=square, Set1-3, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/6144_FP_8_bits_5.2_FNC10.txt};    \label{6144_fnc_8b_5.2}
+        
+        \addplot[mark=pentagon, Set1-4, semithick                              ]  table [x=Eb/N0, y=FER] {../fp/6144_FP_8_bits_5.1_ref.txt};      \label{6144_tc_8b_5.1}
+        \addplot[mark=pentagon, Set1-4, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../fp/6144_FP_8_bits_5.1_FNC10.txt};    \label{6144_fnc_8b_5.1}
+
+        
+
+
+\end{groupplot}
+
+% legend
+\path (minX c1r1.north west|-current bounding box.north)--
+      coordinate(legendpos)
+      (minX c3r1.north east|-current bounding box.north);
+\matrix[
+    matrix of nodes,
+    anchor=south,
+    draw,
+    inner sep=0.2em,
+    draw
+  ]at([yshift=3ex]legendpos)
+  {
+                & [2pt] & \small{\textbf{Flottant}}       & [2pt] & \small{\textbf{16 bits} (Canal : $Q_{6.3}$)} & [2pt] & \small{\textbf{8 bits} (Canal : $Q_{5.2}$)}    & [2pt] & \small{\textbf{8 bits} (Canal : $Q_{5.1}$)}    \\
+\small{TC/FNC}  & [2pt] & \ref{528_tc_f}/\ref{528_fnc_f}  & [2pt] & \ref{528_tc_16b}/\ref{528_fnc_16b}       & [2pt] &  \ref{528_tc_8b_5.2}/\ref{528_fnc_8b_5.2}  & [2pt] &  \ref{528_tc_8b_5.1}/\ref{528_fnc_8b_5.1}  \\};
+
+    \node[below = 1.3cm of minX c1r1.south] {(a) : K=528};
+    \node[below = 1.3cm of minX c2r1.south] {(b) : K=2048};
+    \node[below = 1.3cm of minX c3r1.south] {(c) : K=6144};
+\end{tikzpicture}
+\end{document}
