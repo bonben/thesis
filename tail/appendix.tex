@@ -3,7 +3,7 @@
 \appendix
 
 \chapter{Compléments au Chapitre 1}
-
+Afin d'alléger la lecture du premier chapitre, certains calculs de ce chapitre sont déroulés dans cette annexe.
 \section{Détails des calculs de l'algorithme APP}\label{append:app}
 Cette partie vise à démontrer l'ensemble des calculs présentés dans la section \ref{sec:BCJR}.
 \subsection{Décomposition de la probabilité jointe} 
@@ -55,7 +55,7 @@ La probabilité \textit{a posteriori} a pour expression :
 
 Ainsi, \[\gamma_k(s,s') = \frac{P(m_k)}{2\pi\sigma^2}\exp\left(-\frac{ (y_k^s)^2 +   (y_k^p)^2 + 2}{2\sigma^2}\right) \exp\left(\frac{( y_k^s   c_k^s +  y_k^p c_k^p)}{\sigma^2}\right)\]
 
-Or, la première exponentielle n'est pas dépendante de $m_k$ (ou du chemin $ s \mapsto s'$) et peut donc être supprimé du numérateur et du dénominateur dans l’expression de la probabilité \textit{a posteriori}.
+Or, la première exponentielle n'est pas dépendante de $m_k$ (ou du chemin $ s \mapsto s'$) et peut donc être supprimée du numérateur et du dénominateur dans l’expression de la probabilité \textit{a posteriori}.
 
 
 \section{Détails des calculs pour les algorithmes sub-APP}\label{append:subAPP}
@@ -109,53 +109,63 @@ En partant de la définition de l’opérateur $\maxstar$ et en utilisant une di
 % \paragraph{Stabilité numérique}
 
 
-\chapter{Compléments au Chapitre 2}
-\section{Standard CCSDS}\label{sec:annCCSDS}
+\chapter{Compléments au Chapitre 2}\label{sec:annCCSDS}
+Dans un soucis de lisibilité, l'ensemble des résultats statistiques obtenus dans le cadre du standard CCSDS sont situés dans
+cette annexe. Ils confortent les propos tenus en section \ref{sec:osc_ccsds}.
+
 Cette section présente les observations statistiques obtenues avec le standard CCSDS. La Figure \ref{fig:m_ccsds} présente 
 les valeurs moyennes d'oscillations, ce pour différentes valeurs de SNR. Les Figures \ref{fig:it1_ccsds} et \ref{fig:it2_ccsds}
 présentent l'évolution des oscillations au cours des itérations pour, respectivement, un taux d'erreur trame correspondant 
-au seuil de convergence et un correspondant au plancher d'erreur. Finalement, les Figures \ref{fig:d1_ccsds} et \ref{fig:d2_ccsds} 
+au seuil de convergence et un correspondant au plancher d'erreurs. Finalement, les Figures \ref{fig:d1_ccsds} et \ref{fig:d2_ccsds} 
 présentent la distribution normalisée des oscillations pour ces deux valeurs de SNR considérées.
 \begin{figure}[tb]
 	\begin{center}
-	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/m_ccsds.pdf}
-	\caption{Nombre moyen d'oscillations pour différents taux d'erreurs trame cibles, turbo code du standard CCSDS (K=1784, R=1/3) \label{fig:m_ccsds}}
+	\includegraphics[width=\textwidth]{main/ch2_fig/tikz/m_ccsds.pdf}
+	\caption{Nombre moyen d'oscillations pour différents taux d'erreurs trames cibles, turbo code du standard CCSDS (K=1784, R=1/3). \label{fig:m_ccsds}}
 	\end{center}
 \end{figure}
 
 \begin{figure}[!ht]
 	%\hspace*{-.7cm}	
 	\begin{center}
-	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/it_ccsds10-2.pdf}
-	\caption{Oscillations au cours des itérations dans le cadre du standard CCSDS (K=1784, R=1/3) pour un taux d'erreur trame de $10^{-2}$\label{fig:it1_ccsds}}
+	\includegraphics[width=\textwidth]{main/ch2_fig/tikz/it_ccsds10-2.pdf}
+	\caption{Oscillations au cours des itérations dans le cadre du standard CCSDS (K=1784, R=1/3) pour un taux d'erreur trame de $10^{-2}$.\label{fig:it1_ccsds}}
 	\end{center}
 \end{figure}
 
 \begin{figure}[!ht]
 	%\hspace*{-.7cm}
 	\begin{center}
-	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/it_ccsds610-7.pdf}
-	\caption{Oscillations au cours des itérations dans le cadre du standard CCSDS (K=1784, R=1/3) pour un taux d'erreur trame de $6\times10^{-7}$\label{fig:it2_ccsds}}
+	\includegraphics[width=\textwidth]{main/ch2_fig/tikz/it_ccsds610-7.pdf}
+	\caption{Oscillations au cours des itérations dans le cadre du standard CCSDS (K=1784, R=1/3) pour un taux d'erreur trame de $6\times10^{-7}$.\label{fig:it2_ccsds}}
 	\end{center}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/d_ccsds_10-2.pdf}
-	\caption{Distribution du nombre d'oscillations par bit pour un taux d'erreur trame de $10^{-2}$, pour le turbo code du standard CCSDS (K=1784, R=1/3)\label{fig:d1_ccsds}}
+	\includegraphics[width=\textwidth]{main/ch2_fig/tikz/d_ccsds_10-2.pdf}
+	\caption{Distribution du nombre d'oscillations par bit pour un taux d'erreur trame de $10^{-2}$, pour le turbo code du standard CCSDS (K=1784, R=1/3).\label{fig:d1_ccsds}}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=.9\textwidth]{main/ch2_fig/tikz/d_ccsds_610-7.pdf}
-	\caption{Distribution du nombre d'oscillations par bit pour un taux d'erreur trame de $6\times10^{-7}$, pour le turbo code du standard CCSDS (K=1784, R=1/3)\label{fig:d2_ccsds}}
+	\includegraphics[width=\textwidth]{main/ch2_fig/tikz/d_ccsds_610-7.pdf}
+	\caption{Distribution du nombre d'oscillations par bit pour un taux d'erreur trame de $6\times10^{-7}$, pour le turbo code du standard CCSDS (K=1784, R=1/3).\label{fig:d2_ccsds}}
 \end{figure}
 
 
 \chapter{Compléments au Chapitre 3}\label{sec:ann3}
+Toujours dans un objectif de lisibilité plus aisé, cette dernière annexe présente des résultats du troisième chapitre.
+
+Tout d'abord, les spectres de distances complets de turbo codes standardisés sont donnés. Ensuite, les distributions 
+d'erreurs du turbo code du standard DVB-RRCS pour K=752 et R=1/3 sont présentés. Puis les pourcentages d'identification pour les métriques 
+$\Delta_1'$ et $\Delta_2'$ pour différents codes du standard DVB-RCS avec K=440 sont donnés. 
+
+Finalement, des performances de 
+décodage obtenues pour l'algorithme FNC sont données; d'abord  le BER pour 4 turbo codes du standard LTE puis le FER pour des turbo codes du standard 
+DVB-RCS avec K=752.
 \newpage
 \begin{adjustbox}{angle=90, caption={Spectres de distances de turbo codes binaires standardisés},float=table}
-\centering
 \resizebox{1.5\textwidth}{!}{
 \begin{tabular}{@{}llrrrrrrrrrrrrrrrrrrrrrrrrrrrr@{}}
 \toprule
@@ -234,13 +244,12 @@ présentent la distribution normalisée des oscillations pour ces deux valeurs d
 
 \begin{figure}[!ht] 
 	\centering
+	\vspace*{-1em}
 	\hspace*{-1cm}
 	\includegraphics[width=1.05\textwidth]{main/ch3_fig/be/dvb/tikz/be_752.pdf}
-	\caption{Distribution du nombre d'erreurs binaires et symboles pour différentes valeur de SNR et pour différents turbo codes des 
+	\caption{Distribution du nombre d'erreurs binaires et symboles pour différentes valeurs de SNR et pour différents turbo codes des 
 	standards DVB-RCS pour K=752.	Décodage EML-MAP itérant 8 fois. \label{fig:be_dvb752}}
 \end{figure}
-
-
 
 \begin{figure}[!h]
 	\centering
@@ -266,7 +275,7 @@ présentent la distribution normalisée des oscillations pour ces deux valeurs d
 
 \begin{figure}[!t]
 \centering
-			\input{main/ch1_fig/std/vierge.tikz}	
+	\input{main/ch1_fig/std/vierge.tikz}	
 	\caption{Comparaison de performances de décodages entre EML-MAP et FNC. Standard DVB-RCS, K=752. R=1/3, 1/2, 3/4 et 6/7.
 	Décodeurs itérant jusqu'à 8 fois. \label{fig:fnc_dvb_752}}
 \end{figure}

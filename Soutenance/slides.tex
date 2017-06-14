@@ -1,0 +1,206 @@
+\documentclass[slidestop,compress,mathserif,10pt,xcolor=dvipsnames, aspectratio=169]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage{eulervm}
+
+%%%%% Colors
+\definecolor{bleuUni}{RGB}{0, 157, 224}
+\definecolor{marronUni}{RGB}{68, 58, 49}
+\usecolortheme[named=bleuUni]{structure}
+\input{colors}
+%%%%%%%%%%%%%%%%%%%
+
+%%%%% Tabs
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{makecell}
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% Plots
+\usepackage{pgfplots}
+ \pgfplotsset{compat=newest}
+\usepackage{tikz}
+ \usetikzlibrary{patterns, shapes, arrows, shapes.multipart}
+\usepackage{circuitikz}
+\usepackage{tikz-timing}      % package pour les chronogrammes
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% Algo
+\usepackage[french,onelanguage, ruled, linesnumbered, vlined]{algorithm2e}
+\SetAlFnt{\small}
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% Math
+\usepackage{stmaryrd} %llbracket
+\usepackage{amsmath}
+\usepackage{amssymb}
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator*{\maxstar}{max*}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\decide}{decide}
+\DecimalMathComma
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%% Special commands : ddfrac and actionenv and compresslist
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+\newenvironment<>{varblock}[2][\textwidth]{%
+  \setlength{\textwidth}{#1}
+  \begin{actionenv}#3%
+    \def\insertblocktitle{#2}%
+    \par%
+    \usebeamertemplate{block begin}}
+  {\par%
+    \usebeamertemplate{block end}%
+  \end{actionenv}}
+
+\newcommand{\compresslist}{ % Define a command to reduce spacing within itemize/enumerate environments, this is used right after \begin{itemize} or \begin{enumerate}
+\setlength{\itemsep}{1pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% Beamer
+\usepackage[bars]{beamerthemetree} % Beamer theme v 2.2
+\mode<presentation>
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+ \oldmacro\hfill%
+\insertframenumber\,/\,\inserttotalframenumber}
+\setbeamertemplate{footline}[frame number]
+\setbeamersize{text margin left=10pt,text margin right=10pt}
+\setbeamerfont{frametitle}{size=\small}
+\setbeamertemplate{frametitle}{ \nointerlineskip %
+\begin{beamercolorbox}[wd=\paperwidth,ht=2.2ex,dp=.9ex,left]{frametitle} %
+                       \hspace*{2ex}\strut\bfseries\color{bleuUni!15!white}\insertframetitle\strut\par %
+\end{beamercolorbox}}
+
+\setbeamerfont{headline}{size=\small}
+
+
+\usepackage{multimedia}
+\usetheme{Ilmenau} % Beamer theme v 3.0
+\setbeamercolor{section in head/foot}{bg=marronUni}
+\useinnertheme{circles} %rectangle bullet points instead of circle ones
+\usepackage{beamerthemebars}
+\beamertemplatenavigationsymbolsempty
+%\setbeamercolor{navigation symbols dimmed}{fg=red!80!black}
+%\setbeamercolor{navigation symbols}{fg=red!80!black}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% Title
+\title{\textbf{Contributions à l'amélioration des \\%
+               performances de décodage des turbo codes : \\%
+               algorithmes et architecture}}
+%\subtitle{algorithms et arhitecture}
+\author[Thibaud Tonnellier\hspace{10.7cm}{thibaud.tonnellier@ims-bordeaux.fr}]    {Thibaud Tonnellier}
+\titlegraphic{\includegraphics[height=.7cm]{logos/ims.png} \hfil %
+              \includegraphics[height=.7cm]{logos/inp.PNG} \hfil %
+              \includegraphics[height=.7cm]{logos/ub.png}  \hfil %
+              \includegraphics[height=.7cm]{logos/tas.png}}
+%\pgfdeclareimage[height=.8cm]{le-logo}{logo.png}
+%\logo{\pgfuseimage{le-logo}\hspace{\dimexpr\paperwidth-1.55cm}\vspace{-8pt}}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% Contents each new sec and subsec
+\AtBeginSection[]
+{
+  \ifnumcomp{\value{section}}{=}{1}{}{
+\begin{frame}[c]{Plan}
+\centering
+\tableofcontents[
+  currentsection,
+  currentsubsection,
+]
+\end{frame}
+}
+}
+\AtBeginSubsection[]
+{
+  \begin{frame}[c]{Plan}
+\tableofcontents[
+currentsection,
+sectionstyle=show/show,
+subsectionstyle=show/shaded/hide
+]
+  \end{frame}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\begin{frame}[c]
+  \titlepage
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[]{Contexte}
+\begin{frame}[c]
+  Blah
+\end{frame}
+
+\begin{frame}[c]
+  Blah
+\end{frame}
+
+\begin{frame}[c]
+  \tableofcontents[
+      subsectionstyle=hide,
+  ]
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Contexte et introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Le codage de canal}
+\begin{frame}[c]{Principe}
+  Blah
+\end{frame}
+
+\begin{frame}[c]{Historique}
+  Blah
+\end{frame}
+
+\begin{frame}[c]{Définitions}
+ Performances, EF, spectre, 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Les turbo codes}
+\begin{frame}[c]{Historique et principe}
+ Blah
+\end{frame}
+
+\begin{frame}[c]{Les turbo codes standardisés}
+  Blah
+\end{frame}
+
+\begin{frame}[c]{La problématique du plancher d'erreurs}
+  Blah
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Conclusion et problématique}
+\begin{frame}[c]{Conclusion}
+  Blah
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Osicllations]{}
+
+
+\end{document}

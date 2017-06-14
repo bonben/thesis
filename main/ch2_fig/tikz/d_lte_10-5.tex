@@ -28,7 +28,7 @@
                                     height=0.5\textwidth,  width=\textwidth,
                                     xtick=data,
                                     ylabel= Occurence normalisée (\%),
-                                    xlabel= Oscillations par bit dans trames erronée,
+                                    xlabel= Oscillations par bit dans trames erronées,
                                     ymin=0, ymax=80, %ytick = {0,1000,...,10000},
                                     %legend style={at={(0.9,0.9)}, anchor=north, legend columns=1}, 
                                     ybar interval, 
@@ -43,7 +43,7 @@
                         \legend{N\textrightarrow N bit correct, I\textrightarrow I bit correct,N\textrightarrow N bit erroné, I\textrightarrow I bit erroné}
             \nextgroupplot[]
                         \addplot[fill=correctbit!50] table [x=R, y expr=\thisrow{NIC}*100] {../stats/lte_2/10-5/dist.dat}; 
-                        \addplot[fill=correctbit]  table [x=R, y expr=\thisrow{NIC}*100] {../stats/lte_2/10-5/dist.dat}; 
+                        \addplot[fill=correctbit]  table [x=R, y expr=\thisrow{INC}*100] {../stats/lte_2/10-5/dist.dat}; 
                         \addplot[fill=falsebit!50]  table [x=R, y expr=\thisrow{NIE}*100] {../stats/lte_2/10-5/dist.dat}; 
                         \addplot[fill=falsebit]  table [x=R, y expr=\thisrow{INE}*100] {../stats/lte_2/10-5/dist.dat};  
                         \legend{N \textrightarrow I bit correct, I \textrightarrow N bit correct,N \textrightarrow I bit erroné, I \textrightarrow N bit erroné}

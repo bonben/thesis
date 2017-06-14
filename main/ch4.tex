@@ -23,10 +23,12 @@ pouvoir adresser un très large spectre de turbo décodeurs.
 
 \section{Les architectures matérielles de turbo décodeurs}
 Dans cette section, un état de l'art des architectures de turbo décodeurs est mené. Dans un premier temps, des détails 
-sont donnés pour des architectures basées sur un processus itératif de turbo décodage séquentiel. Des architectures 
-matérielles pouvant réaliser parallèlement plusieurs demi-itérations seront présentées dans un second temps.
+sont donnés pour des architectures basées sur un processus itératif de turbo décodage séquentiel. 
+Dans ce cas, une étude du parallélisme au sein d'un décodeur SISO (parallélisme intra-SISO) est menée. Dans un second 
+temps, des architectures matérielles faisant intervenir plusieurs décodeurs SISO en même temps sont détaillées. Ceci 
+correspond au parallélisme inter-SISO.
 
-\subsection{Traitement itératif séquentiel}
+\subsection{Traitement itératif séquentiel et parallélisme intra-SISO}
 Le décodage des turbo codes est basé sur un échange d'informations extrinsèques entre différentes instances de décodage SISO. À partir 
 des informations du canal et des informations \textit{a priori}, chaque instance de décodage SISO évalue les informations 
 \textit{a posteriori}. De là, les informations extrinsèques sont déduites. Ces dernières sont alors utilisées en tant
@@ -34,12 +36,13 @@ qu'informations \textit{a priori} lors de la demi-itération suivante conjointem
 domaine. La Figure \ref{fig:turbo_seq} présente la séquentialité de ces opérations lors du processus de décodage
 itératif. Dans ce cas, un seul décodeur SISO effectue toutes les instances de décodage.
 %Au cours des itérations, cet unique décodeur 
-
+\vspace*{-1em}
 \begin{figure}[!h]
 	\centering
 	\includegraphics{main/ch4_fig/ipe/serial.pdf}
 	\caption{Principe du turbo décodage séquentiel. \label{fig:turbo_seq}}
 \end{figure} 
+\vspace*{-1em}
 
 Dans les architectures matérielles de turbo décodeurs, l'algorithme de décodage SISO choisi pour l’obtention des informations \textit{a posteriori} est l'algorithme MAP, 
 ou plutôt une des ses simplifications, à savoir l'algorithme EML-MAP. Cet algorithme repose sur trois calculs successifs et 
@@ -47,6 +50,7 @@ séquentiels. Suivant l'ordonnancement choisi et le degré de parallélisme rete
 au niveau des ressources calculatoires, de mémorisation et des temps d'exécutions sont obtenues. Une description
 incrémentale des différentes approches de l'implémentation du décodeur SISO est maintenant menée, suivant la 
 classification proposée dans \cite{Muller2010}.
+\vspace*{-1em}
 
 \subsubsection{Traitement séquentiel de l'algorithme BCJR}
 \paragraph*{BCJR aller-retour}
@@ -66,11 +70,11 @@ de mémoire additionnelle. En effet chaque opération ACS est exécutée sur le 
 métriques de nœuds d'une section de treillis peuvent être calculées en un cycle d'exécution. Le calcul récursif des métriques de 
 nœuds nécessite alors au total K cycles d'exécutions.
 
-Dans ce contexte, un cycle d'exécution après le début du calcul des métriques de nœuds retour, il est possible d'effectuer le calcul de l'information 
+Dans ce contexte, un cycle d'exécution après le début du calcul des métriques de nœuds retour, il est possible d'entamer le calcul de l'information 
 \textit{a posteriori}. Cet ordonnancement des opérations correspond à celui originellement proposé par Bahl, Cocke, 
 Jelinek et Raviv lors de la présentation de leur algorithme de décodage \cite{bcjr}. Dans le suite du manuscrit, cet
 ordonnancement des opérations est nommé Forward-Backward (FB). Il est schématisé dans la Figure \ref{fig:siso_seq}.
-Il apparaît que le temps requis pour exécuter une demi-itération du processus de décodage itératif équivaut à $2\times K$ cycles d'horloge. Dans le cadre du standard LTE, à cause des bits de terminaisons de treillis, cette durée est légèrement
+Il apparaît que le temps requis pour exécuter une demi-itération du processus de décodage itératif équivaut à $2\times K$ cycles d'horloge. Dans le cadre du standard LTE, à cause des bits de terminaison de treillis, cette durée est légèrement
 plus importante en réalité. Cependant, afin d'exprimer plus simplement le nombre de cycles nécessaires, le temps de 
 traitement des bits de terminaison n'est jamais pris en compte dans ce chapitre.
 Pour pouvoir disposer des informations 
@@ -99,7 +103,7 @@ techniques ont été proposées. Il s'agit de l'utilisation :
 	taille de prologue ayant le meilleur compromis entre calculs supplémentaires et gain de 
 	décodage se situe entre 3 et 5 fois la longueur de contrainte du code constituant \cite{sw_init}.
 	\item du passage de messages. Son principe consiste à utiliser les métriques de nœuds calculées lors de l'itération 
-	précédente comme valeurs initiales pour les limites de la fenêtre. Cette technique propose de meilleurs 
+	précédente comme valeurs initiales pour les limites de la fenêtre. Cette technique propose de meilleures 
 	performances de décodage que la technique de la fenêtre d'acquisition pour un surcoût de mémorisation limité \cite{muller2006}.\vspace*{1ex}
 \end{itemize}
 
@@ -133,6 +137,7 @@ facteur deux par rapport à l'ordonnancement FB.
 	\includegraphics{main/ch4_fig/ipe/BFLY+LEG.pdf}
 	\caption{Ordonnancement BCJR Butterfly (BFLY). \label{fig:siso_but}}
 \end{figure}
+\vspace*{-1em}
 
 \paragraph*{BCJR en ailes de papillon à l'aide d'une fenêtre glissante}
 Toujours dans un but de réduire le nombre de données à mémoriser, il est possible d'utiliser le concept de fenêtre 
@@ -163,11 +168,13 @@ d'exécution.
 %     \end{minipage}
 % \end{figure}
 
-\subsection{Parallélisme au sein du processus itératif}
+%\subsection{Parallélisme au sein du processus itératif}
+\subsection{Parallélisme inter-SISO}
 Il est aussi possible d'agir sur d'autres niveaux de parallélisme en plus de celui concernant l'ordonnancement des traitements
-de l'algorithme BCJR. Tout d'abord un 
-parallélisme opérant au niveau du calcul d'une demi-itération est présenté.
-\subsubsection{Parallélisme au sein d'une demi-itération}
+de l'algorithme BCJR. Cette section présente alors l’interaction de décodeurs SISO lorsqu'ils fonctionnent en parallèle. 
+Tout d'abord un parallélisme opérant au niveau du calcul d'une demi-itération est présenté.
+%\subsubsection{Parallélisme au sein d'une demi-itération}
+\subsubsection{Parallélisme de sous-bloc}
 À partir de l'algorithme basé sur une fenêtre glissante, afin de gagner un niveau de parallélisme supplémentaire, il est possible 
 d'augmenter le nombre de décodeurs SISO. Chaque décodeur opère alors sur une fenêtre différente de la 
 trame. La Figure \ref{fig:turbo_par} illustre un tel degré de parallélisme pour un nombre de sous blocs de deux ($B=2$).
@@ -223,16 +230,17 @@ du manuscrit.
 	\caption{Ordonnancement BCJR Butterfly avec fenêtre glissante en parallèle (BFLY-SW-SB). \label{fig:sisos_par_sb}}
 \end{figure}
 
-\subsubsection{Parallélisme de demi-itérations}
+%\subsubsection{Parallélisme de demi-itérations}
+\subsubsection{Parallélisme de décodeur composant}
 Plus encore, il est possible de considérer un autre niveau de parallélisme. Il est en effet possible de faire opérer le 
 décodage des deux codes convolutifs élémentaires en même temps \cite{turbo_par}. Dans ce cas, après chaque itération, 
-chaque décodeur élémentaire travaillant dans un certain domaine fourni ses informations extrinsèques au décodeur 
+chaque décodeur élémentaire travaillant dans un certain domaine fournit ses informations extrinsèques au décodeur 
 élémentaire utilisant les données du canal de l'autre dimension. Cependant, cette technique nécessite à performances de 
 décodage égales deux fois plus d'itérations que le turbo décodage conventionnel. Ceci vient du fait que le principe 
-itératif du turbo décodage conventionnel n'est plus respectée dans cette organisation.
+itératif du turbo décodage conventionnel n'est plus respecté dans cette organisation.
 
 Pour palier cela, en 2005, le décodage dit shuffled a été proposé \cite{turbo_shuff}. Dans ce cas,  les informations extrinsèques sont échangées entre les deux domaines dès qu'elles ont 
-été calculées. Chaque décodeur composant dispose donc plus vite des information \textit{a priori} mises à jour avant la 
+été calculées. Chaque décodeur composant dispose donc plus vite des informations \textit{a priori} mises à jour avant la 
 fin des traitements associés à la demi-itération courante. Ceci a 
 alors pour effet d'augmenter la vitesse de convergence du turbo décodeur. 
 %Dans ce cas, 
@@ -254,10 +262,11 @@ spécifiques (ASIP) est à privilégier \cite{asip}.
 	\caption{Principe de turbo décodage Shuffled. \label{fig:turbo_shuff}}
 \end{figure}
 
-\subsubsection{Parallélisme de décodage entre différentes trames}
+%\subsubsection{Parallélisme de décodage entre différentes trames}
+\subsubsection{Parallélisme au niveau du processus turbo}
 La dernière technique permettant d'augmenter l'efficacité du processus de décodage revient à dupliquer les décodeurs 
 SISO au cours du traitement itératif. Ceci permet alors de décoder simultanément plusieurs trames. Cette méthode revient 
-à utiliser une architecture pipeline pour le turbo décodeur. Ainsi des décodeurs SISO sont assignées à une ou plusieurs 
+à utiliser une architecture pipeline pour le turbo décodeur. Ainsi des décodeurs SISO sont assignés à une ou plusieurs 
 itérations. Cela implique une organisation pipeline pour mémoriser les trames entre les décodeurs SISO. Dans ce cas, la 
 profondeur maximale du pipeline équivaut à deux fois le nombre maximal d'itérations. Bien que permettant une augmentation 
 conséquente du débit, cette approche ne réduit pas la latence du processus de décodage. En revanche, elle s'avère 
@@ -278,7 +287,7 @@ matérielle de l'algorithme FNC puisse être adaptée à celle d'un turbo décod
 matérielles indépendantes nécessite un transfert du turbo décodeur vers le bloc FNC des métriques $\Delta$, basées sur les 
 informations \textit{a posteriori}. Dans la suite de ce chapitre, une architecture matérielle adaptée à un turbo décodeur BF-SW 
  est proposée. En effet, ce contexte considère une transmission des métriques de façon séquentielle, permettant une 
- interconnexion plus aisé. En même temps, cet ordonnancent permet de réduire la latence du décodeur et les quantités de données mémorisées vis-à-vis d'un ordonnancement FB.
+ interconnexion plus aisée. En même temps, cet ordonnancent permet de réduire la latence du décodeur et les quantités de données mémorisées vis-à-vis d'un ordonnancement FB.
 %Mais avant cela, une étude est menée sur l'impact au niveau des performances de décodage et de la complexité calculatoire des différents paramètres de l'algorithme FNC ainsi que sur son 
 %efficacité pour une représentation en virgule fixe de l'information.
 Mais avant cela, une étude est menée sur l'impact des différents paramètres de l'algorithme FNC sur les performances de 
@@ -312,9 +321,9 @@ L'algorithme FNC est ajustable en fonction de plusieurs paramètres. Ces dernier
 la complexité calculatoire. Cette section vise à caractériser l'impact de chacun de ces paramètres sur les performances de 
 décodage dans le cadre de turbo codes du standard LTE. L'objectif est de réduire la complexité calculatoire de 
 l'architecture FNC et de présenter la dégradation des performances de décodage associée, si elle existe. Pour ce faire, 
-trois axes sont considérés. Tout d'abord, le nombre de fois ou l'approche FNC est appliqué par trame. Ensuite, 
+trois axes sont considérés. Tout d'abord, le nombre de fois où l'approche FNC est appliquée par trame. Ensuite, 
 le nombre des mots candidats considérés est étudié. Finalement, la quantification des informations à l'intérieur du 
-processus FNC est considéré.
+processus FNC est considérée.
 
 Vis-à-vis de l'algorithme FNC dans le cas binaire présenté dans le chapitre précédent (\textit{cf.} Algorithme \ref{alg:fc_b}), une première modification est effectuée. 
 Dorénavant, l'application de l'algorithme FNC n'est plus réalisée après la demi-itération dans le domaine
@@ -352,7 +361,7 @@ code CRC dégrade les performances de décodage. Au delà de cette valeur $I_{\t
 
 La Figure 
 \ref{fig:fnc_onlyX} présente les performances de décodage obtenues avec l'algorithme FNC lorsque celui-ci n'est appliqué
-qu'à une seule itération (noté $@i=j$) pour les trois turbo codes étudiées dans cette section. Les valeurs de $j$ pour lesquelles les performances de décodage moins bonnes que celles 
+qu'à une seule itération (noté $@i=j$) pour les trois turbo codes étudiés dans cette section. Les valeurs de $j$ pour lesquelles les performances de décodage moins bonnes que celles 
 obtenues avec l'algorithme de décodage conventionnel sont exclues. Dans les cas favorables, les performances de décodage 
 sont également comparées à celles obtenues avec $I_\text{min} = I_{\text{m}_\text{o}}$. Il apparaît alors qu'appliquer une 
 seule fois l'approche FNC lors du turbo décodage dégrade les performances en comparaison à une application à chaque itération à partir de $I_\text{min}
@@ -373,7 +382,7 @@ seule fois l'approche FNC lors du turbo décodage dégrade les performances en c
 \end{figure}
 
 Finalement, il semble intéressant d'appliquer l'algorithme FNC qu'une itération sur deux. Ceci permet de disposer d'un budget temporel plus conséquent pour exécuter l'algorithme FNC. Le Figure 
-\ref{fig:fnc_step} permet une comparaison des performances pour les turbo codes du standard LTE en considérant une application du principe FNC soit toute les itérations 
+\ref{fig:fnc_step} permet une comparaison des performances pour les turbo codes du standard LTE en considérant une application du principe FNC soit toutes les itérations 
 soit toutes les deux itérations (noté Pas=2). Dans les deux cas, l'itération minimale est fixée à $I_{\text{m}_\text{o}}$. Le nombre d'applications de l'algorithme est donc divisé par 2 par rapport aux références. Il est intéressant de constater  que la dégradation de performances est minime.
 
 \begin{figure}[!t]
@@ -418,7 +427,7 @@ l'étape de tri est elle aussi impactée. Pour ces raisons, il est nécessaire d
 
 La Figure \ref{fig:fnc_q} présente l'impact de l'évolution de la valeur de $q$ pour les turbo codes du standard LTE 
 d'une taille de trame allant de K=528 à K=6144. Dans tous les cas, l'algorithme FNC est utilisé toutes les itérations à 
-partir de l'itération $I_\text{min} = I_{\text{m}_\text{o}}$ de telle sorte que les performances de décodages 
+partir de l'itération $I_\text{min} = I_{\text{m}_\text{o}}$ de telle sorte que les performances de décodage 
 soient les meilleures pour $q=10$. Dans l'ensemble, comme attendu, il apparaît que la réduction de $q$ impacte 
 négativement les performances de décodage. Cependant, cet impact dépend du turbo code considéré. Par exemple, pour 
 $K=528$, le passage de $q=10$ à $q=8$ a un impact plus défavorable que le passage de $q=8$ à $q=6$. 
@@ -449,18 +458,18 @@ l'information en virgule fixe. Ceci est l'objet de la prochaine section.
 
 \subsection{L'algorithme FNC et la quantification de l'information}
 Jusqu'alors, les informations manipulées par le turbo décodeur utilisent une représentation en virgule flottante. Dans cette section, 
-il est vérifié que l'algorithme FNC fourni des performances semblables lorsque la dynamique et la précision des données manipulées par
-le turbo décodeur est contrainte. Pour ce faire, une étude de la dynamique des métriques $\Delta$ est mené car elle impacte
+il est vérifié que l'algorithme FNC fournit des performances semblables lorsque la dynamique et la précision des données manipulées par
+le turbo décodeur est contrainte. Pour ce faire, une étude de la dynamique des métriques $\Delta$ est menée car elle impacte
 la complexité des opérations utilisées lors du tri.
 
 Dans un premier temps, il est nécessaire de vérifier que l'algorithme FNC supporte le passage en virgule fixe des informations
 manipulées par le turbo décodeur. Pour ce 
-faire, les performances de décodages sont comparées suivant le format des données internes aux turbo décodeurs. 
+faire, les performances de décodage sont comparées suivant le format des données internes aux turbo décodeurs. 
 Afin de mener cette étude, l'outil de simulation de chaîne de communications numériques AFF3CT a été utilisé.\footnote{AFF3CT : A Fast Forward Error Correction Tool est sous licence MIT et est téléchargeable depuis \url{http://aff3ct.github.io}. L'ensemble des propositions décrites dans ce manuscrit y sont intégrées.} Cet outil 
 open-source supporte de nombreuses configurations permettant notamment de répondre aux contextes du standard LTE. Le 
 turbo décodeur logiciel décrit permet d'obtenir parmi les meilleurs débits de la littérature \citemine{symp2}. 
 Cet outil de simulation de chaîne de communications numériques permet une liberté totale sur la quantification des 
-donnés du canal. Dans la suite, la notation pour la quantification de l'information est $Q_{n.d}$, avec $n$ le nombre de bits au total
+données du canal. Dans la suite, la notation pour la quantification de l'information est $Q_{n.d}$, avec $n$ le nombre de bits au total
 et $d$ le nombre de bits utilisés pour coder la partie fractionnaire. Les formats de données pouvant être considérés pour 
 le turbo décodeur sont quant à eux limités à trois. Il s'agit soit d'une représentation flottante de l'information, 
 soit d'une quantification des données internes sur 16 bits, soit enfin, d'une quantification sur 8 bits.
@@ -469,13 +478,13 @@ représentation flottante de l'information. En revanche, en limitant la quantifi
 à 8 bits, la quantification des données du canal à un impact fondamental sur les performances de décodage.
 En effet, si les données du canal utilisent 5 bits au total dont 2 pour la partie fractionnaire 
 ($Q_{5.2}$), alors les performances de décodage dans la zone convergence sont proches de la représentation flottante. 
-Cependant, le plancher d'erreurs apparaît plus tôt. Il est situé une ordre de grandeur au dessus. Dans le cas où les 
+Cependant, le plancher d'erreurs apparaît plus tôt. Il est situé un ordre de grandeur au dessus. Dans le cas où les 
 données du canal utilisent la représentation $Q_{5.1}$, la dégradation des performance de décodage se situe dans la zone 
 de convergence et représente environ 0.2 dB. En revanche, pour 
 les plus hautes valeurs de SNR considérées, les performances de décodage rejoignent celles obtenues dans le cas d'une 
 quantification sur 16 bits. Ainsi avec cette dernière configuration, les performances dans la zone du plancher 
 d'erreurs sont proches. Cette différence de performances s'explique par la nature itérative du processus de turbo 
-décodage. Il apparaît que la précision a un impact sur la convergence alors que la dynamique a un impact sur le plancher d'erreurs.
+décodage. Plus encore, il apparaît que la précision a un impact sur la convergence alors que la dynamique a un impact sur le plancher d'erreurs.
 %En effet, cette particularité implique un accroissement général des métriques internes lors du décodage pouvant
 %amener des problématiques de dynamique complexes. 
 
@@ -509,7 +518,7 @@ gains qu'il apporte ne sont pas conditionnés par les choix de quantification r�
 \begin{figure}[!t]
 	\hspace*{-.075\textwidth}
 	\includegraphics[width=1.1\textwidth]{main/ch4_fig/final/tikz_last/fnc10_format_8b.pdf}
-	\caption{Performances de l'algorithme FNC pour différents turbo codes du standard LTE, selon la quantification $b_{\Delta}$ 
+	\caption{Performances de l'algorithme FNC $q=10$ pour différents turbo codes du standard LTE, selon la quantification $b_{\Delta}$ 
 	de la métrique $\Delta$.
 	Turbo décodeur 8 bits, informations du canal sur 5 bits ($Q_{5.1}$), basé sur l'algorithme EML-MAP itérant au plus 8 fois.
 	\label{fig:fnc_format_8b}}
@@ -588,8 +597,8 @@ Dans le cas d'un turbo décodeur exploitant un ordonnancement BF-SW, la durée d
 Ainsi, si une application de l'algorithme FNC est considérée après chaque itération de turbo décodage, la
 durée de traitement FNC ne doit pas excéder  $2\times (K+K/W)$ cycles d’exécution.
 Afin d'être compatible avec n'importe quelle taille de 
-fenêtre de traitement, la taille de fenêtre la plus petite possible est considéré. Cela revient à considérer un nombre 
-infini de fenêtres glissantes  ($W\rightarrow \infty$). Ainsi, un temps d'exécution de $2\times K$ cycles est visé.
+fenêtre de traitement, la taille de fenêtre la plus petite possible doit être supportée. Cela revient à considérer le nombre 
+maximal de fenêtres glissantes  ($W\rightarrow K$). Ainsi, un temps d'exécution de $2\times K$ cycles est visé.
 Ceci est 
 représenté par la Figure \ref{fig:fnc_tc}. Dans ce scénario, l'architecture matérielle de l'algorithme FNC est sur-contrainte 
 car un turbo décodeur utilisant l'ordonnancement BF-SW nécessite légèrement plus de $2\times K$ cycles pour 
@@ -620,7 +629,7 @@ Afin de conserver les $q$ positions des décisions $\hat{d}$ les moins fiables, 
 à la volée lors de la réception de ces informations via un module nommé \textit{trieur}. En effet, dans le cas de 
 l’ordonnancement BF-SW, les K métriques $\Delta$ sont fournies séquentiellement durant K cycles d'exécution. Parallèlement, 
 le mot décidé par le turbo décodeur $\hat{d}$ est mémorisé dans la \textit{mémoire de bits décidés}. Ces données permettent de générer lors de 
-l'étape suivante les $2^q$ mots candidats. La génération est réalisé lors des K cycles suivants par le 
+l'étape suivante les $2^q$ mots candidats. La génération est réalisée lors des K cycles suivants par le 
 \textit{générateur de mots}. Ce dernier se base pour cela sur les bits mémorisés $\hat{d}$ ainsi que sur les $q$ positions
 des minimums fournis par le module trieur.
 Les 
@@ -639,7 +648,7 @@ différentes unités de cette solution architecturale est fourni en Figure \ref{
 \end{figure}
 
 \subsection{Détail des unités composant l'architecture matérielle FNC}
-Dans cette sous-section, les différentes unités composant l'architecture matérielle pour l'algorithme FNC sont détaillés.
+Dans cette sous-section, les différentes unités composant l'architecture matérielle pour l'algorithme FNC sont détaillées.
 
 \paragraph*{Mémoire des bits décidés} Le principe de l'algorithme FNC est de générer $2^q1$ mots candidats à partir 
 du mot décidé à l'itération courante par le turbo décodeur $\hat{d}$. Cependant, cette génération n'est possible 
@@ -654,7 +663,7 @@ fil de l'eau, un tri par insertion est utilisé. La nouvelle valeur de la métri
 comparée avec les valeurs correspondant aux $q$ positions les moins fiables. Suivant le résultat de ces comparaisons, 
 les valeurs de $\Delta$ et leur positions associées sont potentiellement mises à jour. La complexité matérielle de cette unité dépend donc 
 à la fois de $q$ et de la quantification de $\Delta$ (pour rappel, noté $\Delta_b$). Il a été vu que 4 bits 
-pour $\Delta_b$ permet d'assurer une imperceptible dégradation des performances de décodage. Finalement, pour 
+pour $\Delta_b$ permet d'assurer une très légère dégradation des performances de décodage. Finalement, pour 
 l'implémentation de ce bloc, un effort de 
 $q\times(\Delta_b + \lceil log_2{K} \rceil)$ bits de mémorisation est nécessaire. Les éléments de calcul consistent 
 essentiellement en $q$ comparateurs d'une taille de $\Delta_b$ bits interconnectés à un réseau de multiplexeurs.
@@ -717,8 +726,8 @@ et de placement-routage sont celles par défaut afin de faciliter la reproductib
 
 \begin{table}[!tb]
 	\centering
-	\caption{Résultats après Placement-Routage pour l'architecture associée à l'algorithme FNC (K=6144, 
-	$\Delta_b = 4$ et différentes valeurs de $q$ pour le circuit FPGA \bsc{Xilinx Virtex-6} \bsc{xc6vlx75t-1}). }
+	\caption{Résultats après Placement-Routage pour l'architecture associée à l'algorithme FNC K=6144, 
+	$\Delta_b = 4$ et différentes valeurs de $q$ pour le circuit FPGA \bsc{Xilinx Virtex-6} \bsc{xc6vlx75t-1}. }
 	\label{tab:fnc_impl_res_4}
 	\begin{tabular}{lrrrrr} 
 		\toprule
@@ -738,7 +747,7 @@ et de placement-routage sont celles par défaut afin de faciliter la reproductib
 	\centering
 	\includegraphics{main/ch4_fig/implem/xc6_4.pdf}
 	\caption{Évolution de la fréquence maximale de fonctionnement et du nombre de Slices utilisées en fonction de $q$.
-	Courbes réalisés en fonction des données du tableau $4.2$. \label{fig:fnc_impl_res}}
+	Courbes réalisées en fonction des données du tableau $4.2$. \label{fig:fnc_impl_res}}
 \end{figure}
 
 Comme attendu, il apparaît que le nombre de ressources matérielles nécessaires croît exponentiellement avec $q$. 
@@ -746,7 +755,7 @@ A chaque incrément
 de $q$, les ressources sont quasiment multipliées par 2. En ce qui concerne la fréquence maximale atteignable par cette 
 architecture, elle décroit lorsque le nombre de mots candidats augmente. Ainsi, elle varie entre $103$ MHz pour $q=10$ 
 et $293$ MHz pour $q=4$. Cette réduction de la fréquence s'explique par l'augmentation de la complexité du tri par insertion
-et donc du chemin critique attenant. En effet, cette opération de tri doit être réalisé en 1 cycle d'horloge. Aussi, en 
+et donc du chemin critique attenant. En effet, cette opération de tri doit être réalisée en 1 cycle d'horloge. Aussi, en 
 sortie du CRC, une \bsc{réduction-en-ou} entre les sorties de toutes les unité de CRC a lieu. De part l'augmentation de
 la profondeur de cette réduction avec l'augmentation de $q$, le chemin critique se voit augmenté puisque cette opération 
 est elle aussi exécutée en un cycle d'horloge.
@@ -846,7 +855,7 @@ Une architecture matérielle pour l'algorithme FNC pouvant s'adapter à tout tur
 ordonnancement BF-SW avec une taille de fenêtre aussi petite que possible a été présentée. Cette architecture permet d'obtenir 
 les meilleures performances de décodage atteignables avec l'algorithme FNC dans le contexte du standard LTE. Ce travail 
 a fait l'objet d'une publication en
-conférence internationale avec acte \citemine{dasip}. Il est possible de réduire le nombre d'itérations sur lesquelles 
+conférence internationale avec acte \citemine{dasip} ainsi qu'en conférence nationale \citemine{gdr}. Il est possible de réduire le nombre d'itérations sur lesquelles 
 est appliqué l’algorithme FNC tout en garantissant des performances de décodage similaires (Figure \ref{fig:fnc_step}).
 Ainsi, en appliquant l'algorithme FNC toutes les deux itérations et en modifiant la machine d'états de l'architecture, 
 le calcul des différents CRC peut s'effectuer durant $1,5$ itérations. Ceci permettrait une réduction  par 
@@ -863,11 +872,11 @@ différentes adaptations selon l'ordonnancement de turbo décodage retenu. Pour 
 les différents ordonnancements de turbo décodage.
 
 \paragraph*{Adaptation pour un ordonnancement de type Butterfly (BFLY)}
-Dans ce cas, la durée d'une itération vaut toujours $2\times K$. Cependant, deux donnés \textit{a posteriori} sont 
+Dans ce cas, la durée d'une itération vaut toujours $2\times K$. Cependant, deux données \textit{a posteriori} sont 
 fournies en même temps durant K/2 cycles. Il est alors nécessaire de scinder la mémoire de bits décidés (Figure 
 \ref{fig:fnc_arch}) en deux bancs complémentaires.
 Ceci permet de mémoriser deux données en parallèle : l'une s'effectuant dans l'ordre ascendant 
-et l'autre selon l'ordre descendant des positions. Pour la même raison, l'unité de tri se doit d'être dupliqué. L'une
+et l'autre selon l'ordre descendant des positions. Pour la même raison, l'unité de tri se doit d'être dupliquée. L'une
 d'elle a pour rôle d'obtenir les $q$ positions les moins fiables sur l'intervalle $\llbracket 1; K/2 \rrbracket$. L'autre
 effectue parallèlement la même opération sur l'intervalle $\rrbracket K/2; K \rrbracket$. De ces deux sous-ensembles de positions
 les moins fiables de taille $q$, il est nécessaire de les combiner en un seul ensemble de taille $q$. Il faut alors 
@@ -956,18 +965,19 @@ opérations de l'architecture adaptée à un turbo décodeur de type BFLY-SB pou
 \paragraph*{Adaptation pour un ordonnancement de type Butterfly à fenêtre glissante et avec parallélisme de sous-bloc 
 (BFLY-SW-SB)}
 Cet ordonnancement de turbo décodage, le plus complexe étudié dans ce chapitre consiste en la combinaison des
-deux ordonnancements précédents. Une architecture matérielle adapté à un tel turbo décodage doit alors adresser 
+deux ordonnancements précédents. Une architecture matérielle adaptée à un tel turbo décodage doit alors adresser 
 toutes les modifications précédemment introduites. Ainsi, le nombre de tri à effectuer en parallèle est de $2\times B$. 
 De ces $2\times B$ listes de
 $q$ positions, $2\times B-1$ opérations de fusion doivent être réalisées afin de ne garder que les $q$ positions les moins 
 fiables de la trame. Chaque unité de CRC doit être adaptée à un degré de parallélisme de $B$ afin d'effectuer 
 l'ensemble des 
 vérifications de CRC en $\frac{K}{B}$ cycles. Enfin, le nombre de cycles entre la fin des 
-opérations de CRC et le début du prochain tri sur le nouveau jeu de donnée doit valoir $\frac{K}{2\times B\times W}$.
+opérations de CRC et le début du prochain tri sur le nouveau jeu de données doit valoir $\frac{K}{2\times B\times W}$.
 
 \paragraph*{Conclusion}
 Dans cette sous-section les modifications à apporter à l'architecture FNC de référence afin de l'adapter à différents 
-ordonnancement de turbo décodage ont été introduites. À la vue de ces différentes modifications, il apparaît possible 
+ordonnancements de turbo décodage ont été introduites. À la vue de ces modifications
+envisageables, il apparaît possible 
 d'adapter l'architecture FNC aux différents ordonnancements de turbo décodage. Ceci montre la polyvalence de l'algorithme
 FNC quant à son implémentation. Cependant, ces synthèses ainsi que les résultats restent à mener. Le tableau \ref{tab:fnc_recap} récapitule les différentes projections sur l'architecture matérielle suivant le 
 turbo décodage considéré.
@@ -991,8 +1001,8 @@ turbo décodage considéré.
 \end{table}
 
 \section{Conclusion}
-Dans ce quatrième chapitre, une architecture matérielle de correction des erreurs résiduelles a été détaillé. 
-Afin d'aboutir à cette proposition, différents ordonnancements de turbo décodage ont été présentées dans un premier temps.
+Dans ce quatrième chapitre, une architecture matérielle de correction des erreurs résiduelles a été détaillée. 
+Afin d'aboutir à cette proposition, différents ordonnancements de turbo décodage ont été présentés dans un premier temps.
 Ces ordonnancements, séquentiels ou parallèles, peuvent adresser un large panel applicatif
 répondant à différents contextes.
 
@@ -1001,7 +1011,7 @@ ceux-ci interagissent à la fois sur la complexité calculatoire et sur les perf
 Certains de ces paramètres possèdent des valeurs optimales alors que d'autres doivent être adaptés selon un
 compromis entre performances de décodage et complexité matérielle résultante.
 
-Finalement, la troisième section présente le cas d'étude d'une architecture matérielle pour l'algorithme FNC adapté à
+Finalement, la troisième section présente le cas d'étude d'une architecture matérielle pour l'algorithme FNC, adaptée à
 un ordonnancement de turbo décodage particulier. Le principe, l'ordonnancement et la composition de cette architecture ont 
 été détaillés. S'en est suivi des résultats d'implémentation pour une cible FPGA. Ces résultats ont été comparés à un 
 turbo décodeur vendu sous forme d'IP Core par Xilinx. Finalement, des projections quant à la transposition de ce cas 

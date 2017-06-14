@@ -1,0 +1,18 @@
+%!TEX root = ../../../my_thesis.tex
+\begin{tikzpicture}
+	\begin{semilogyaxis}[footnotesize, width=0.9\linewidth, height=0.6\linewidth,    
+			xmin=1.2, xmax=4.8, xtick={1.2, 1.8,...,6.0},
+			%ymin=2e-6,  ymax=0.11,
+			xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
+			tick align=outside, tickpos=left, legend pos=north east]
+																				
+                \addplot[mark=o,       Set1-1,semithick]  table [x=SNR, y=FER] {main/ch3_fig/fnc/dvb2/symp/752_12}; 
+                \addplot[mark=diamond, Set1-2,semithick]  table [x=SNR, y=FER] {main/ch3_fig/fnc/dvb2//symp/752_23}; 
+                \addplot[mark=triangle,Set1-3,semithick]  table [x=SNR, y=FER] {main/ch3_fig/fnc/dvb2//symp/752_34};
+                \addplot[mark=square,  Set1-4,semithick]  table [x=SNR, y=FSF] {main/ch3_fig/fnc/dvb2//dat/2_752_45};
+																																															
+		\legend{R=1/2, R=2/3, R=3/4, R=4/5}
+		 \node[rotate=30, align=center] at (axis cs:2.3,10e-5){\Large \textbf{Simulations non stables}\\ \Large \textbf{et partielles}};  
+																								
+	\end{semilogyaxis}
+\end{tikzpicture}  

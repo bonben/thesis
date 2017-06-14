@@ -1,6 +1,6 @@
 %!TEX root = ../my_thesis.tex
 \chapter{Caractérisation, identification et correction des erreurs résiduelles} % (fold)
-\chaptermark{Caractérisation, identification et correction des erreurs rés...}
+\chaptermark{Caractérisation, identification et correction des erreurs rés\ldots}
 Ce chapitre troisième vise à présenter une méthode permettant de corriger les erreurs résiduelles rencontrées dans la zone
 du plancher d'erreurs lors du décodage des turbo codes.
 
@@ -61,7 +61,7 @@ P^{\langle ML\rangle}(m) \approx \frac{\displaystyle\sum\limits_{w, \frac{W_w}{A
 avec, comme déjà introduit dans le premier chapitre, $A_w$ le nombre de mots de code de poids de Hamming $w$. La 
 multiplicité des bits d'information $W_w$ est la somme des poids de Hamming des $A_w$ séquences binaires générant des
 mots de code de poids de Hamming $w$. Au prix d'une faible imprécision, cette forme de l'équation permet d'utiliser 
-directement le spectre de distances d'un turbo code pour estimer le nombre de bits erronées dans le plancher d'erreurs. Les
+directement le spectre de distances d'un turbo code pour estimer le nombre de bits erronés dans le plancher d'erreurs. Les
 résultats obtenus avec cette équation différent alors légèrement de ceux obtenus avec l'Équation \ref{eq:be1}. En effet,
 certaines valeurs sont masquées par l'opération de moyenne : $\frac{W_w}{A_w}=m$. 
 
@@ -81,7 +81,7 @@ trames erronées de la zone du plancher d'erreurs avec un décodage basé sur l'
 \subsection{Observations considérant des turbo codes standardisés}
 Une méthode proposant de prédire théoriquement la distribution des erreurs résiduelles dans la zone du plancher d'erreurs 
 a été  établie. L'obtention 
-de la distribution réelle de ces erreurs est maintenant réalisé et elle est comparée avec cette méthode. Dans un premier 
+de la distribution réelle de ces erreurs est maintenant réalisée et elle est comparée avec cette méthode. Dans un premier 
 temps, des turbo codes binaires de tailles de 
 trames différentes et de rendement 1/3 sont considérés. Dans un second temps, des turbo codes double binaires de deux
 tailles de trame mais de différents rendements sont considérés. Ainsi, un large spectre de paramètres est exploité sans
@@ -92,7 +92,7 @@ présenter un nombre trop conséquent de données.
 	\centering
 	\hspace*{-1cm}
 	\includegraphics[width=1.07\textwidth]{main/ch3_fig/be/tikz/be.pdf}
-	\caption{Distribution du nombre d'erreurs binaires pour différentes valeur de SNR et différents turbo codes des 
+	\caption{Distribution du nombre d'erreurs binaires pour différentes valeurs de SNR et différents turbo codes des 
 	standards LTE et CCSDS. 
 	Décodage EML-MAP itérant 8 fois. \label{fig:be}}
 \end{figure}
@@ -210,7 +210,7 @@ code considéré. Ceci est conforme avec le fait qu'une erreur symbole correspon
 	\centering
 	\hspace*{-1cm}
 	\includegraphics[width=1.04\textwidth]{main/ch3_fig/be/dvb/tikz/be_440.pdf}
-	\caption{Distribution du nombre d'erreurs binaires et symboles pour différentes valeur de SNR et pour différents turbo codes du 
+	\caption{Distribution du nombre d'erreurs binaires et symboles pour différentes valeurs de SNR et pour différents turbo codes du 
 	standard DVB-RCS pour K=440.	Décodage EML-MAP itérant 8 fois. \label{fig:be_dvb440}}
 \end{figure}
 
@@ -410,7 +410,7 @@ plus probables sont proches l'un de l'autre, la position $k$ est considérée co
 laquelle cette distance serait plus grande.
 
 \subsubsection{Résultats d'identification}
-Le même protocole expérimental que celui décrit dans le cas de turbo codes binaires est exploité. Cependant des turbo codes du standard DVB-RCS
+Le même protocole expérimental que celui décrit dans le cas de turbo codes binaires est exploité. Cependant, des turbo codes du standard DVB-RCS
 sont maintenant considérés. Le décodage utilise l'algorithme EML-MAP itérant 8 fois. Le facteur de remise à l'échelle 
 vaut $0,5$ pour les deux premières itérations et $0,85$ pour les itérations suivantes. Profitant de la circularité du treillis, 
 un processus de décodage par passage de message est employé. Les tailles de trame considérées sont K=440
@@ -457,10 +457,10 @@ adaptée aux turbo codes double binaires). En considérant la valeur absolue de 
 métrique permet d'identifier la totalité des erreurs résiduelles d'une trame erronée dans 90\% des cas dans la zone du plancher 
 d'erreurs pour une profondeur de recherche raisonnable, ce quelque soit le turbo code standardisé considéré. Ce taux devrait
 permettre d'observer des gains de l'ordre d'une décade en considérant un algorithme capable d'exploiter cette métrique. 
-La Section suivante a justement pour 
+La section suivante a justement pour 
 objet la proposition d'un tel algorithme de décodage.
 
-\section{L'algorithme de décodage Flip'N'Check}
+\section{L'algorithme de décodage Flip and Check}
 Cette section présente un algorithme permettant de tirer parti de la métrique $\Delta_1$ sélectionnée.
 %  Tout d'abord, le 
 % principe de cet algorithme est détaillé. Ceci mène alors à la formalisation de ce dernier. Finalement, ces performances 
@@ -469,7 +469,7 @@ Dans un premier temps, le principe de cet algorithme est détaillé. Dans un sec
 pour différents turbo codes standardisés.
 
 
-\subsection{Principe général de l'algorithme Flip'N'Check}
+\subsection{Principe général de l'algorithme Flip and Check}
 Afin de faciliter la compréhension de l'algorithme présenté ci après, ses concepts clefs sont maintenant introduits.
 L'algorithme décrit repose sur trois actions successives et complémentaires. Tout d'abord, les positions les moins fiables dans la trame 
 décodée sont identifiées grâce à la métrique $\Delta_1$ présentée dans la section précédente. Ensuite, différents mots candidats sont générés
@@ -577,7 +577,7 @@ comparant cet algorithme de décodage avec les propositions de l'état de l'art 
 Plus encore, le chapitre prochain étudiera l'impact sur les performances de décodage d'une réduction de la valeur de ce paramètre $q$.
 
 Dans la section suivante, une présentation des performances de décodage dans le cadre de turbo codes des standards LTE
-et CCSDS est réalisée. Cet algorithme est nommé Flip'N'Check et est abrégé en FNC.
+et CCSDS est réalisée. Cet algorithme est nommé Flip and Check et est abrégé en FNC.
 
 
 \subsubsection{Performances de décodage}
@@ -792,7 +792,7 @@ Mul GF$\left(2^{11}\right)$ & $0$				& $0$										& $0$					& $2.t.K + \frac{3
 \end{table}
 
 \subsubsection{Conclusions}
-L'algorithme Flip'N'Check pour les turbo codes binaires a été présenté. Celui-ci permet d'abaisser le plancher d'erreurs 
+L'algorithme Flip and Check pour les turbo codes binaires a été présenté. Celui-ci permet d'abaisser le plancher d'erreurs 
 des turbo codes binaires d'au moins une décade. Ses performances sont proches de celles atteignables via une 
 identification parfaite. La complexité calculatoire de cet algorithme réside dans les vérifications du code CRC. Cette 
 complexité croit exponentiellement avec le nombre de positions les moins fiables considérées. Toutefois, une 
@@ -1000,16 +1000,16 @@ trames erronées avec l'algorithme de décodage FNC.
 Il apparaît que même dans un contexte de turbo code très performants, des gains conséquents dans la zone du plancher d'erreurs 
 sont obtenus grâce à l'emploi de l'algorithme FNC. À nouveau, un changement de la pente de la courbe dans cette zone est
 visible. Ceci a pour conséquence de fournir des gains approchant la décade dans certains cas comme pour R=4/5. Dans d'autres
-cas, comme pour R=1/2, les gains dépassent légèrement l'ordre de magnitude. Ce travail a fait l'objet d'une publication en
+cas, comme pour R=1/2, les gains atteignent l'ordre de grandeur. Ce travail a fait l'objet d'une publication en
 conférence internationale avec acte \citemine{symp1}.
 
-\section{Conclusions}
+\section{Conclusion}
 Dans ce troisième chapitre, une étude sur les erreurs résiduelles des turbo codes a été menée. Dans un premier temps,
 leur existence a été caractérisée grâce aux spectres de distances des turbo codes. Ces erreurs étant responsables de 
 la zone du plancher d'erreurs, des propositions de critères d'identifications ont alors été comparées.
 
 Cette comparaison a permis de mettre en exergue une métrique, permettant d'identifier de façon quasi-systématique
-les erreurs résiduelles à l'issue du processus de turbo décodage. À partir de celle-ci, un algorithme, nommé Flip'N'Check
+les erreurs résiduelles à l'issue du processus de turbo décodage. À partir de celle-ci, un algorithme, nommé Flip and Check
 a été proposé. Cet algorithme tire parti de l'augmentation de la distance minimale obtenue via la concaténation en série 
 d'un code détecteur d'erreurs et d'un turbo code. Un tel schéma de codage est couramment rencontré dans les standards de 
 communications numériques. Le principe de cet algorithme repose sur l'identification des positions les moins fiables dans la séquence en train 
@@ -1021,7 +1021,7 @@ comme le montre l'analyse de complexité calculatoire.
 Cela rend cette approche compétitive par rapport à l’état de l'art sur la réduction du plancher d'erreurs des turbo codes.
 
 Dans le chapitre suivant, après une étude des architectures matérielles de turbo décodeurs, des propositions d'implémentation 
-de l'algorithme Flip'N'Check sont détaillées.
+de l'algorithme Flip and Check sont détaillées.
 
 
 % Conclusion: Méthode relativement simple à mettre en oeuvre qui tire parti de l'auigmentation de la dmin du code grace a 

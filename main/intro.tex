@@ -5,7 +5,7 @@
 
 Les travaux développés dans le cadre de cette thèse portent sur la proposition de méthodes et la définition 
 d'architectures associées permettant 
-l'amélioration des performances de décodage des turbo codes. Tout d'abord le contexte des codes correcteurs d'erreurs 
+l'amélioration des performances de décodage des turbo codes. Tout d'abord, le contexte des codes correcteurs d'erreurs 
 est dressé. Ceci mène à la problématique traitée tout au long de ce manuscrit. L'agencement du manuscrit est 
 ensuite détaillé. Enfin, les contributions réalisées au cours des travaux de thèse sont énoncés.
 
@@ -24,18 +24,20 @@ Via la formalisation de l'information de manière abstraite et mathématique, le
 désormais possible de mesurer et de quantifier l'information. %En découle la possibilité de théoriser la 
 Dans son article, Shannon montre que chaque canal de transmission peut faire transiter une quantité maximale 
 d'information de manière fiable. De fait, en raison du bruit inhérent aux canaux de transmission, des erreurs peuvent apparaître
-lors de la réception du message. Afin de palier à cela, Shannon énonce qu'il existe un système de codage correcteur d'erreurs, 
-basé sur l'insertion d'informations redondantes à l’émission, permettant de corriger complètement les effets des distorsions et ainsi, de reconstituer parfaitement
-le contenu du message émis. Cependant, Shannon ne fourni aucune indication quant à la façon de concevoir un tel code
+lors de la réception du message. Afin de palier cela, Shannon démontre qu'il existe un système de codage correcteur d'erreurs, 
+%basé sur l'insertion d'informations redondantes à l’émission, 
+basé sur l'envoi d'informations redondantes
+permettant lors de la réception de corriger complètement les effets des distorsions et ainsi, de reconstituer parfaitement
+le contenu du message émis. Cependant, Shannon ne fournit aucune indication quant à la façon de concevoir un tel code
 correcteur d'erreurs.
 
 Face à l'enjeu que représente la transmission fiable de l'information, la communauté scientifique s'est consacrée à la 
 construction de tels codes. Tout d'abord, en 1950, Richard Hamming invente un code éponyme permettant de corriger tous 
-les messages contenant une unique erreur binaire \cite{hamming}. S'en est suivi 15 années de découvertes successives avec les codes de Reed-Muller \cite{reedmuller1,reedmuller2} en 1954,
+les messages contenant une unique erreur binaire \cite{hamming}. S'en est suivi quinze années de découvertes successives avec les codes de Reed-Muller \cite{reedmuller1,reedmuller2} en 1954,
 puis les codes convolutifs par Peter Elias en 1955 \cite{elias}, les codes de BCH en 1959 \cite{hocquenghem1959codes,bose1960class}, les codes LDPC par Robert Gallager en 1962 \cite{gallager1962low}.
-Ces différentes familles de codes correcteurs d'erreurs permettent de corriger de 1 à $N$ erreurs de transmission dans un message en fonction de la quantité d'information redondante ajoutée lors de l'émission du message.
+Ces différentes familles de codes correcteurs d'erreurs permettent de corriger de 1 à $n$ erreurs de transmission dans un message en fonction de la quantité d'information redondante ajoutée lors de l'émission du message.
 Enfin, en 1966, David Forney introduit le principe de la concaténation de codes correcteurs d'erreurs \cite{forney1966concatenated}. Cependant, à partir de 1966, les avancées
-sur la construction de codes correcteurs d'erreurs se font rare. Cela fait alors dire à Robert McEliece en 1971 que 
+sur la construction de codes correcteurs d'erreurs se font rares. Cela fait alors dire à Robert McEliece en 1971 que 
 \og Le codage de canal est mort \fg\cite{codingdead}. 
 
 C'était sans compter sur la découverte deux décennies plus tard des turbo codes par Claude Berrou et Alain Glavieux \cite{berrouTC}. 
@@ -43,7 +45,7 @@ Grâce à leurs performances, cette nouvelle famille de codes correcteurs d'erre
 schémas de codage alors existants. Dès leur introduction, les turbo codes sont employés dans différents 
 standards de communications numériques adressant des contextes applicatifs divers et variés. L'une des métriques de 
 performance d'un code correcteur d'erreurs est sa capacité de correction en fonction de la qualité de transmission. 
-Une telle courbe de performance pour un turbo code est divisé en deux parties. Dans la première, nommée région de 
+Pour un turbo code et d'autres familles de codes correcteurs d'erreurs, une telle courbe de performance est divisée en deux parties. Dans la première, nommée région de 
 convergence, un faible incrément de la qualité de transmission résulte en une amélioration importante des performances de
 décodage. En revanche, dans la région du plancher d'erreurs, l'augmentation de la qualité de transmission ne résulte qu'en
 une amélioration marginale des performances de décodage. Cette région est alors particulièrement limitante pour des applications
@@ -60,8 +62,8 @@ lors, une amélioration des performances de décodage, et notamment la réductio
 
 D'autre part, lorsqu'un turbo code est retenu pour un standard de communications numériques, ses performances sont adaptées aux
 contraintes applicatives correspondant au cas d'emploi de ce standard. Cependant, les besoins applicatifs évoluent au cours du temps et peuvent diverger de ceux originellement considérés. Ainsi, des exigences de plus faibles taux 
-d'erreur pour une qualité de transmission constante peuvent apparaître. Deux solutions sont alors envisageables. La première
-consiste à repenser le code correcteur d'erreur afin d'atteindre ces nouveaux besoins. Néanmoins, cette approche est 
+d'erreurs pour une qualité de transmission constante peuvent apparaître. Deux solutions sont alors envisageables. La première
+consiste à repenser le code correcteur d'erreurs afin d'atteindre ces nouveaux besoins. Néanmoins, cette approche est 
 particulièrement coûteuse. De fait, l'ensemble de l’infrastructure devient obsolète et un nouveau déploiement 
 d'équipements, que ce soit pour la transmission ou la réception, s'avère nécessaire. Cette solution est par exemple 
 difficilement envisageable pour un contexte de communications satellitaires.
@@ -73,7 +75,7 @@ approches permettant d'améliorer les performances de décodage des turbo codes.
 durant cette thèse répondent alors à la problématique de proposer de nouveaux algorithmes de décodage des
 turbo codes. Ceux-ci doivent permettre une amélioration des performances de décodage tout en limitant le surcoût de l'implémentation matérielle 
 des solutions de décodage mises en œuvre.
- La réponse à cette problématique qui fait le travail de thèse est récapitulé dans ce manuscrit. Ce dernier est organisé 
+ La réponse à cette problématique, qui constitue le travail de thèse, est récapitulée dans ce manuscrit. Ce dernier est organisé 
  en quatre chapitres.
 
 \section*{Structure du manuscrit de thèse}
@@ -104,7 +106,7 @@ Le quatrième chapitre est dédié à la description d'une architecture matérie
 des erreurs résiduelles. Cet algorithme, par son principe, peut être vu comme une extension d'un turbo décodeur. Dès 
 lors les différents ordonnancements de turbo décodage sont successivement présentés. Suite à cela, afin d'assurer la maîtrise de la complexité 
 calculatoire de cet algorithme, une étude des différents paramètres 
-sur les performances de décodages est mené. Celle-ci permet alors la proposition d'une architecture 
+sur les performances de décodages est menée. Celle-ci permet alors la proposition d'une architecture 
 matérielle de référence adaptée à un ordonnancement particulier de turbo décodage. Le coût matériel de l'architecture 
 est comparé à celui d'une architecture matérielle de turbo décodage équivalente. Finalement, des projections sont 
 esquissées quant aux modifications requises à l'adaptation de cette architecture aux autres ordonnancements de turbo 
@@ -113,31 +115,33 @@ décodage existants.
 \section*{Contributions des travaux de thèse}
 Les différentes contributions originales de ces travaux de thèse sont : 
 \begin{enumerate}
-	\item La proposition d'un algorithme de décodage permettant l'augmentation de la convergence de décodage de 
+	\item La proposition d'un algorithme de décodage permettant l'amélioration de la convergence de décodage de 
 	turbo codes dans certains contextes. Son principe est d'annuler la contribution des décodeurs élémentaires du 
 	turbo décodeur lorsqu'un changement de signe sur cette contribution est détectée d'une itération à l'autre. Dans le
 	cadre du standard CCSDS, des gains de $0,1$ dB sont observés en comparaison d'un turbo décodage conventionnel.
-	%Ceci est détaillé dans le deuxièmne chapitre.
+	Ceci est détaillé dans le deuxième chapitre.
 	\item La proposition d'un algorithme de décodage basé sur le décodage successif d'une même trame permettant une 
-	réduction limitée du plancher d'erreurs. Un abaissement d'un ordre de grandeur pour de hautes valeurs du rapport signal à bruit est atteint pour différents turbo codes. Cependant les gains sont obtenus au prix d'un surcoût calculatoire important. 
+	réduction limitée du plancher d'erreurs. Un abaissement d'un ordre de grandeur pour de hautes valeurs du rapport signal à bruit est atteint pour différents turbo codes. Cependant les gains sont obtenus au prix d'un surcoût calculatoire important. Ceci est détaillé dans le deuxième chapitre.
 	\item La formalisation d'une prédiction de la distribution des erreurs résiduelles dans la zone du plancher 
 	d'erreurs des turbo codes. Celle-ci se base directement sur le spectre de distances des turbo codes. Le spectre est
 	plus 
-	facile à obtenir que les fonctions recenseuses de poids jusqu'alors utilisées.
+	facile à obtenir que les fonctions recenseuses de poids jusqu'alors utilisées. Ceci est détaillé dans le troisième chapitre.
 	\item La proposition d'un algorithme de décodage permettant une réduction drastique du plancher d'erreurs des 
-	turbo codes standardisés grâce à la correction des erreurs résiduelles. Cet algorithme, nommé Flip and Check a un surcoût en 
+	turbo codes standardisés grâce à la correction des erreurs résiduelles. Cet algorithme, nommé \textit{Flip and Check} a un surcoût en 
 	terme de complexité calculatoire maîtrisé. Il permet d'abaisser le plancher d'erreurs d'au moins un ordre de grandeur 
-	dans tous les contextes applicatifs considérés dans ce manuscrit.
-	\item La proposition d'une architecture matérielle adaptée à l'algorithme Flip and Check de correction des erreurs résiduelles
-	.
+	dans tous les contextes applicatifs considérés dans ce manuscrit. Ceci est détaillé dans le troisième chapitre.
+	\item La proposition d'une architecture matérielle adaptée à l'algorithme Flip and Check de correction des erreurs résiduelles.
 	Cette architecture matérielle démontre la possible intégration de la technique proposée pour des systèmes contraints, 
 	grâce à un impact limité au niveau de la complexité calculatoire. De plus, la latence du 
-	processus de turbo décodage n'est pas impacté.\\
+	processus de turbo décodage n'est pas impactée. Ceci est détaillé dans le quatrième chapitre.\\
 \end{enumerate}
 Ces différentes contributions ont fait l'objet de publications scientifiques : \\
 \begin{itemize}
-	\item Communication sans acte :
+	\item Communications nationales avec actes :
 	\begin{itemize}
+     	\item T. Tonnellier, C. Leroux, B. L. Gal, C. Jego, B. Gadat, and C. Poulliat,
+		“L’algorithme Self-Corrected Max-Log-MAP pour le décodage des Turbo Codes”,
+		18ème Journées Nationales du Réseau Doctoral en Micro-nanoélectronique (JNRDM), Bordeaux, 5-7 Mai, 2015.
 		\item T. Tonnellier, C. Leroux, B. L. Gal, C. Jego, B. Gadat, and C. Poulliat, “Extension
 		du principe self-corrected de l’information extrinsèque au décodage itératif de turbo
 		codes,” in GRETSI, Sept 2015.
@@ -148,21 +152,21 @@ Ces différentes contributions ont fait l'objet de publications scientifiques : 
 	\item Communications internationales avec actes :
 	\begin{itemize}
 		\item T. Tonnellier, C. Leroux, B. L. Gal, C. Jego, B. Gadat, and N. V. Wambeke,
-		“Lowering the error floor of double-binary turbo codes : The flip and check algorithm,”
-		in 2016 9th International Symposium on Turbo Codes and Iterative Information
+		“Lowering the error floor of double-binary turbo codes : the Flip and Check algorithm”
+		in 9th International Symposium on Turbo Codes and Iterative Information
 		Processing (ISTC), Sept 2016, pp. 156–160.
 		\item A. Cassagne, T. Tonnellier, C. Leroux, B. L. Gal, O. Aumage, and D. Barthou,
-		“Beyond gbps turbo decoder on multi-core cpus,” in 2016 9th International Sympo-
+		“Beyond gbps turbo decoder on multi-core cpus,” in 9th International Sympo-
 		sium on Turbo Codes and Iterative Information Processing (ISTC), Sept 2016, pp. 136–140.
 		\item T. Tonnellier, C. Leroux, B. L. Gal, C. Jego, B. Gadat, and N. V. Wambeke,
-		“Hardware architecture for lowering the error floor of lte turbo codes,” in 2016
+		“Hardware architecture for lowering the error floor of lte turbo codes,” in 
 		Conference on Design and Architectures for Signal and Image Processing (DASIP),
 		Oct 2016, pp. 107–112.\\
 	\end{itemize}
 	\item Communication dans une revue internationale avec comité de lecture :
 	\begin{itemize}
 		\item T. Tonnellier, C. Leroux, B. L. Gal, B. Gadat, C. Jego, and N. V. Wambeke,
-		“Lowering the error floor of turbo codes with crc verification,” IEEE Wireless
+		“Lowering the error floor of turbo codes with CRC verification,” IEEE Wireless
 		Communications Letters, vol. 5, no. 4, pp. 404–407, Aug 2016.
 	\end{itemize}
 \end{itemize}

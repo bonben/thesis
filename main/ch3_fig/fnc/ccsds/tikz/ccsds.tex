@@ -30,12 +30,10 @@
             xlabel=$E_b/N_0 \text{(dB)}$, ylabel=Taux d'erreur,  grid=both, grid style={gray!30},
         tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}]
         legend pos=north east]
-        \addplot[mark=o,Paired-5, semithick]  table [x=SNR, y=FSF] {../dat/1784};
-      
-        \addplot[mark=o,Paired-5!50!Paired-6, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER] {../dat/1784_fnc};    
-
-          \addplot[mark=square,Paired-1, semithick]  table [x=SNR, y=BSF] {../dat/1784};
     
+        \addplot[mark=o,Paired-5, semithick]  table [x=SNR, y=FSF] {../dat/1784};     
+        \addplot[mark=o,Paired-5!50!Paired-6, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER] {../dat/1784_fnc};    
+        \addplot[mark=square,Paired-1, semithick]  table [x=SNR, y=BSF] {../dat/1784};
         \addplot[mark=square,Paired-1!50!Paired-2, semithick, dashed, mark options={solid}]  table [x=SNR, y=BER] {../dat/1784_fnc};   
  
         \legend{FER EML-MAP, FER FNC, BER EML-MAP, BER FNC}  

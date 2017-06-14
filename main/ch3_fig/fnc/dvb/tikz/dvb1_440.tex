@@ -52,7 +52,7 @@
         %         \node[below = 1.2cm of ccsds c1r2.south] {(b) : Taux d'erreur binaire};
 
         
-        % \end{tikzpicture}
+        % \end{tikzpicture} 
 
 \begin{tikzpicture}
     \begin{semilogyaxis}[footnotesize, width=0.8\linewidth, height=0.6\linewidth,    
@@ -64,7 +64,7 @@
         \addplot[mark=o,Paired-5, semithick]  table [x=SNR, y=FSF] {../dat/1_440_12};
         \addplot[mark=o,Paired-1, semithick]  table [x=SNR, y=FSF] {../dat/1_440_34};
         \addplot[mark=o,Paired-3, semithick]  table [x=SNR, y=FSF] {../dat/1_440_67};
-        \addplot[mark=o,Paired-5!50!Paired-6, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER] {../dat/1_440_12};        
+        \addplot[mark=o,Paired-5!50!Paired-6, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER2] {../dat/1_440_12};        
         \addplot[mark=o,Paired-1!50!Paired-2, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER] {../dat/1_440_34}; 
         \addplot[mark=o,Paired-3!50!Paired-4, semithick, dashed, mark options={solid}]  table [x=SNR, y=FER] {../dat/1_440_67};      
         
@@ -73,5 +73,5 @@
         
     \end{semilogyaxis}
 \end{tikzpicture}  
-
+ 
 \end{document}

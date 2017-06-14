@@ -32,7 +32,7 @@
 					xlabel=Profondeur de recherche,
 					legend entries = {Métrique Apost.~~, Métrique Ext.~~}
 					 ]
-	 \nextgroupplot[ylabel=Identification (\%),]
+	 \nextgroupplot[ylabel=Identification réussie (\%),]
 		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{2}/5.0] {../dat/528};
 		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{1}/5.0] {../dat/528};
 
@@ -44,7 +44,7 @@
 		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{6}/5.0] {../dat/528};
 		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{5}/5.0] {../dat/528};
 
-		 		 \nextgroupplot[ylabel=Identification (\%),]
+		 		 \nextgroupplot[ylabel=Identification réussie (\%),]
 		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{2}/5.0] {../dat/2048};
 		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{1}/5.0] {../dat/2048};
 
@@ -59,7 +59,7 @@
 		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{5}/5.0] {../dat/2048};
 
 	 
-		 \nextgroupplot[ylabel=Identification (\%),]
+		 \nextgroupplot[ylabel=Identification réussie (\%),]
 		 \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=north east lines}] table [x=X, y expr=\thisrowno{2}/5.34] {../dat/6144};
 		 \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}] table [x=X, y expr=\thisrowno{1}/5.34] {../dat/6144};
 

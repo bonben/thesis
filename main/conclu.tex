@@ -4,10 +4,10 @@
 \addcontentsline{toc}{chapter}{Conclusions et perspectives}
 \section*{Conclusions}
 Dans un contexte de communications numériques,
-le besoin d'obtenir des taux d'erreurs aussi fables que possible devient primordial pour de nombreux domaines 
+le besoin d'obtenir des taux d'erreurs aussi faibles que possible devient primordial pour de nombreux domaines 
 applicatifs. Ces travaux de thèse se sont alors concentrés sur l'amélioration des performances de décodage des turbo 
 codes et notamment la réduction de leurs planchers d'erreurs. Pour ce faire, différentes techniques associées au turbo 
-décodage et des solutions architecturales adaptées ont été étudiées.
+décodage et des solutions architecturales adaptées ont été proposées.
 
 % De nombreux standards de communications numériques incluent un code CRC concaténé avec le turbo code. Ceci permet 
 % d'envisager une plus grande diversité dans le décodage en tirant parti des propriétés de distance de cette concaténation.
@@ -17,7 +17,7 @@ l’occurrence d'oscillations de métriques internes au processus de turbo déco
 décodage. Cependant, aucune relation d'implication directe entre les occurrences d'oscillations et les erreurs n'a pu
 être trouvée. Ceci rend alors délicat l'identification de la position des erreurs à partir de l'observation
 des oscillations. Néanmoins, un algorithme, nommé SC EML-MAP, a été proposé afin d'améliorer la pertinence de l'information extrinsèque 
-échangée au cours du processus itératif. Cet algorithme est largement inspiré d'une approche originellement proposée 
+échangée au cours du processus itératif. Cet algorithme est inspiré d'une approche originellement proposée 
 dans le cadre du décodage des codes LDPC. Dans le cas de turbo codes binaires, sous couvert d'un nombre maximal d'itérations
 important, le seuil de convergence est amélioré par rapport à celui obtenu avec 
 l'algorithme EML-MAP fonctionnant avec le même nombre 
@@ -26,14 +26,14 @@ d'erreur trame ont été observés. Ainsi, pour une valeur de SNR constante les 
 peuvent être améliorées. Une architecture matérielle a été proposée afin d'estimer le surcoût au niveau de la 
 complexité calculatoire de cette approche. Ce surcoût s'est avéré modeste.
 
-Dans le troisième chapitre, un algorithme de correction des erreurs résiduelles, nommé FNC, a été défini. 
+Dans le troisième chapitre, un algorithme de correction des erreurs résiduelles, nommé Flip and Check (FNC), a été défini. 
 Partant du principe que de nombreux standards de communications numériques incluent un code CRC concaténé avec le turbo 
 code, il est possible d'envisager une plus grande diversité dans le décodage en tirant parti des nouvelles propriétés de 
 distance de cette concaténation.
 L'algorithme FNC comprend trois étapes. Après l'identification des positions les moins fiables dans la trame en cours de traitement par le turbo décodeur,
-différents mots candidats sont générés puis vérifiés en utilisant un code détecteur d'erreurs. L'algorithme FNC permet 
-d'observer des gains de performance de décodage dans la région du plancher d'erreur d'au moins un ordre de 
-grandeur. Les gains ont été obtenus pour des turbo codes binaires ou double binaires à 8 ou 16 états. Les
+différents mots candidats sont générés puis vérifiés en utilisant un code détecteur d'erreurs. L’utilisation de l'algorithme FNC permet d'obtenir 
+des gains de performance de décodage dans la région du plancher d'erreurs d'au moins un ordre de 
+grandeur. Ces gains ont été observés pour des turbo codes binaires ou double binaires à 8 ou 16 états. Les
 performances de l'algorithme reposent principalement sur le pouvoir d'identification de la métrique permettant la sélection des positions
 les moins fiables dans la séquence d'information reçue. Afin de définir cette métrique, différentes approches
 d'identification ont été proposées et comparées. Il apparaît que la métrique mise en exergue permet d'identifier de 
@@ -45,7 +45,7 @@ de distance conséquentes. Ainsi, le risque de non-détection n'impacte pas de m
 
 Enfin, le quatrième chapitre détaille une proposition d'architecture matérielle pour l'implémentation de l'algorithme
 FNC. L'algorithme FNC pouvant être vu comme une extension du processus de turbo décodage conventionnel, son implantation
-peut être réalisée sans impacter le processus itératif de décodage. Cependant l'interconnexion entre ces deux architectures 
+peut être réalisée sans impacter le processus itératif de décodage. Cependant, l'interconnexion entre ces deux architectures 
 matérielles indépendantes nécessite un transfert de différentes informations du turbo décodeur vers le bloc FNC. Afin
 de pouvoir déterminer la manière dont cette interconnexion peut être réalisée, différents ordonnancements de turbo décodage 
 ont été présentés dans un premier temps. Puis, une caractérisation de l'impact des différents paramètres de 
@@ -95,10 +95,12 @@ d'autres codes correcteurs d'erreurs. Une étude préliminaire semble montrer qu
 contexte de certains codes LDPC, une identification des erreurs résiduelles par une métrique semblable à celle 
 utilisée au cœur de l'algorithme FNC est possible. Cependant, afin de proposer des gains conséquents en terme de performance de 
 décodage, il est nécessaire que les capacités d'identification d'une telle métrique soient particulièrement
-efficace. En ce qui concerne le décodage des codes polaires, grâce à un décodage par liste, avec un nombre de mots
-candidats conséquent (32), il semblerait qu'aucun plancher d'erreur ne soit rencontré pour des taux d'erreurs trame de 
+efficaces. En ce qui concerne le décodage des codes polaires, grâce à un décodage par liste, avec un nombre de mots
+candidats conséquent (32), il semblerait qu'aucun plancher d'erreurs ne soit rencontré pour des taux d'erreurs trame de 
 $10^{-10}$. Néanmoins, il est possible que cette constatation diffère pour les codes polaires pressentis pour la 5G. Il est 
-en effet difficile d'adresser à la fois un seuil de convergence faible et des performances asymptotiques.
+en effet difficile d'adresser à la fois un seuil de convergence faible et des performances asymptotiques. De plus, 
+la quantification de l'information peut amener l'apparition d'un plancher d'erreurs. Peut-être alors que dans ce 
+contexte, une transposition de l'algorithme FNC serait envisageable.
 
 % Au cours du deuxième chapitre, il a été vu que l'algorithme SC EML-MAP ne proposait pas de gain significatif en terme de
 % taux d'erreur trame pour un turbo code 16 états lorsqu'un nombre maximum de 8 itérations est considéré (\textit{cf.} 
@@ -109,7 +111,7 @@ FNC. Ainsi, il serait nécessaire d'évaluer au mieux la complexité calculatoir
 décodeur à fort degré de parallélisme. Pour ce faire, des implantations pour une cible technologique de type ASIC sont 
 indispensables. Mais avant cela, des travaux quant à la réduction de la complexité calculatoire peuvent encore être
 menés. Le principal défi quant à la réduction de la complexité calculatoire de l'algorithme FNC repose sur l'unité de
-calculs de CRC. Une première solution à été envisagée à la fin du chapitre 4. En effet, il a été observé que l'efficacité
+calculs de CRC. Une première solution a été envisagée à la fin du chapitre 4. En effet, il a été observé que l'efficacité
 d'une unité de calcul de CRC augmente avec son degré de parallélisme. Or, cette augmentation de parallélisme est 
 concomitante avec une réduction du temps nécessaire pour la vérification d'un CRC. Il apparaît alors opportun de maximiser
 le degré de parallélisme de chaque unité de vérification de CRC afin d'en réduire le nombre. Ainsi, une 
