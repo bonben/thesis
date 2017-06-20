@@ -1,0 +1,50 @@
+\documentclass[border=1pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{patterns, shapes, arrows, shapes.multipart, calc, positioning}
+\input{../../../colors}
+\begin{document}
+\begin{tikzpicture}
+	% style des nœuds
+	\tikzstyle{debutfin}=[ellipse,draw,fill=Paired-7!50!Paired-5, text=white]
+	\tikzstyle{instruct}=[rectangle,draw,fill=Accent-4]
+	\tikzstyle{test}=[diamond, aspect=2.5,thick, draw=Accent-4!50!Paired-7,fill=Accent-4!50!white,text=black]
+	\tikzstyle{es}=[rectangle,draw,rounded corners=4pt,fill=Paired-2!40!white]
+	\tikzstyle{es_a}=[rectangle,draw,rounded corners=4pt,fill=Paired-1, text=white]
+	\tikzstyle{test_a}=[diamond, aspect=2.5,thick, draw=Accent-4!50!Paired-7,fill=Paired-8,text=black]
+	% style des flèches
+	\tikzstyle{suite}=[->,>=stealth',thick,rounded corners=4pt]
+	\tikzstyle{suite_a}=[->,>=stealth',thick,rounded corners=4pt, Paired-1]
+	%%%% AVEC J>1
+	\node[debutfin] (start) at (0,1.4) {Start};
+	\node[es] (tdec) at (0,0.4) {Iteration of Turbo Decoding};
+	\node[test] (j1) at (0, -0.8) {$j > I_{min}$?};
+	\node[test] (crc1) at (0, -3) {CRC verified?};
+	\node[debutfin] (end) at (3, -8) {Stop};
+	\node[es_a] (find) at (-3, -4.5) {Find/Sort $q$ unreliables bits};
+	\node[instruct] (x0) at (-3, -5.5) {$x \gets 0$};
+	\node[es] (flip) at (-3, -6.5) {Flip using the $x^{th}$ pattern};
+	\node[test] (crc2) at (-3, -8) {CRC verified?};
+	\node[test] (xq) at (-3, -10.2) {$x < 2^q$?};
+	\node[instruct] (x1) at (-6, -7.5) {$x \gets x+1$};     
+	%\node at (-5,-1) {ATTENTION TU NE FAIS};
+	%\node at (-5,-1.5) {PAS COMME CA!!!};
+	% Placement des flèches
+	\draw[suite] (start) -- (tdec);
+	\draw[suite] (tdec) -- (j1);
+	\draw[suite] (j1) -- (crc1)node[near start,fill=white]{Yes};
+	\draw[suite] (j1) -- (3,-0.8)node[near start,fill=white]{No} |- (tdec);
+	%\draw[suite] (j1) -- (-3,-0.8)node[near start,fill=white]{No} |- (tdec);
+	\draw[suite] (crc1) -| (find)node[near start,fill=white]{No};
+	\draw[suite] (crc1) -| (end)node[near start,fill=white]{Yes};
+	\draw[suite] (find) -- (x0);
+	\draw[suite] (x0) -- (flip);
+	\draw[suite] (flip) -- (crc2);
+	\draw[suite] (crc2) -- (end)node[near start,fill=white]{Yes};
+	\draw[suite] (crc2) -- (xq)node[near start,fill=white]{No};   
+	\draw[suite] (xq) -| (x1)node[near start,fill=white]{Yes};
+	\draw[suite] (x1) |- (flip);
+	%\draw[suite] (xq) -- (4,-10.2)node[near start,fill=white]{No} -- (4,0.4) -- (tdec);  
+	\draw[suite] (xq) |- (-7.2,-11.2)node[near end,fill=white]{No} |- (tdec) ;
+																																	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+\end{tikzpicture}
+\end{document} 
