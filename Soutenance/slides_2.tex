@@ -510,44 +510,154 @@ mot décodé.
 \begin{frame}[c]{Résultats d'identification}
 \begin{columns}[T] % align columns
   \begin{column}{.48\textwidth}
-  \begin{tikzpicture}
+    \only<1>{
+    \begin{tikzpicture}
     \begin{axis}[
-    height=.8\textheight,  width=\textwidth,
-          grid=both, grid style={gray!30},
-          %colorbrewer cycle list=Spectral,
-          ybar interval = 1pt, /pgf/bar width=-5pt,
-          xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
-          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4,
-          xticklabels={4, 6, 8, 10, 20},
-          ylabel=Identification réussie (\%),
-          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east},  
-          axis lines*=left,
-          xlabel=Profondeur de recherche,
-          legend entries = {Métrique $\Delta$}
-          %legend entries = {Métrique Apost.~~, Métrique Ext.~~}
-          ]
-         
-        \only<2>{\addplot[draw=marronUni!50!black, fill=bleuUni!50] table [x=X, y expr=\thisrowno{2}/5.0, restrict x to domain=0:2] {../main/ch3_fig/id2/dat/2048};}
-        % \only<3>{\addplot[draw=marronUni!50!black, fill=bleuUni!50, restrict x to domain=0:3] table [x=X, y expr=\thisrowno{2}/5.0] {../main/ch3_fig/id2/dat/2048};}
-        % \only<4>{\addplot[draw=marronUni!50!black, fill=bleuUni!50, restrict x to domain=0:4] table [x=X, y expr=\thisrowno{2}/5.0] {../main/ch3_fig/id2/dat/2048};}
-        % \only<5>{\addplot[draw=marronUni!50!black, fill=bleuUni!50, restrict x to domain=0:5] table [x=X, y expr=\thisrowno{2}/5.0] {../main/ch3_fig/id2/dat/2048};}
-        % \only<6>{\addplot[draw=marronUni!50!black, fill=bleuUni!50, restrict x to domain=0:6] table [x=X, y expr=\thisrowno{2}/5.0] {../main/ch3_fig/id2/dat/2048};}
-
-%        \only<2>{\addplot[draw=marronUni!50!black, fill=bleuUni!50] table [x=X, y expr=\thisrowno{4}/5.0] {../main/ch3_fig/id2/dat/2048};}
-
- %       \only<3>{\addplot[draw=marronUni!50!black, fill=bleuUni!50] table [x=X, y expr=\thisrowno{6}/5.0] {../main/ch3_fig/id2/dat/2048};}
-   
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=none] table [x=X, y expr=\thisrowno{2}/5.0, restrict x to domain=0:2] {../main/ch3_fig/id2/dat/2048};
     \end{axis}
-    % \only<1>{\node[below = 1cm of be c1r1.south] {(a) : LTE K=2048, SNR=0.9dB (TET=$1.3\times 10^{-4}$)};}
-    % \only<2>{\node[below = 1cm of be c1r1.south] {(a) : LTE K=2048, SNR=1.1dB (TET=$1.0\times 10^{-5}$)};}
-    % \only<3>{\node[below = 1cm of be c1r1.south] {(a) : LTE K=2048, SNR=1.3dB (TET=$4.3\times 10^{-6}$)};}
-    % \only<1>{\node[below = 1cm of be c2r1.south] {(b) : LTE K=6144, SNR=0.4dB (TET=$1.4\times 10^{-1}$)};}
-    % \only<2>{\node[below = 1cm of be c2r1.south] {(b) : LTE K=6144, SNR=0.6dB (TET=$1.3\times 10^{-3}$)};}
-    % \only<3>{\node[below = 1cm of be c2r1.south] {(b) : LTE K=6144, SNR=0.8dB (TET=$3.4\times 10^{-5}$)};}
-  \end{tikzpicture}
+   \end{tikzpicture}}
+    \only<2>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-1!50] table [x=X, y expr=\thisrowno{2}/5.0, restrict x to domain=0:2] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+    \only<3>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-1!50] table [x=X, y expr=\thisrowno{2}/5.0, restrict x to domain=0:3] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+    \only<4>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-1!50] table [x=X, y expr=\thisrowno{2}/5.0, restrict x to domain=0:4] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+       \only<5>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-1!50] table [x=X, y expr=\thisrowno{2}/5.0, restrict x to domain=0:5] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+       \only<6>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-1!50] table [x=X, y expr=\thisrowno{2}/5.0, restrict x to domain=0:6] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+    \only<7>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-3!50] table [x=X, y expr=\thisrowno{4}/5.0, restrict x to domain=0:2] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+    \only<8>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-3!50] table [x=X, y expr=\thisrowno{4}/5.0, restrict x to domain=0:3] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+    \only<9>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-3!50] table [x=X, y expr=\thisrowno{4}/5.0, restrict x to domain=0:4] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+    \end{tikzpicture}}
+    \only<10>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-3!50] table [x=X, y expr=\thisrowno{4}/5.0, restrict x to domain=0:5] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+    \end{tikzpicture}}
+    \only<11>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-3!50] table [x=X, y expr=\thisrowno{4}/5.0, restrict x to domain=0:6] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+    \only<12>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-5!50] table [x=X, y expr=\thisrowno{6}/5.0, restrict x to domain=0:2] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+    \only<13>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-5!50] table [x=X, y expr=\thisrowno{6}/5.0, restrict x to domain=0:3] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+   \only<14>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-5!50] table [x=X, y expr=\thisrowno{6}/5.0, restrict x to domain=0:4] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+  \only<15>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-5!50] table [x=X, y expr=\thisrowno{6}/5.0, restrict x to domain=0:5] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
+  \only<16>{
+    \begin{tikzpicture}
+    \begin{axis}[
+    height=.8\textheight,  width=\textwidth, grid=both, grid style={gray!30}, ybar interval = 1pt, /pgf/bar width=-5pt, xmin=1, xmax=6, ymin=0,  ytick={0,10,...,105}, ymax=105, 
+          grid=both, grid style={dashed, gray!50},  legend style={at={(0.5,1.05)},anchor=south},legend columns=4, xticklabels={4, 6, 8, 10, 20}, ylabel=Identification réussie (\%),
+          x tick label style={shift={(axis cs:1.15,-2.5)},anchor=east}, axis lines*=left, xlabel=Profondeur de recherche, legend entries = {Métrique $\Delta$} ]
+        \addplot[draw=marronUni!50!black, fill=Paired-5!50] table [x=X, y expr=\thisrowno{6}/5.0, restrict x to domain=0:6] {../main/ch3_fig/id2/dat/2048};
+    \end{axis}
+   \end{tikzpicture}}
   \end{column}%
   \hfill%
   \begin{column}{.48\textwidth}
+  \vspace*{4em}
    \begin{tikzpicture}
      \begin{axis}[footnotesize, 
            height=.6\textwidth,  width=\textwidth,
@@ -568,23 +678,132 @@ mot décodé.
            legend style={at={(0.5,1.03)},anchor=south}, legend columns=4,
            ]
    
-          \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}, visible on=<2->, restrict x to domain=1:11] table [x=X, y expr=\thisrowno{5}/5] {../main/ch3_fig/be/dat/2048.dat};
-          \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}, visible on=<3->, restrict x to domain=1:11] table [x=X, y expr=\thisrowno{6}/5] {../main/ch3_fig/be/dat/2048.dat};
-          \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }, visible on=<4->, restrict x to domain=1:11] table [x=X, y expr=\thisrowno{7}/5] {../main/ch3_fig/be/dat/2048.dat};
+          \addplot[draw=Paired-1, fill=Paired-1!50, postaction={pattern color = black!80,pattern=north west lines}, visible on=<2-6>, restrict x to domain=1:11] table [x=X, y expr=\thisrowno{5}/5] {../main/ch3_fig/be/dat/2048.dat};
+          \addplot[draw=Paired-3, fill=Paired-3!50, postaction={pattern color = black!80,pattern=north east lines}, visible on=<7-11>, restrict x to domain=1:11] table [x=X, y expr=\thisrowno{6}/5] {../main/ch3_fig/be/dat/2048.dat};
+          \addplot[draw=Paired-5, fill=Paired-5!50, postaction={pattern color = black!80,pattern=crosshatch dots }, visible on=<12-16>, restrict x to domain=1:11] table [x=X, y expr=\thisrowno{7}/5] {../main/ch3_fig/be/dat/2048.dat};
           %\addplot[mark=*, only marks, black, mark options={scale=0.9, fill=Dark2-2!50 }, update limits=false, visible on=<5->] table[x=X, y=l2048] {../main/ch3_fig/be/dat/th};
 
           \legend{$0.9$ dB,$1.1$ dB,$1.3$ dB}%, Théorique $1.3$ dB}
 
           \end{axis}
    \end{tikzpicture}
-
     \end{column}%
 \end{columns}
-
 \end{frame}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{L'algorithme FNC}
+\begin{frame}[c]{Principe}
+\begin{enumerate}\itmsp{1.5em}
+  \item Calcul de la métrique d'identification $\Delta$
+  \item Extraction des $q$ positions les moins fiables
+  \item Génération de $2^q - 1$ mots candidats
+  \item Vérification par le code CRC des mots candidats
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}[c]{Explication schématique et exemple}
+  \begin{columns}[T] % align columns
+    \begin{column}{.48\textwidth}
+      \only<1>{\includegraphics[width=\textwidth]{fig/flow/fc0.pdf}}
+      \only<2>{\includegraphics[width=\textwidth]{fig/flow/fc_tdec.pdf}}
+      \only<3>{\includegraphics[width=\textwidth]{fig/flow/fc_reit.pdf}}
+      \only<4>{\includegraphics[width=\textwidth]{fig/flow/fc_tdec.pdf}}
+      \only<5>{\includegraphics[width=\textwidth]{fig/flow/fc_nocrc.pdf}}
+      \only<6>{\includegraphics[width=\textwidth]{fig/flow/fc_find.pdf}}
+      \only<7>{\includegraphics[width=\textwidth]{fig/flow/fc_flip.pdf}}
+      \only<8>{\includegraphics[width=\textwidth]{fig/flow/fc_flip2.pdf}}
+      \only<9>{\includegraphics[width=\textwidth]{fig/flow/fc_flip.pdf}}
+      \only<10>{\includegraphics[width=\textwidth]{fig/flow/fc_flip2.pdf}}
+      \only<11>{\includegraphics[width=\textwidth]{fig/flow/fc0.pdf}}
+    \end{column}%
+    \hfill%
+    \begin{column}{.48\textwidth}
+      \begin{center}
+        \uncover<5->{
+          \resizebox{\linewidth}{!}{
+            \begin{tabular}{rllllllllll}
+              & \multicolumn{7}{|c|}{\textit{input}} & \multicolumn{2}{|c|}{\textit{crc}} \\
+              \toprule
+              $\mathbf{\hat{d}}$ & \textcolor{Paired-5}{\textbf{0}}    & 1   & 1                                   & 0   & 1   & \textcolor{Paired-5}{\textbf{0}}    & 0   & 1   & 0   \\
+              $\Delta$           & \only<6-9>{\cellcolor{Paired-6}}1.2 & 3.5 & \only<6-9>{\cellcolor{Paired-6}}0.2 & 4.2 & 5.1 & \only<6-9>{\cellcolor{Paired-6}}0.3 & 2.8 & 1.7 & 3.5 \\
+              \bottomrule
+            \end{tabular}}  }
+      \end{center}
+      \only<6->{{\small$q = 3$ positions are identified:}\resizebox{.31\linewidth}{!}{\begin{tabular}{ccc} 
+        $k_2$ & $k_5$ & $k_0$ \\
+        \end{tabular}}\\\vspace*{.2cm}}
+      \only<7->{
+        {\small$2^q - 1= 7$ candidate words are generated :}\\\vspace*{.2cm}
+        \resizebox{\linewidth}{!}{\vspace*{.2cm}
+          \begin{tabular}{rllllllllll}
+            \toprule
+            $\mathbf{d_1}$                                          & 0 ~~                                 & 1 ~~ & \only<7-10>{\cellcolor{Paired-4}}{0} ~~ & 0 ~~ & 1 ~~ & 0 ~~                                 & 0 ~~ & 1 ~~ & 0  \\
+            \only<8->{$\mathbf{d_2}$                                & 0 ~~                                 & 1 ~~ & 1 ~~                                  & 0 ~~ & 1 ~~ & \only<8-10>{\cellcolor{Paired-4}}{1}   & 0 ~~ & 1 ~~ & 0} \\
+            \only<9->{$\mathbf{d_3}$                                & \only<8-10>{\cellcolor{Paired-4}}{1} ~~ & 1 ~~ & 1 ~~                                  & 0 ~~ & 1 ~~ & 0 ~~                                 & 0 ~~ & 1 ~~ & 0} \\
+            \only<10->{$\mathbf{d_4}$                                & 0 ~~                                 & 1 ~~ & \only<8-10>{\cellcolor{Paired-4}}{0} ~~  & 0 ~~ & 1 ~~ & \only<8-10>{\cellcolor{Paired-4}}{1} ~~ & 0 ~~ & 1 ~~ & 0} \\
+            \only<10->{$\mathbf{d_5}$                                & \only<8-10>{\cellcolor{Paired-4}}{1} ~~ & 1 ~~ & \only<8-10>{\cellcolor{Paired-4}}{0} ~~  & 0 ~~ & 1 ~~ & 0 ~~                                 & 0 ~~ & 1 ~~ & 0} \\
+            \only<10->{\only<11>{\cellcolor{Paired-3}}$\mathbf{d_6}$ & \only<8-10>{\cellcolor{Paired-4}}{1} ~~ & 1 ~~ & 1 ~~                                  & 0 ~~ & 1 ~~ & \only<8-10>{\cellcolor{Paired-4}}{1} ~~ & 0 ~~ & 1 ~~ & 0} \\
+            \only<10->{$\mathbf{d_7}$                                & \only<8-10>{\cellcolor{Paired-4}}{1} ~~ & 1 ~~ & \only<8-10>{\cellcolor{Paired-4}}{0} ~~  & 0 ~~ & 1 ~~ & \only<8-10>{\cellcolor{Paired-4}}{1} ~~ & 0 ~~ & 1 ~~ & 0} \\
+            \bottomrule
+          \end{tabular}}\\\vspace*{.2cm}}
+      \only<11->{{\small} These words are verified thanks to the CRC}
+    \end{column}%
+  \end{columns}
+\end{frame}
+
+\begin{frame}[c]{Performances de décodage}
+\begin{center}
+\begin{tikzpicture}
+    \begin{semilogyaxis}[footnotesize, width=0.95\linewidth, height=0.6\linewidth,    
+            xmin=0, xmax=3, xtick={0,0.5,...,3},
+            %ymin=2e-6,  ymax=0.11,
+            xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
+        tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}]
+        legend pos=north east]
+        \addplot[mark=o,Paired-5, semithick, visible on=<2->]  table [x=SNR, y=FSF] {../main/ch3_fig/fnc/lte/dat/528};
+        \addplot[mark=o,Paired-1, semithick, visible on=<4->]  table [x=SNR, y=FSF] {../main/ch3_fig/fnc/lte/dat/1024};
+        \addplot[mark=o,Paired-3, semithick, visible on=<6->]  table [x=SNR, y=FSF] {../main/ch3_fig/fnc/lte/dat/2048};
+        \addplot[mark=o,Paired-7, semithick, visible on=<8->]  table [x=SNR, y=FSF] {../main/ch3_fig/fnc/lte/dat/6144};
+        \addplot[mark=o,Paired-5!50!Paired-6, semithick, dashed, mark options={solid}, visible on=<3->]  table [x=SNR, y=FER] {../main/ch3_fig/fnc/lte/dat/528};
+        \addplot[mark=o,Paired-1!50!Paired-2, semithick, dashed, mark options={solid}, visible on=<5->]  table [x=SNR, y=FER] {../main/ch3_fig/fnc/lte/dat/1024};
+        \addplot[mark=o,Paired-3!50!Paired-4, semithick, dashed, mark options={solid}, visible on=<7->]  table [x=SNR, y=FER] {../main/ch3_fig/fnc/lte/dat/2048};
+        \addplot[mark=o,Paired-7!50!Paired-8, semithick, dashed, mark options={solid}, restrict x to domain=0.4:1.4, visible on=<9->]  table [x=SNR, y=FER] {../main/ch3_fig/fnc/lte/dat/6144};
+
+        \legend{K=528, K=1024, K=2048, K=6144} 
+         
+    \end{semilogyaxis}
+\end{tikzpicture}  
+\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ICI mon gros
+\subsection[Double binaires]{Transposition aux turbo codes doubles binaires}
+\begin{frame}[c]{Le critère pour les turbo codes double binaires}
+\begin{itemize}\setlength\itemsep{2em}
+  \item Considérer uniquement les deux symboles les plus probables : 
+  \begin{equation*} \begin{split}
+  {\quad \color{bleuUni}\bullet}\quad S_{M_x}(k) = \argmax\limits_{s\in\llbracket0;3\rrbracket}\left(l^a_s(k)\right)
+  \end{split}\qquad
+  \begin{split}
+   {\color{bleuUni}\bullet}\quad S_{M_y}(k) = \argmax\limits_{s\in\llbracket0;3\rrbracket\setminus{S_{M_x}(k)}}\left(l^a_s(k)\right)
+  \end{split} 
+\end{equation*}
+\begin{equation*}
+  \Delta(k) = l^a_{S_{M_x}}(k)-l^a_{S_{M_y}}(k)
+\end{equation*}
+\item Permet de me calculer qu'une distance par symbole
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]{Turbo codes doubles binaires - Identification symboles}
+\begin{itemize}\setlength\itemsep{2em}
+  \item Dans le cas des TC double binaires, l'identification des positions les moins fiables correspond à un symbole
+  \item Une transposition directe de l'algorithme binaire impliquerait alors une génération de $4^q$ mots candidats
+  \item Or, par une approche statistique il apparaît que dans $96\%$ des cas, le symbole émis correspond au deuxième plus probable ($S_{m_y}$)
+\end{itemize}
+\vspace*{1em}
+{\color{bleuUni}\Large\MVRightarrow} Mémorisation des 2 symboles les plus probables et génération de $2^q$ mots candidats
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section[Architecture matérielle]{Architecture matérielle de correction des erreurs résiduelles}
