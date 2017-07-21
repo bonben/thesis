@@ -1,0 +1,79 @@
+#./bin/aff3ct --sim-type "BFER" --cde-type "TURBO" --dec-type "DVB-RCS2" -K "1504" -N "2256" -m "2.0" -M "3.2" -s "0.2" --dec-implem "FAST" -i "8" --mod-type "PSK" --mod-bps "2" -e "50" --chn-type "AWGN_FAST" --crc-type "FAST" --crc-poly "32-GZIP"
+# -------------------------------------------------
+# ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----
+# -------------------------------------------------
+# Parameters:
+# * Simulation ------------------------------------
+#    ** Type                     = BFER
+#    ** SNR min (m)              = 2.000000 dB
+#    ** SNR max (M)              = 3.200100 dB
+#    ** SNR step (s)             = 0.200000 dB
+#    ** Type of bits             = int (32 bits)
+#    ** Type of reals            = float (32 bits)
+#    ** Inter frame level        = 1
+#    ** Seed                     = 0
+#    ** Multi-threading (t)      = 48 thread(s)
+# * Code ------------------------------------------
+#    ** Type                     = TURBO
+#    ** Info. bits (K)           = 1472 + 32 (CRC)
+#    ** Codeword size (N)        = 2256
+#    ** Code rate (R)            = 0.666667
+#    ** Coset approach (c)       = off
+# * Source ----------------------------------------
+#    ** Type                     = RAND
+# * CRC -------------------------------------------
+#    ** Type                     = FAST
+#    ** Name                     = 32-GZIP
+#    ** Polynomial (hexadecimal) = 0x4c11db7
+#    ** Size (in bit)            = 32
+#    ** Add CRC in the code rate = off
+# * Encoder ---------------------------------------
+#    ** Type                     = TURBO_DB
+#    ** Systematic encoding      = on
+#    ** Polynomials              = {013,015}
+#    ** Buffered                 = on
+# * Puncturer -------------------------------------
+#    ** Pattern                  = {111,111,111}
+# * Interleaver -----------------------------------
+#    ** Type                     = ARP_DVB2
+#    ** Uniform                  = off
+# * Modulator -------------------------------------
+#    ** Type                     = PSK
+#    ** Bits per symbol          = 2
+#    ** Sampling factor          = 1
+# * Channel ---------------------------------------
+#    ** Type                     = AWGN_FAST
+# * Demodulator -----------------------------------
+#    ** Sigma square             = on
+#    ** Max type                 = MAX
+# * Decoder ---------------------------------------
+#    ** Type (D)                 = BCJR_DB
+#    ** Implementation           = FAST
+#    ** Num. of iterations (i)   = 8
+#    ** Scaling factor           = DB
+#    ** Max type                 = MAX
+#    ** Self-corrected           = off
+#    ** Flip aNd Check (FNC)     = off
+# * Monitor ---------------------------------------
+#    ** Frame error count (e)    = 50
+#    ** Bad frames tracking      = off
+#    ** Bad frames replay        = off
+#
+# The simulation is running...
+# ----------------------------------------------------------------------||--------------------------------||---------------------
+#       Bit Error Rate (BER) and Frame Error Rate (FER) depending       ||     Decoder throughput and     ||  Global throughput  
+#                    on the Signal Noise Ratio (SNR)                    ||      latency (per thread)      ||  and elapsed time   
+# ----------------------------------------------------------------------||--------------------------------||---------------------
+# -------|-------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+   Es/N0 | Eb/N0 |      FRA |       BE |       FE |      BER |      FER ||     CTHR |     ITHR |  LATENCY || SIM_CTHR |    ET/RT 
+#   (dB) |  (dB) |          |          |          |          |          ||   (Mb/s) |   (Mb/s) |     (us) ||   (Mb/s) | (hhmmss) 
+# -------|-------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+    3.16 |  2.00 |      409 |     5981 |       59 | 9.93e-03 | 1.44e-01 ||     0.67 |     0.22 |  6718.42 ||    17.47 | 00h00'00  
+    3.36 |  2.20 |     2306 |     4439 |       50 | 1.31e-03 | 2.17e-02 ||     0.73 |     0.24 |  6140.98 ||    25.35 | 00h00'00  
+    3.56 |  2.40 |    38312 |     3926 |       50 | 6.96e-05 | 1.31e-03 ||     0.89 |     0.29 |  5051.46 ||    32.28 | 00h00'05  
+    3.76 |  2.60 |  1028369 |     3286 |       50 | 2.17e-06 | 4.86e-05 ||     0.83 |     0.27 |  5467.26 ||    28.89 | 00h02'40  
+    3.96 |  2.80 | 45531412 |     2231 |       50 | 3.33e-08 | 1.10e-06 ||     0.92 |     0.30 |  4925.43 ||    31.13 | 01h49'58  
+    4.16 |  3.00 | 4.99e+08 |      296 |       50 | 4.03e-10 | 1.00e-07 ||     1.02 |     0.33 |  4434.80 ||    33.74 | 18h31'36  
+    4.36 |  3.20 | 1.37e+09 |      194 |       36 | 9.63e-11 | 2.63e-08 ||     1.03 |     0.34 |  4362.01 ||    33.16 | 20h06'41
+#    4.56 |  3.40 | 5.58e+09 |      300 |       50 | 3.65e-11 | 8.96e-09 ||  1071.05 | 06h31'44  
+#    4.76 |  3.60 | 1.26e+10 |      168 |       33 | 9.04e-12 | 2.61e-09 ||  1061.66 | 07h40'34 *

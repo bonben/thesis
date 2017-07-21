@@ -1,0 +1,207 @@
+\documentclass[t,compress,mathserif,10pt,xcolor=dvipsnames, table, aspectratio=43]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage{eulervm}
+\usepackage{etoolbox,refcount}
+
+\usepackage[normalem]{ulem} %strikeout with \sout{}
+
+%%%%% Colors
+\definecolor{bleuUni}{RGB}{0, 157, 224}
+\definecolor{marronUni}{RGB}{68, 58, 49}
+\usecolortheme[named=bleuUni]{structure}
+\input{../colors}
+%%%%%%%%%%%%%%%%%%%
+
+%%%%% Tabs
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{makecell}
+%\usepackage{enumitem}
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% Plots
+\usepackage{pgfplots}
+ \pgfplotsset{compat=newest}
+ \usepgfplotslibrary{groupplots}
+\usepackage{tikz}
+  \usetikzlibrary{matrix, positioning, patterns, shapes, arrows, shapes.multipart, decorations.pathmorphing}
+\usepackage{circuitikz}
+\usepackage{tikz-timing}      % package pour les chronogrammes
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox} %align in includegraphics
+\tikzset{
+    invisible/.style={opacity=0},
+    visible on/.style={alt={#1{}{invisible}}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },  
+}
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% Algo
+\usepackage[french,onelanguage, ruled, linesnumbered, vlined]{algorithm2e}
+\SetAlFnt{\footnotesize}
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% Math
+\usepackage{stmaryrd} %llbracket
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{marvosym} %grosse fleche
+\usepackage{calc}
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator*{\maxstar}{max*}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\decide}{decide}
+\DecimalMathComma
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%% Special commands : ddfrac and actionenv and compresslist
+
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+\newenvironment<>{varblock}[2][\textwidth]{%
+  \setlength{\textwidth}{#1}
+  \begin{actionenv}#3%
+    \def\insertblocktitle{#2}%
+    \par%
+    \usebeamertemplate{block begin}}
+  {\par%
+    \usebeamertemplate{block end}%
+  \end{actionenv}}
+
+\newcommand{\compresslist}{ % Define a command to reduce spacing within itemize/enumerate environments, this is used right after \begin{itemize} or \begin{enumerate}
+\setlength{\itemsep}{1pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{%
+      \node[shape=circle,fill=bleuUni,inner sep=2pt] (char) {\textbf{\textcolor{white}{#1}}};}}
+
+\newcommand{\itmsp}[1] {\setlength\itemsep{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% Beamer
+\usepackage[bars]{beamerthemetree} % Beamer theme v 2.2
+\mode<presentation>
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+ \oldmacro\hfill%
+\insertframenumber\,/\,\inserttotalframenumber}
+\setbeamertemplate{footline}[frame number]
+\setbeamersize{text margin left=10pt,text margin right=10pt}
+\setbeamerfont{frametitle}{size=\small}
+\setbeamertemplate{frametitle}{ \nointerlineskip %
+\begin{beamercolorbox}[wd=\paperwidth,ht=2.2ex,dp=.9ex,left]{frametitle} %
+                       \hspace*{2ex}\strut\bfseries\color{bleuUni!15!white}\insertframetitle\strut\par %
+\end{beamercolorbox}} 
+
+\usetheme{Ilmenau} % Beamer theme v 3.0
+\setbeamercolor{section in head/foot}{bg=marronUni}
+\useinnertheme{circles} %rectangle bullet points instead of circle ones
+\usepackage{beamerthemebars}
+\beamertemplatenavigationsymbolsempty
+%\setbeamercolor{navigation symbols dimmed}{fg=red!80!black}
+%\setbeamercolor{navigation symbols}{fg=red!80!black}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamertemplate{headline}{%
+\begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
+\end{beamercolorbox}
+\begin{beamercolorbox}{section in head/foot}
+    \vskip2pt\insertsectionnavigationhorizontal{\paperwidth}{}{}\vskip2pt
+\end{beamercolorbox}%
+\begin{beamercolorbox}[ht=10pt]{subsection in head/foot}%
+    \vskip2pt\insertsubsectionnavigationhorizontal{\paperwidth}{}{}\vskip2pt
+\end{beamercolorbox}%
+\begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
+\end{beamercolorbox}
+}
+
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+
+
+%%%%% Title
+\title{\textbf{Contribution à l'amélioration des \\%
+               performances de décodage des turbo codes : \\%
+               algorithmes et architecture}}
+%\subtitle{algorithms et arhitecture}\hspace{10.7cm}
+\author[Thibaud Tonnellier\hspace{7.51cm}{thibaud.tonnellier@ims-bordeaux.fr}]    {Thibaud Tonnellier}
+\titlegraphic{\includegraphics[height=.7cm]{logos/ims.png} \hfil %
+              \includegraphics[height=.7cm]{logos/inp.PNG} \hfil %
+              \includegraphics[height=.7cm]{logos/ub.png}  \hfil %
+              \includegraphics[height=.7cm]{logos/tas.png}}
+\date{5 Juillet 2017}
+%\pgfdeclareimage[height=.8cm]{le-logo}{logo.png}
+%\logo{\pgfuseimage{le-logo}\hspace{\dimexpr\paperwidth-1.55cm}\vspace{-8pt}}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% Contents each new sec and subsec
+\AtBeginSection[]
+{
+  %\ifnumcomp{\value{section}}{=}{1}{}{
+    \begin{frame}[c]{Plan}
+      \centering
+      \tableofcontents[
+          currentsection,
+          hideothersubsections
+          %subsectionstyle=show/hide
+      ]
+    \end{frame}
+  %}
+}
+
+\AtBeginSubsection[]
+{
+  \begin{frame}[c]{Plan}
+    \tableofcontents[
+      currentsection,
+      sectionstyle=show/shaded,
+      subsectionstyle=show/shaded/hide
+    ]
+  \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{frame}[c]{Std LTE, K=2048, Poinçonnage systématiques (1 sur 16)}
+\begin{center}
+\begin{tikzpicture}
+    \begin{semilogyaxis}[footnotesize, width=0.95\linewidth, height=0.6\linewidth,    
+            xmin=0, xmax=3, xtick={0,0.2,...,3},
+            %ymin=2e-6,  ymax=0.11,
+            xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  
+            grid=both, grid style={gray!30},
+          /pgfplots/table/ignore chars={|},
+        tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}]
+        legend pos=north east] 
+                \addplot[mark=o,Paired-1, semithick]  table [x=Eb/N0, y=FER] {../../main/ch4_fig/final/2048/ref.txt};
+                \addplot[mark=o,Set1-2, semithick, dashed, mark options={solid}]  table [x=Eb/N0, y=FER] {../../main/ch4_fig/final/2048/fnc10_m5.txt};
+                \addplot[mark=o,Paired-5, semithick, visible on=<2->]  table [x=Eb/N0, y=FER] {data/punc_lte_ref};
+                \addplot[mark=o,Paired-5, semithick, dashed, mark options={solid}, visible on=<3->]  table [x=Eb/N0, y=FER] {data/punc_lte_fnc};
+
+        \legend{TC 1/3, FNC q=10, TC Poinç., FNC Poinç q=10}
+    \end{semilogyaxis}
+\end{tikzpicture}  
+\end{center}
+
+\end{frame} 
+
+
+\end{document}

@@ -1,0 +1,58 @@
+\documentclass[border=1pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage{eulervm}
+\usepackage{xcolor}
+\definecolor{bleuUni}{RGB}{0, 157, 224}
+\usepackage{tikz}
+\usetikzlibrary{patterns, shapes, arrows, shapes.multipart, calc, positioning}
+\input{../../colors}
+\begin{document}
+\begin{tikzpicture}
+	% style des nœuds
+	\tikzstyle{debutfin}=[ellipse,draw,fill=Paired-7!50!Paired-5, text=white]
+	\tikzstyle{instruct}=[rectangle,draw,fill=Accent-4]
+	\tikzstyle{test}=[diamond, aspect=2.5,thick, draw=Accent-4!50!Paired-7,fill=Accent-4!50!white,text=black]
+	\tikzstyle{es}=[rectangle,draw,rounded corners=4pt,fill=Paired-2!40!white]
+	\tikzstyle{es_a}=[rectangle,draw,rounded corners=4pt,fill=Paired-1, text=white]
+	\tikzstyle{test_a}=[diamond, aspect=2.5,thick, draw=Accent-4!50!Paired-7,fill=Paired-8!50!Paired-7,text=black]
+	% style des flèches
+	\tikzstyle{suite}=[->,>=stealth',thick,rounded corners=4pt]
+	\tikzstyle{suite_a}=[->,>=stealth',very thick,rounded corners=4pt, bleuUni]
+	\tikzstyle{suite_v}=[->,>=stealth',very thick,rounded corners=4pt, Paired-3]
+	\tikzstyle{suite_r}=[->,>=stealth',very thick,rounded corners=4pt, Paired-5]
+	%%%% AVEC J>1
+	\node[debutfin] (start) at (0,1.4) {Début};
+	\node[es] (tdec) at (0,0.4) {Itération de Turbo Décodage};
+	\node[test] (j1) at (0, -0.8) {$i > I_{min}$?};
+	\node[test] (crc1) at (0, -3) {CRC verifié?};
+	\node[debutfin] (end) at (3, -8) {Stop};
+	\node[es] (find) at (-3, -4.5) {Identification/Tri des $q$ bits les moins fiables};
+	\node[instruct] (x0) at (-3, -5.5) {$x \gets 0$};
+	\node[es] (flip) at (-3, -6.5) {Génération du $x^{i\`eme}$ candidat};
+	\node[test] (crc2) at (-3, -8) {CRC verifié?};
+	\node[test] (xq) at (-3, -10.2) {$x < 2^q$?};
+	\node[instruct] (x1) at (-6, -7.5) {$x \gets x+1$};     
+	%\node at (-5,-1) {ATTENTION TU NE FAIS};
+	%\node at (-5,-1.5) {PAS COMME CA!!!};
+	% Placement des flèches
+	\draw[suite] (start) -- (tdec);
+	\draw[suite] (tdec) -- (j1);
+	\draw[suite] (j1) -- (crc1)node[near start,fill=white]{oui};
+	\draw[suite] (j1) -- (3,-0.8)node[near start,fill=white]{non} |- (tdec);
+	%\draw[suite] (j1) -- (-3,-0.8)node[near start,fill=white]{non} |- (tdec);
+	\draw[suite] (crc1) -| (find)node[near start,fill=white]{non};
+	\draw[suite] (crc1) -| (end)node[near start,fill=white]{oui};
+	\draw[suite] (find) -- (x0);
+	\draw[suite] (x0) -- (flip);
+	\draw[suite] (flip) -- (crc2);
+	\draw[suite] (crc2) -- (end)node[near start,fill=white]{oui};
+	\draw[suite_a] (crc2) -- (xq)node[near start,fill=white]{non};   
+	\draw[suite_a] (xq) -| (x1)node[near start,fill=white]{oui};
+	\draw[suite_a] (x1) |- (flip);
+	%\draw[suite] (xq) -- (4,-10.2)node[near start,fill=white]{non} -- (4,0.4) -- (tdec);  
+	\draw[suite] (xq) |- (-7.2,-11.2)node[near end,fill=white]{non} |- (tdec) ;
+																																	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+\end{tikzpicture}
+\end{document} 
