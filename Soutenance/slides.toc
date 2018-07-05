@@ -1,2 +1,0 @@
-\select@language {french}
-\beamer@sectionintoc {1}{Contexte}{2}{0}{1}

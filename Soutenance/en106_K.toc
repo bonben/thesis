@@ -1,5 +1,0 @@
-\select@language {french}
-\beamer@sectionintoc {1}{Rappels}{3}{0}{1}
-\beamer@sectionintoc {2}{Exemple}{4}{0}{2}
-\beamer@subsectionintoc {2}{1}{La table consid\IeC {\'e}r\IeC {\'e}e}{5}{0}{2}
-\beamer@subsectionintoc {2}{2}{Regroupements}{7}{0}{2}
