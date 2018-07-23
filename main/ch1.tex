@@ -10,51 +10,73 @@ Résumé
 
 \subsection*{Introduction}
 
-\section{Codes correcteurs d'erreurs}
+\section{Principe et construction}
 
-\subsection{Introduction}
+\subsection{Contexte}
 \begin{itemize}
-\item 
-\end{itemize}
-\subsection{Encodage du code polaire}
-\begin{itemize}
-\item 
+\item Chaine de communication : complet -> simplifié data -> encodeur -> canal -> décodeur-data
+\item Introduire redondance
+\item Codes linéaires - codes en blocs : évocation de certains pour exemple (hamming ? ldpc ?)
+\item Info souple / dure
+
 \end{itemize}
 \subsection{Noeuds de parité et d'égalité}
 \begin{itemize}
-\item 
+\item Codes bloc : réseau parité et égalité (reprendre exemple)
+\item Dans codes polaires, noyau 2 utilisé
+\item donner les équations
 \end{itemize}
 \subsection{Polarisation}
 \begin{itemize}
-\item 
+\item donner valeurs pour bec
+\item simulations, représentation de la polarisation
+\end{itemize}
+\subsection{Constructions des codes polaires}
+\begin{itemize}
+\item puisque polarisation -> bits gelés
+\item equations SC
 \end{itemize}
 
-\section{Classes d'algorithmes de décodage}
+\section{Les algorithmes de décodage de codes polaires}
 
 \subsection{Annulation Successive}
 \begin{itemize}
-\item 
+\item Séquencement
+\item Parallélisme
 \end{itemize}
 \subsection{Annulation Successive Liste}
 \begin{itemize}
-\item 
+\item Algorithme
+\item Calcul Métrique
+
 \end{itemize}
 \subsection{Algorithmes itératifs à sortie souple}
 \begin{itemize}
-\item 
+\item Noeud 2 à sortie souple
+\item BP
+\item SCAN
 \end{itemize}
 
+\subsection{Autres algorithmes}
+\begin{itemize}
+	\item SCS
+	\item SCF
+\end{itemize}
 \section{Améliorations algorithmiques}
 
 \subsection{Elagage de l'arbre de décodage}
 
 \subsubsection{Fast SC}
 \begin{itemize}
-\item 
+\item R0 - R1
+\item SPC - REP
+\item détailler calculs évitables (g0, f0, grep)
 \end{itemize}
 \subsubsection{Fast SCL}
 \begin{itemize}
-\item 
+\item détailler adaptation élagage pour SC Liste - calculs métriques
+\item discussion chase spc - r1 ?
+
 \end{itemize}
 \subsubsection{Fast SCAN}
 \begin{itemize}
@@ -64,14 +86,7 @@ Résumé
 \subsection{Adaptive}
 
 \section{Codes polaires de taille variables}
+% https://arxiv.org/pdf/1701.06458.pdf 4-5-6-7-8-9
 
-\subsection{Techniques par poinçonnage}
-\begin{itemize}
-\item 
-\end{itemize}
-\subsection{Techniques par raccourcissement}
-\begin{itemize}
-\item 
-\end{itemize}
 
 \subsection*{Conclusion}
