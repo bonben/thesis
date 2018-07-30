@@ -67,62 +67,98 @@ L'invention des codes polaires et la définition des matrices d'encodage par Ar{
 
 Deux algorithmes de décodages ont été proposés dès l'invention des codes polaires \cite{arikan_channel_2009}. L'algorithme de décodage appelé Annulation Successive (SC) est un algorithme de décodage à sortie dure : les données de sortie sont des bits. L'algorithme de décodage par propagation de croyance (BP) est au contraire un algorithme de décodage à sortie souple, dont les données de sortie sont des estimations représentée par exemple par des LLRs. De nombreuses variantes de ces algorithme ont ensuite été proposées pour améliorer leur performances de corrections. Les algorithme Annulation Successive par Liste (SCL), Annulation Successive "Flip" (SCF), Annulation Sucessive par Pile (SCS) sont des évolutions de l'algorithme SC. Tandis que l'algorithme appelé Annulation Souple (SCAN) eut être vu comme une combinaison des algorithmes SC et BP. Chacun de ces algorithmes est décrit dans cette section.
 
-\subsection{Annulation Successive}
+\subsection{Le décodage par Annulation Successive}
+
+\subsubsection{L'arbre de décodage}
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.7\textwidth]{main/ch1_fig/sc}
 \caption{Arbre de décodage SC}
 \label{fig:sc}
 \end{figure}
-% Sommes partielles termes non introduit
-% Vérifier que n est introduit
+% mettre en évidence qu'on décode bit par bit, sera utile pour sc list
+% introduire termes rendement 1 / rendement 0
+% sommes partielles termes non introduit
+% vérifier que n est introduit
 Les données d'entrée des algorithmes de décodages présentés ici sont des LLRs, contenus dans le vecteur $\mathbold{L}$ de taille $N$, sortis du canal composite. Les données de sorties sont des bits contenus dans le vecteur $\mathbold{\hat{b}}$ de taille $K$. Au cours du décodage de codes polaires, ces deux formats de données (LLRs et bits) sont également utilisés. La Figure~\ref{fig:sc} représente ces données nécessaires. Dans l'exemple considéré, $K=3$ et $N=8$. Les données sont organisées en arbre binaire sur $log_2(N) + 1$ couches. Dans notre cas donc, l'arbre possède quatre niveaux. A chaque couche sont attribués un certain nombre de noeuds. La racine de l'arbre numérotée $0$ est constituée d'un seul noeud. Ce noeud contient $N$ LLRs et $N$ sommes partielles. En decendant dans l'arbre, à chaque couche, le nombre de noeuds double, tandis que le nombre de LLRs et de sommes partielles de chaque noeud et divisé par deux. Chaque couche $d$ contient $2^d$ noeuds constitués de $2^{n-d}$ LLRs et de $2^{n-d}$ sommes partielles. 
 
 % Ajouter channel LLRs à la racine
-
+\subsubsection{Les fonctions élémentaires et leur séquencement}
 La première étape du décodage est le chargement des LLRs du canal $L$ : les LLRs du noeud racine prennent la valeur des LLRs du canal. Les LLRs et les sommes partielles de chaque noeud de l'arbre sont ensuite calculées par l'intermédiaire des opérations $f$, $g$, $h$, \texttt{R0} et \texttt{R1} symbolisées dans la Figure~\ref{fig:sc} par des flèches. Elles correspondent aux équations \ref{eq:sc}. 
-    \begin{eqnarray}
-      \begin{array}{l c l}
-        f(L_a,L_b) &=& \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)\\
-        g(L_a,L_b,\hat{s}_a)&=&(1-2\hat{s}_a)L_a+L_b\\
-        h(\hat{s}_a,\hat{s}_b)&=& (\hat{s}_{a} \oplus \hat{s}_{b}, \hat{s}_{b})\\
-        \texttt{R0}(L_a) &=& 0 \\
-        \texttt{R1}(L_a) &=&  \left\{\begin{array}{l c l} 0 \text{ si } L_a \geq 0 \\ 1 \text{ si } L_a < 0 \end{array}\right.
-      \end{array}
-      \label{eq:sc}
-    \end{eqnarray}
-% Explixiter notation (N,K)
-Les fonctions $f$ et $g$ prennent comme entrée des LLRs et produisent des LLRs en sortie. Elles permettent de descendre dans l'arbre jusqu'aux feuilles. Les feuilles sont les noeuds les plus bas de l'arbre. Le traitement d'une feuille correspond à l'application des opérations \texttt{R0} et \texttt{R1}. Lors d'un décodage non systématique, les sommes partielles contenues par les feuilles correspondent aux bits du mot de code. Certains sont donc des bits d'informations, d'autres sont des bits gelés dont la valeur, $0$, est connue d'avance. Pour les feuilles contenant les bits gelés, l'opération \texttt{R0} est appliquée, la somme partielle est égale à 0. Lorsque la feuille contient un bit d'information, l'opération \texttt{R1} est appliquée, la somme partielle est obtenue par seuillage du LLR. Après le décodage d'une feuille, la fonction $h$ est appliquée afin de remonter dans l'arbre. La hauteur jusqu'à laquelle les sommes partielles sont calculées grâce à la fonction $h$ dépend de l'index de la feuille qui vient d'être décodé. Cette recombinaison des sommes partielles est nécessaire à l'application des fonctions $g$, qui prennent en argument des sommes partielles. Le séquencement du décodage SC d'un codes polaire de taille $N=4$ est détaillé en Figure~\ref{fig:seq_sc}.
-
+\begin{eqnarray}
+  \begin{array}{l c l}
+    f(L_a,L_b) &=& \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)\\
+    g(L_a,L_b,\hat{s}_a)&=&(1-2\hat{s}_a)L_a+L_b\\
+    h(\hat{s}_a,\hat{s}_b)&=& (\hat{s}_{a} \oplus \hat{s}_{b}, \hat{s}_{b})\\
+    \texttt{R0}(L_a) &=& 0 \\
+    \texttt{R1}(L_a) &=&  \left\{\begin{array}{l c l} 0 \text{ si } L_a \geq 0 \\ 1 \text{ si } L_a < 0 \end{array}\right.
+  \end{array}
+  \label{eq:sc}
+\end{eqnarray}
 \begin{figure}[b]
 \centering
 \includegraphics[width=0.5\textwidth]{main/ch1_fig/seq_sc}
 \caption{Séquencement du décodage SC d'un code polaire de taille $N=8$.}
 \label{fig:seq_sc}
 \end{figure}
+% Expliciter notation (N,K)
+Les fonctions $f$ et $g$ prennent comme entrée des LLRs et produisent des LLRs en sortie. Elles permettent de descendre dans l'arbre jusqu'aux feuilles. Les feuilles sont les noeuds les plus bas de l'arbre. Le traitement d'une feuille correspond à l'application des opérations \texttt{R0} et \texttt{R1}. Lors d'un décodage non systématique, les sommes partielles contenues par les feuilles correspondent aux bits du mot de code. Certains sont donc des bits d'informations, d'autres sont des bits gelés dont la valeur, $0$, est connue d'avance. Pour les feuilles contenant les bits gelés, l'opération \texttt{R0} est appliquée, la somme partielle est égale à 0. Lorsque la feuille contient un bit d'information, l'opération \texttt{R1} est appliquée, la somme partielle est obtenue par seuillage du LLR. Après le décodage d'une feuille, la fonction $h$ est appliquée afin de remonter dans l'arbre. La hauteur jusqu'à laquelle les sommes partielles sont calculées grâce à la fonction $h$ dépend de l'index de la feuille qui vient d'être décodé. Cette recombinaison des sommes partielles est nécessaire à l'application des fonctions $g$, qui prennent en argument des sommes partielles. Le séquencement du décodage SC d'un codes polaire de taille $N=4$ est détaillé en Figure~\ref{fig:seq_sc}. Dans le cas d'un code non systématique, le mot de code décodé se trouve dans les feuilles de l'arbre de décodage. Les opération 12 et 13 dans la Figure \ref{fig:seq_sc} sont donc inutiles puisqu'elles servent seulement à calculer les sommes partielles du noeud racine. Par contre, dans le cas d'un code systématique, ce sont les sommes partielles du noeud racine qui correspondent au mot de code décodé.
 
-\begin{itemize}
-\item Parallélisme
-\item Systématique
-\end{itemize}
-\subsection{Annulation Successive Liste}
-\begin{itemize}
-\item Algorithme
-\item Calcul Métrique
+\subsubsection{Le parallélisme de l'algorithme}
+Dans la Figure~\ref{fig:sc}, quatre fonctions $f$ sont appliquées sur le noeud racine pour calculer les LLRs de la branche de gauche. Ces quatre fonctions sont indépendantes : leurs entrées et sorties sont disjointes. Par conséquence, elles peuvent être réalisées simultanément. Cela est également vrai pour chaque fonction $f$, $g$ et $h$ d'un noeud donné. Ainsi, le niveau de parallélisme est différent selon la couche considérée et correspond à la taille du noeud de sortie. Le parallélisme est donc plus grand en haut de l'arbre qu'en bas. Lorsque ce parallélisme est utilisé, on parle de parallélisme \textit{intra-trame}.
 
-\end{itemize}
+
+\subsection{Le décodage par Annulation Successive Liste}
+\subsubsection{L'algorithme}
+L'algorithme de décodage par Annulation Successive Liste (SCL) est une évolution de l'algorithme SC \cite{tal_how_2013}. L'algorithme SC présente en effet des performances de correction médiocres pour des codes polaires de petite taille. Le SCL améliore ses performances substantiellement. Dans l'algorithme de décodage SC décrit précédemment, des décisions dure sont réalisées à chaque décodage d'une feuille correspondant à un bit d'information (fonction \texttt{R1}). Si une erreur est commise au sur une feuille lors de ce seuillage, celle-ci est irréversible, et le décodage du mot de code est un échec. Le principe de l'algorithme de décodage par liste est de retarder la décision dure. Au lieu d'appliquer un seuillage sur la valeur du LLR, les deux possibilités de décodage sont considérées, et l'arbre de décodage, avec l'ensemble de ses LLRs et sommes partielles, est dupliqué. Le décodage continue ainsi sur les deux arbres parallèlement. A chaque feuille de rendement 1, le même procédé est réalisé, doublant le nombre d'arbres décodés en parallèle.
+
+% citer article balatsoukas
+% Ajouter les bits décodés sur les arbres pour les faire apparaître lors de la description du liste. 
+Il n'est pas possible, en pratique, de dupliquer indéfiniment le nombre d'arbres de décodage, la mémoire nécessaire et le nombre de calcul devient vite insoutenable. Un nombre de chemins maximum $L$ paramétrise donc l'algorithme liste. La sélection des chemins qui seront conservés ou éliminés est réalisée grâce à une métrique $m$ associée à chaque chemin. Cette métrique est mise à jour à chaque traitement d'une feuille. Lorsque la feuille est de rendement 0 si le LLR de la feuille est positif, la métrique est inchangée car l'estimation du LLR est en encore avec la valeur du bit gelé, 0. Si le LLR est négatif alors au contraire, la valeur absolue du LLR lui est ajoutée. Lorsque la feuille est de rendement un, deux chemins sont créés, avec chacun une version différente du bit décodé. Le chemin créé dont la valeur du bit est en accord avec la valeur du LLR ne reçoit pas de pénalité. Au contraire, la métrique du deuxième chemin créé est accrue de la valeur du LLR.
+
+Une fois ces calculs de métriques réalisés, on sélectionne les chemins à conserver. Si $L$ chemins étaient actifs au moment du traitement d'une feuille de rendement 1, alors $2L$ chemins sont générés, avec chacun une métrique associée. Seuls les $L$ chemins avec la métrique la plus faible sont conservés. A la fin du parcours de l'arbre de décodage, $L$ chemins auront donc été conservés. Ces $L$ chemins correspondent à $L$ mots de codes possibles. Une sélection d'un seul candidat parmis les $L$ doit être effectuée. Dans la version originale de l'algorithme, le mot décodé associé au chemin ayant la métrique de valeur la plus faible à la fin du décodage est sélectionné comme étant la sortie de l'algorithme $\mathbold{\hat{b}}$.
+
+\subsubsection{Concaténation avec un CRC}
+Les auteurs de \cite{tal_how_2013} ont proposé de concaténer un test de redondance cyclique (CRC) pour discriminer les différents candidats. A la fin de l'algorithme de décodage, lorsque les $L$ mots de codes sont disponibles, un CRC est appliqué sur chacun d'entre eux. Si l'un d'entre eux vérifie le CRC, il est alors hautement probable qu'il soit le bon candidat. Le mécanisme est illustré en Figure~\ref{fig:crc}.
+
+% Prendre une décision sur l'appellation des algos (de / par / [] Annu Succ par / "" / [] Liste / Pile)
+% Pour chaque algo, lister possiblement les améliorations mineures
+
+\subsection{Autres algorithmes}
+	L'algorithme de décodage par Annulation Successive Flip (SCF) \cite{afisiadis_low-complexity_2014} est une variante de l'algorithme SC. Il vise également à améliorer les performances de décodage. Cet algorithme nécessite la concaténation d'un CRC pour être réalisé. L'algorithme de décodage SC est appliqué une première fois. L'ensemble des LLRs permettant les décisions dure (les LLRs des feuilles) est conservé. Si le mot de code décodé satisfait le CRC, alors le décodage s'arrête. Par contre, si le CRC n'est pas satisfait, alors l'algorithme SC est lancé une nouvelle fois. La différence est que la décision prise, lors du premier décodage, sur le LLR le moins fiable est inversée. Ce deuxième mot décodé est encore testé à l'aide du CRC. S'il ne satisfait toujours pas le CRC, une autre séquence de décodage est lancée en inversant le bit du deuxième LLR le moins fiable. Ce mécanisme itératif continue jusqu'à un nombre d'essai maximum $T$.
+
+
+	% SC Stack
+	L'algorithme de décodage par Annulation Successive Pile (SCS) \cite{chen_improved_2013} est une variante de l'algorithme SCL. Dans l'algorithme SCL, le nombre de candidat $L$ est conservé stable tout au long de l'algorithme. De plus, le séquencement est exactement le même que dans le SC dans les différents arbres décodés parallèlement : les feuilles sont décodées l'une après l'autre, dans l'ordre. Dans l'algorithme SCS, les métriques associées aux différents arbres de décodages sont maintenues dans une pile ordonnée de profondeur $T$. L'algorithme SC est appliqué sur le chemin associé à la meilleure métrique. A l'arrivée sur une feuille, la métrique de l'arbre est mise à jour et, si la feuille est de rendement 1, un nouveau chemin est ajouté à la pile. \`A un instant $t$, seul l'arbre étant le plus haut sur la pile est décodé. Lorsque la dernière feuille de l'un des chemins est décodé, le CRC est testé. Le décodage se termine lorsqu'un mot décodé satisfait le CRC ou que le nombre de candidats testés atteint une valeur déterminée à l'avance $D$. L'algorithme SCS présente l'avantage de nécessiter moins d'opérations élementaires sur les codes polaires. Cependant, le maintien d'une pile et son séquencement particulier rendent son implémentation difficile.
+	% Citer Harsch
+	% Parler du Stack Hybride ? 
+
+
 \subsection{Algorithmes itératifs à sortie souple}
+
+\subsubsection{L'algorithme de décodage à Propagation de Croyance}
+Les algorithmes cités précédemment sont des algorithmes de décodage à sortie dures. Leur sortie consiste en un mot de code décodé $\mathbold{\hat{b}}$ constitué de bits. Certains algorithmes permettent au contraire de générer des sorties souples représentant des vraisemblances. Dans nos exemples celles-si prendront la forme de LLRs. Lors de l'invention des codes polaires \cite{arikan_channel_2009}, le premier algorithme à sorties souples proposé fut l'algorithme de décodage à Propagation de Croyance (BP). Au contraire de l'algorithme SC, aucune décision dure n'est effectuée au cours du décodage. Les sommes partielles sont remplacées par des LLRs. Les fonction utilisées pour les calculs des LLRs sont listées dans les Equations \ref{eq:bp}.
+    \begin{eqnarray}
+      \begin{array}{l c l}
+        f_{bp}(L_a,L_b,L_c) &=& f(L_a, L_b + L_c) \\
+        g_{bp}(L_a,L_b,L_c)&=& f(L_a, L_c) + L_b
+      \end{array}
+      \label{eq:bp}
+    \end{eqnarray}
+
 \begin{itemize}
 \item Noeud 2 à sortie souple
 \item BP
 \item SCAN
 \end{itemize}
 
-\subsection{Autres algorithmes}
+
+\subsection{Comparaisons des algorithmes}
 \begin{itemize}
 	\item SCS
 	\item SCF
 \end{itemize}
+
 \section{Améliorations algorithmiques}
 
 \subsection{Elagage de l'arbre de décodage}
