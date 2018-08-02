@@ -1,22 +1,706 @@
-%!TEX root = ../my_thesis.tex
 
-@book{ryan2009channel,
-  title={Channel codes: classical and modern},
-  author={Ryan, William and Lin, Shu},
-  year={2009},
-  publisher={Cambridge University Press}
+@article{leonardon_fast_2017,
+	title = {Fast and {Flexible} {Software} {Polar} {List} {Decoders}},
+	url = {http://arxiv.org/abs/1710.08314},
+	abstract = {Flexibility is one mandatory aspect of channel coding in modern wireless communication systems. Among other things, the channel decoder has to support several code lengths and code rates. This need for flexibility applies to polar codes that are considered for control channels in the future 5G standard. This paper presents a new generic and flexible implementation of a software Successive Cancellation List (SCL) decoder. A large set of parameters can be fine-tuned dynamically without re-compiling the software source code: the code length, the code rate, the frozen bits set, the puncturing patterns, the cyclic redundancy check, the list size, the type of decoding algorithm, the tree-pruning strategy and the data quantization. This generic and flexible SCL decoder enables to explore tradeoffs between throughput, latency and decoding performance. Several optimizations are proposed to achieve a competitive decoding speed despite the constraints induced by the genericity and the flexibility. The resulting polar list decoder is about 4 times faster than a generic software decoder and only 2 times slower than a non-flexible unrolled decoder. Thanks to the flexibility of the decoder, the fully adaptive SCL algorithm can be easily implemented and achieves higher throughput than any other similar decoder in the literature (up to 425 Mb/s on a single processor core for N = 2048 and K = 1723 at 4.5 dB).},
+	urldate = {2018-04-12},
+	journal = {arXiv:1710.08314 [cs, math]},
+	author = {Léonardon, Mathieu and Cassagne, Adrien and Leroux, Camille and Jégo, Christophe and Hamelin, Louis-Philippe and Savaria, Yvon},
+	month = oct,
+	year = {2017},
+	note = {arXiv: 1710.08314},
+	keywords = {Computer Science - Information Theory},
+	annote = {Comment: 11 pages, 7 figures, submitted to Springer Journal of Signal Processing Systems},
+	file = {arXiv\:1710.08314 PDF:/home/bonben/Zotero/storage/WJJM8BS2/Léonardon et al. - 2017 - Fast and Flexible Software Polar List Decoders.pdf:application/pdf;arXiv.org Snapshot:/home/bonben/Zotero/storage/4PC8HZU7/1710.html:text/html}
 }
 
-
-@article{arikan_channel_2009,
-	title = {Channel polarization: {A} method for constructing capacity-achieving codes for symmetric binary-input memoryless channels},
-	volume = {55},
-	number = {7},
-	journal = {IEEE Transactions on Information Theory},
-	author = {Arikan, Erdal},
-	year = {2009}
+@inproceedings{ghaffari_improving_2017,
+	title = {Improving performance of {SCMA} {MPA} decoders using estimation of conditional probabilities},
+	doi = {10.1109/NEWCAS.2017.8010095},
+	abstract = {Sparse code multiple access (SCMA) is a new type of non-orthogonal modulation suggested for 5G systems offering lower bit-error rate and higher spectral efficiency. There are many challenges when designing high throughput SCMA message passing decoders to meet the standards expected from 5G networks. Particularly, the message passing algorithm (MPA) needs many exponential computations to calculate conditional probabilities in case of Gaussian noise channels. This paper describes a sub-optimal modeling of noise using polynomial probability distributions rather than a normal distribution to eliminate the exponential calculations for MPA detectors. Simulation results demonstrate that an estimated SCMA MPA reaches the desired bit-error rate performance with much lower computational/hardware complexity.},
+	booktitle = {2017 15th {IEEE} {International} {New} {Circuits} and {Systems} {Conference} ({NEWCAS})},
+	author = {Ghaffari, A. and Leonardon, M. and Savaria, Y. and Jego, C. and Leroux, C.},
+	month = jun,
+	year = {2017},
+	keywords = {5G, 5G mobile communication, 5G systems, Algorithm design and analysis, BER, bit-error rate, conditional probabilities, Decoding, error statistics, Estimation, Gaussian channels, Gaussian noise channels, iterative multi-user detection, Message passing, message passing algorithm, MPA Decoder, multi-access systems, nonorthogonal modulation, polynomial probability distributions, probability, Probability density function, SCMA MPA decoders, sparse code multiple access, Sparse Code Multiple Access (SCMA), Throughput, Uplink},
+	pages = {21--24},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/LK4X7AE6/8010095.html:text/html}
 }
 
+@inproceedings{yang_reconfigurable_2018,
+	title = {Reconfigurable {Decoder} for {LDPC} and {Polar} {Codes}},
+	doi = {10.1109/ISCAS.2018.8351337},
+	abstract = {With low-density parity-check (LDPC) code and polar code selected as the standard codes for 5G eMBB scenario, one challenge is how to improve the hardware efficiency when both decoders are required by one system. Since LDPC and polar codes can be decoded with belief propagation (BP) algorithms, this similarity allows us to design a reconfigurable decoder, which can decode both codes at the cost of only one decoder. Numerical and implementation results are also given in this paper to show that the proposed decoder achieves higher hardware efficiency than stand-alone LDPC or polar decoder, without harming the error performance.},
+	booktitle = {2018 {IEEE} {International} {Symposium} on {Circuits} and {Systems} ({ISCAS})},
+	author = {Yang, N. and Jing, S. and Yu, A. and Liang, X. and Zhang, Z. and You, X. and Zhang, C.},
+	month = may,
+	year = {2018},
+	keywords = {Decoding, Adders, belief propagation, Complexity theory, Computer architecture, Hardware, Iterative decoding, LDPC codes, polar codes, reconfigurable decoder},
+	pages = {1--5},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/G8G8PIS2/8351337.html:text/html}
+}
+
+@article{sze_efficient_2017,
+	title = {Efficient {Processing} of {Deep} {Neural} {Networks}: {A} {Tutorial} and {Survey}},
+	volume = {105},
+	issn = {0018-9219, 1558-2256},
+	shorttitle = {Efficient {Processing} of {Deep} {Neural} {Networks}},
+	url = {http://ieeexplore.ieee.org/document/8114708/},
+	doi = {10.1109/JPROC.2017.2761740},
+	language = {en},
+	number = {12},
+	urldate = {2018-05-18},
+	journal = {Proceedings of the IEEE},
+	author = {Sze, Vivienne and Chen, Yu-Hsin and Yang, Tien-Ju and Emer, Joel S.},
+	month = dec,
+	year = {2017},
+	pages = {2295--2329},
+	file = {Sze et al. - 2017 - Efficient Processing of Deep Neural Networks A Tu.pdf:/home/bonben/Zotero/storage/NZJW8JFU/Sze et al. - 2017 - Efficient Processing of Deep Neural Networks A Tu.pdf:application/pdf}
+}
+
+@inproceedings{wasserman_designing_2016,
+	title = {Designing polar codes to minimize the {BER} of {CRC}-aided list decoding},
+	doi = {10.1109/ITA.2016.7888197},
+	abstract = {This paper is concerned with polar codes for FEC. One major advantage of polar codes is that it is easy to construct polar codes for a specified BMS channel. The standard polar code constructions are designed to minimize the FER of an SC decoder. However, there are polar decoders more powerful than SC, and for some applications BER is more important than FER. We ask, can the code construction be tweaked to minimize the BER of a CRC-aided list decoder? This paper reports an initial investigation of this question. Simulation results show that when communicating through a binary AWGN channel, it sometimes helps to use a code constructed for a noisier binary AWGN channel.},
+	booktitle = {2016 {Information} {Theory} and {Applications} {Workshop} ({ITA})},
+	author = {Wasserman, D. R.},
+	month = jan,
+	year = {2016},
+	keywords = {Decoding, error statistics, Complexity theory, AWGN channels, binary AWGN channel, Bit error rate, BMS channel, channel coding, CRC-aided list decoding BER minimization, decoding, Encoding, FEC, forward error correction, Forward error correction, minimisation, polar code, SC decoder FER minimization, Simulation, Systematics},
+	pages = {1--3},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/FQFYAJ3V/7888197.html:text/html}
+}
+
+@incollection{jaaskelainen_hw/sw_2017,
+	title = {{HW}/{SW} {Co}-design {Toolset} for {Customization} of {Exposed} {Datapath} {Processors}},
+	isbn = {978-3-319-49678-8 978-3-319-49679-5},
+	url = {https://link.springer.com/chapter/10.1007/978-3-319-49679-5_8},
+	abstract = {Customized processors are an interesting option for implementing software defined radios; they bring benefits of tailored fixed function hardware while adding new advantages such as reduced implementation verification effort and increased post-fabrication flexibility. To reduce the engineering costs and the time-to-market of platforms with new computing devices, the processor customization process should be supported with automated design flows that include tools like retargeting compilers, instruction-set simulators, and RTL generators. This chapter presents an open source processor co-design toolset that is based on a computation resource oriented design methodology where the primary design choices are the set of resources to include in the processor at hand, instead of focusing on instruction encoding details. The toolset is based on a retargetable high-level language compiler and a scalable exposed datapath template which support different styles of parallelism available in applications. In addition to various published academic processor design examples for SDR algorithms, the tools have been used to design and program processors that have been implemented down to silicon layout level and integrated in commercial grade chips.},
+	language = {en},
+	urldate = {2018-06-11},
+	booktitle = {Computing {Platforms} for {Software}-{Defined} {Radio}},
+	publisher = {Springer, Cham},
+	author = {Jääskeläinen, Pekka and Viitanen, Timo and Takala, Jarmo and Berg, Heikki},
+	year = {2017},
+	doi = {10.1007/978-3-319-49679-5_8},
+	pages = {147--164},
+	file = {Snapshot:/home/bonben/Zotero/storage/XI7X6ZLX/978-3-319-49679-5_8.html:text/html;Snapshot:/home/bonben/Zotero/storage/QTH37F2C/978-3-319-49679-5_8.html:text/html}
+}
+
+@inproceedings{lattner_llvm:_2004,
+	address = {Washington, DC, USA},
+	series = {{CGO} '04},
+	title = {{LLVM}: {A} {Compilation} {Framework} for {Lifelong} {Program} {Analysis} \& {Transformation}},
+	isbn = {978-0-7695-2102-2},
+	shorttitle = {{LLVM}},
+	url = {http://dl.acm.org/citation.cfm?id=977395.977673},
+	abstract = {This paper describes LLVM (Low Level Virtual Machine),a compiler framework designed to support transparent, lifelongprogram analysis and transformation for arbitrary programs,by providing high-level information to compilertransformations at compile-time, link-time, run-time, and inidle time between runs.LLVM defines a common, low-levelcode representation in Static Single Assignment (SSA) form,with several novel features: a simple, language-independenttype-system that exposes the primitives commonly used toimplement high-level language features; an instruction fortyped address arithmetic; and a simple mechanism that canbe used to implement the exception handling features ofhigh-level languages (and setjmp/longjmp in C) uniformlyand efficiently.The LLVM compiler framework and coderepresentation together provide a combination of key capabilitiesthat are important for practical, lifelong analysis andtransformation of programs.To our knowledge, no existingcompilation approach provides all these capabilities.We describethe design of the LLVM representation and compilerframework, and evaluate the design in three ways: (a) thesize and effectiveness of the representation, including thetype information it provides; (b) compiler performance forseveral interprocedural problems; and (c) illustrative examplesof the benefits LLVM provides for several challengingcompiler problems.},
+	urldate = {2018-06-15},
+	booktitle = {Proceedings of the {International} {Symposium} on {Code} {Generation} and {Optimization}: {Feedback}-directed and {Runtime} {Optimization}},
+	publisher = {IEEE Computer Society},
+	author = {Lattner, Chris and Adve, Vikram},
+	year = {2004},
+	pages = {75--},
+	file = {ACM Full Text PDF:/home/bonben/Zotero/storage/LXHYIDR8/Lattner and Adve - 2004 - LLVM A Compilation Framework for Lifelong Program.pdf:application/pdf}
+}
+
+@inproceedings{esko_customized_2010,
+	title = {Customized {Exposed} {Datapath} {Soft}-{Core} {Design} {Flow} with {Compiler} {Support}},
+	doi = {10.1109/FPL.2010.51},
+	abstract = {A popular way to exploit high level programming languages in FPGA designs is to use a soft-core with accompanying software development tools. However, a common shortcoming with the current soft-core offerings is their limited software execution capability: the required performance for the implementation can be often reached only with instruction set extensions. In this paper, we propose and evaluate an application-specific processor design toolset that uses a multi-issue exposed data path processor architecture template. The main benefit of the architecture is scalability with respect to instruction-level parallelism (ILP). The design flow allows the designer to freely customize the data path resources in the core to exploit the ILP available in computation intensive kernels. The design toolset includes a retargetable C compiler and an architecture simulator, making design space exploration feasible. The experiments show that a relatively small soft-core tailored with the toolset provides significant speedups on software execution without using any instruction set extensions. The best measured speedup in comparison to the major commercial soft-cores was fourfold in applications from the CHStone benchmark suite, while the amount of consumed FPGA resources remained moderate.},
+	booktitle = {2010 {International} {Conference} on {Field} {Programmable} {Logic} and {Applications}},
+	author = {Esko, O. and Jaaskelainen, P. and Huerta, P. and Lama, C. S. de La and Takala, J. and Martinez, J. I.},
+	month = aug,
+	year = {2010},
+	keywords = {application specific integrated circuits, application specific processor design toolset, architecture simulator, CHStone benchmark suite, data path processor architecture template, field programmable gate arrays, FPGA designs, high level languages, high level programming languages, ILP, instruction level parallelism, instruction set, instruction sets, logic design, program compilers, retargetable C compiler, soft core design flow, software development tools, software execution capability, software tools},
+	pages = {217--222},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/LKKT4I6J/5694250.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/ZFFUMPAK/5694250.html:text/html}
+}
+
+@inproceedings{giard_638_2015,
+	title = {A 638 {Mbps} low-complexity rate 1/2 polar decoder on {FPGAs}},
+	doi = {10.1109/SiPS.2015.7345007},
+	abstract = {Polar codes are capacity-achieving error-correcting codes with an explicit construction that can be decoded with low-complexity algorithms. In this work, we show how the state-of-the-art low-complexity decoding algorithm can be improved to better accommodate low-rate codes. Dedicated hardware is added to efficiently decode new constituent codes. Also, we use polar code construction alteration to further improve the latency and throughput. A polar decoder for a (1024, 512) code is implemented on two different FPGAs. It has 25\% lower latency over the previous work and a coded throughput of 436 Mbps and 638 Mbps on the Xilinx Virtex 6 and Altera Stratix IV FPGAs, respectively.},
+	booktitle = {2015 {IEEE} {Workshop} on {Signal} {Processing} {Systems} ({SiPS})},
+	author = {Giard, P. and Sarkis, G. and Thibeault, C. and Gross, W. J.},
+	month = oct,
+	year = {2015},
+	keywords = {Throughput, Hardware, decoding, field programmable gate arrays, Clocks, Maximum likelihood decoding, Altera Stratix IV FPGA, capacity-achieving error-correcting codes, error correction codes, Field programmable gate arrays, low-complexity decoding algorithm, polar code construction alteration, polar decoder, Reliability, Xilinx Virtex 6},
+	pages = {1--6},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/HHQX7A6Q/7345007.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/4WHN7LCD/7345007.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/N5D4PDTV/7345007.html:text/html}
+}
+
+@inproceedings{berhault_hardware_2015,
+	title = {Hardware implementation of a soft cancellation decoder for polar codes},
+	doi = {10.1109/DASIP.2015.7367252},
+	abstract = {Polar Codes can provably achieve the capacity of discrete memoryless channels. In order to make practical, it is necessary to propose efficient hardware decoder architectures. In this paper, the first hardware decoder architecture implementing the Soft-output CANcellation (SCAN) decoding algorithm, is presented. This decoder was implemented on Field Programmable Gate Array (FPGA) devices. The proposed architecture is parametrizable for any number of iterations without adding hardware complexity. The SCAN decoder architecture is compared to another soft-output decoder that implements a Belief Propagation (BP) algorithm. The SCAN decoder can reach a higher throughput than a BP decoder, with a lower memory footprint. Moreover, only one iteration with the SCAN algorithm leads to better decoding performance than 50 iterations of the BP algorithm.},
+	booktitle = {2015 {Conference} on {Design} and {Architectures} for {Signal} and {Image} {Processing} ({DASIP})},
+	author = {Berhault, G. and Leroux, C. and Jego, C. and Dallet, D.},
+	month = sep,
+	year = {2015},
+	keywords = {Decoding, belief propagation, Computer architecture, Hardware, Iterative decoding, polar codes, decoding, Encoding, Systematics, field programmable gate arrays, logic design, codes, codecs, BP algorithm, BP decoder, discrete memoryless channels, field programmable gate array, FPGA devices, hardware decoder architectures, iterative methods, Logic gates, SCAN decoder architecture, SCAN decoding algorithm, soft cancellation decoder, soft-output cancellation},
+	pages = {1--8},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/4H9TLN9N/7367252.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/TJTLH344/7367252.html:text/html}
+}
+
+@inproceedings{lin_reduced_2015,
+	title = {Reduced complexity belief propagation decoders for polar codes},
+	doi = {10.1109/SiPS.2015.7344984},
+	abstract = {Polar codes are newly discovered capacity-achieving codes, which have attracted lots of research efforts. Polar codes can be efficiently decoded by the low-complexity successive cancelation (SC) algorithm and the SC list (SCL) decoding algorithm. The belief propagation (BP) decoding algorithm not only is an alternative to the SC and SCL decoders, but also provides soft outputs that are necessary for joint detection and decoding. Both the BP decoder and the soft cancelation (SCAN) decoder were proposed for polar codes to output soft information about the coded bits. In this paper, first a belief propagation decoding algorithm, called reduced complexity soft cancelation (RCSC) decoding algorithm, is proposed. Let N denote the block length. Our RCSC decoding algorithm needs to store only 5N - 3 log-likelihood ratios (LLRs), significantly less than 4N - 2+ N log2N/2 and N(log2 N +1) LLRs needed by the BP and SCAN decoders, respectively, when N ≥ 64. Besides, compared to the SCAN decoding algorithm, our RCSC decoding algorithm eliminates unnecessary additions over the real field. Then the simplified SC (SSC) principle is applied to our RCSC decoding algorithm, and the resulting SSC-aided RCSC (S-RCSC) decoding algorithm further reduces the computational complexity. Finally, based on the S-RCSC decoding algorithm, we propose a corresponding memory efficient decoder architecture, which has better error performance than existing architectures. Besides, our decoder architecture consumes less energy on updating LLRs.},
+	booktitle = {2015 {IEEE} {Workshop} on {Signal} {Processing} {Systems} ({SiPS})},
+	author = {Lin, J. and Xiong, C. and Yan, Z.},
+	month = oct,
+	year = {2015},
+	keywords = {Decoding, Message passing, Complexity theory, Computer architecture, Iterative decoding, polar codes, decoding, SCAN decoding algorithm, Belief propagation, BP decoding algorithm, capacity-achieving codes, low-complexity successive cancelation algorithm, reduced complexity belief propagation decoders, S-RCSC decoding algorithm, SC list decoding algorithm, Schedules, soft cancelation},
+	pages = {1--6},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/EAXJUQTL/7344984.html:text/html}
+}
+
+@inproceedings{alles_flexichap:_2008,
+	title = {{FlexiChaP}: {A} reconfigurable {ASIP} for convolutional, turbo, and {LDPC} code decoding},
+	shorttitle = {{FlexiChaP}},
+	doi = {10.1109/TURBOCODING.2008.4658677},
+	abstract = {Future mobile and wireless communication networks require flexible modem architectures to provide seamless services between different network standards. In this paper we focus on the outer modem which has to support various advanced channel coding techniques like convolutional codes, turbo codes, and low-density parity-check (LDPC) codes. We present an application-specific instruction-set processor (ASIP) which supports convolutional codes, binary/duo-binary turbo codes, and LDPC codes. Special emphasis is put on the support of LDPC codes. The ASIP consists of a special pipeline which is completely optimized for channel decoding. Logic synthesis yields an overall area of 0.62 mm2 for this ASIP in a 65 nm low power technology. Payload throughputs of, e.g., up to 257 Mbps are possible at 400 MHz for the WiMAX and WiFi LDPC codes, outperforming existing ASIP solutions for LDPC decoding by an order of magnitude.},
+	booktitle = {2008 5th {International} {Symposium} on {Turbo} {Codes} and {Related} {Topics}},
+	author = {Alles, M. and Vogt, T. and Wehn, N.},
+	month = sep,
+	year = {2008},
+	keywords = {Decoding, channel coding, decoding, Pipelines, Application specific processors, application-specific instruction-set processor, binary-duo-binary turbo codes, bit rate 257 Mbit/s, Channel coding, channel coding techniques, Communication standards, convolutional codes, Convolutional codes, frequency 400 MHz, LDPC code decoding, low power technology, mobile communication networks, mobile radio, modem architecture flexibility, Modems, parity check codes, Parity check codes, reconfigurable ASIP, turbo codes, Turbo codes, Wi-Fi, WiMAX, Wireless communication, wireless communication networks},
+	pages = {84--89},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/HR7ZYURS/4658677.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/GF8TKFT7/4658677.html:text/html}
+}
+
+@inproceedings{muller_asip-based_2006,
+	address = {3001 Leuven, Belgium, Belgium},
+	series = {{DATE} '06},
+	title = {{ASIP}-based {Multiprocessor} {SoC} {Design} for {Simple} and {Double} {Binary} {Turbo} {Decoding}},
+	isbn = {978-3-9810801-0-0},
+	url = {http://dl.acm.org/citation.cfm?id=1131481.1131845},
+	abstract = {This paper presents a new multiprocessor platform for high throughput turbo decoding. The proposed platform is based on a new configurable ASIP combined with an efficient memory and communication interconnect scheme. This Application-Specific Instruction-set Processor has an SIMD architecture with a specialized and extensible instruction-set and 5-stages pipeline control. The attached memories and communication interfaces enable the design of efficient multiprocessor architectures. These multiprocessor architectures benefit from the recent shuffling technique introduced in the turbo-decoding field to reduce communication latency. The major characteristics of the proposed platform are its flexibility and scalability which make it reusable for various standards and operating modes. Results obtained for double binary DVB-RCS turbo codes demonstrate a 100 Mbit/s throughput using 16-ASIP multiprocessor architecture.},
+	urldate = {2018-06-25},
+	booktitle = {Proceedings of the {Conference} on {Design}, {Automation} and {Test} in {Europe}: {Proceedings}},
+	publisher = {European Design and Automation Association},
+	author = {Muller, Olivier and Baghdadi, Amer and Jézéquel, Michel},
+	year = {2006},
+	pages = {1330--1335},
+	file = {ACM Full Text PDF:/home/bonben/Zotero/storage/E7YWU762/Muller et al. - 2006 - ASIP-based Multiprocessor SoC Design for Simple an.pdf:application/pdf;ACM Full Text PDF:/home/bonben/Zotero/storage/BBMNABJE/Muller et al. - 2006 - ASIP-based Multiprocessor SoC Design for Simple an.pdf:application/pdf}
+}
+
+@inproceedings{leonardon_custom_2018,
+	title = {Custom {Low} {Power} {Processor} for {Polar} {Decoding}},
+	doi = {10.1109/ISCAS.2018.8351739},
+	abstract = {Cloud Radio Access Network is foreseen as one of the key features of the future 5G mobile communication standard. In this context, all the baseband processing is intended to be performed on CPUs in order to keep a high level of flexibility. The challenge is then to propose efficient software implementations of baseband processing algorithms that guarantee a sufficient throughput, while limiting the energy consumption. In this paper, as an alternative to general purpose processors, we propose an implementation of an Application Specific Instruction set Processor customized for the Successive Cancellation decoding of polar codes. The resulting software decoder achieves throughputs similar to state-of-the-art ARM processor implementations, while reducing the energy consumption by a factor 10.},
+	booktitle = {2018 {IEEE} {International} {Symposium} on {Circuits} and {Systems} ({ISCAS})},
+	author = {Léonardon, M. and Leroux, C. and Binet, D. and Langlois, J. M. P. and Jégo, C. and Savaria, Y.},
+	month = may,
+	year = {2018},
+	keywords = {5G mobile communication, Decoding, Throughput, Hardware, Registers, Software, Energy consumption},
+	pages = {1--5},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/VAW6WI5C/8351739.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/W7LNCRKD/8351739.html:text/html}
+}
+
+@article{wang_interleaved_2016,
+	title = {Interleaved {Concatenations} of {Polar} {Codes} {With} {BCH} and {Convolutional} {Codes}},
+	volume = {34},
+	issn = {0733-8716},
+	doi = {10.1109/JSAC.2015.2504320},
+	abstract = {We analyze interleaved concatenation schemes of polar codes with outer binary BCH codes and convolutional codes. We show that both BCH-polar and Conv-polar codes can have a frame error rate that decays exponentially with the code length for all rates up to capacity, which is a substantial improvement in the error exponent over stand-alone polar codes. Interleaved concatenation with long constraint length convolutional codes is an effective way to leverage the fact that polarization increases the cutoff rate of the channel. Simulation results show that Conv-polar codes when decoded with the proposed soft-output multistage iterative decoding algorithm can outperform stand-alone polar codes decoded with successive cancellation or belief propagation decoding. It may be comparable to stand-alone polar codes with list decoding in the high SNR regime. In addition to this, we show that the proposed concatenation scheme requires lower memory and decoding complexity in comparison to belief propagation and list decoding of polar codes. Practically, the scheme enables rate compatible outer codes which ease hardware implementation. Our results suggest that the proposed method may strike a better balance between performance and complexity compared to existing methods in the finite-length regime.},
+	number = {2},
+	journal = {IEEE Journal on Selected Areas in Communications},
+	author = {Wang, Y. and Narayanan, K. R. and Huang, Y. C.},
+	month = feb,
+	year = {2016},
+	keywords = {Complexity theory, Iterative decoding, Maximum likelihood decoding, Convolutional codes, concatenated codes, convolution, cutoff rate, decoding complexity, Error analysis, interleaved codes, interleaved concatenation, interleaved polar code-BCH-convolutional code concatenation, list decoding, long constraint length convolutional codes, Memory management, multistage decoding, Polar codes, rate compatible outer codes, sequential decoding},
+	pages = {267--277},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/QMP6SU2U/7339653.html:text/html}
+}
+
+@article{fayyaz_low-complexity_2014,
+	title = {Low-{Complexity} {Soft}-{Output} {Decoding} of {Polar} {Codes}},
+	volume = {32},
+	issn = {0733-8716},
+	doi = {10.1109/JSAC.2014.140515},
+	abstract = {The state-of-the-art soft-output decoder for polar codes is a message-passing algorithm based on belief propagation, which performs well at the cost of high processing and storage requirements. In this paper, we propose a low-complexity alternative for soft-output decoding of polar codes that offers better performance but with significantly reduced processing and storage requirements. In particular we show that the complexity of the proposed decoder is only 4\% of the total complexity of the belief propagation decoder for a rate one-half polar code of dimension 4096 in the dicode channel, while achieving comparable error-rate performance. Furthermore, we show that the proposed decoder requires about 39\% of the memory required by the belief propagation decoder for a block length of 32768.},
+	number = {5},
+	journal = {IEEE Journal on Selected Areas in Communications},
+	author = {Fayyaz, U. U. and Barry, J. R.},
+	month = may,
+	year = {2014},
+	keywords = {Decoding, error statistics, message passing algorithm, Complexity theory, Iterative decoding, polar codes, decoding, Belief propagation, Memory management, Polar codes, belief propagation decoder, dicode channel, error rate performance, low-complexity soft-output decoding, message passing, Receivers, soft-output decoding, turbo equalization},
+	pages = {958--966},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/CY2VNG2H/6804940.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/3MJNCKCN/6804940.html:text/html}
+}
+
+@inproceedings{rister_parallel_2014,
+	title = {Parallel programming of a symmetric transport-triggered architecture with applications in flexible {LDPC} encoding},
+	doi = {10.1109/ICASSP.2014.6855236},
+	abstract = {Exposed-datapath architectures yield small, low-power processors that trade instruction word length for aggressive compile-time scheduling and a high degree of instruction-level parallelism. In this paper, we present a general-purpose parallel accelerator consisting of a main processor and eight symmetric clusters, all in a single core. Use of a lightweight and memory-efficient application programming interface allows for the first high-performance program executing both sequential and data-parallel code on the same TTA processor. We use the processor for LDPC encoding, a popular method of forward error correction. Demonstrating the flexibility of software-defined radio, we benchmark the processor with two programs, one which can handle almost any sort of LDPC code, and another which is optimized for a specific standard. We achieve a throughput of 5 Mb/s with the flexible program and 92 Mb/s with the standard-specific one, while consuming only 95 mW at a clock frequency of 1175 MHz.},
+	booktitle = {2014 {IEEE} {International} {Conference} on {Acoustics}, {Speech} and {Signal} {Processing} ({ICASSP})},
+	author = {Rister, B. and Jääskeläinen, P. and Silvén, O. and Hannuksela, J. and Cavallaro, J. R.},
+	month = may,
+	year = {2014},
+	keywords = {Computer architecture, Hardware, Encoding, forward error correction, parity check codes, Parity check codes, application program interfaces, data-parallel code, flexible LDPC encoding, general-purpose parallel accelerator, low-density parity check codes (LDPC), memory-efficient application programming interface, Open Computing Language (OpenCL), parallel architectures, parallel computing, Parallel processing, parallel programming, software radio, software-defined radio, software-defined radio (SDR), Sparse matrices, symmetric transport-triggered architecture, transport-triggered architecture (TTA), TTA processor, Vectors},
+	pages = {8380--8384},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/BC84GEPW/6855236.html:text/html}
+}
+
+@inproceedings{kultala_turbo_2013,
+	title = {Turbo decoding on tailored {OpenCL} processor},
+	doi = {10.1109/IWCMC.2013.6583710},
+	abstract = {Turbo coding is commonly used in the current wireless standards such as 3G and 4G. However, due to the high computational requirements, its software-defined implementation is challenging. This paper proposes a static multi-issue exposed datapath processor design tailored for turbo decoding. In order to utilize the parallel processor datapath efficiently without resorting to low level assembly programming, the turbo decoder is implemented using OpenCL, a parallel programming standard for heterogeneous devices. The proposed implementation includes only a small set of Turbo-specific custom operations to accelerate the most critical parts of the algorithm. Most of the computation is performed using general-purpose integer operations. Thus, the processor design can be used as a general-purpose OpenCL accelerator for arbitrary integer workloads as well. The proposed processor design was evaluated both by implementing it using a Xilinx Virtex 6 FPGA and by ASIC synthesis using 130 nm and 40 nm technology libraries. The implementation achieves over 63 Mbps Turbo decoding throughput on a single low-power core. According to the ASIC synthesis, the maximum operating clock frequency is 344 MHz/1 050 MHz (130 nm/40 nm).},
+	booktitle = {2013 9th {International} {Wireless} {Communications} and {Mobile} {Computing} {Conference} ({IWCMC})},
+	author = {Kultala, H. and Esko, O. and Jääskeläinen, P. and Guzma, V. and Takala, J. and Xianjun, J. and Zetterman, T. and Berg, H.},
+	month = jul,
+	year = {2013},
+	keywords = {Decoding, Throughput, Computer architecture, application specific integrated circuits, field programmable gate arrays, Clocks, Registers, turbo codes, parallel programming, software radio, Vectors, ASIC synthesis, computational requirements, datapath processor design, general-purpose integer operations, low level assembly programming, radio networks, software-defined implementation, tailored OpenCL processor, telecommunication standards, turbo decoding, wireless standards, Xilinx Virtex 6 FPGA},
+	pages = {1095--1100},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/R5GK2BHN/6583710.html:text/html}
+}
+
+@misc{noauthor_tta-based_nodate,
+	title = {{TTA}-{Based} {Co}-{Design} {Environment} {Home} {Page}},
+	url = {http://tce.cs.tut.fi},
+	abstract = {An open source toolset for 
+the design of application-specific processors based on the Transport Triggered 
+Architecture paradigm.},
+	urldate = {2018-06-29},
+	journal = {TCE},
+	file = {Snapshot:/home/bonben/Zotero/storage/YQZUKL5J/publications.html:text/html}
+}
+
+@article{shahabuddin_design_2014,
+	title = {Design of a transport triggered vector processor for turbo decoding},
+	volume = {78},
+	issn = {0925-1030, 1573-1979},
+	url = {https://link.springer.com/article/10.1007/s10470-013-0183-y},
+	doi = {10.1007/s10470-013-0183-y},
+	abstract = {In order to meet the requirement of high data rates for next generation wireless systems, efficient implementations of receiver algorithms are essential. On the other hand, faster time-to-market motivates the investigation of programmable implementations. This paper presents a novel design of a programmable turbo decoder as an application-specific instruction-set processor (ASIP) using transport triggered architecture (TTA). The processor architecture is designed in such a manner that it can be programmed with high level language to support different suboptimal maximum a posteriori (MAP) algorithms in a single TTA processor. The design enables the designer to change the algorithms according to the frame error rate performance requirement. A quadratic polynomial permutation interleaver is used for contention-free memory access and to make the processor 3GPP LTE compliant. Several optimization techniques to enable real time processing on programmable platforms are introduced. The essential parts of the turbo decoding algorithm are designed with vector function units. Unlike most other turbo decoder ASIPs, high level language is used to program the processor to meet the time-to-market requirements. With a single iteration, 68.35 Mbps decoding speed is achieved for the max-log-MAP algorithm at a clock frequency of 210 MHz on 90 nm technology.},
+	language = {en},
+	number = {3},
+	urldate = {2018-06-29},
+	journal = {Analog Integrated Circuits and Signal Processing},
+	author = {Shahabuddin, Shahriar and Janhunen, Janne and Juntti, Markku and Ghazi, Amanullah and Silvén, Olli},
+	month = mar,
+	year = {2014},
+	pages = {611--622},
+	file = {Full Text PDF:/home/bonben/Zotero/storage/362A5SEW/Shahabuddin et al. - 2014 - Design of a transport triggered vector processor f.pdf:application/pdf;Snapshot:/home/bonben/Zotero/storage/QSNSUXLS/s10470-013-0183-y.html:text/html}
+}
+
+@inproceedings{sanghavi_estimation_2001,
+	address = {New York, NY, USA},
+	series = {{DAC} '01},
+	title = {Estimation of {Speed}, {Area}, and {Power} of {Parameterizable}, {Soft} {IP}},
+	isbn = {1-58113-297-2},
+	url = {http://doi.acm.org/10.1145/378239.378259},
+	doi = {10.1145/378239.378259},
+	booktitle = {Proceedings of the 38th {Annual} {Design} {Automation} {Conference}},
+	publisher = {ACM},
+	author = {Sanghavi, Jagesh and Wang, Albert},
+	year = {2001},
+	pages = {31--34}
+}
+
+@inproceedings{rodriguez_towards_2017,
+	title = {Towards the deployment of a fully centralized {Cloud}-{RAN} architecture},
+	booktitle = {Proceedings of the {IEEE} {International} {Wireless} {Communications} and {Mobile} {Computing} {Conference} ({IWCMC})},
+	author = {Rodriguez, V. Q. and Guillemin, F.},
+	year = {2017},
+	pages = {1055--1060}
+}
+
+@inproceedings{nikaein_processing_2015,
+	title = {Processing radio access network functions in the cloud: critical issues and modeling},
+	booktitle = {Proceedings of the {ACM} {International} {Workshop} on {Mobile} {Cloud} {Computing} and {Services} ({MCS})},
+	author = {Nikaein, N.},
+	year = {2015},
+	pages = {36--43}
+}
+
+@article{giard_polarbear:_2017,
+	title = {{PolarBear}: {A} 28 nm {FD}-{SOI} {ASIC} for decoding of polar codes},
+	journal = {IEEE Journal on Emerging and Selected Topics in Circuits and Systems},
+	author = {Giard, Pascal and Balatsoukas-Stimming, Alexios and Müller, Thomas Christoph and Bonetti, Andrea and Thibeault, Claude and Gross, Warren J and Flatresse, Philippe and Burg, Andreas},
+	year = {2017}
+}
+
+@techreport{3gpp_ts_2017,
+	title = {{TS} 38.212, multiplexing and channel coding ({Release} 15)},
+	author = {{3GPP}},
+	month = sep,
+	year = {2017}
+}
+
+@article{wehner_real_2009,
+	title = {A {Real} {Cloud} {Computer}},
+	volume = {46},
+	issn = {0018-9235},
+	doi = {10.1109/MSPEC.2009.5267992},
+	number = {10},
+	journal = {IEEE Spectrum},
+	author = {Wehner, M. and Oliker, L. and Shalf, J.},
+	month = oct,
+	year = {2009},
+	keywords = {AMD Opteron, cloud computer, geophysics computing, Green Flash, microprocessor chips, numerical weather forecasting, Tensilica XTensa LX2, weather forecasting},
+	pages = {24--29}
+}
+
+@article{gal_multi-gb/s_2015,
+	title = {Multi-{Gb}/s {Software} {Decoding} of {Polar} {Codes}},
+	volume = {63},
+	issn = {1053-587X},
+	doi = {10.1109/TSP.2014.2371781},
+	number = {2},
+	journal = {IEEE Transactions on Signal Processing},
+	author = {Gal, B. Le and Leroux, C. and Jego, C.},
+	month = jan,
+	year = {2015},
+	keywords = {Decoding, Throughput, polar codes, decoding, Systematics, Signal processing algorithms, Software, successive cancellation decoder, Polar codes, Vectors, software polar decoders, algorithmic simplifications, AVX mode, code length, code rate, data packing, energy per decoded bit, explicit assembly description, low level optimizations, memory reduction techniques, multiGb/s software decoding, multithreading mode, optimisation, Optimization, parallel software polar decoder, processor architectures, SC decoder, selected target, SIMD, SIMD mode, software optimizations, successive cancellation decoding, x86 processor, x86 processor target},
+	pages = {349--359}
+}
+
+@inproceedings{giard_fast_2014,
+	title = {Fast software polar decoders},
+	doi = {10.1109/ICASSP.2014.6855069},
+	booktitle = {2014 {IEEE} {International} {Conference} on {Acoustics}, {Speech} and {Signal} {Processing} ({ICASSP})},
+	author = {Giard, P. and Sarkis, G. and Thibeault, C. and Gross, W. J.},
+	month = may,
+	year = {2014},
+	keywords = {Decoding, Throughput, Hardware, polar codes, Signal processing algorithms, error correction codes, codecs, parity check codes, Parity check codes, software radio, channel capacity, error-correcting codes, Error-Correction, error-correction performance, general-purpose processors, graphic processing units, graphics processing units, Graphics processing units, information throughput, Polar Codes, software implementations, software LDPC decoders, software polar decoders, Software-Defined-Radio, software-defined-radio applications},
+	pages = {7555--7559},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/8F3PQL4K/6855069.html:text/html}
+}
+
+@inproceedings{gal_software_2014,
+	title = {Software polar decoder on an embedded processor},
+	doi = {10.1109/SiPS.2014.6986083},
+	booktitle = {2014 {IEEE} {Workshop} on {Signal} {Processing} {Systems} ({SiPS})},
+	author = {Gal, B. L. and Leroux, C. and Jego, C.},
+	month = oct,
+	year = {2014},
+	keywords = {Decoding, Throughput, instruction sets, memory footprint reduction, Software, codecs, parity check codes, Parity check codes, Parallel processing, algorithmic simplifications, code length, code rate, multithreading mode, Cortex A9 ARM processor, embedded ARM processor, embedded systems, information theory, LDPC decoders, Multicore processing, NEON instruction set, polar codes decoder, Software algorithms, software implementation, software polar decoder},
+	pages = {1--6}
+}
+
+@article{sarkis_fast_2014,
+	title = {Fast {Polar} {Decoders}: {Algorithm} and {Implementation}},
+	volume = {32},
+	issn = {0733-8716},
+	doi = {10.1109/JSAC.2014.140514},
+	number = {5},
+	journal = {IEEE Journal on Selected Areas in Communications},
+	author = {Sarkis, G. and Giard, P. and Vardy, A. and Thibeault, C. and Gross, W. J.},
+	month = may,
+	year = {2014},
+	keywords = {Throughput, Complexity theory, polar codes, decoding, Systematics, field programmable gate arrays, Maximum likelihood decoding, error correction codes, Reliability, Parity check codes, block codes, fast polar decoders, flexible polar decoder, FPGA implementation, gigabit-per-second polar decoder, linear codes, polar decoding hardware throughput, storage systems, successive-cancellation decoders, successive-cancellation decoding, symmetric memoryless channel capacity},
+	pages = {946--957}
+}
+
+@techreport{etsi_lte;_2013,
+	title = {{LTE}; {Evolved} {Universal} {Terrestrial} {Radio} {Access} ({E}-{UTRA}); {Multiplexing} and channel coding (3GPP {TS} 36.212 vers ion 11.1.0 {Release} 11)},
+	institution = {ETSI},
+	author = {{ETSI}},
+	year = {2013}
+}
+
+@techreport{std_802.16e-2005_ieee_2005,
+	title = {{IEEE} {LAN}/{MAN} {Standards} {Committee}. {IEEE} {Standard} for {Local} and metropolitan area networks – {Part} 16: {Air} {Interface} for {Fixed} and {Mobile} {Broadband} {Wireless} {Access} {Systems} {Amendment} 2: {Physical} and {Medium} {Access} {Control} {Layers} for {Combined} {Fixed} and {Mobile} {Operation} in {Licensed} {Bands} and {Corrigendum} 1,},
+	institution = {IEEE},
+	author = {Std 802.16e-2005, IEEE and IEEE Std 802.16-2004/Cor 1-2005, 2006. IEEE std 802.16e–2005},
+	year = {2005}
+}
+
+@article{gallager_low-density_1962,
+	title = {Low-density parity-check codes},
+	volume = {8},
+	number = {1},
+	journal = {IRE Transactions on information theory},
+	author = {Gallager, Robert},
+	year = {1962},
+	pages = {21--28}
+}
+
+@inproceedings{berrou_near_1993,
+	title = {Near {Shannon} limit error-correcting coding and decoding: {Turbo}-codes. 1},
+	volume = {2},
+	booktitle = {Communications, 1993. {ICC}'93 {Geneva}. {Technical} {Program}, {Conference} {Record}, {IEEE} {International} {Conference} on},
+	publisher = {IEEE},
+	author = {Berrou, Claude and Glavieux, Alain and Thitimajshima, Punya},
+	year = {1993},
+	pages = {1064--1070}
+}
+
+@inproceedings{tal_list_2011,
+	title = {List decoding of polar codes},
+	booktitle = {Information {Theory} {Proceedings} ({ISIT}), 2011 {IEEE} {International} {Symposium} on},
+	publisher = {IEEE},
+	author = {Tal, Ido and Vardy, Alexander},
+	year = {2011},
+	pages = {1--5}
+}
+
+@article{giard_hardware_2016,
+	title = {Hardware {Decoders} for {Polar} {Codes}: {An} {Overview}},
+	volume = {abs/1606.00737},
+	url = {http://arxiv.org/abs/1606.00737},
+	journal = {CoRR},
+	author = {Giard, Pascal and Sarkis, Gabi and Balatsoukas-Stimming, Alexios and Fan, YouZhe and Tsui, Chi-Ying and Burg, Andreas and Thibeault, Claude and Gross, Warren J.},
+	year = {2016}
+}
+
+@article{giard_unrolled_2015,
+	title = {Unrolled {Polar} {Decoders}, {Part} {I}: {Hardware} {Architectures}},
+	volume = {abs/1505.01459},
+	url = {http://arxiv.org/abs/1505.01459},
+	journal = {CoRR},
+	author = {Giard, Pascal and Sarkis, Gabi and Thibeault, Claude and Gross, Warren J.},
+	year = {2015}
+}
+
+@inproceedings{leroux_hardware_2011,
+	title = {Hardware architectures for successive cancellation decoding of polar codes},
+	doi = {10.1109/ICASSP.2011.5946819},
+	booktitle = {2011 {IEEE} {International} {Conference} on {Acoustics}, {Speech} and {Signal} {Processing} ({ICASSP})},
+	author = {Leroux, C. and Tal, I. and Vardy, A. and Gross, W. J.},
+	month = may,
+	year = {2011},
+	keywords = {Decoding, Throughput, Complexity theory, Computer architecture, Hardware, channel coding, polar code, Registers, error correction codes, Polar codes, successive cancellation decoding, block codes, linear codes, computational complexity, consecutive codeword, hardware architecture, hardware implementation, logarithmic domain, Processor scheduling, speed-up factor, VLSI},
+	pages = {1665--1668}
+}
+
+@misc{cadence_design_systems_tensilica_nodate,
+	title = {Tensilica {Customizable} {Processors}},
+	url = {https://ip.cadence.com/ipportfolio/tensilica-ip/xtensa-customizable},
+	urldate = {2018-02-06},
+	author = {Cadence Design Systems, Inc. (US)}
+}
+
+@book{noauthor_3gpp_2016,
+	title = {3GPP {TSG} {RAN} {WG}1 meeting \#87, {Chairman}’s notes of agenda item 7.1.5 {Channel} coding and modulation},
+	year = {2016}
+}
+
+@article{wubben_benefits_2014,
+	title = {Benefits and impact of cloud computing on 5G signal processing: flexible centralization through cloud-{RAN}},
+	volume = {31},
+	number = {6},
+	journal = {IEEE Signal Processing Magazine},
+	author = {Wübben, D. and Rost, P. and Bartelt, J. S. and Lalam, M. and Savin, V. and Gorgoglione, M. and Dekorsy, A. and Fettweis, G.},
+	year = {2014},
+	pages = {35--44}
+}
+
+@article{rost_cloud_2014,
+	title = {Cloud technologies for flexible 5G radio access networks},
+	volume = {52},
+	number = {5},
+	journal = {IEEE Communications Magazine},
+	author = {Rost, P. and Bernardos, C. J. and De Domenico, A. and Di Girolamo, M. and Lalam, M. and Maeder, A. and Sabella, D. and Wübben, D.},
+	year = {2014},
+	pages = {68--76}
+}
+
+@techreport{ericsson_cloud_2015,
+	title = {Cloud {RAN} - {The} benefits of cirtualization, centralisation and coordination},
+	url = {https://www.ericsson.com/assets/local/publications/white-papers/wp-cloud-ran.pdf},
+	author = {{Ericsson}},
+	year = {2015}
+}
+
+@techreport{huawei_5g:_2013,
+	title = {5G: {A} technology vision},
+	url = {https://www.huawei.com/ilink/en/download/HW_314849},
+	author = {{Huawei}},
+	year = {2013}
+}
+
+@book{dahlman_4g:_2013,
+	title = {4G: {LTE}/{LTE}-advanced for mobile broadband},
+	publisher = {Academic press},
+	author = {Dahlman, E. and Parkvall, S. and Skold, J.},
+	year = {2013}
+}
+
+@inproceedings{wang_high_2013,
+	title = {High throughput low latency {LDPC} decoding on {GPU} for {SDR} systems},
+	booktitle = {Proceedings of the {IEEE} {Global} {Conference} on {Signal} and {Information} {Processing} ({GlobalSIP})},
+	author = {Wang, G. and Wu, M. and Yin, B. and Cavallaro, J. R.},
+	year = {2013}
+}
+
+@article{le_gal_high-throughput_2016,
+	title = {High-throughput multi-core {LDPC} decoders based on x86 processor},
+	volume = {27},
+	number = {5},
+	journal = {IEEE Transactions on Parallel and Distributed Systems (TPDS)},
+	author = {Le Gal, B. and Jego, C.},
+	year = {2016},
+	pages = {1373--1386}
+}
+
+@article{le_gal_high-throughput_2015,
+	title = {High-throughput {LDPC} decoder on low-power embedded processors},
+	volume = {19},
+	number = {11},
+	journal = {IEEE Communications Letters},
+	author = {Le Gal, B. and Jego, C.},
+	year = {2015},
+	pages = {1861--1864}
+}
+
+@inproceedings{yoge_gpu_2012,
+	title = {{GPU} {Implementation} of a programmable turbo decoder for software defined radio applications},
+	booktitle = {Proceedings of the {IEEE} {VLSI} {Design} {Conference}},
+	author = {Yoge, D.R.N. and Chandrachoodan, N.},
+	year = {2012}
+}
+
+@inproceedings{wu_hspa+/lte-turbo_2013,
+	title = {{HSPA}+/{LTE}-{A} turbo decoder on {GPU} and multicore {CPU}},
+	booktitle = {Proceedings of the {IEEE} {Asilomar} {Conference} on {Signals}, {Systems}, and {Computers} ({ACSSC})},
+	author = {Wu, M. and Wang, G. and Yin, B. and Studer, C. and Cavallaro, J.R.},
+	year = {2013}
+}
+
+@inproceedings{cassagne_beyond_2016,
+	title = {Beyond {Gbps} {Turbo} decoder on multi-core {CPUs}},
+	booktitle = {Proceedings of the {IEEE} {International} {Symposium} on {Turbo} {Codes} \& {Iterative} {Information} {Processing} ({ISTC})},
+	author = {Cassagne, A. and Tonnellier, T. and Leroux, C. and Le Gal, B. and Aumage, O. and Barthou, D.},
+	year = {2016}
+}
+
+@inproceedings{mishra_successive_2012,
+	title = {A successive cancellation decoder {ASIC} for a 1024-bit polar code in 180nm {CMOS}},
+	booktitle = {Proceedings of the {IEEE} {Asilomar} {Conference} on {Signals}, {Systems}, and {Computers} ({ACSSC})},
+	author = {Mishra, A. and Raymond, A. J. and Amaru, L. G. and Sarkis, G. and Leroux, C. and Meinerzhagen, P. and Burg, A. and Gross, W.J.},
+	year = {2012},
+	keywords = {decoding, polar code, application specific integrated circuits, field programmable gate arrays, ASIC implementation, CMOS, CMOS integrated circuits, codecs, FPGA testing setup, silicon complexity, size 180 nm, speculative decoding technique, successive cancellation decoder},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/5TW36RTD/6522661.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/2C7ZD4LT/6522661.html:text/html}
+}
+
+@article{leroux_hardware_2012,
+	title = {Hardware implementation of successive-cancellation decoders for polar codes},
+	volume = {69},
+	number = {3},
+	journal = {Springer Journal of Signal Processing Systems (JSPS)},
+	author = {Leroux, C. and Raymond, A. J. and Sarkis, G. and Tal, I. and Vardy, A. and Gross, W. J.},
+	year = {2012},
+	pages = {305--315}
+}
+
+@article{raymond_scalable_2014,
+	title = {A scalable successive-cancellation decoder for polar codes},
+	volume = {62},
+	number = {20},
+	journal = {IEEE Transactions on Signal Processing (TSP)},
+	author = {Raymond, A.J. and Gross, W.J.},
+	year = {2014},
+	pages = {5339--5347}
+}
+
+@inproceedings{li_low-latency_2014,
+	title = {Low-latency polar codes via hybrid decoding},
+	booktitle = {Proceedings of the {IEEE} {International} {Symposium} on {Turbo} {Codes} \& {Iterative} {Information} {Processing} ({ISTC})},
+	author = {Li, B. and Shen, H. and Tse, D. and Tong, W.},
+	year = {2014}
+}
+
+@article{yuan_low-latency_2014,
+	title = {Low-latency successive-cancellation polar decoder architectures using 2-bit decoding},
+	volume = {61},
+	issn = {1549-8328},
+	number = {4},
+	journal = {IEEE Transactions on Circuits and Systems I: Regular Papers},
+	author = {Yuan, B. and Parhi, K. K.},
+	month = apr,
+	year = {2014},
+	keywords = {Algorithm design and analysis, Decoding, Complexity theory, Computer architecture, Hardware, polar codes, decoding, Encoding, 2 bit decoding, 2-bit decoder, Equations, hardware complexity, hardware design, hardware efficiency, least-latency SC decoder, Look-ahead, low latency successive cancellation polar decoder architectures, overlapped scheduling, precomputation, SC algorithm, successive cancellation},
+	pages = {1241--1254}
+}
+
+@article{giard_237_2015,
+	title = {A 237 {Gbps} unrolled hardware polar decoder},
+	volume = {51},
+	number = {10},
+	journal = {IET Electronics Letters},
+	author = {Giard, P. and Sarkis, G. and Thibeault, C. and Gross, W.J.},
+	year = {2015},
+	pages = {762--763}
+}
+
+@inproceedings{sarkis_autogenerating_2014,
+	title = {Autogenerating software polar decoders},
+	booktitle = {Proceedings of the {IEEE} {Global} {Conference} on {Signal} and {Information} {Processing} ({GlobalSIP})},
+	author = {Sarkis, G. and Giard, P. and Thibeault, C. and Gross, W.J.},
+	year = {2014},
+	keywords = {Throughput, Computer architecture, Hardware, polar codes, decoding, program compilers, branchless data flow, data flow computing, data memory layout, decoder, floating-point software polar decoder, fully-unrolled software polar decoders, Maximum likelihood decoding, optimization techniques, Signal processing algorithms, software, Software, software polar decoder autogeneration, source code (software)},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/3QZRBMNU/7032067.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/L9ZGULWJ/7032067.html:text/html}
+}
+
+@book{aff3ct_aff3ct:_2016,
+	title = {{AFF}3CT: {The} first software release},
+	url = {http://dx.doi.org/10.5281/zenodo.55668},
+	author = {{AFF3CT}},
+	year = {2016},
+	doi = {10.5281/zenodo.55668}
+}
+
+@article{arikan_systematic_2011,
+	title = {Systematic polar coding},
+	volume = {15},
+	number = {8},
+	journal = {IEEE Communications Letters},
+	author = {Arikan, E.},
+	year = {2011},
+	pages = {860--862}
+}
+
+@inproceedings{sarkis_increasing_2014,
+	title = {Increasing the speed of polar list decoders},
+	booktitle = {Proceedings of the {IEEE} {International} {Workshop} on {Signal} {Processing} {Systems} ({SiPS})},
+	author = {Sarkis, G. and Giard, P. and Vardy, A. and Thibeault, C. and Gross, W. J.},
+	year = {2014},
+	pages = {1--6}
+}
+
+@article{sarkis_fast_2016,
+	title = {Fast list decoders for polar codes},
+	volume = {34},
+	number = {2},
+	journal = {IEEE Journal on Selected Areas in Communications (JSAC)},
+	author = {Sarkis, G. and Giard, P. and Vardy, A. and Thibeault, C. and Gross, W. J.},
+	year = {2016},
+	pages = {318--328}
+}
+
+@inproceedings{cassagne_energy_2016,
+	title = {Energy consumption analysis of software polar decoders on low power processors},
+	booktitle = {Proceedings of the {IEEE} {European} {Signal} {Processing} {Conference} ({EUSIPCO})},
+	author = {Cassagne, A. and Aumage, O. and Leroux, C. and Barthou, D. and Le Gal, B.},
+	year = {2016},
+	keywords = {Decoding, Throughput, Bit error rate, decoding, Encoding, Energy consumption, software radio, ARM Cortex-A57, energy consumption, low power embedded processor, Program processors, SC decoder implementation, SDR system, software defined radio system, software polar decoder energy consumption analysis, successive cancellation decoder implementation, telecommunication power management},
+	pages = {642--646}
+}
+
+@article{li_adaptive_2012,
+	title = {An adaptive successive cancellation list decoder for polar codes with cyclic redundancy check},
+	volume = {16},
+	issn = {1089-7798},
+	doi = {10.1109/LCOMM.2012.111612.121898},
+	number = {12},
+	journal = {IEEE Communications Letters},
+	author = {Li, B. and Shen, H. and Tse, D.},
+	month = dec,
+	year = {2012},
+	keywords = {Complexity theory, Iterative decoding, polar codes, decoding, Maximum likelihood decoding, Error analysis, Polar codes, adaptive codes, adaptive SC list decoder, adaptive successive cancellation list decoder, CRC code, Cyclic redundancy check, cyclic redundancy check codes, FER, frame error rate, information theoretic limit, list decoder, Signal to noise ratio, word length 24 bit},
+	pages = {2044--2047}
+}
+
+@inproceedings{shen_low-latency_2016,
+	title = {Low-latency software successive cancellation list polar decoder using stage-located copy},
+	booktitle = {Proceedings of the {IEEE} {International} {Conference} on {Digital} {Signal} {Processing} ({DSP})},
+	author = {Shen, Y. and Zhang, C. and Yang, J. and Zhang, S. and You, X.},
+	year = {2016}
+}
 
 @article{tal_how_2013,
 	title = {How to construct polar codes},
@@ -30,6 +714,221 @@
 	year = {2013},
 	keywords = {Decoding, Complexity theory, polar codes, codes, Convolutional codes, channel capacity, Approximation algorithms, alphabet size, approximation methods, Approximation methods, approximation theory, Channel degrading and upgrading, channel polarization, construction algorithms, Kernel, polar bit-channels, Quantization (signal)},
 	pages = {6562--6582}
+}
+
+@article{wang_novel_2014,
+	title = {A novel puncturing scheme for polar codes},
+	volume = {18},
+	issn = {1089-7798},
+	doi = {10.1109/LCOMM.2014.2364845},
+	number = {12},
+	journal = {IEEE Communications Letters},
+	author = {Wang, R. and Liu, R.},
+	month = dec,
+	year = {2014},
+	keywords = {Decoding, polar codes, Bit error rate, codes, Error probability, arbitrary code lengths, channel codes, Channel codes, Generators, length-compatible, log-likelihood ratios, polar code construction, puncturing, puncturing patterns, puncturing scheme},
+	pages = {2081--2084}
+}
+
+@inproceedings{niu_beyond_2013,
+	title = {Beyond turbo codes: rate-compatible punctured polar codes},
+	doi = {10.1109/ICC.2013.6655078},
+	booktitle = {Proceedings of the {IEEE} {International} {Conference} on {Communications} ({ICC})},
+	author = {Niu, K. and Chen, K. and Lin, J. R.},
+	month = jun,
+	year = {2013},
+	keywords = {Decoding, error statistics, AWGN channels, decoding, turbo codes, Turbo codes, concatenated codes, Vectors, cyclic redundancy check codes, Generators, arbitrary code length, BI-AWGN, binary input additive white Gaussian noise channels, BLER, block error rate, CRC concatenated codes, Long Term Evolution, LTE, Multiaccess communication, puncturing table, quasi-uniform puncturing algorithm, random puncturing, rate-compatible punctured polar codes, RCPP codes, row-weight property, SCL decoding algorithms, SCS decoding algorithms, Spread spectrum communication, successive cancellation list decoding algorithms, successive cancellation stack decoding algorithms, WCDMA, wideband code division multiple access, wireless communication systems},
+	pages = {3423--3427}
+}
+
+@article{miloslavskaya_shortened_2015,
+	title = {Shortened polar codes},
+	volume = {61},
+	issn = {0018-9448},
+	doi = {10.1109/TIT.2015.2453312},
+	number = {9},
+	journal = {IEEE Transactions on Information Theory (TIT)},
+	author = {Miloslavskaya, V.},
+	month = sep,
+	year = {2015},
+	keywords = {Decoding, Polar codes, sequential decoding, Optimization, successive cancellation decoding, Error probability, Arrays, Heuristic algorithms, Iron, Linear codes, shortening},
+	pages = {4852--4865}
+}
+
+@inproceedings{balatsoukas-stimming_metric_2015,
+	title = {On metric sorting for successive cancellation list decoding of polar codes},
+	doi = {10.1109/ISCAS.2015.7169066},
+	booktitle = {Proceedings of the {IEEE} {International} {Symposium} on {Circuits} and {Systems} ({ISCAS})},
+	author = {Balatsoukas-Stimming, A. and Parizi, M. B. and Burg, A.},
+	month = may,
+	year = {2015},
+	keywords = {Decoding, Computer architecture, Hardware, polar codes, channel coding, maximum likelihood decoding, Delays, Indexes, log-likelihood ratio, metric sorter unit architecture, path metrics, Sorting, successive cancellation list decoder, successive cancellation list decoding},
+	pages = {1993--1996}
+}
+
+@inproceedings{fan_low-latency_2015,
+	title = {Low-latency list decoding of polar codes with double thresholding},
+	booktitle = {Proceedings of the {IEEE} {International} {Conference} on {Acoustics}, {Speech} and {Signal} {Processing} ({ICASSP})},
+	author = {Fan, Y. and Chen, J. and Xia, C. and Tsui, C. and Jin, J. and Shen, H. and Li, B.},
+	year = {2015},
+	pages = {1042--1046}
+}
+
+@article{zhang_crc_2017,
+	title = {{CRC} code design for list decoding of polar codes},
+	volume = {21},
+	number = {6},
+	journal = {IEEE Communications Letters},
+	author = {Zhang, Q. and Liu, A. and Pan, X. and Pan, K.},
+	year = {2017},
+	pages = {1229--1232}
+}
+
+@inproceedings{lin_reduced_2014,
+	title = {A reduced latency list decoding algorithm for polar codes},
+	booktitle = {Proceedings of the {IEEE} {International} {Workshop} on {Signal} {Processing} {Systems} ({SiPS})},
+	author = {Lin, J. and Xiong, C. and Yan, Z.},
+	year = {2014},
+	pages = {1--6}
+}
+
+@inproceedings{giard_multi-gbps_2016,
+	title = {A multi-{Gbps} unrolled hardware list decoder for a systematic polar code},
+	booktitle = {Proceedings of the {IEEE} {Asilomar} {Conference} on {Signals}, {Systems}, and {Computers} ({ACSSC})},
+	author = {Giard, P. and Balatsoukas-Stimming, A. and Müller, T. C. and Burg, A. and Thibeault, C. and Gross, W. J.},
+	year = {2016},
+	pages = {1194--1198}
+}
+
+@article{balatsoukas-stimming_llr-based_2015,
+	title = {{LLR}-based successive cancellation list decoding of polar codes},
+	volume = {63},
+	number = {19},
+	journal = {IEEE Transactions on Signal Processing (TSP)},
+	author = {Balatsoukas-Stimming, A. and Parizi, M. B. and Burg, A.},
+	year = {2015},
+	pages = {5165--5179}
+}
+
+@article{giard_low-latency_2016,
+	title = {Low-latency software polar decoders},
+	issn = {1939-8115},
+	journal = {Springer Journal of Signal Processing Systems (JSPS)},
+	author = {Giard, P. and Sarkis, G. and Leroux, C. and Thibeault, C. and Gross, W. J.},
+	month = jul,
+	year = {2016},
+	pages = {31--53}
+}
+
+@article{hashemi_fast_2017,
+	title = {Fast and flexible successive-cancellation list decoders for polar codes},
+	volume = {65},
+	issn = {1053-587X},
+	doi = {10.1109/TSP.2017.2740204},
+	number = {21},
+	journal = {IEEE Transactions on Signal Processing (TSP)},
+	author = {Hashemi, S. A. and Condo, C. and Gross, W. J.},
+	month = nov,
+	year = {2017},
+	keywords = {Algorithm design and analysis, Estimation, Throughput, Hardware, Maximum likelihood decoding, Signal processing algorithms, list decoding, Polar codes, successive-cancellation decoding, hardware implementation},
+	pages = {5756--5769}
+}
+
+@article{giard_multi-mode_2016,
+	title = {Multi-mode unrolled architectures for polar decoders},
+	volume = {63},
+	issn = {1549-8328},
+	doi = {10.1109/TCSI.2016.2586218},
+	number = {9},
+	journal = {IEEE Transactions on Circuits and Systems I: Regular Papers},
+	author = {Giard, P. and Sarkis, G. and Thibeault, C. and Gross, W. J.},
+	month = sep,
+	year = {2016},
+	keywords = {Throughput, Computer architecture, Hardware, polar codes, decoding, Encoding, Systematics, application specific integrated circuits, Maximum likelihood decoding, ASIC, code lengths, coded throughput, energy conservation, energy efficiency, frequency 250 MHz, frequency 500 MHz, fully-unrolled polar decoder architecture, high throughput, length-flexible decoder, low-power electronics, master polar code, multi-mode, multimode decoder, polar decoders, rate-flexible decoder, reduced-complexity successive-cancellation decoding algorithm, size 65 nm, unrolled architecture, unrolled decoders},
+	pages = {1443--1453}
+}
+
+@book{knuth_art_1973,
+	title = {The art of computer programming},
+	number = {3},
+	publisher = {Addison-Wesley},
+	author = {Knuth, D.E.},
+	year = {1973}
+}
+
+@article{schreier_tournament_1932,
+	title = {On tournament elimination systems},
+	volume = {7},
+	journal = {Mathesis Polska},
+	author = {Schreier, J.},
+	year = {1932},
+	pages = {154--160}
+}
+
+@inproceedings{furtak_using_2007,
+	title = {Using {SIMD} registers and instructions to enable instruction-level parallelism in sorting algorithms},
+	booktitle = {Proceedings of the {ACM} {Symposium} on {Parallel} {Algorithms} and {Architectures}},
+	author = {Furtak, T and Amaral, J. N. and Niewiadomski, R.},
+	year = {2007},
+	pages = {348--357}
+}
+
+@book{noauthor_cyclic_nodate,
+	title = {Cyclic redundancy check},
+	url = {https://en.wikipedia.org/wiki/Cyclic_redundancy_check},
+	annote = {Accessed: 2017-03-13}
+}
+
+@article{chase_class_1972,
+	title = {Class of algorithms for decoding block codes with channel measurement information},
+	volume = {18},
+	number = {1},
+	journal = {IEEE Transactions on Information Theory (TIT)},
+	author = {Chase, D.},
+	year = {1972},
+	pages = {170--182}
+}
+
+@article{matsumoto_mersenne_1998,
+	title = {Mersenne twister: a 623-dimensionally equidistributed uniform pseudo-random number generator},
+	volume = {8},
+	number = {1},
+	journal = {ACM Transactions on Modeling and Computer Simulation (TOMACS)},
+	author = {Matsumoto, M. and Nishimura, T.},
+	year = {1998},
+	pages = {3--30}
+}
+
+@article{box_note_1958,
+	title = {A note on the generation of random normal deviates},
+	volume = {29},
+	number = {2},
+	journal = {The annals of mathematical statistics},
+	author = {Box, G. E. P. and Muller, M. E. and {others}},
+	year = {1958},
+	pages = {610--611}
+}
+
+@article{arikan_channel_2009,
+	title = {Channel polarization: {A} method for constructing capacity-achieving codes for symmetric binary-input memoryless channels},
+	volume = {55},
+	number = {7},
+	journal = {IEEE Transactions on Information Theory},
+	author = {Arikan, Erdal},
+	year = {2009}
+}
+
+@techreport{3gpp_ts_2017-1,
+	title = {{TS} 38.212, {Multiplexing} and {Channel} coding},
+	author = {{3GPP}},
+	year = {2017}
+}
+
+@article{alamdar-yazdi_simplified_2011,
+	title = {A simplified successive-cancellation decoder for polar codes},
+	journal = {IEEE Comm. Letters},
+	author = {Alamdar-Yazdi, Amin and Kschischang, Frank R},
+	year = {2011}
 }
 
 @article{trifonov_efficient_2012,
@@ -45,7 +944,111 @@
 	keywords = {polar codes, Maximum likelihood decoding, concatenated codes, Polar codes, Vectors, Approximation algorithms, Concatenated codes, Constellation diagram, density evolution, design, Error probability, Gaussian approximation, Gaussian processes, maximum likelihood decoding, multilevel codes, multistage decoding algorithm}
 }
 
-@article{arikan_systematic_2011,
+@article{dizdar_high-throughput_2016,
+	title = {A high-throughput energy-efficient implementation of successive cancellation decoder for polar codes using combinational logic},
+	volume = {63},
+	number = {3},
+	journal = {IEEE Transactions on Circuits and Systems I: Regular Papers},
+	author = {Dizdar, Onur and Arıkan, Erdal},
+	year = {2016}
+}
+
+@book{cassagne_aff3ct_2017,
+	title = {{AFF}3CT, an open source software dedicated to forward error correction simulations, http://aff3ct.github.io},
+	author = {Cassagne, A. and Léonardon, M. and Leroux, C. and Tajan, R. and Delbergue, G. and Petit, B. and Hartmann, O.},
+	year = {2017}
+}
+
+@article{leroux_semi-parallel_2013,
+	title = {A semi-parallel successive-cancellation decoder for polar codes},
+	volume = {61},
+	number = {2},
+	journal = {IEEE Transactions on Signal Processing},
+	author = {Leroux, Camille and Raymond, Alexandre J and Sarkis, Gabi and Gross, Warren J},
+	year = {2013}
+}
+
+@inproceedings{gal_scalable_2016,
+	title = {A scalable 3-phase polar decoder},
+	doi = {10.1109/ISCAS.2016.7527259},
+	abstract = {In this paper, we propose a 3-phase polar codes Successive Cancellation (SC) decoder. Benefiting from the local properties of the decoding tree, 3 zones are defined and associated to 3 distinct sub-decoders. This approach reduces the memory footprint while guaranteeing a better scalability in comparison with state of the art SC decoders. Several 3-phase SC decoders are implemented on an FPGA circuit and compare favorably to state-of-the-art implementations in terms of distributed hardware resources (LUT, D-FF) and throughput. Moreover, the memory of the decoder is reduced by 37\% for a N = 221 polar codes.},
+	booktitle = {{ISCAS}},
+	author = {Gal, B. Le and Leroux, C. and Jégo, C.},
+	month = may,
+	year = {2016},
+	keywords = {Decoding, Computer architecture, decoding, field programmable gate arrays, 3-phase polar codes successive cancellation decoder, 3-phase SC decoders, Clocks, codes, decoding tree, distinct subdecoders, distributed hardware resources, FPGA circuit, memory footprint reduction, Pipelines, Random access memory, Registers, Scalability, scalable 3-phase polar decoder, trees (mathematics)},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/RW7PW3FC/7527259.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/6TLI4AZB/7527259.html:text/html}
+}
+
+@inproceedings{cassagne_efficient_2015,
+	title = {An {Efficient}, {Portable} and {Generic} {Library} for {Successive} {Cancellation} {Decoding} of {Polar} {Codes}},
+	isbn = {978-3-319-29777-4 978-3-319-29778-1},
+	doi = {10.1007/978-3-319-29778-1_19},
+	abstract = {Error Correction Code decoding algorithms for consumer products such as Internet of Things (IoT) devices are usually implemented as dedicated hardware circuits. As processors are becoming increasingly powerful and energy efficient, there is now a strong desire to perform this processing in software to reduce production costs and time to market. The recently introduced family of Successive Cancellation decoders for Polar codes has been shown in several research works to efficiently leverage the ubiquitous SIMD units in modern CPUs, while offering strong potentials for a wide range of optimizations. The P-EDGE environment introduced in this paper, combines a specialized skeleton generator and a building blocks library routines to provide a generic, extensible Polar code exploration workbench. It enables ECC code designers to easily experiments with combinations of existing and new optimizations, while delivering performance close to state-of-art decoders.},
+	language = {en},
+	booktitle = {Languages and {Compilers} for {Parallel} {Computing}},
+	publisher = {Springer, Cham},
+	author = {Cassagne, Adrien and Gal, Bertrand Le and Leroux, Camille and Aumage, Olivier and Barthou, Denis},
+	month = sep,
+	year = {2015},
+	keywords = {Polar Codes, Code generation, Domain Specific Language, Error Correction Codes, Generic programming, SIMDization, Successive Cancellation decoding},
+	file = {Snapshot:/home/bonben/Zotero/storage/W6G4CEMK/978-3-319-29778-1_19.html:text/html;Snapshot:/home/bonben/Zotero/storage/PG8MZMVR/978-3-319-29778-1_19.html:text/html}
+}
+
+@book{corporaal_microprocessor_1997,
+	address = {New York, NY, USA},
+	title = {Microprocessor {Architectures}: {From} {VLIW} to {TTA}},
+	isbn = {978-0-471-97157-3},
+	shorttitle = {Microprocessor {Architectures}},
+	abstract = {From the Publisher:The market for single chip microprocessors is huge and their performance continues to increase, driven by the on-going demand for more powerful applications, particularly in the control and signal processing domains. This work introduces a new type of computer architecture, the transport triggered architecture (TTA), designed to alleviate delay problems in existing instruction-level parallel architectures.},
+	publisher = {John Wiley \& Sons, Inc.},
+	author = {Corporaal, Henk},
+	year = {1997}
+}
+
+@inproceedings{cassagne_fast_2017,
+	title = {Fast simulation and prototyping with {AFF}3CT},
+	abstract = {This demonstration intends to present AFF3CT (A Fast Forward 3rror Correction Tool). The main objective of AFF3CT is to provide a portable, open source, fast and ﬂexible software to the channel coding community in such a way that researchers can spend more time on channel coding / algorithmic problems instead of software development issues. It is also intended to facilitate the process of hardware veriﬁcation and debug with the objective of fast prototyping.},
+	language = {en},
+	booktitle = {{SiPS}},
+	author = {Cassagne, Adrien and Leonardon, Mathieu and Hartmann, Olivier and Delbergue, Guillaume and Tonnellier, Thibaud and Tajan, Romain and Leroux, Camille and Jego, Christophe and Le Gal, Bertrand and Aumage, Olivier and Barthou, Denis},
+	year = {2017},
+	file = {Cassagne et al. - Fast simulation and prototyping with AFF3CT.pdf:/home/bonben/Zotero/storage/CE9DBY3A/Cassagne et al. - Fast simulation and prototyping with AFF3CT.pdf:application/pdf}
+}
+
+@article{jarvela_vector_nodate,
+	title = {Vector {Operation} {Support} for {Transport} {Triggered} {Architectures}},
+	language = {en},
+	author = {Järvelä, Mikko},
+	pages = {66},
+	file = {Järvelä - Vector Operation Support for Transport Triggered A.pdf:/home/bonben/Zotero/storage/EUINRS59/Järvelä - Vector Operation Support for Transport Triggered A.pdf:application/pdf}
+}
+
+@article{stimming_hardware_nodate,
+	title = {Hardware implementation aspects of polar decoders and ultra high-speed {LDPC} decoders},
+	language = {en},
+	author = {Stimming, Balatsoukas and Konstantinos, Alexios},
+	pages = {189},
+	file = {Stimming and Konstantinos - Hardware implementation aspects of polar decoders .pdf:/home/bonben/Zotero/storage/Q576D8W8/Stimming and Konstantinos - Hardware implementation aspects of polar decoders .pdf:application/pdf}
+}
+
+@article{bioglio_low-complexity_2017,
+	title = {Low-{Complexity} {Puncturing} and {Shortening} of {Polar} {Codes}},
+	url = {http://arxiv.org/abs/1701.06458},
+	abstract = {In this work, we address the low-complexity construction of shortened and punctured polar codes from a uniﬁed view. While several independent puncturing and shortening designs were attempted in the literature, our goal is a unique, low-complexity construction encompassing both techniques in order to achieve any code length and rate. We observe that our solution signiﬁcantly reduces the construction complexity as compared to state-of-the-art solutions while providing a block error rate performance comparable to constructions that are highly optimized for speciﬁc lengths and rates. This makes the constructed polar codes highly suitable for practical application in future communication systems requiring a large set of polar codes with different lengths and rates.},
+	language = {en},
+	urldate = {2018-07-23},
+	journal = {arXiv:1701.06458 [cs, math]},
+	author = {Bioglio, Valerio and Gabry, Frederic and Land, Ingmar},
+	month = jan,
+	year = {2017},
+	note = {arXiv: 1701.06458},
+	keywords = {Computer Science - Information Theory},
+	annote = {Comment: to appear in WCNC 2017 - "Polar Coding in Wireless Communications: Theory and Implementation" Workshop},
+	file = {Bioglio et al. - 2017 - Low-Complexity Puncturing and Shortening of Polar .pdf:/home/bonben/Zotero/storage/4A568PQS/Bioglio et al. - 2017 - Low-Complexity Puncturing and Shortening of Polar .pdf:application/pdf}
+}
+
+@article{arikan_systematic_2011-1,
 	title = {Systematic {Polar} {Coding}},
 	volume = {15},
 	issn = {1089-7798},
@@ -56,24 +1059,9 @@
 	author = {Arikan, E.},
 	month = aug,
 	year = {2011},
-	keywords = {binary codes, Binary phase shift keying, Bit error rate, bit error rate performance, Channel coding, Complexity theory, decoding, Decoding, decoding methods, encoding methods, error propagation, error statistics, frame error rate, linear codes, nonsystematic linear block codes, nonsystematic polar coding, Polar codes, successive cancellation decoding, systematic polar codes, systematic polar coding, Systematics},
+	keywords = {Decoding, error statistics, Complexity theory, Bit error rate, decoding, Systematics, Channel coding, Polar codes, successive cancellation decoding, linear codes, frame error rate, binary codes, Binary phase shift keying, bit error rate performance, decoding methods, encoding methods, error propagation, nonsystematic linear block codes, nonsystematic polar coding, systematic polar codes, systematic polar coding},
 	pages = {860--862},
 	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/6LCDJG7E/5934670.html:text/html}
-}
-
-
-@article{tal_how_2013,
-	title = {How to construct polar codes},
-	volume = {59},
-	issn = {0018-9448},
-	doi = {10.1109/TIT.2013.2272694},
-	number = {10},
-	journal = {IEEE Transactions on Information Theory (TIT)},
-	author = {Tal, I. and Vardy, A.},
-	month = oct,
-	year = {2013},
-	keywords = {Decoding, Complexity theory, polar codes, codes, Convolutional codes, channel capacity, Approximation algorithms, alphabet size, approximation methods, Approximation methods, approximation theory, Channel degrading and upgrading, channel polarization, construction algorithms, Kernel, polar bit-channels, Quantization (signal)},
-	pages = {6562--6582}
 }
 
 @article{afisiadis_low-complexity_2014,
@@ -92,7 +1080,6 @@
 	file = {Afisiadis et al. - 2014 - A Low-Complexity Improved Successive Cancellation .pdf:/home/bonben/Zotero/storage/53F43FWV/Afisiadis et al. - 2014 - A Low-Complexity Improved Successive Cancellation .pdf:application/pdf}
 }
 
-
 @article{chen_improved_2013,
 	title = {Improved {Successive} {Cancellation} {Decoding} of {Polar} {Codes}},
 	volume = {61},
@@ -104,7 +1091,7 @@
 	author = {Chen, K. and Niu, K. and Lin, J.},
 	month = aug,
 	year = {2013},
-	keywords = {Algorithm design and analysis, code tree, Complexity theory, decoding, finite-length performance, interference suppression, maximum likelihood decoding, Maximum likelihood decoding, Measurement, ML decoding, path search procedure, polar codes, Polar codes, pruning technique, SC decoding, SCH, SCL decoding, SCS decoding, search problems, Signal to noise ratio, signal-to-noise ratio regime, successive cancellation decoding, successive cancellation hybrid, successive cancellation list decoding, successive cancellation stack, tree pruning, trees (mathematics), Vectors},
+	keywords = {Algorithm design and analysis, Complexity theory, polar codes, decoding, trees (mathematics), Maximum likelihood decoding, Polar codes, Vectors, successive cancellation decoding, maximum likelihood decoding, Signal to noise ratio, successive cancellation list decoding, code tree, finite-length performance, interference suppression, Measurement, ML decoding, path search procedure, pruning technique, SC decoding, SCH, SCL decoding, SCS decoding, search problems, signal-to-noise ratio regime, successive cancellation hybrid, successive cancellation stack, tree pruning},
 	pages = {3100--3107},
 	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/L82F5W56/6560025.html:text/html}
 }
