@@ -12,8 +12,8 @@
    inkscape:version="0.91 r13725"
    version="1.1"
    id="svg2"
-   viewBox="0 0 1744.9732 686.26049"
-   height="193.67796mm"
+   viewBox="0 0 1744.9732 558.47998"
+   height="157.61546mm"
    width="492.47021mm"
    sodipodi:docname="chaine_com.svg">
   <sodipodi:namedview
@@ -25,8 +25,8 @@
      showgrid="false"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="-46.852252"
-     inkscape:cx="374.28807"
+     inkscape:cy="45.150647"
+     inkscape:cx="373.95659"
      inkscape:zoom="0.49497475"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -91,7 +91,7 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(164.70872,203.62538)"
+     transform="translate(164.70872,225.84483)"
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
@@ -547,15 +547,15 @@
        id="rect7360-3-6-7-6-1-2-7"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:#00ff00;fill-opacity:0;fill-rule:evenodd;stroke:#000000;stroke-width:1.70000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10.43299961;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <rect
-       y="-202.17538"
-       x="744.42847"
-       height="581.84784"
-       width="834.38599"
+       y="-153.81386"
+       x="744.30267"
+       height="485.12479"
+       width="834.63757"
        id="rect9034"
-       style="fill:#00ff00;fill-opacity:0;stroke:#000000;stroke-width:2.90000033;stroke-miterlimit:4;stroke-dasharray:23.20000207, 11.60000104;stroke-dashoffset:0" />
+       style="fill:#00ff00;fill-opacity:0;stroke:#000000;stroke-width:2.64841199;stroke-miterlimit:4;stroke-dasharray:21.1872947, 10.59364736;stroke-dashoffset:0" />
     <g
        id="g9140"
-       transform="matrix(1.2248939,0,0,1.2248939,688.65857,-714.87707)">
+       transform="matrix(1.2248939,0,0,1.2248939,688.65851,-1377.5372)">
       <g
          word-spacing="normal"
          letter-spacing="normal"
@@ -631,7 +631,7 @@
            style="fill:#000000;stroke-width:0" /></g>    </g>
   </g>
   <g
-     transform="translate(164.70874,-5836.5289)"
+     transform="translate(164.70874,-5814.3094)"
      id="g7584">
     <rect
        transform="translate(0,6034.252)"
@@ -680,7 +680,7 @@
   </g>
   <g
      id="g9490"
-     transform="translate(-16.474383,0)">
+     transform="translate(-16.474384,22.219453)">
     <g
        transform="translate(540.74667,45.298616)"
        id="g6121">
@@ -724,7 +724,7 @@
   </g>
   <g
      id="g6487"
-     transform="translate(101.04682,-221.45894)">
+     transform="translate(101.04682,-199.23949)">
     <g
        id="g6489"
        transform="matrix(1.0629921,0,0,-1.0629921,-186.02362,789.27165)"
@@ -744,7 +744,7 @@
          style="fill:#000000;stroke-width:0" /></g>  </g>
   <g
      id="g6679"
-     transform="translate(99.625896,44.82027)">
+     transform="translate(99.625895,67.039723)">
     <g
        word-spacing="normal"
        letter-spacing="normal"
@@ -759,7 +759,7 @@
        id="g6681"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10.43299961;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"><polygon
          id="polygon6683"
-         points="479.08,447.8 472.45,454.57 465.78,447.8 466.68,446.9 472.45,451.98 478.18,446.9 "
+         points="466.68,446.9 472.45,451.98 478.18,446.9 479.08,447.8 472.45,454.57 465.78,447.8 "
          style="fill:#000000;stroke-width:0" /><path
          id="path6685"
          d="m 468,440.52 -0.74,0.6 -9.37,-1.4 -0.44,-0.45 0,-1.09 c 2.98,-0.25 4.68,-0.7 4.68,-2.19 0,-1.5 0.1,-2.79 0.1,-4.74 l 0,-17.23 c 0,-6.68 3.73,-8.72 7.72,-8.72 4.03,0 7.67,1.8 10.61,4.29 3.33,2.84 4.78,7.02 4.78,11.16 0,4.48 -2.09,9.81 -7.87,9.81 -3.54,0 -6.68,-1.75 -9.27,-3.89 l -0.54,-2.39 c 1.64,1.2 3.68,2.59 5.82,2.59 5.29,0 5.93,-5.38 5.93,-9.01 0,-4.34 -1.54,-9.97 -7.02,-9.97 -4.14,0 -4.88,5.58 -4.88,9.72 l 0.15,6.67 0.54,2.39 -0.54,0.15 z"
@@ -767,7 +767,7 @@
          style="fill:#000000;stroke-width:0" /></g>  </g>
   <g
      id="g6859"
-     transform="translate(1084.3854,-221.35264)">
+     transform="translate(1084.3854,-199.13319)">
     <g
        id="g6861"
        transform="matrix(1.0629921,0,0,-1.0629921,-186.02362,789.27165)"
@@ -791,7 +791,7 @@
          style="fill:#000000;stroke-width:0" /></g>  </g>
   <g
      id="g7025"
-     transform="translate(1051.5005,44.404981)">
+     transform="translate(1051.5005,66.624434)">
     <g
        word-spacing="normal"
        letter-spacing="normal"

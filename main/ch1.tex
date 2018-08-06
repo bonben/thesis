@@ -34,12 +34,12 @@ L'ajout d'un encodeur et d'un décodeur canal dans la chaîne de transmission es
 Un seul et unique modèle de canal composite sera considéré tout au long de ce manuscrit. Sa modulation est une modulation à changement de phase binaire (BPSK) qui associe aux valeurs binaires d'entrée $x\in\{0,1\}$ les valeurs réelles $\hat{x}\in\{-1,1\}$, respectivement.
 Le canal à bruit blanc additif gaussien à double entrée (BI-AWGNC) tel que défini dans \cite[Section~1.5.1.3]{ryan2009channel} est considéré. Ce modèle est le plus utilisé pour caractériser les performances des codes correcteurs d'erreur car il se rapproche du bruit thermique évoqué précédemment, qui est souvent prépondérant. Il consiste en l'addition d'une variable réelle à distribution gaussienne centrée en $0$ et de densité spectrale $N_0$. Afin d'évaluer les performances de correction des codes correcteurs d'erreurs, les taux d'erreur seront souvent rapportés à cette densité spectrale, ou plus précisément au \textbf{rapport signal à bruit} (SNR), noté $E_b/N_0$, où $E_b=\frac{\mathbb{E}(\hat{x}^2)}{R}$ est l'énergie moyenne par bit d'information.
 
-Les estimations en sortie du démodulateur sont données sous la forme de rapport de vraisemblance logarithmique (LLR). Leur signe détermine la valeur binaire d'entrée $x$ la plus probable, et leur valeur absolue le degré de fiabilité de cette valeur d'entrée. Des détails sur le modèle de canal et le calcul de ces LLRs sont données en Annexe \ref{append:canal}.
+Les estimations en sortie du démodulateur sont données sous la forme de rapport de vraisemblance logarithmique (LLR). Leur signe détermine la valeur binaire d'entrée $x$ la plus probable, et leur valeur absolue le degré de fiabilité de cette valeur d'entrée. Des détails sur le modèle de canal et le calcul de ces LLRs sont données en Annexe \ref{append:decoding_nodes}.
 
 \subsection{Encodage de codes polaires}
 Les codes polaires appartiennent à la famille des codes en blocs linéaire. Soient les ensembles $\mathbb{B}^n = \{0,1\}^n$, et  une matrice de taille $G \in \mathbb{B}^K \times \mathbb{B}^N$. L'encodage d'un code en blocs linéaire est une application linéaire injective de $\mathbb{B}^K$ vers $\mathbb{B}^N$ qui à un élément $\mathbold{b} \in \mathbb{B}^K$ associe un élément $\mathbold{x} \in \mathbb{B}^N$ tel que $x=bG$. Définir un encodeur de code polaire revient donc à définir sa matrice génératrice $G$. 
 
-La matrice génératrice d'un code polaire est elle-même produit de deux matrices $E \in (\mathbb{B}^K \times \mathbb{B}^N)$ et $F^{\otimes n}\in (\mathbb{B}^N)^2$, $G=EF^{\otimes n}$. La multiplication par la matrice $E$ correspond à l'ajout de "bits gelés", dont la valeur est $0$, à la séquence d'information $\mb{b}$. Le résultat de l'opération $\mathbold{u} = E\mathbold{b}$ est constitué de $K$ bits $b_i \in \mathbold{b}$ et de $N-K$ bits gelés. Les positions respectives des bits d'informations et des bits gelés sont liés au phénomène de polarisation décrit dans la section suivante est sont déterminants quant à la performance de correction du code.
+La matrice génératrice d'un code polaire est elle-même produit de deux matrices $E \in (\mathbb{B}^K \times \mathbb{B}^N)$ et $F^{\otimes n}\in (\mathbb{B}^N)^2$, $G=EF^{\otimes n}$. La multiplication par la matrice $E$ correspond à l'introduction de "bits gelés", dont la valeur est $0$, à la séquence d'information $\mb{b}$. Le résultat de l'opération $\mathbold{u} = E\mathbold{b}$ est constitué de $K$ bits $b_i \in \mathbold{b}$ et de $N-K$ bits gelés. Les positions respectives des bits d'informations et des bits gelés sont liés au phénomène de polarisation décrit dans la section suivante. Ces positions sont déterminantes pour à la performance de correction du code.
 
 La matrice $F^{\otimes n}$, où $N=2^n$, est la n-ième puissance de Kronecker du noyau $F=\left[\begin{smallmatrix} 1 & 0 \\ 1 & 1\end{smallmatrix}\right]$. En Figure \ref{fig:encodage} sont données plusieurs représentations de cette matrice d'encodage. La représentation sous forme de \textit{factor graph} est une représentation alternative où les symboles $\oplus$ correspondent à des opération \textit{OU-exclusif}. La représentation sous forme d'arbre binaire est quant à elle particulièrement pertinente pour la description des algorithmes de décodage.
 
@@ -61,7 +61,7 @@ Le processus d'encodage peut également être modifié pour rendre le code syst�
 
 \subsection{Polarisation}
 
-L'invention des codes polaires et la définition des matrices d'encodage par Ar{\i}kan \cite{arikan_channel_2009} est lié au phénomène de polarisation. L'ensemble constitué de l'encodeur polaire, du canal composite et du décodeur polaire peut être vu comme un ensemble de canaux de transmission qui chacun transmet un bit. On parle de polarisation parce que, dans ces condition, il est possible de montrer que ces $N$ canaux ont tendance à se diviser en deux groupes. Un groupe de canaux très fiables, avec une probabilité d'erreur faible, et un groupe de canaux peu fiables, à probabilité d'erreur forte. Cette tendance augmente quand $N$ augmente, les canaux se polarisent. Ainsi, les bits d'informations seront attribués aux canaux fiables, et des bits dits gelés, dont la valeur est connue à priori, seront attribués aux canaux peu fiables. Le processus de détermination de la position des bits gelés dans le vecteur $\mathbold{u}$ est appelé construction des codes polaires. Celle-ci est déterminante pour la performance de correction des codes polaires. Plusieurs méthodes efficaces ont été proposées \cite{tal_how_2013,trifonov_efficient_2012} pour le canal AWGN.
+L'invention des codes polaires et la définition des matrices d'encodage par Ar{\i}kan \cite{arikan_channel_2009} sont liées au phénomène de polarisation. L'ensemble constitué de l'encodeur polaire, du canal composite et du décodeur polaire peut être vu comme un ensemble de canaux de transmission qui chacun transmet un bit. Le terme \og polarisation \fg exprime le fait que ces $N$ canaux ont tendance à se diviser en deux groupes. Un groupe de canaux très fiables, avec une probabilité d'erreur faible, et un groupe de canaux peu fiables, à probabilité d'erreur forte. Cette tendance augmente quand $N$ augmente : les canaux se polarisent. Ainsi, les bits d'informations seront attribués aux canaux fiables, et des bits dits gelés, dont la valeur est connue à priori, seront attribués aux canaux peu fiables. Le processus de détermination de la position des bits gelés dans le vecteur $\mathbold{u}$ est appelé construction des codes polaires. Celle-ci est déterminante pour la performance de correction des codes polaires. Plusieurs méthodes efficaces ont été proposées \cite{tal_how_2013,trifonov_efficient_2012} pour le canal AWGN.
 
 \section{Les algorithmes de décodage de codes polaires}
 
@@ -69,22 +69,33 @@ Deux algorithmes de décodages ont été proposés dès l'invention des codes po
 
 \subsection{Le décodage par Annulation Successive}
 
-\subsubsection{L'arbre de décodage}
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.7\textwidth]{main/ch1_fig/sc}
-\caption{Arbre de décodage SC}
-\label{fig:sc}
-\end{figure}
-% mettre en évidence qu'on décode bit par bit, sera utile pour sc list
-% introduire termes rendement 1 / rendement 0
-% sommes partielles termes non introduit
-% vérifier que n est introduit
-Les données d'entrée des algorithmes de décodages présentés ici sont des LLRs, contenus dans le vecteur $\mathbold{L}$ de taille $N$, sortis du canal composite. Les données de sorties sont des bits contenus dans le vecteur $\mathbold{\hat{b}}$ de taille $K$. Au cours du décodage de codes polaires, ces deux formats de données (LLRs et bits) sont également utilisés. La Figure~\ref{fig:sc} représente ces données nécessaires. Dans l'exemple considéré, $K=3$ et $N=8$. Les données sont organisées en arbre binaire sur $log_2(N) + 1$ couches. Dans notre cas donc, l'arbre possède quatre niveaux. A chaque couche sont attribués un certain nombre de nœuds. La racine de l'arbre numérotée $0$ est constituée d'un seul nœud. Ce nœud contient $N$ LLRs et $N$ sommes partielles. En descendant dans l'arbre, à chaque couche, le nombre de nœuds double, tandis que le nombre de LLRs et de sommes partielles de chaque nœud et divisé par deux. Chaque couche $d$ contient $2^d$ nœuds constitués de $2^{n-d}$ LLRs et de $2^{n-d}$ sommes partielles. 
-
 % Ajouter channel LLRs à la racine
-\subsubsection{Les fonctions élémentaires et leur séquencement}
-La première étape du décodage est le chargement des LLRs du canal $L$ : les LLRs du nœud racine prennent la valeur des LLRs du canal. Les LLRs et les sommes partielles de chaque nœud de l'arbre sont ensuite calculées par l'intermédiaire des opérations $f$, $g$, $h$, \texttt{R0} et \texttt{R1} symbolisées dans la Figure~\ref{fig:sc} par des flèches. Elles correspondent aux équations \ref{eq:sc}. 
+\subsubsection{Les fonctions élémentaires}
+
+\begin{figure}[t]
+  \renewcommand*\thesubfigure{\arabic{subfigure}} 
+  \centering
+  \subfloat[][Channel LLRs]{\includegraphics[width=.26\textwidth]{main/ch1_fig/sc_graph_1}}\quad\quad
+  \label{lolol}
+  \subfloat[][$f$ function]{\includegraphics[width=.18\textwidth]{main/ch1_fig/sc_graph_2}}\quad\quad
+  \subfloat[][$\texttt{R0}$ function]{\includegraphics[width=.2\textwidth]{main/ch1_fig/sc_graph_3}}\\
+  \subfloat[][$g$ function]{\includegraphics[width=.18\textwidth]{main/ch1_fig/sc_graph_4}}\quad\quad
+  \subfloat[][$\texttt{R1}$ function]{\includegraphics[width=.2\textwidth]{main/ch1_fig/sc_graph_5}}\quad\quad
+  \subfloat[][$h$ function]{\includegraphics[width=.18\textwidth]{main/ch1_fig/sc_graph_6}}
+  \caption{Fonctions élémentaires et séquencement du décodage SC du noyau $N=2$}
+  \label{fig:SCSchedule}
+\end{figure}
+
+% Expliciter notation (N,K)
+% Mettre cohérence dans numérotation des couches (0 = racine)
+
+%
+Les étapes du décodage du \noeud élémentaire de taille 2 sont représentées en Figure~\ref{fig:SCSchedule}.
+Les données d'entrée des algorithmes de décodages présentés ici sont des LLRs, contenus dans le vecteur $\mathbold{L}$ de taille $N$, sortis du canal composite.
+Les données de sorties sont des bits contenus dans le vecteur $\mathbold{\hat{b}}$ de taille $K$.
+Au cours du décodage de codes polaires, ces deux formats de données (LLRs et bits) sont également utilisés.
+Huit variables sont nécessaires durant le décodage, 4 LLRs $L_{i,j}$ et 4 sommes partielles ($s{i,j}$).
+La première étape du décodage est le chargement des LLRs du canal $L$ : les LLRs $L_{0,0}$ et $L_{1,0}$ prennent la valeur des LLRs du canal. Les LLRs et les sommes partielles de chaque \noeud de l'arbre sont ensuite calculées par l'intermédiaire des opérations $f$, $g$, $h$, \texttt{R0} et \texttt{R1} symbolisées dans la Figure~\ref{fig:sc} par des flèches. Elles correspondent aux équations \ref{eq:sc}. 
 \begin{eqnarray}
   \begin{array}{l c l}
     f(L_a,L_b) &=& \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)\\
@@ -95,26 +106,69 @@ La première étape du décodage est le chargement des LLRs du canal $L$ : les L
   \end{array}
   \label{eq:sc}
 \end{eqnarray}
-\begin{figure}[b]
+La fonction $f$ est appliquée dans l'étape 2 et permet le calcul de $L_{0,1}$.
+La troisième opération est l'application de la fonction \texttt{R0} sur le \noeud supérieur. 
+La fonction \texttt{R0} est appliquée dans l'hypothèse où le bit encodé $u_0$ en Figure \ref{fig:encodage} était un bit gelé.
+La fonction $g$ permet ensuite, en étape 4, le calcul de $L_{1,1}$.
+L'étape 5 est le calcul de $s_{1,1}$ par l'opération \texttt{R1} correspondant à un bit d'information. 
+Cette opération correspond à un seuillage du LLR pour obtenir la somme partielle.
+Après le décodage de la somme partielle $s_{1,1}$, la fonction $h$ est appliquée afin de propager les sommes partielles.
+
+
+\subsubsection{L'arbre de décodage}
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.55\textwidth]{main/ch1_fig/sc}
+\caption{Arbre de décodage SC}
+\label{fig:sc}
+\end{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.5\textwidth]{main/ch1_fig/seq_sc}
 \caption{Séquencement du décodage SC d'un code polaire de taille $N=4$.}
 \label{fig:seq_sc}
 \end{figure}
-% Expliciter notation (N,K)
-Les fonctions $f$ et $g$ prennent comme entrée des LLRs et produisent des LLRs en sortie. Elles permettent de descendre dans l'arbre jusqu'aux feuilles. Les feuilles sont les nœuds les plus bas de l'arbre. Le traitement d'une feuille correspond à l'application des opérations \texttt{R0} et \texttt{R1}. Lors d'un décodage non systématique, les sommes partielles contenues par les feuilles correspondent aux bits du mot de code. Certains sont donc des bits d'informations, d'autres sont des bits gelés dont la valeur, $0$, est connue d'avance. Pour les feuilles contenant les bits gelés, l'opération \texttt{R0} est appliquée, la somme partielle est égale à 0. Lorsque la feuille contient un bit d'information, l'opération \texttt{R1} est appliquée, la somme partielle est obtenue par seuillage du LLR. Après le décodage d'une feuille, la fonction $h$ est appliquée afin de remonter dans l'arbre. La hauteur jusqu'à laquelle les sommes partielles sont calculées grâce à la fonction $h$ dépend de l'index de la feuille qui vient d'être décodé. Cette recombinaison des sommes partielles est nécessaire à l'application des fonctions $g$, qui prennent en argument des sommes partielles. Le séquencement du décodage SC d'un codes polaire de taille $N=4$ est détaillé en Figure~\ref{fig:seq_sc}. Dans le cas d'un code non systématique, le mot de code décodé se trouve dans les feuilles de l'arbre de décodage. Les opération 12 et 13 dans la Figure \ref{fig:seq_sc} sont donc inutiles puisqu'elles servent seulement à calculer les sommes partielles du nœud racine. Par contre, dans le cas d'un code systématique, ce sont les sommes partielles du nœud racine qui correspondent au mot de code décodé.
+% mettre en évidence qu'on décode bit par bit, sera utile pour sc list
+% introduire termes rendement 1 / rendement 0
+% sommes partielles termes non introduit
+% vérifier que n est introduit
+Lorsque $N$ augmente, il est plus commode d'utiliser la représentation en arbre, comme montré en Figure~\ref{fig:sc}, où $N=8$.
+Les données sont organisées en arbre binaire sur $log_2(N) + 1$ couches. Dans notre cas donc, l'arbre possède quatre niveaux.
+A chaque couche sont attribués un certain nombre de \noeuds.
+La racine de l'arbre numérotée $0$ est constituée d'un seul \noeud.
+Ce \noeud contient $N$ LLRs et $N$ sommes partielles.
+En descendant dans l'arbre, à chaque couche, le nombre de \noeuds double, tandis que le nombre de LLRs et de sommes partielles de chaque \noeud et divisé par deux.
+Les feuilles sont les \noeuds les plus bas de l'arbre.
+Le traitement d'une feuille correspond à l'application des opérations \texttt{R0} et \texttt{R1}.
+Chaque couche $d$ contient $2^d$ \noeuds constitués de $2^{n-d}$ LLRs et de $2^{n-d}$ sommes partielles. 
+La hauteur jusqu'à laquelle les sommes partielles sont propagées par la fonction $h$ dépend de l'index de la feuille qui vient d'être décodé.
+
+Dans le cas d'un code non systématique, le mot de code décodé se trouve dans les feuilles de l'arbre de décodage.
+Lors d'un décodage non systématique, les sommes partielles contenues par les feuilles correspondent aux bits du mot de code.
+Les opération 12 et 13 dans la Figure \ref{fig:seq_sc} sont donc inutiles puisqu'elles servent seulement à calculer les sommes partielles du \noeud racine.
+Par contre, dans le cas d'un code systématique, ce sont les sommes partielles du \noeud racine qui correspondent au mot de code décodé.
+Le parcours de l'arbre est un parcours en profondeur.
+La séquence d'application des différentes fonctions est explicitée dans la Figure~\ref{fig:seq_sc}, où chaque flèche représentant une fonction est numérotée dans l'ordre.
+
+
 
 \subsubsection{Le parallélisme de l'algorithme}
-Dans la Figure~\ref{fig:sc}, quatre fonctions $f$ sont appliquées sur le nœud racine pour calculer les LLRs de la branche de gauche. Ces quatre fonctions sont indépendantes : leurs entrées et sorties sont disjointes. Par conséquence, elles peuvent être réalisées simultanément. Cela est également vrai pour chaque fonction $f$, $g$ et $h$ d'un nœud donné. Ainsi, le niveau de parallélisme est différent selon la couche considérée et correspond à la taille du nœud de sortie. Le parallélisme est donc plus grand en haut de l'arbre qu'en bas. Lorsque ce parallélisme est utilisé, on parle de parallélisme \textit{intra-trame}.
+Dans la Figure~\ref{fig:sc}, il apparaît que quatre fonctions $f$ sont appliquées sur le \noeud racine pour calculer les LLRs de la branche de gauche. Ces quatre fonctions sont indépendantes : leurs entrées et sorties sont disjointes. Par conséquence, elles peuvent être réalisées simultanément. Cela est également vrai pour chaque fonction $f$, $g$ et $h$ d'un \noeud donné. Ainsi, le niveau de parallélisme est différent selon la couche considérée et correspond à la taille du \noeud cible. Le parallélisme est donc plus grand en haut de l'arbre qu'en bas. Dans les implémentations logicielles ou matérielles de ces algorithme, ce parallélisme est utilisé pour réduire le temps de décodage et accélérer le débit du décodage. Lorsque ce parallélisme est utilisé, on parle de parallélisme \textit{intra-trame}.
 
 
 \subsection{Le décodage par Annulation Successive Liste}
 \subsubsection{L'algorithme}
-L'algorithme de décodage par Annulation Successive Liste (SCL) est une évolution de l'algorithme SC \cite{tal_how_2013}. L'algorithme SC présente en effet des performances de correction médiocres pour des codes polaires de petite taille. Le SCL améliore ses performances substantiellement. Dans l'algorithme de décodage SC décrit précédemment, des décisions dure sont réalisées à chaque décodage d'une feuille correspondant à un bit d'information (fonction \texttt{R1}). Si une erreur est commise au sur une feuille lors de ce seuillage, celle-ci est irréversible, et le décodage du mot de code est un échec. Le principe de l'algorithme de décodage par liste est de retarder la décision dure. Au lieu d'appliquer un seuillage sur la valeur du LLR, les deux possibilités de décodage sont considérées, et l'arbre de décodage, avec l'ensemble de ses LLRs et sommes partielles, est dupliqué. Le décodage continue ainsi sur les deux arbres parallèlement. A chaque feuille de rendement 1, le même procédé est réalisé, doublant le nombre d'arbres décodés en parallèle.
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.7\textwidth]{main/ch1_fig/scl}
+\caption{Duplication de l'arbre de décodage dans l'algorithme SCL.}
+\label{fig:scl}
+\end{figure}
+L'algorithme de décodage par Annulation Successive Liste (SCL) est une évolution de l'algorithme SC \cite{tal_how_2013}. L'algorithme SC présente en effet des performances de correction médiocres pour des codes polaires de petite taille. Le SCL améliore ses performances substantiellement. Dans l'algorithme de décodage SC décrit précédemment, des décisions dure sont réalisées à chaque décodage d'une feuille correspondant à un bit d'information (fonction \texttt{R1}). Si une erreur est commise lors de ce seuillage, celle-ci est irréversible, et le décodage du mot de code est un échec. Le principe de l'algorithme de décodage par liste est de retarder la décision dure. Au lieu d'appliquer un seuillage sur la valeur du LLR, les deux possibilités de décodage sont considérées, et l'arbre de décodage, avec l'ensemble de ses LLRs et sommes partielles, est dupliqué. Le décodage continue ainsi sur les deux arbres parallèlement. Ce processus est illustré en figure \ref{fig:scl} \`A chaque feuille de rendement 1, le même procédé est réalisé, doublant le nombre d'arbres décodés en parallèle.
 
 % citer article balatsoukas pour LLRs et calculs métriques
 % Ajouter les bits décodés sur les arbres pour les faire apparaître lors de la description du liste. 
-Il n'est pas possible, en pratique, de dupliquer indéfiniment le nombre d'arbres de décodage, la mémoire nécessaire et le nombre de calcul devient vite insoutenable. Un nombre de chemins maximum $L$ est donc paramètre l'algorithme liste. La sélection des chemins qui seront conservés ou éliminés est réalisée grâce à une métrique $m$ associée à chaque chemin. Cette métrique est mise à jour à chaque traitement d'une feuille. Lorsque la feuille est de rendement 0 si le LLR de la feuille est positif, la métrique est inchangée car l'estimation du LLR est en encore avec la valeur du bit gelé, 0. Si le LLR est négatif alors au contraire, la valeur absolue du LLR lui est ajoutée. Lorsque la feuille est de rendement un, deux chemins sont créés, avec chacun une version différente du bit décodé. Le chemin créé dont la valeur du bit est en accord avec la valeur du LLR ne reçoit pas de pénalité. Au contraire, la métrique du deuxième chemin créé est accrue de la valeur du LLR.
+Il n'est pas possible, en pratique, de dupliquer indéfiniment le nombre d'arbres de décodage, la mémoire nécessaire et le nombre de calcul devient vite insoutenable. Un nombre de chemins maximum $L$ est donc paramètre l'algorithme liste. La sélection des chemins qui seront conservés ou éliminés est réalisée grâce à une métrique $m$ associée à chaque chemin. Cette métrique est mise à jour à chaque traitement d'une feuille. Lorsque la feuille est de rendement 0 si le LLR de la feuille est positif, la métrique est inchangée car l'estimation du LLR est en encore avec la valeur du bit gelé, 0. Si le LLR est négatif alors au contraire, la valeur absolue du LLR lui est ajoutée. Lorsque la feuille est de rendement 1, deux chemins sont créés, avec chacun une version différente du bit décodé. Le chemin créé dont la valeur du bit est en accord avec la valeur du LLR ne reçoit pas de pénalité. Au contraire, la métrique du deuxième chemin créé est accrue de la valeur du LLR.
 
 Une fois ces calculs de métriques réalisés, on sélectionne les chemins à conserver. Si $L$ chemins étaient actifs au moment du traitement d'une feuille de rendement 1, alors $2L$ chemins sont générés, avec chacun une métrique associée. Seuls les $L$ chemins avec la métrique la plus faible sont conservés. A la fin du parcours de l'arbre de décodage, $L$ chemins auront donc été conservés. Ces $L$ chemins correspondent à $L$ mots de codes possibles. Une sélection d'un seul candidat parmi les $L$ doit être effectuée. Dans la version originale de l'algorithme, le mot décodé associé au chemin ayant la métrique de valeur la plus faible à la fin du décodage est sélectionné comme étant la sortie de l'algorithme $\mathbold{\hat{b}}$.
 
@@ -122,7 +176,13 @@ Une fois ces calculs de métriques réalisés, on sélectionne les chemins à co
 
 
 \subsubsection{Concaténation avec un CRC}
-Les auteurs de \cite{tal_how_2013} ont proposé de concaténer un test de redondance cyclique (CRC) pour discriminer les différents candidats. A la fin de l'algorithme de décodage, lorsque les $L$ mots de codes sont disponibles, un CRC est appliqué sur chacun d'entre eux. Si l'un d'entre eux vérifie le CRC, il est alors hautement probable qu'il soit le bon candidat. Le mécanisme de l'algorithme SCL aidé d'un CRC (CA-SCL) est illustré en Figure~\ref{fig:crc}.
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.5\textwidth]{main/ch1_fig/crc}
+\caption{Concaténation avec un CRC.}
+\label{fig:crc}
+\end{figure}
+Les auteurs de \cite{tal_how_2013} ont proposé de concaténer un test de redondance cyclique (CRC) pour discriminer les différents candidats. L'encodage est représenté en Figure~\ref{fig:crc}. \'A la fin de l'algorithme de décodage, lorsque les $L$ mots de codes sont disponibles, un CRC est appliqué sur chacun d'entre eux. Si l'un d'entre eux vérifie le CRC, il est alors hautement probable qu'il soit le bon candidat.
 
 \subsubsection{L'algorithme par Annulation Successive de type Liste Adaptatif}
 
@@ -152,8 +212,8 @@ Cet algorithme permet donc d'augmenter le débit, puisque plus $L$ et petit, plu
 Une ambiguïté doit tout d'abord être levée. L'ensemble des algorithmes de décodage traitant des informations souples peut être considéré comme un algorithme à propagation de croyance, y compris les algorithmes précédemment cités, basés sur l'algorithme de décodage SC. Toutefois, ce nom est aussi associé à un algorithme particulier de décodage de codes polaires \cite{arikan_channel_2009}. Dans la suite, l'acronyme BP sera utilisé pour l'algorithme spécifique de décodage de code polaire. L'algorithme BP, à la différence des précédents, est un algorithme de décodage à sortie souple. Il génère des sorties souples représentant des vraisemblances. Dans nos exemples celles-ci prendront la forme de LLRs. Au contraire de l'algorithme SC, aucune décision dure n'est effectuée au cours du décodage. Les sommes partielles sont remplacées par des LLRs. Les fonction utilisées pour les calculs des LLRs sont listées dans les Équations \ref{eq:bp}.
     \begin{eqnarray}
       \begin{array}{l c l}
-        f_{bp}(L_a,L_b,L_c) &=& f(L_a, L_b + L_c) \\
-        g_{bp}(L_a,L_b,L_c)&=& f(L_a, L_c) + L_b
+        f_{bp}(L_a,L_b,L_c) & = & f(L_a, L_b  + L_c) \\
+        g_{bp}(L_a,L_b,L_c) & = & f(L_a, L_c) + L_b
       \end{array}
       \label{eq:bp}
     \end{eqnarray}
@@ -166,28 +226,28 @@ Figure à décrire
 % Figure sous-arbre
 
 \subsection{Fast SC}
-Afin de réduire le temps de décodage, il est possible d'élaguer l'arbre de décodage comme indiqué dans \cite{alamdar-yazdi_simplified_2011}. En effet, un sous-arbre dont toutes les feuilles sont de rendement $0$ n'a pas besoin d'être parcouru. Comme toutes ses feuilles sont des bits gelés, alors toutes les sommes partielles du sous-arbre sont nulles. Le même élagage est possible pour des sous-arbre dont toutes les feuilles sont de rendement $1$. Pour un tel sous-arbre, il suffit d'appliquer la fonction de seuillage \texttt{R1} sur chaque LLR de la racine du sous arbre pour obtenir le même résultat que s'il avait été parcouru.
+Afin de réduire le temps de décodage, il est possible d'élaguer l'arbre de décodage comme indiqué dans \cite{alamdar-yazdi_simplified_2011}. En effet, un sous-arbre dont toutes les feuilles sont de rendement 0 n'a pas besoin d'être parcouru. Comme toutes ses feuilles sont des bits gelés, alors toutes les sommes partielles du sous-arbre sont nulles. Le même élagage est possible pour des sous-arbre dont toutes les feuilles sont de rendement 1. Pour un tel sous-arbre, il suffit d'appliquer la fonction de seuillage \texttt{R1} sur chaque LLR de la racine du sous arbre pour obtenir le même résultat que s'il avait été parcouru.
 
-Deux autres types de sous arbres peuvent être identifiés, et des fonctions spécialisées permettent d'obtenir les valeurs des sommes partielles directement depuis les valeurs des LLRs de la racine du sous-arbre. Soit un sous-arbre dont le nœud racine a une taille $M$. Si $M-1$ feuilles correspondent à des bits gelés et la dernière à un bit d'information, le sous-arbre peut être remplacé par un nœud de répétition. Les valeurs des sommes partielles d'un tel nœud sont soit toutes égales à $0$ soit toutes égales à $1$. Pour déterminer quelles valeurs prennent les sommes partielles, tous les LLRs du nœud considéré sont additionnés. Si le total est supérieur à 0, alors toutes les sommes partielles sont mises à $0$, et dans le cas contraire, toutes à $1$. Le dernier est un nœud à test de parité unique (SPC). Plusieurs étapes sont nécessaires au traitement d'un tel nœud. Ce traitement est noté \texttt{REP} dans la suite du document. Tout d'abord, la fonction élémentaire \texttt{R1} est appliqué sur chaque LLR, comme pour un nœud de rendement $1$. La parité de ce premier vecteur de sommes partielles est testée. Si celle-ci est égale à 0, le test de parité est satisfait, et les sommes partielles ne sont pas modifiées. Dans le cas contraire, les LLRs sont triés selon leur valeur absolue. La somme partielle associée au LLR ayant la valeur absolue la plus faible est inversée. Le vecteur ainsi corrigé respecte cette fois la contrainte de parité.
+Deux autres types de sous arbres peuvent être identifiés, et des fonctions spécialisées permettent d'obtenir les valeurs des sommes partielles directement depuis les valeurs des LLRs de la racine du sous-arbre. Soit un sous-arbre dont le \noeud racine a une taille $M$. Si $M-1$ feuilles correspondent à des bits gelés et la dernière à un bit d'information, le sous-arbre peut être remplacé par un \noeud de répétition. Les valeurs des sommes partielles d'un tel \noeud sont soit toutes égales à $0$ soit toutes égales à $1$. Pour déterminer quelles valeurs prennent les sommes partielles, tous les LLRs du \noeud considéré sont additionnés. Si le total est supérieur à 0, alors toutes les sommes partielles sont mises à $0$, et dans le cas contraire, toutes à $1$. Le dernier est un \noeud à test de parité unique (SPC). Plusieurs étapes sont nécessaires au traitement d'un tel \noeud. Ce traitement est noté \texttt{REP} dans la suite du document. Tout d'abord, la fonction élémentaire \texttt{R1} est appliqué sur chaque LLR, comme pour un \noeud de rendement 1. La parité de ce premier vecteur de sommes partielles est testée. Si celle-ci est égale à 0, le test de parité est satisfait, et les sommes partielles ne sont pas modifiées. Dans le cas contraire, les LLRs sont triés selon leur valeur absolue. La somme partielle associée au LLR ayant la valeur absolue la plus faible est inversée. Le vecteur ainsi corrigé respecte cette fois la contrainte de parité.
 
 \subsection{Fast SCL}
 
-Le mécanisme d'élagage de l'arbre peut être décliné pour l'algorithme SCL, il est toutefois plus complexe à mettre en œuvre. Il faut, pour tous ces nœud excepté celui de rendement 0, proposer plusieurs candidats. Les mécanisme de traitement de chaque type de nœud sont énumérés ci-dessous. Pour chaque type de nœud, la méthode de génération des candidats est exposée, accompagnée du calcul de leurs métriques respectives.
+Le mécanisme d'élagage de l'arbre peut être décliné pour l'algorithme SCL, il est toutefois plus complexe à mettre en œuvre. Il faut, pour tous ces \noeud excepté celui de rendement 0, proposer plusieurs candidats. Les mécanisme de traitement de chaque type de \noeud sont énumérés ci-dessous. Pour chaque type de \noeud, la méthode de génération des candidats est exposée, accompagnée du calcul de leurs métriques respectives.
 
-Dans un nœud de rendement 0, comme pour le SC, les sommes partielles résultantes d'un sous-arbre sont toutes égales à 0. Il n'y a pas de nouveaux candidats à générer. Par contre, les métriques doivent être mises à jour. Le traitement pour chaque LLR en entrée du sous-arbre est le même que pour le traitement d'une feuille de rendement 0. S'il est positif, aucune pénalité n'est appliquée à la métrique du chemin courant. S'il est négatif, une pénalité égale à la valeur absolue du LLR est ajoutée à la métrique. 
+Dans un \noeud de rendement 0, comme pour le SC, les sommes partielles résultantes d'un sous-arbre sont toutes égales à 0. Il n'y a pas de nouveaux candidats à générer. Par contre, les métriques doivent être mises à jour. Le traitement pour chaque LLR en entrée du sous-arbre est le même que pour le traitement d'une feuille de rendement 0. S'il est positif, aucune pénalité n'est appliquée à la métrique du chemin courant. S'il est négatif, une pénalité égale à la valeur absolue du LLR est ajoutée à la métrique. 
 
-Le traitement d'un nœud de répétition est relativement simple à appréhender. En effet, puisqu'un seul bit d'information est présent dans le sous-arbre, seulement deux versions des sommes partielles en sortie sont possibles, soit toutes à uns, soit toutes à 0. Ces deux versions constituent les deux candidats de chaque chemin. Un nœud de répétition génère donc deux candidats. A chaque candidat doit être affecté une nouvelle métrique. Cette nouvelle métrique est fonction des LLRs d'entrée du sous-arbre. Pour le candidat \og tout à 0 \fg, la valeur absolue de chaque LLR en entrée du sous-arbre ajoutée en pénalité à la métrique du chemin si et seulement si le LLR est négatif. Pour le nœud \og tout à 1 \fg, la valeur absolue de chaque LLR en entrée du sous-arbre est ajoutée en pénalité à la métrique du chemin si et seulement si le LLR est positif.
+Le traitement d'un \noeud de répétition est relativement simple à appréhender. En effet, puisqu'un seul bit d'information est présent dans le sous-arbre, seulement deux versions des sommes partielles en sortie sont possibles, soit toutes à uns, soit toutes à 0. Ces deux versions constituent les deux candidats de chaque chemin. Un \noeud de répétition génère donc deux candidats. A chaque candidat doit être affecté une nouvelle métrique. Cette nouvelle métrique est fonction des LLRs d'entrée du sous-arbre. Pour le candidat \og tout à 0 \fg, la valeur absolue de chaque LLR en entrée du sous-arbre ajoutée en pénalité à la métrique du chemin si et seulement si le LLR est négatif. Pour le \noeud \og tout à 1 \fg, la valeur absolue de chaque LLR en entrée du sous-arbre est ajoutée en pénalité à la métrique du chemin si et seulement si le LLR est positif.
 
 % Ajouter de la citation partout 
 % Ajouter citation Chase 2 Sarkis R1
-Le traitement du nœud de rendement 1 est plus intensif en calcul. En effet, si le nœud est de taille $T$, alors le nombre de candidats possibles est $2^T$. Pour chaque candidat, il faut calculer la nouvelle métrique. Ce calcul est le traitement \texttt{R1} appliqué à chaque LLR en entrée du sous-arbre, soit un seuillage. Comme pour tout nœud terminal, il faut ensuite trier les $2^T$ candidats afin d'en sélectionner les $L$ ayant la métrique la plus faible. Rapidement, ces traitements deviennent trop intensifs pour une implémentation réaliste. Une diminution drastique de la complexité de ce traitement peut être obtenu par l'utilisation de l'algorithme \og Chase \fg sur le sous-arbre. Tout d'abord, le premier candidat est obtenu en appliquant un seuillage sur les $T$ LLRs d'entrée à la manière du traitement du nœud de rendement 1 dans l'algorithme SC. Ensuite les $T$ LLRs d'entrée sous tout d'abord triés selon leur valeur absolue. Les deux LLR parmi les $T$  dont la valeur est la plus faible sont identifiés, notés LLR\textsubscript{1} et \textsubscript{2}. Les deuxième et troisième candidats sont générés en inversant la somme partielle associé au LLR\textsubscript{1} et au LLR\textsubscript{2}, respectivement. Le quatrième candidat est généré en inversant les deux sommes partielles à la fois. La métrique de chaque candidat est calculée en ajoutant à la métrique du chemin considéré la valeur absolue des LLRs dont la somme partielle a été inversée. Cette méthode empirique fonctionne excellemment. L'on pourrait s'attendre à des réductions de performances, puisque le nombre de candidats envisagés est réduit par rapport à la version non élaguée de l'algorithme SCL. Aucune dégradation n'est observée dans les faits expérimentaux.
+Le traitement du \noeud de rendement 1 est plus intensif en calcul. En effet, si le \noeud est de taille $T$, alors le nombre de candidats possibles est $2^T$. Pour chaque candidat, il faut calculer la nouvelle métrique. Ce calcul est le traitement \texttt{R1} appliqué à chaque LLR en entrée du sous-arbre, soit un seuillage. Comme pour tout \noeud terminal, il faut ensuite trier les $2^T$ candidats afin d'en sélectionner les $L$ ayant la métrique la plus faible. Rapidement, ces traitements deviennent trop intensifs pour une implémentation réaliste. Une diminution drastique de la complexité de ce traitement peut être obtenu par l'utilisation de l'algorithme \og Chase \fg sur le sous-arbre. Tout d'abord, le premier candidat est obtenu en appliquant un seuillage sur les $T$ LLRs d'entrée à la manière du traitement du \noeud de rendement 1 dans l'algorithme SC. Ensuite les $T$ LLRs d'entrée sous tout d'abord triés selon leur valeur absolue. Les deux LLR parmi les $T$  dont la valeur est la plus faible sont identifiés, notés LLR\textsubscript{1} et \textsubscript{2}. Les deuxième et troisième candidats sont générés en inversant la somme partielle associé au LLR\textsubscript{1} et au LLR\textsubscript{2}, respectivement. Le quatrième candidat est généré en inversant les deux sommes partielles à la fois. La métrique de chaque candidat est calculée en ajoutant à la métrique du chemin considéré la valeur absolue des LLRs dont la somme partielle a été inversée. Cette méthode empirique fonctionne excellemment. L'on pourrait s'attendre à des réductions de performances, puisque le nombre de candidats envisagés est réduit par rapport à la version non élaguée de l'algorithme SCL. Aucune dégradation n'est observée dans les faits expérimentaux.
  
 
-Enfin, le traitement des nœuds \texttt{SPC} est similaire au traitement du nœud de rendement 1 à la différence qu'au lieu de deux bits potentiellement inversés ce sont quatre bits qui sont considérés. Ensuite, seuls les candidats respectant la contrainte de parité sont générés. A la différence des nœuds de rendement 1, la performance de correction de l'algorithme élagué peut être dégradé. Les auteurs de \cite{sarkis_fast_2016} signalent en effet que des dégradations importantes sont observées pour des nœuds \texttt{SPC} de taille supérieure à 4. 
+Enfin, le traitement des \noeuds \texttt{SPC} est similaire au traitement du \noeud de rendement 1 à la différence qu'au lieu de deux bits potentiellement inversés ce sont quatre bits qui sont considérés. Ensuite, seuls les candidats respectant la contrainte de parité sont générés. A la différence des \noeuds de rendement 1, la performance de correction de l'algorithme élagué peut être dégradé. Les auteurs de \cite{sarkis_fast_2016} signalent en effet que des dégradations importantes sont observées pour des \noeuds \texttt{SPC} de taille supérieure à 4. 
 
 
 \subsection{Fast SCAN}
-Tout comme les algorithmes SC et SCL, des élagages peuvent être appliqués sur le SCAN. A la différence des deux précédents, les nœuds \texttt{REP} et \texttt{SPC} ne sont pas élagués. De plus, le concept de sous-arbre dans le SCAN évolue. Tandis que dans l'algorithme SC, un sous arbre prenait comme entrée des LLRs et produisait en sortie des sommes partielles. Dans l'algorithme SCL, les sorties des sous-arbres sont également des LLRs. Dans le cas d'un rendement 0, les sorties du nœud sont toutes à $+\inf$, puisqu'il est certain que les bits du mots de code sont des $0$. Dans le cas d'un rendement 1, les sorties du nœud sont tous à $0$ puisqu'en l'absence de redondance, aucune information ne peut être donnée à partir de ce sous arbre.
+Tout comme les algorithmes SC et SCL, des élagages peuvent être appliqués sur le SCAN. A la différence des deux précédents, les \noeuds \texttt{REP} et \texttt{SPC} ne sont pas élagués. De plus, le concept de sous-arbre dans le SCAN évolue. Tandis que dans l'algorithme SC, un sous arbre prenait comme entrée des LLRs et produisait en sortie des sommes partielles. Dans l'algorithme SCL, les sorties des sous-arbres sont également des LLRs. Dans le cas d'un rendement 0, les sorties du \noeud sont toutes à $+\inf$, puisqu'il est certain que les bits du mots de code sont des $0$. Dans le cas d'un rendement 1, les sorties du \noeud sont tous à $0$ puisqu'en l'absence de redondance, aucune information ne peut être donnée à partir de ce sous arbre.
 % détailler calculs évitables (g0, f0, grep)
 % discussion chase spc - r1 ? Hashemi-Sarkis + Simulations
 
