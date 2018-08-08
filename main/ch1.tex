@@ -219,7 +219,17 @@ Une ambiguïté doit tout d'abord être levée. L'ensemble des algorithmes de d�
     \end{eqnarray}
 
 \subsubsection{L'algorithme de décodage par Annulation Souple}
-Figure à décrire
+
+\begin{figure}[t]
+  \renewcommand*\thesubfigure{\arabic{subfigure}} 
+  \centering
+  \subfloat[][Initialisation]{\includegraphics[width=.26\textwidth]{main/ch1_fig/scan_graph_1}}\quad\quad\quad
+  \subfloat[][$f_{bp}$ function]{\includegraphics[width=.18\textwidth]{main/ch1_fig/scan_graph_2}}\\
+  \subfloat[][$g_{bp}$ function]{\includegraphics[width=.18\textwidth]{main/ch1_fig/scan_graph_3}}\quad\quad\quad
+  \subfloat[][Backward functions]{\includegraphics[width=.18\textwidth]{main/ch1_fig/scan_graph_4}}
+  \caption{Fonctions élémentaires et séquencement du décodage SCAN du noyau $N=2$}
+  \label{fig:SCANSchedule}
+\end{figure}
 
 \subsection{Les performances de décodage des différents algorithmes}
 
