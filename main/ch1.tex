@@ -10,9 +10,9 @@ Résumé
 
 % \subsection*{Introduction}
 
-\section{Principe et construction}
+\section{Le principe et la construction des codes polaires}
 
-\subsection{Contexte}
+\subsection{Le contexte}
 
 
 
@@ -23,25 +23,26 @@ Résumé
 \label{fig:chaine_com}
 \end{figure}
 Une chaîne de communications numériques est représentée en Figure~\ref{fig:chaine_com}.
-Elle représente les étapes usuelles de la transmission de données numériques depuis une \textbf{Source} vers un \textbf{Destinataire} à travers un \textbf{Canal}.
-Le canal de transmission est le support qui permet le transfert de l'information. Lors de communications sans fil, il s'agit du vide, par lequel passent les ondes émises par les antennes de nos équipements. Or les grandeurs physiques associées à ce canal sont continues tandis que les données à transmettre sont une \textbf{séquence d'information} constituée de bits, donc discrètes. C'est le rôle du modulateur que de transformer ce flux binaire en signaux physiques transmissibles par le canal. Si l'on considère toujours le cas d'application des communications sans fils, le modulateur transforme des séquences de bits en formes d'ondes.
+Elle représente les étapes usuelles de la transmission de données numériques depuis une \textbf{source} vers un \textbf{destinataire} à travers un \textbf{canal}.
+Le canal de transmission est le support qui permet le transfert de l'information. Lors de communications sans fil, il s'agit du vide, par lequel passent les ondes émises par les antennes de nos équipements. Or les grandeurs physiques associées à ce canal sont continues tandis que les données à transmettre sont constituées de bits, donc discrètes. Le \textbf{modulateur} transforme ce flux binaire en signaux physiques transmissibles par le canal. Si l'on considère toujours les communications sans fils, le modulateur transforme les séquences de bits en formes d'ondes.
 
-Au sein du canal de communication, les signaux subissent de nombreuses perturbations. Le bruit thermique des composants circuits électroniques de la chaîne de transmission et les interférences causées par d'autres utilisateurs du canal sont des exemples de sources de perturbations. Le démodulateur, qui a le rôle inverse du modulateur, c'est-à-dire de convertir les signaux physiques en données binaires, peut, à cause de ces perturbations, commettre des erreurs. Ceci est un problème, puisque le but de la chaîne de transmission est de transmettre au destinataire l'exacte réplique de la séquence d'information donnée par la source. Dans le cas contraire, il s'agit d'erreurs de transmissions. La qualité de la chaîne de transmission est souvent mesurée par son taux d'erreur binaire (BER), qui correspond au nombre de bits erronés sur le nombre total de bits transmis.
+Au sein du canal de communication, les signaux subissent de nombreuses perturbations comme le bruit thermique des composants circuits électroniques de la chaîne de transmission ou encore les interférences causées par d'autres utilisateurs du canal. Le \textbf{démodulateur}, qui a le rôle inverse du modulateur, c'est-à-dire de convertir les signaux physiques en données binaires, peut, à cause de ces perturbations, commettre des erreurs. Ceci est un problème, puisque le but de la chaîne de transmission est de transmettre au destinataire l'exacte réplique de la \textbf{séquence d'information}, $\mathbold{b}$ émise par la source. Lorsque les deux séquences, l'une émise et et l'autre reçue, diffèrent, il y a échec de la transmission. La qualité de la chaîne de transmission est souvent mesurée par son taux d'erreur binaire (BER), qui correspond au nombre de bits différents entre la séquence émise et la séquence reçue.
 
 L'ajout d'un encodeur et d'un décodeur canal dans la chaîne de transmission est un moyen efficace de réduire ce taux d'erreur. L'encodeur transforme une séquence d'information $\mathbold{b}$ de $K$ bits en un \textbf{mot de code} $\mathbold{x}$ de $N$ bits. La taille du mot de code, en nombre de bits, est supérieure à la taille de la séquence d'informations afin d'ajouter de la redondance au message transmis: le rendement du code $R=K/N$ est inférieur à $1$. Cette redondance est utilisée par le décodeur canal, ou parfois le couple démodulateur - décodeur canal, afin de réduire le taux d'erreur binaire de la chaîne de transmission. Dans la présente thèse, le décodeur canal est découplé du démodulateur. L'ensemble modulateur - canal - démodulateur peut être considéré comme une entité indépendante dont l'entrée est le mot de code $\mathbold{x}$ et la sortie une séquence d'estimation $\mathbold{L}$. Cet ensemble est appelé canal composite.
 
 \subsection{Le canal composite}
 Un seul et unique modèle de canal composite sera considéré tout au long de ce manuscrit. Sa modulation est une modulation à changement de phase binaire (BPSK) qui associe aux valeurs binaires d'entrée $x\in\{0,1\}$ les valeurs réelles $\hat{x}\in\{-1,1\}$, respectivement.
-Le canal à bruit blanc additif gaussien à double entrée (BI-AWGNC) tel que défini dans \cite[Section~1.5.1.3]{ryan2009channel} est considéré. Ce modèle est le plus utilisé pour caractériser les performances des codes correcteurs d'erreur car il se rapproche du bruit thermique évoqué précédemment, qui est souvent prépondérant. Il consiste en l'addition d'une variable réelle à distribution gaussienne centrée en $0$ et de densité spectrale $N_0$. Afin d'évaluer les performances de correction des codes correcteurs d'erreurs, les taux d'erreur seront souvent rapportés à cette densité spectrale, ou plus précisément au \textbf{rapport signal à bruit} (SNR), noté $E_b/N_0$, où $E_b=\frac{\mathbb{E}(\hat{x}^2)}{R}$ est l'énergie moyenne par bit d'information.
 
-Les estimations en sortie du démodulateur sont données sous la forme de rapport de vraisemblance logarithmique (LLR). Leur signe détermine la valeur binaire d'entrée $x$ la plus probable, et leur valeur absolue le degré de fiabilité de cette valeur d'entrée. Des détails sur le modèle de canal et le calcul de ces LLRs sont données en Annexe \ref{append:decoding_nodes}.
+Le canal à bruit blanc additif gaussien à double entrée (BI-AWGNC) tel que défini dans \cite[Section~1.5.1.3]{ryan2009channel} est considéré. Ce modèle est le plus utilisé pour caractériser les performances des codes correcteurs d'erreur car il se rapproche du bruit thermique évoqué précédemment, qui est souvent prépondérant. Il consiste en l'addition aux données de sortie du modulateur $\mathbold{\hat{y}}$ d'une variable réelle à distribution gaussienne centrée en $0$ et de densité spectrale $N_0$. Afin d'évaluer les performances de correction des codes correcteurs d'erreurs, les taux d'erreur seront souvent rapportés à cette densité spectrale, ou plus précisément au \textbf{rapport signal à bruit} (SNR), noté $E_b/N_0$, où $E_b=\frac{\mathbb{E}(\hat{x}^2)}{R}$ est l'énergie moyenne par bit d'information.
 
-\subsection{Encodage de codes polaires}
+Les estimations en sortie du démodulateur sont données sous la forme de rapport de vraisemblance logarithmique (LLR). Leur signe détermine pour chaque donnée $\hat{y}_i \in \mathbold{\hat{y}}$ la valeur binaire d'entrée $\hat{x}_i \in \mathbold{\hat{x}}$ la plus probable. Leur valeur absolue le degré de fiabilité de l'information. Des détails sur le modèle de canal et la définition des LLRs sont données en Annexe \ref{append:decoding_nodes}.
+
+\subsection{L'encodage de codes polaires}
 Les codes polaires appartiennent à la famille des codes en blocs linéaire. Soient les ensembles $\mathbb{B}^n = \{0,1\}^n$, et  une matrice de taille $G \in \mathbb{B}^K \times \mathbb{B}^N$. L'encodage d'un code en blocs linéaire est une application linéaire injective de $\mathbb{B}^K$ vers $\mathbb{B}^N$ qui à un élément $\mathbold{b} \in \mathbb{B}^K$ associe un élément $\mathbold{x} \in \mathbb{B}^N$ tel que $x=bG$. Définir un encodeur de code polaire revient donc à définir sa matrice génératrice $G$. 
 
-La matrice génératrice d'un code polaire est elle-même produit de deux matrices $E \in (\mathbb{B}^K \times \mathbb{B}^N)$ et $F^{\otimes n}\in (\mathbb{B}^N)^2$, $G=EF^{\otimes n}$. La multiplication par la matrice $E$ correspond à l'introduction de "bits gelés", dont la valeur est $0$, à la séquence d'information $\mb{b}$. Le résultat de l'opération $\mathbold{u} = E\mathbold{b}$ est constitué de $K$ bits $b_i \in \mathbold{b}$ et de $N-K$ bits gelés. Les positions respectives des bits d'informations et des bits gelés sont liés au phénomène de polarisation décrit dans la section suivante. Ces positions sont déterminantes pour à la performance de correction du code.
+La matrice génératrice d'un code polaire est elle-même produit de deux matrices $E \in (\mathbb{B}^K \times \mathbb{B}^N)$ et $F^{\otimes n}\in (\mathbb{B}^N)^2$, $G=EF^{\otimes n}$. La multiplication par la matrice $E$ correspond à l'introduction de "bits gelés", dont la valeur est $0$, à la séquence d'information $\mb{b}$. Le résultat de l'opération $\mathbold{u} = E\mathbold{b}$ est constitué de $K$ bits $b_i \in \mathbold{b}$ et de $N-K$ bits gelés. Les positions respectives des bits d'informations et des bits gelés sont liées au phénomène de polarisation décrit dans la section suivante. Ces positions sont déterminantes quant à la performance de correction du code.
 
-La matrice $F^{\otimes n}$, où $N=2^n$, est la n-ième puissance de Kronecker du noyau $F=\left[\begin{smallmatrix} 1 & 0 \\ 1 & 1\end{smallmatrix}\right]$. En Figure \ref{fig:encodage} sont données plusieurs représentations de cette matrice d'encodage. La représentation sous forme de \textit{factor graph} est une représentation alternative où les symboles $\oplus$ correspondent à des opération \textit{OU-exclusif}. La représentation sous forme d'arbre binaire est quant à elle particulièrement pertinente pour la description des algorithmes de décodage.
+La matrice $F^{\otimes n}$, où $N=2^n$, est la n-ième puissance de Kronecker du noyau $F=\left[\begin{smallmatrix} 1 & 0 \\ 1 & 1\end{smallmatrix}\right]$. On peut définir $F^{\otimes n}$ récursivement : $F^{\otimes 1} = F$ et $\forall {n > 1}\text{ , }{F^{\otimes n + 1}=\left[\begin{smallmatrix} F^{\otimes n} & 0_n \\ F^{\otimes n} & F^{\otimes n}\end{smallmatrix}\right]}$ avec $0_n \in \mathbb{B}^N$ une matrice nulle.   En Figure \ref{fig:encodage} sont données plusieurs représentations de cette matrice d'encodage. La représentation sous forme de \textit{factor graph} est une représentation alternative où les symboles $\oplus$ correspondent à des opération \textit{OU-exclusif}. La représentation sous forme d'arbre binaire est quant à elle particulièrement pertinente pour la description des algorithmes de décodage.
 
 \begin{figure}[t]
 \centering
@@ -50,7 +51,7 @@ La matrice $F^{\otimes n}$, où $N=2^n$, est la n-ième puissance de Kronecker d
 \label{fig:encodage}
 \end{figure}
 
-Le processus d'encodage peut également être modifié pour rendre le code systématique. Un code correcteur d'erreur est dit systématique si les bits de la séquence d'information sont présents dans le mot de code. Pour se faire, il faut modifier la matrice d'encodage : $G_{sys}=EF^{\otimes n}EF^{\otimes n}$. Il est alors prouvé dans \cite{arikan_systematic_2011} que si $\mb{x}=\mb{b}G_{sys}$, alors $\mb{b}=E^{-1}\mb{x}$. L'encodage systématique est représenté en Figure \ref{fig:sys}.
+Le processus d'encodage peut également être modifié pour rendre le code systématique. Un code correcteur d'erreur est dit systématique si les bits de la séquence d'information sont présents dans le mot de code. Pour ce faire, il faut modifier la matrice d'encodage : $G_{sys}=EF^{\otimes n}EF^{\otimes n}$. Il est alors prouvé dans \cite{arikan_systematic_2011} que si $\mb{x}=\mb{b}G_{sys}$, alors $\mb{b}=E^{-1}\mb{x}$. L'encodage systématique est représenté en Figure \ref{fig:sys}.
 
 \begin{figure}[t]
 \centering
@@ -59,7 +60,7 @@ Le processus d'encodage peut également être modifié pour rendre le code syst�
 \label{fig:sys}
 \end{figure}
 
-\subsection{Polarisation}
+\subsection{Le phénomène de polarisation}
 
 L'invention des codes polaires et la définition des matrices d'encodage par Ar{\i}kan \cite{arikan_channel_2009} sont liées au phénomène de polarisation. L'ensemble constitué de l'encodeur polaire, du canal composite et du décodeur polaire peut être vu comme un ensemble de canaux de transmission qui chacun transmet un bit. Le terme \og polarisation \fg exprime le fait que ces $N$ canaux ont tendance à se diviser en deux groupes. Un groupe de canaux très fiables, avec une probabilité d'erreur faible, et un groupe de canaux peu fiables, à probabilité d'erreur forte. Cette tendance augmente quand $N$ augmente : les canaux se polarisent. Ainsi, les bits d'informations seront attribués aux canaux fiables, et des bits dits gelés, dont la valeur est connue à priori, seront attribués aux canaux peu fiables. Le processus de détermination de la position des bits gelés dans le vecteur $\mathbold{u}$ est appelé construction des codes polaires. Celle-ci est déterminante pour la performance de correction des codes polaires. Plusieurs méthodes efficaces ont été proposées \cite{tal_how_2013,trifonov_efficient_2012} pour le canal AWGN.
 
@@ -67,7 +68,7 @@ L'invention des codes polaires et la définition des matrices d'encodage par Ar{
 
 Deux algorithmes de décodages ont été proposés dès l'invention des codes polaires \cite{arikan_channel_2009}. L'algorithme de décodage appelé Annulation Successive (SC) est un algorithme de décodage à sortie dure : les données de sortie sont des bits. L'algorithme de décodage par propagation de croyance (BP) est au contraire un algorithme de décodage à sortie souple, dont les données de sortie sont des estimations représentée par exemple par des LLRs. De nombreuses variantes de ces algorithme ont ensuite été proposées pour améliorer leur performances de corrections. Les algorithme Annulation Successive par Liste (SCL), Annulation Successive "Flip" (SCF), Annulation Successive par Pile (SCS) sont des évolutions de l'algorithme SC. Tandis que l'algorithme appelé Annulation Souple (SCAN) eut être vu comme une combinaison des algorithmes SC et BP. Chacun de ces algorithmes est décrit dans cette section.
 
-\subsection{Le décodage par Annulation Successive}
+\subsection{L'algorithme de décodage par Annulation Successive}
 
 % Ajouter channel LLRs à la racine
 \subsubsection{Les fonctions élémentaires}
@@ -156,7 +157,7 @@ La séquence d'application des différentes fonctions est explicitée dans la Fi
 Dans la Figure~\ref{fig:sc}, il apparaît que quatre fonctions $f$ sont appliquées sur le \noeud racine pour calculer les LLRs de la branche de gauche. Ces quatre fonctions sont indépendantes : leurs entrées et sorties sont disjointes. Par conséquence, elles peuvent être réalisées simultanément. Cela est également vrai pour chaque fonction $f$, $g$ et $h$ d'un \noeud donné. Ainsi, le niveau de parallélisme est différent selon la couche considérée et correspond à la taille du \noeud cible. Le parallélisme est donc plus grand en haut de l'arbre qu'en bas. Dans les implémentations logicielles ou matérielles de ces algorithme, ce parallélisme est utilisé pour réduire le temps de décodage et accélérer le débit du décodage. Lorsque ce parallélisme est utilisé, on parle de parallélisme \textit{intra-trame}.
 
 
-\subsection{Le décodage par Annulation Successive Liste}
+\subsection{L'algorithme de décodage par Annulation Successive à Liste}
 \subsubsection{L'algorithme}
 \begin{figure}[t]
 \centering
@@ -184,7 +185,7 @@ Une fois ces calculs de métriques réalisés, on sélectionne les chemins à co
 \end{figure}
 Les auteurs de \cite{tal_how_2013} ont proposé de concaténer un test de redondance cyclique (CRC) pour discriminer les différents candidats. L'encodage est représenté en Figure~\ref{fig:crc}. \'A la fin de l'algorithme de décodage, lorsque les $L$ mots de codes sont disponibles, un CRC est appliqué sur chacun d'entre eux. Si l'un d'entre eux vérifie le CRC, il est alors hautement probable qu'il soit le bon candidat.
 
-\subsubsection{L'algorithme par Annulation Successive de type Liste Adaptatif}
+\subsubsection{Les algorithmes de décodage adaptatifs}
 
 %Citation
 L'algorithme SCL adaptatif permet d'augmenter le débit des implémentations l'algorithme CA-SCL. La première étape est d'appliquer l'algorithme SC sur les LLRs de sortie du canal composite. Le test du CRC est alors réalisé. S'il est satisfait, le mot de code est considéré comme bon et le décodage est terminé. Dans le cas contraire, l'algorithme SCL est appliqué. Dans le cas de l'algorithme Partiellement Adaptatif (PA-SCL), l'algorithme est appliqué une seule fois avec comme taille de liste $L_{max}$. Dans le cas de l'algorithme Complètement Adaptatif (FA-SCL), après la première application de l'algorithme SC, l'algorithme CA-SCL est appliqué plusieurs fois. \`A la première itération, $L$ est égal à $2$. Si après décodage, le CRC est satisfait alors l'algorithme FA-SCL s'arrête, sinon il continue en doublant itérativement $L$ jusqu'à atteindre $L_{max}$.
@@ -193,8 +194,8 @@ Cet algorithme permet donc d'augmenter le débit, puisque plus $L$ et petit, plu
 
 % Prendre une décision sur l'appellation des algos (de / par / [] Annu Succ par / "" / [] Liste / Pile)
 % Pour chaque algo, lister possiblement les améliorations mineures
+\subsection{Des variantes proches}
 
-\subsection{Autres algorithmes}
 	L'algorithme de décodage par Annulation Successive Flip (SCF) \cite{afisiadis_low-complexity_2014} est une variante de l'algorithme SC. Il vise également à améliorer les performances de décodage. Cet algorithme nécessite la concaténation d'un CRC pour être réalisé. L'algorithme de décodage SC est appliqué une première fois. L'ensemble des LLRs permettant les décisions dure (les LLRs des feuilles) est conservé. Si le mot de code décodé satisfait le CRC, alors le décodage s'arrête. Par contre, si le CRC n'est pas satisfait, alors l'algorithme SC est lancé une nouvelle fois. La différence est que la décision prise, lors du premier décodage, sur le LLR le moins fiable est inversée. Ce deuxième mot décodé est encore testé à l'aide du CRC. S'il ne satisfait toujours pas le CRC, une autre séquence de décodage est lancée en inversant le bit du deuxième LLR le moins fiable. Ce mécanisme itératif continue jusqu'à un nombre d'essai maximum $T$.
 
 
@@ -203,8 +204,7 @@ Cet algorithme permet donc d'augmenter le débit, puisque plus $L$ et petit, plu
 	% Citer Harsch
 	% Parler du Stack Hybride ? 
 
-
-\subsection{Algorithmes itératifs à sortie souple}
+\subsection{Les algorithmes itératifs à sortie souple}
 % Parler concaténation
 
 
@@ -221,16 +221,18 @@ Une ambiguïté doit tout d'abord être levée. L'ensemble des algorithmes de d�
 \subsubsection{L'algorithme de décodage par Annulation Souple}
 Figure à décrire
 
-\section{Élagage de l'arbre de décodage}
+\subsection{Les performances de décodage des différents algorithmes}
+
+\section{L'élagage de l'arbre de décodage}
 
 % Figure sous-arbre
 
-\subsection{Fast SC}
+\subsection{L'élagage de l'algorithme de décodage SC}
 Afin de réduire le temps de décodage, il est possible d'élaguer l'arbre de décodage comme indiqué dans \cite{alamdar-yazdi_simplified_2011}. En effet, un sous-arbre dont toutes les feuilles sont de rendement 0 n'a pas besoin d'être parcouru. Comme toutes ses feuilles sont des bits gelés, alors toutes les sommes partielles du sous-arbre sont nulles. Le même élagage est possible pour des sous-arbre dont toutes les feuilles sont de rendement 1. Pour un tel sous-arbre, il suffit d'appliquer la fonction de seuillage \texttt{R1} sur chaque LLR de la racine du sous arbre pour obtenir le même résultat que s'il avait été parcouru.
 
 Deux autres types de sous arbres peuvent être identifiés, et des fonctions spécialisées permettent d'obtenir les valeurs des sommes partielles directement depuis les valeurs des LLRs de la racine du sous-arbre. Soit un sous-arbre dont le \noeud racine a une taille $M$. Si $M-1$ feuilles correspondent à des bits gelés et la dernière à un bit d'information, le sous-arbre peut être remplacé par un \noeud de répétition. Les valeurs des sommes partielles d'un tel \noeud sont soit toutes égales à $0$ soit toutes égales à $1$. Pour déterminer quelles valeurs prennent les sommes partielles, tous les LLRs du \noeud considéré sont additionnés. Si le total est supérieur à 0, alors toutes les sommes partielles sont mises à $0$, et dans le cas contraire, toutes à $1$. Le dernier est un \noeud à test de parité unique (SPC). Plusieurs étapes sont nécessaires au traitement d'un tel \noeud. Ce traitement est noté \texttt{REP} dans la suite du document. Tout d'abord, la fonction élémentaire \texttt{R1} est appliqué sur chaque LLR, comme pour un \noeud de rendement 1. La parité de ce premier vecteur de sommes partielles est testée. Si celle-ci est égale à 0, le test de parité est satisfait, et les sommes partielles ne sont pas modifiées. Dans le cas contraire, les LLRs sont triés selon leur valeur absolue. La somme partielle associée au LLR ayant la valeur absolue la plus faible est inversée. Le vecteur ainsi corrigé respecte cette fois la contrainte de parité.
 
-\subsection{Fast SCL}
+\subsection{L'élagage de l'algorithme de décodage SCL}
 
 Le mécanisme d'élagage de l'arbre peut être décliné pour l'algorithme SCL, il est toutefois plus complexe à mettre en œuvre. Il faut, pour tous ces \noeud excepté celui de rendement 0, proposer plusieurs candidats. Les mécanisme de traitement de chaque type de \noeud sont énumérés ci-dessous. Pour chaque type de \noeud, la méthode de génération des candidats est exposée, accompagnée du calcul de leurs métriques respectives.
 
@@ -240,13 +242,13 @@ Le traitement d'un \noeud de répétition est relativement simple à appréhende
 
 % Ajouter de la citation partout 
 % Ajouter citation Chase 2 Sarkis R1
-Le traitement du \noeud de rendement 1 est plus intensif en calcul. En effet, si le \noeud est de taille $T$, alors le nombre de candidats possibles est $2^T$. Pour chaque candidat, il faut calculer la nouvelle métrique. Ce calcul est le traitement \texttt{R1} appliqué à chaque LLR en entrée du sous-arbre, soit un seuillage. Comme pour tout \noeud terminal, il faut ensuite trier les $2^T$ candidats afin d'en sélectionner les $L$ ayant la métrique la plus faible. Rapidement, ces traitements deviennent trop intensifs pour une implémentation réaliste. Une diminution drastique de la complexité de ce traitement peut être obtenu par l'utilisation de l'algorithme \og Chase \fg sur le sous-arbre. Tout d'abord, le premier candidat est obtenu en appliquant un seuillage sur les $T$ LLRs d'entrée à la manière du traitement du \noeud de rendement 1 dans l'algorithme SC. Ensuite les $T$ LLRs d'entrée sous tout d'abord triés selon leur valeur absolue. Les deux LLR parmi les $T$  dont la valeur est la plus faible sont identifiés, notés LLR\textsubscript{1} et \textsubscript{2}. Les deuxième et troisième candidats sont générés en inversant la somme partielle associé au LLR\textsubscript{1} et au LLR\textsubscript{2}, respectivement. Le quatrième candidat est généré en inversant les deux sommes partielles à la fois. La métrique de chaque candidat est calculée en ajoutant à la métrique du chemin considéré la valeur absolue des LLRs dont la somme partielle a été inversée. Cette méthode empirique fonctionne excellemment. L'on pourrait s'attendre à des réductions de performances, puisque le nombre de candidats envisagés est réduit par rapport à la version non élaguée de l'algorithme SCL. Aucune dégradation n'est observée dans les faits expérimentaux.
+Le traitement du \noeud de rendement 1 est plus intensif en calcul. En effet, si le \noeud est de taille $T$, alors le nombre de candidats possibles est $2^T$. Pour chaque candidat, il faut calculer la nouvelle métrique. Ce calcul est le traitement \texttt{R1} appliqué à chaque LLR en entrée du sous-arbre, soit un seuillage. Comme pour tout \noeud terminal, il faut ensuite trier les $2^T$ candidats afin d'en sélectionner les $L$ ayant la métrique la plus faible. Rapidement, ces traitements deviennent trop intensifs pour une implémentation réaliste. Une diminution drastique de la complexité de ce traitement peut être obtenu par l'utilisation de l'algorithme \og Chase \fg sur le sous-arbre. Tout d'abord, le premier candidat est obtenu en appliquant un seuillage sur les $T$ LLRs d'entrée à la manière du traitement du \noeud de rendement 1 dans l'algorithme SC. Ensuite les $T$ LLRs d'entrée sous tout d'abord triés selon leur valeur absolue. Les deux LLR parmi les $T$  dont la valeur est la plus faible sont identifiés, notés LLR\textsubscript{1} et LLR\textsubscript{2}. Les deuxième et troisième candidats sont générés en inversant la somme partielle associé au LLR\textsubscript{1} et au LLR\textsubscript{2}, respectivement. Le quatrième candidat est généré en inversant les deux sommes partielles à la fois. La métrique de chaque candidat est calculée en ajoutant à la métrique du chemin considéré la valeur absolue des LLRs dont la somme partielle a été inversée. Cette méthode empirique fonctionne excellemment. L'on pourrait s'attendre à des réductions de performances, puisque le nombre de candidats envisagés est réduit par rapport à la version non élaguée de l'algorithme SCL. Aucune dégradation n'est observée dans les faits expérimentaux.
  
 
 Enfin, le traitement des \noeuds \texttt{SPC} est similaire au traitement du \noeud de rendement 1 à la différence qu'au lieu de deux bits potentiellement inversés ce sont quatre bits qui sont considérés. Ensuite, seuls les candidats respectant la contrainte de parité sont générés. A la différence des \noeuds de rendement 1, la performance de correction de l'algorithme élagué peut être dégradé. Les auteurs de \cite{sarkis_fast_2016} signalent en effet que des dégradations importantes sont observées pour des \noeuds \texttt{SPC} de taille supérieure à 4. 
 
 
-\subsection{Fast SCAN}
+\subsection{L'élagage de l'algorithme de décodage SCAN}
 Tout comme les algorithmes SC et SCL, des élagages peuvent être appliqués sur le SCAN. A la différence des deux précédents, les \noeuds \texttt{REP} et \texttt{SPC} ne sont pas élagués. De plus, le concept de sous-arbre dans le SCAN évolue. Tandis que dans l'algorithme SC, un sous arbre prenait comme entrée des LLRs et produisait en sortie des sommes partielles. Dans l'algorithme SCL, les sorties des sous-arbres sont également des LLRs. Dans le cas d'un rendement 0, les sorties du \noeud sont toutes à $+\inf$, puisqu'il est certain que les bits du mots de code sont des $0$. Dans le cas d'un rendement 1, les sorties du \noeud sont tous à $0$ puisqu'en l'absence de redondance, aucune information ne peut être donnée à partir de ce sous arbre.
 % détailler calculs évitables (g0, f0, grep)
 % discussion chase spc - r1 ? Hashemi-Sarkis + Simulations
