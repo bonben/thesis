@@ -84,14 +84,14 @@ Deux algorithmes de décodages ont été proposés dès l'invention des codes po
   \subfloat[][$\texttt{R1}$ function]{\includegraphics[width=.2\textwidth]{main/ch1_fig/sc_graph_5}}\quad\quad
   \subfloat[][$h$ function]{\includegraphics[width=.18\textwidth]{main/ch1_fig/sc_graph_6}}
   \caption{Fonctions élémentaires et séquencement du décodage SC du noyau $N=2$}
-  \label{fig:SCSchedule}
+  \label{fig:sc_steps}
 \end{figure}
 
 % Expliciter notation (N,K)
 % Mettre cohérence dans numérotation des couches (0 = racine)
 
 %
-Les étapes du décodage du \noeud élémentaire de taille 2 sont représentées en Figure~\ref{fig:SCSchedule}.
+Les étapes du décodage du \noeud élémentaire de taille 2 sont représentées en Figure~\ref{fig:sc_steps}.
 Les données d'entrée des algorithmes de décodages présentés ici sont des LLRs, contenus dans le vecteur $\mathbold{L}$ de taille $N$, sortis du canal composite.
 Les données de sorties sont des bits contenus dans le vecteur $\mathbold{\hat{b}}$ de taille $K$.
 Au cours du décodage de codes polaires, ces deux formats de données (LLRs et bits) sont également utilisés.
@@ -176,6 +176,8 @@ Une fois ces calculs de métriques réalisés, on sélectionne les chemins à co
 % Insistier lourdement sur la signification de chaque terme : chemin, métrique, candidat
 
 
+Les auteurs de \cite{tal_how_2013} ont proposé de concaténer un test de redondance cyclique (CRC) pour discriminer les différents candidats. L'encodage est représenté en Figure~\ref{fig:crc}. \'A la fin de l'algorithme de décodage, lorsque les $L$ mots de codes sont disponibles, un CRC est appliqué sur chacun d'entre eux. Si l'un d'entre eux vérifie le CRC, il est alors hautement probable qu'il soit le bon candidat.
+
 \subsubsection{Concaténation avec un CRC}
 \begin{figure}[t]
 \centering
@@ -183,8 +185,6 @@ Une fois ces calculs de métriques réalisés, on sélectionne les chemins à co
 \caption{Concaténation avec un CRC.}
 \label{fig:crc}
 \end{figure}
-Les auteurs de \cite{tal_how_2013} ont proposé de concaténer un test de redondance cyclique (CRC) pour discriminer les différents candidats. L'encodage est représenté en Figure~\ref{fig:crc}. \'A la fin de l'algorithme de décodage, lorsque les $L$ mots de codes sont disponibles, un CRC est appliqué sur chacun d'entre eux. Si l'un d'entre eux vérifie le CRC, il est alors hautement probable qu'il soit le bon candidat.
-
 \subsubsection{Les algorithmes de décodage adaptatifs}
 
 %Citation
@@ -223,15 +223,36 @@ Une ambiguïté doit tout d'abord être levée. L'ensemble des algorithmes de d�
 \begin{figure}[t]
   \renewcommand*\thesubfigure{\arabic{subfigure}} 
   \centering
-  \subfloat[][Initialisation]{\includegraphics[width=.26\textwidth]{main/ch1_fig/scan_graph_1}}\quad\quad\quad
-  \subfloat[][$f_{bp}$ function]{\includegraphics[width=.18\textwidth]{main/ch1_fig/scan_graph_2}}\\
-  \subfloat[][$g_{bp}$ function]{\includegraphics[width=.18\textwidth]{main/ch1_fig/scan_graph_3}}\quad\quad\quad
-  \subfloat[][Backward functions]{\includegraphics[width=.18\textwidth]{main/ch1_fig/scan_graph_4}}
+  \subfloat[][Initialisation]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_1}}\hspace{2.5cm}
+  \subfloat[][$f_{bp}$ function]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_2}}\\
+  \hspace{0.5cm}
+  \subfloat[][$g_{bp}$ function]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_3}}\hspace{3.7cm}
+  \subfloat[][Backward functions]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_4}}
   \caption{Fonctions élémentaires et séquencement du décodage SCAN du noyau $N=2$}
   \label{fig:SCANSchedule}
 \end{figure}
 
 \subsection{Les performances de décodage des différents algorithmes}
+
+% Toutes les simulations en point flottant
+% SC Systématique / non systématique
+% Différents rendements, tailles de codes, etc...
+% Faire le lien avec réseaux mobiles
+% 
+% SC LIST
+% Ne pas trop en faire, développé en chapitre 2
+% Différents CRC (retrouver citation des CRC adaptés dans papiers SCL)
+% ASCL : montrer pour CRC non adapté (1723/2048 )
+% 
+% BP    (Thèse guillaume ?)
+% SCAN  
+% 
+% 	
+% 
+% SC Stack
+% SC FLIP
+% 
+% 
 
 \section{L'élagage de l'arbre de décodage}
 

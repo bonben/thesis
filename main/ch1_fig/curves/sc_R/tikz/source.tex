@@ -1,0 +1,50 @@
+\documentclass{standalone}
+
+\usepackage{amsmath}
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+
+\input{colors}
+
+\begin{document}
+  \begin{tikzpicture}
+    \begin{semilogyaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
+                         width=1.0\linewidth, height=0.70\linewidth,
+                         xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
+                         xmin=0.5, xmax=4.5, xtick={0,0.5,1,...,4.5},
+                         tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
+                         legend pos=north east, legend columns=2]
+      \addplot[mark=o,        Paired-1,    semithick                              ] table [x=Eb/N0, y=FER] {../dat/SCL_8_32.txt};   \label{plot:line1}
+      \addplot[mark=o,        Paired-1!70, semithick, dashed, mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SC_8.txt};       \label{plot:line2}
+      \addplot[mark=triangle, Paired-3,    semithick                              ] table [x=Eb/N0, y=FER] {../dat/SCL_12_32.txt};  \label{plot:line3}
+      \addplot[mark=triangle, Paired-3!70, semithick, dashed, mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SC_12.txt};      \label{plot:line4}
+      \addplot[mark=square,   Paired-7,    semithick                              ] table [x=Eb/N0, y=FER] {../dat/SCL_16_32.txt};  \label{plot:line5}
+      \addplot[mark=square,   Paired-7!70, semithick, dashed, mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SC_16.txt};      \label{plot:line6}
+      \addplot[mark=pentagon, Paired-5,    semithick                              ] table [x=Eb/N0, y=FER] {../dat/SCL_20_32.txt};  \label{plot:line7}
+      \addplot[mark=pentagon, Paired-5!70, semithick, dashed, mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SC_20.txt};      \label{plot:line8}
+      \addplot[mark=star,     Paired-5                                            ] table [x=Eb/N0, y=FER] {../dat/SCL_20_128.txt}; \label{plot:line9}
+
+      \coordinate (legend) at (axis description cs:0.98,0.41);
+    \end{semilogyaxis}
+
+    \matrix [
+        draw,
+        matrix of nodes,
+        anchor=south east,
+        fill=white
+    ] at (legend) {
+        $N$             & \small{SCL}$_{32}$  & \small{SC}       \\
+        \small{2}$^{8\text{ }}$ & \ref{plot:line1}    & \ref{plot:line2} \\
+        \small{2}$^{12}$        & \ref{plot:line3}    & \ref{plot:line4} \\
+        \small{2}$^{16}$        & \ref{plot:line5}    & \ref{plot:line6} \\
+        \small{2}$^{20}$        & \ref{plot:line7}    & \ref{plot:line8} \\
+        \hline
+        $N$             & \small{SCL}$_{128}$ &                  \\
+        \small{2}$^{20}$        & \ref{plot:line9}    &                  \\
+    };
+  \end{tikzpicture}
+\end{document}
