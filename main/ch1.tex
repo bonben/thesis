@@ -66,7 +66,7 @@ L'invention des codes polaires et la définition des matrices d'encodage par Ar{
 
 \section{Les algorithmes de décodage de codes polaires}
 
-Deux algorithmes de décodages ont été proposés dès l'invention des codes polaires \cite{arikan_channel_2009}. L'algorithme de décodage appelé Annulation Successive (SC) est un algorithme de décodage à sortie dure : les données de sortie sont des bits. L'algorithme de décodage par propagation de croyance (BP) est au contraire un algorithme de décodage à sortie souple, dont les données de sortie sont des estimations représentée par exemple par des LLRs. De nombreuses variantes de ces algorithme ont ensuite été proposées pour améliorer leur performances de corrections. Les algorithme Annulation Successive par Liste (SCL), Annulation Successive "Flip" (SCF), Annulation Successive par Pile (SCS) sont des évolutions de l'algorithme SC. Tandis que l'algorithme appelé Annulation Souple (SCAN) eut être vu comme une combinaison des algorithmes SC et BP. Chacun de ces algorithmes est décrit dans cette section.
+Deux algorithmes de décodage ont été proposés dès l'invention des codes polaires \cite{arikan_channel_2009}. L'algorithme de décodage appelé Annulation Successive (SC) est un algorithme de décodage à sortie dure : les données de sortie sont des bits. L'algorithme de décodage par propagation de croyance (BP) est au contraire un algorithme de décodage itératif à sortie souple, dont les données de sortie sont des estimations représentée typiquement par des LLRs. De nombreuses variantes de ces algorithme ont ensuite été proposées pour en améliorer les performances de corrections. Les algorithme Annulation Successive par Liste (SCL), Annulation Successive "Flip" (SCF), Annulation Successive par Pile (SCS) sont des évolutions de l'algorithme SC. Au contraire, l'algorithme appelé Annulation Souple (SCAN) peut être vu comme une combinaison des algorithmes SC et BP. Chacun de ces algorithmes est décrit dans cette section.
 
 \subsection{L'algorithme de décodage par Annulation Successive}
 
@@ -92,11 +92,11 @@ Deux algorithmes de décodages ont été proposés dès l'invention des codes po
 
 %
 Les étapes du décodage du \noeud élémentaire de taille 2 sont représentées en Figure~\ref{fig:sc_steps}.
-Les données d'entrée des algorithmes de décodages présentés ici sont des LLRs, contenus dans le vecteur $\mathbold{L}$ de taille $N$, sortis du canal composite.
-Les données de sorties sont des bits contenus dans le vecteur $\mathbold{\hat{b}}$ de taille $K$.
-Au cours du décodage de codes polaires, ces deux formats de données (LLRs et bits) sont également utilisés.
-Huit variables sont nécessaires durant le décodage, 4 LLRs $L_{i,j}$ et 4 sommes partielles ($s{i,j}$).
-La première étape du décodage est le chargement des LLRs du canal $L$ : les LLRs $L_{0,0}$ et $L_{1,0}$ prennent la valeur des LLRs du canal. Les LLRs et les sommes partielles de chaque \noeud de l'arbre sont ensuite calculées par l'intermédiaire des opérations $f$, $g$, $h$, \texttt{R0} et \texttt{R1} symbolisées dans la Figure~\ref{fig:sc} par des flèches. Elles correspondent aux équations \ref{eq:sc}. 
+Les données d'entrée des algorithmes de décodages présentés ici sont des LLRs, contenus dans le vecteur $\mathbold{L}$ de taille $N$, sorti du canal composite.
+Les données de sorties du décodeur sont des bits contenus dans le vecteur $\mathbold{\hat{b}}$ de taille $K$.
+Au cours du décodage de codes polaires, ces deux formats de données (LLRs et bits) sont utilisés.
+Huit variables sont nécessaires pour le décodage du noyau élémentaire de taille 2 : 4 LLRs notés $L_{i,j}$ et 4 sommes partielles notés $s{i,j}$.
+La première étape (1) du décodage est le chargement des LLRs du canal $L$ : les LLRs $L_{0,0}$ et $L_{1,0}$ prennent la valeur des LLRs du canal. Les LLRs et les sommes partielles de chaque \noeud de l'arbre sont ensuite calculées par l'intermédiaire des opérations $f$, \texttt{R0}, $g$, \texttt{R1} et $h$ symbolisées dans la Figure~\ref{fig:sc_steps} par des flèches. Elles correspondent aux équations \ref{eq:sc} :
 \begin{eqnarray}
   \begin{array}{l c l}
     f(L_a,L_b) &=& \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)\\
@@ -107,13 +107,16 @@ La première étape du décodage est le chargement des LLRs du canal $L$ : les L
   \end{array}
   \label{eq:sc}
 \end{eqnarray}
-La fonction $f$ est appliquée dans l'étape 2 et permet le calcul de $L_{0,1}$.
-La troisième opération est l'application de la fonction \texttt{R0} sur le \noeud supérieur. 
-La fonction \texttt{R0} est appliquée dans l'hypothèse où le bit encodé $u_0$ en Figure \ref{fig:encodage} était un bit gelé.
-La fonction $g$ permet ensuite, en étape 4, le calcul de $L_{1,1}$.
-L'étape 5 est le calcul de $s_{1,1}$ par l'opération \texttt{R1} correspondant à un bit d'information. 
-Cette opération correspond à un seuillage du LLR pour obtenir la somme partielle.
-Après le décodage de la somme partielle $s_{1,1}$, la fonction $h$ est appliquée afin de propager les sommes partielles.
+La fonction $f$ est appliquée dans l'étape (2) et permet le calcul de $L_{0,1}$.
+L'étape (3) est l'application de la fonction \texttt{R0} sur le \noeud supérieur. 
+La fonction \texttt{R0} est appliquée dans l'hypothèse où le bit encodé $u_0$ en Figure \ref{fig:encodage} est un bit gelé.
+La fonction $g$ permet ensuite, en étape (4), le calcul de $L_{1,1}$.
+L'étape (5) est le calcul de $s_{1,1}$ par l'opération \texttt{R1} correspondant à un bit d'information. 
+Cette opération est un seuillage du LLR pour obtenir la somme partielle.
+Pour rappel, dans la représentation en LLR, le signe correspond à la décision dure : bit égal à 0 pour un LLR positif, bit égal à 1 pour un LLR négatif. 
+La valeur absolue informe sur la fiabilité de cette décision.
+Lorsque le seuillage est réalisé, l'information de fiabilité est perdue.
+Après le décodage de la somme partielle $s_{1,1}$, la fonction $h$ est appliquée afin de propager les sommes partielles, en étape (6).
 
 
 \subsubsection{L'arbre de décodage}
@@ -134,19 +137,20 @@ Après le décodage de la somme partielle $s_{1,1}$, la fonction $h$ est appliqu
 % sommes partielles termes non introduit
 % vérifier que n est introduit
 Lorsque $N$ augmente, il est plus commode d'utiliser la représentation en arbre, comme montré en Figure~\ref{fig:sc}, où $N=8$.
-Les données sont organisées en arbre binaire sur $log_2(N) + 1$ couches. Dans notre cas donc, l'arbre possède quatre niveaux.
-A chaque couche sont attribués un certain nombre de \noeuds.
-La racine de l'arbre numérotée $0$ est constituée d'un seul \noeud.
-Ce \noeud contient $N$ LLRs et $N$ sommes partielles.
+Les données sont organisées en arbre binaire sur $log_2(N) + 1$ \textbf{couches}. Dans notre cas donc, l'arbre possède quatre couches.
+A chaque couche sont attribués un certain nombre de \textbf{\noeuds}.
+La \textbf{racine} de l'arbre numérotée $0$ est constituée d'un seul \noeud.
+La racine contient $N$ LLRs et $N$ sommes partielles.
 En descendant dans l'arbre, à chaque couche, le nombre de \noeuds double, tandis que le nombre de LLRs et de sommes partielles de chaque \noeud et divisé par deux.
-Les feuilles sont les \noeuds les plus bas de l'arbre.
+Les \textbf{feuilles} sont les \noeuds les plus bas de l'arbre.
 Le traitement d'une feuille correspond à l'application des opérations \texttt{R0} et \texttt{R1}.
-Chaque couche $d$ contient $2^d$ \noeuds constitués de $2^{n-d}$ LLRs et de $2^{n-d}$ sommes partielles. 
+Chaque couche $d$ contient $2^d$ \noeuds constitués de $2^{n-d}$ LLRs et de $2^{n-d}$ sommes partielles, où $n=\log_2(N)$. 
 La hauteur jusqu'à laquelle les sommes partielles sont propagées par la fonction $h$ dépend de l'index de la feuille qui vient d'être décodé.
 
-Dans le cas d'un code non systématique, le mot de code décodé se trouve dans les feuilles de l'arbre de décodage.
-Lors d'un décodage non systématique, les sommes partielles contenues par les feuilles correspondent aux bits du mot de code.
-Les opération 12 et 13 dans la Figure \ref{fig:seq_sc} sont donc inutiles puisqu'elles servent seulement à calculer les sommes partielles du \noeud racine.
+Dans le cas d'un code non systématique, la séquence décodée $\hat{u}$ est composée des sommes partielles contenues dans les feuilles de l'arbre de décodage..
+Lors d'un décodage non systématique, les sommes partielles contenues par les feuilles correspondent à la séquence décodée $\hat{u}$.
+La Figure~\ref{fig:seq_sc} est une représentation plus synthétique de l'arbre de décodage.
+Les opérations 12 et 13 dans la Figure \ref{fig:seq_sc} sont donc inutiles puisqu'elles servent seulement à calculer les sommes partielles du \noeud racine.
 Par contre, dans le cas d'un code systématique, ce sont les sommes partielles du \noeud racine qui correspondent au mot de code décodé.
 Le parcours de l'arbre est un parcours en profondeur.
 La séquence d'application des différentes fonctions est explicitée dans la Figure~\ref{fig:seq_sc}, où chaque flèche représentant une fonction est numérotée dans l'ordre.
@@ -154,34 +158,35 @@ La séquence d'application des différentes fonctions est explicitée dans la Fi
 
 
 \subsubsection{Le parallélisme de l'algorithme}
-Dans la Figure~\ref{fig:sc}, il apparaît que quatre fonctions $f$ sont appliquées sur le \noeud racine pour calculer les LLRs de la branche de gauche. Ces quatre fonctions sont indépendantes : leurs entrées et sorties sont disjointes. Par conséquence, elles peuvent être réalisées simultanément. Cela est également vrai pour chaque fonction $f$, $g$ et $h$ d'un \noeud donné. Ainsi, le niveau de parallélisme est différent selon la couche considérée et correspond à la taille du \noeud cible. Le parallélisme est donc plus grand en haut de l'arbre qu'en bas. Dans les implémentations logicielles ou matérielles de ces algorithme, ce parallélisme est utilisé pour réduire le temps de décodage et accélérer le débit du décodage. Lorsque ce parallélisme est utilisé, on parle de parallélisme \textit{intra-trame}.
+Dans la Figure~\ref{fig:sc}, il apparaît que quatre fonctions $f$ sont appliquées sur le \noeud racine pour calculer les LLRs de la branche de gauche. Ces quatre fonctions sont indépendantes : leurs entrées et sorties sont disjointes. Par conséquence, elles peuvent être réalisées simultanément. Ce parallélisme existe pour chaque fonction $f$, $g$ et $h$ d'un \noeud donné. Ainsi, le niveau de parallélisme est différent selon la couche considérée et correspond à la taille du \noeud cible. Le parallélisme est donc plus grand en haut de l'arbre qu'en bas. Dans les implémentations logicielles ou matérielles de ces algorithme, ce parallélisme est utilisé pour réduire le temps de décodage et accélérer son débit. Lorsque ce parallélisme est utilisé, on parle de parallélisme \textit{intra-trame}.
 
 
 \subsection{L'algorithme de décodage par Annulation Successive à Liste}
 \subsubsection{L'algorithme}
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.7\textwidth]{main/ch1_fig/scl}
+\includegraphics[width=1\textwidth]{main/ch1_fig/scl}
 \caption{Duplication de l'arbre de décodage dans l'algorithme SCL.}
 \label{fig:scl}
 \end{figure}
-L'algorithme de décodage par Annulation Successive Liste (SCL) est une évolution de l'algorithme SC \cite{tal_how_2013}. L'algorithme SC présente en effet des performances de correction médiocres pour des codes polaires de petite taille. Le SCL améliore ses performances substantiellement. Dans l'algorithme de décodage SC décrit précédemment, des décisions dure sont réalisées à chaque décodage d'une feuille correspondant à un bit d'information (fonction \texttt{R1}). Si une erreur est commise lors de ce seuillage, celle-ci est irréversible, et le décodage du mot de code est un échec. Le principe de l'algorithme de décodage par liste est de retarder la décision dure. Au lieu d'appliquer un seuillage sur la valeur du LLR, les deux possibilités de décodage sont considérées, et l'arbre de décodage, avec l'ensemble de ses LLRs et sommes partielles, est dupliqué. Le décodage continue ainsi sur les deux arbres parallèlement. Ce processus est illustré en figure \ref{fig:scl} \`A chaque feuille de rendement 1, le même procédé est réalisé, doublant le nombre d'arbres décodés en parallèle.
+L'algorithme de décodage par Annulation Successive Liste (SCL) est une évolution de l'algorithme SC \cite{tal_how_2013}. L'algorithme SC présente en effet des performances de correction médiocres pour des codes polaires de petite taille. Le SCL améliore ces performances substantiellement. Dans l'algorithme de décodage SC décrit précédemment, des décisions dure sont réalisées à chaque traitement d'une feuille correspondant à un bit d'information (fonction \texttt{R1}). Si une erreur est commise lors de ce seuillage, celle-ci est irréversible, et le décodage du mot de code est un échec. Le principe de l'algorithme de décodage par liste est de retarder la décision dure. Au lieu d'appliquer un seuillage sur la valeur du LLR, les deux possibilités de décodage sont considérées, et l'arbre de décodage, avec l'ensemble de ses LLRs et sommes partielles, est dupliqué. Cette duplication est représentée dans la Figure~\ref{fig:scl}. Il est considéré sur la gauche de la figure un décodage au cours duquel la fonction $f$ est appliquée, dans la première étape représentée. L'étape suivante consiste en la duplication de l'arbre de décodage afin de former deux chemins. Dans le premier, l'hypothèse est que $\hat{u}_2=0$, dans le deuxième, $\hat{u}_2=1$ Le décodage continue ainsi sur les deux arbres parallèlement : l'étape suivante dans l'exemple donné est l'application de la fonction $g$. Ces deux arbres sont qualifiés de \textbf{chemins} de décodage. \`A chaque feuille de rendement 1, le même procédé est réalisé, doublant le nombre d'arbres décodés en parallèle.
+
 
 % citer article balatsoukas pour LLRs et calculs métriques
 % Ajouter les bits décodés sur les arbres pour les faire apparaître lors de la description du liste. 
-Il n'est pas possible, en pratique, de dupliquer indéfiniment le nombre d'arbres de décodage, la mémoire nécessaire et le nombre de calcul devient vite insoutenable. Un nombre de chemins maximum $L$ est donc paramètre l'algorithme liste. La sélection des chemins qui seront conservés ou éliminés est réalisée grâce à une métrique $m$ associée à chaque chemin. Cette métrique est mise à jour à chaque traitement d'une feuille. Lorsque la feuille est de rendement 0 si le LLR de la feuille est positif, la métrique est inchangée car l'estimation du LLR est en encore avec la valeur du bit gelé, 0. Si le LLR est négatif alors au contraire, la valeur absolue du LLR lui est ajoutée. Lorsque la feuille est de rendement 1, deux chemins sont créés, avec chacun une version différente du bit décodé. Le chemin créé dont la valeur du bit est en accord avec la valeur du LLR ne reçoit pas de pénalité. Au contraire, la métrique du deuxième chemin créé est accrue de la valeur du LLR.
+Il n'est pas possible, en pratique, de dupliquer indéfiniment le nombre d'arbres de décodage, la mémoire nécessaire et le nombre de calcul devient vite insoutenable. Un nombre de chemins maximum $L$ est donc paramètre l'algorithme liste. Des La sélection des chemins qui seront conservés ou éliminés est réalisée grâce à une \textbf{métrique} $m$ associée à chaque chemin. Cette métrique est mise à jour à chaque traitement d'une feuille. Le détail des calculs pour un décodage utilisant des LLRs est proposé dans \cite{balatsoukas-stimming_llr-based_2015}. Lorsque la feuille est de rendement 0 si le LLR de la feuille est positif, la métrique est inchangée car l'estimation du LLR est en accord avec la valeur du bit gelé, 0. Si le LLR est négatif alors au contraire, la valeur absolue du LLR lui est ajoutée. Lorsque la feuille est de rendement 1, deux chemins sont créés, avec chacun une version différente du bit décodé. Le chemin créé dont la valeur du bit est en accord avec la valeur du LLR ne reçoit pas de pénalité. Au contraire, la métrique du deuxième chemin créé est accrue de la valeur du LLR.
 
-Une fois ces calculs de métriques réalisés, on sélectionne les chemins à conserver. Si $L$ chemins étaient actifs au moment du traitement d'une feuille de rendement 1, alors $2L$ chemins sont générés, avec chacun une métrique associée. Seuls les $L$ chemins avec la métrique la plus faible sont conservés. A la fin du parcours de l'arbre de décodage, $L$ chemins auront donc été conservés. Ces $L$ chemins correspondent à $L$ mots de codes possibles. Une sélection d'un seul candidat parmi les $L$ doit être effectuée. Dans la version originale de l'algorithme, le mot décodé associé au chemin ayant la métrique de valeur la plus faible à la fin du décodage est sélectionné comme étant la sortie de l'algorithme $\mathbold{\hat{b}}$.
+Une fois ces calculs de métriques réalisés, on sélectionne les chemins à conserver. Si $L$ chemins étaient actifs au moment du traitement d'une feuille de rendement 1, alors $2L$ candidats sont générés, avec chacun une métrique associée. Seuls les $L$ candidats avec la métrique la plus faible sont conservés. Cette opération de sélection est représentée dans la Figure~\ref{fig:scl}. Lors de la dernière étape, à droite de la figure, les deux candidats du bas sont éliminés. L'hypothèse était donc que ces deux chemins avaient un métrique de valeur absolue supérieure aux métriques des deux candidat du haut. \`A la fin du parcours de l'arbre de décodage, $L$ chemins auront donc été conservés. Ces $L$ chemins correspondent à $L$ mots de codes possibles. Une sélection d'un seul candidat parmi les $L$ doit être effectuée. Dans la version originale de l'algorithme, le mot décodé associé au chemin ayant la métrique de valeur la plus faible à la fin du décodage est sélectionné comme étant la sortie de l'algorithme $\mathbold{\hat{b}}$.
 
 % Insistier lourdement sur la signification de chaque terme : chemin, métrique, candidat
 
-
-Les auteurs de \cite{tal_how_2013} ont proposé de concaténer un test de redondance cyclique (CRC) pour discriminer les différents candidats. L'encodage est représenté en Figure~\ref{fig:crc}. \'A la fin de l'algorithme de décodage, lorsque les $L$ mots de codes sont disponibles, un CRC est appliqué sur chacun d'entre eux. Si l'un d'entre eux vérifie le CRC, il est alors hautement probable qu'il soit le bon candidat.
-
 \subsubsection{Concaténation avec un CRC}
+
+Les auteurs de \cite{tal_how_2013} ont proposé de concaténer un test de redondance cyclique (CRC) pour discriminer les différents candidats. L'encodage est représenté en Figure~\ref{fig:crc}. \`A la fin de l'algorithme de décodage, lorsque les $L$ mots de codes sont disponibles, un CRC est appliqué sur chacun d'entre eux. Si l'un d'entre eux vérifie le CRC, il est alors hautement probable qu'il soit le bon candidat.
+
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.5\textwidth]{main/ch1_fig/crc}
+\includegraphics[width=0.6\textwidth]{main/ch1_fig/crc}
 \caption{Concaténation avec un CRC.}
 \label{fig:crc}
 \end{figure}
@@ -273,14 +278,14 @@ Le traitement d'un \noeud de répétition est relativement simple à appréhende
 
 % Ajouter de la citation partout 
 % Ajouter citation Chase 2 Sarkis R1
-Le traitement du \noeud de rendement 1 est plus intensif en calcul. En effet, si le \noeud est de taille $T$, alors le nombre de candidats possibles est $2^T$. Pour chaque candidat, il faut calculer la nouvelle métrique. Ce calcul est le traitement \texttt{R1} appliqué à chaque LLR en entrée du sous-arbre, soit un seuillage. Comme pour tout \noeud terminal, il faut ensuite trier les $2^T$ candidats afin d'en sélectionner les $L$ ayant la métrique la plus faible. Rapidement, ces traitements deviennent trop intensifs pour une implémentation réaliste. Une diminution drastique de la complexité de ce traitement peut être obtenu par l'utilisation de l'algorithme \og Chase \fg sur le sous-arbre. Tout d'abord, le premier candidat est obtenu en appliquant un seuillage sur les $T$ LLRs d'entrée à la manière du traitement du \noeud de rendement 1 dans l'algorithme SC. Ensuite les $T$ LLRs d'entrée sous tout d'abord triés selon leur valeur absolue. Les deux LLR parmi les $T$  dont la valeur est la plus faible sont identifiés, notés LLR\textsubscript{1} et LLR\textsubscript{2}. Les deuxième et troisième candidats sont générés en inversant la somme partielle associé au LLR\textsubscript{1} et au LLR\textsubscript{2}, respectivement. Le quatrième candidat est généré en inversant les deux sommes partielles à la fois. La métrique de chaque candidat est calculée en ajoutant à la métrique du chemin considéré la valeur absolue des LLRs dont la somme partielle a été inversée. Cette méthode empirique fonctionne excellemment. L'on pourrait s'attendre à des réductions de performances, puisque le nombre de candidats envisagés est réduit par rapport à la version non élaguée de l'algorithme SCL. Aucune dégradation n'est observée dans les faits expérimentaux.
+Le traitement du \noeud de rendement 1 est plus intensif en calcul. En effet, si le \noeud est de taille $T$, alors le nombre de candidats possibles est $2^T$. Pour chaque candidat, il faut calculer la nouvelle métrique. Ce calcul est le traitement \texttt{R1} appliqué à chaque LLR en entrée du sous-arbre, soit un seuillage. Comme pour tout \noeud terminal, il faut ensuite trier les $2^T$ candidats afin d'en sélectionner les $L$ ayant la métrique la plus faible. Rapidement, ces traitements deviennent trop intensifs pour une implémentation réaliste. Une diminution drastique de la complexité de ce traitement peut être obtenu par l'utilisation de l'algorithme \og Chase \fg sur le sous-arbre. Tout d'abord, le premier candidat est obtenu en appliquant un seuillage sur les $T$ LLRs d'entrée à la manière du traitement du \noeud de rendement 1 dans l'algorithme SC. Ensuite les $T$ LLRs d'entrée sous tout d'abord triés selon leur valeur absolue. Les deux LLR parmi les $T$  dont la valeur est la plus faible sont identifiés, notés LLR\textsubscript{1} et LLR\textsubscript{2}. Les deuxième et troisième candidats sont générés en inversant la somme partielle associée au LLR\textsubscript{1} et celle associée au LLR\textsubscript{2}. Le quatrième candidat est généré en inversant les deux sommes partielles à la fois. La métrique de chaque candidat est calculée en ajoutant à la métrique du chemin considéré la valeur absolue des LLRs dont la somme partielle a été inversée. Cette méthode empirique fonctionne excellemment. Il est possible que des réductions de performances apparaissent, puisque le nombre de candidats envisagés pour un sous arbre est réduit par rapport à la version non élaguée de l'algorithme SCL. Aucune dégradation n'est observée dans les faits expérimentaux.
  
 
-Enfin, le traitement des \noeuds \texttt{SPC} est similaire au traitement du \noeud de rendement 1 à la différence qu'au lieu de deux bits potentiellement inversés ce sont quatre bits qui sont considérés. Ensuite, seuls les candidats respectant la contrainte de parité sont générés. A la différence des \noeuds de rendement 1, la performance de correction de l'algorithme élagué peut être dégradé. Les auteurs de \cite{sarkis_fast_2016} signalent en effet que des dégradations importantes sont observées pour des \noeuds \texttt{SPC} de taille supérieure à 4. 
+Enfin, le traitement des \noeuds \texttt{SPC} est similaire au traitement du \noeud de rendement 1 à la différence qu'au lieu de deux bits potentiellement inversés ce sont quatre bits qui sont considérés. De plus, seuls les candidats respectant la contrainte de parité sont générés. A la différence des \noeuds de rendement 1, la performance de correction de l'algorithme élagué peut être dégradé. Les auteurs de \cite{sarkis_fast_2016} signalent en effet que des dégradations importantes sont observées pour des \noeuds \texttt{SPC} de taille supérieure à 4. 
 
 
 \subsection{L'élagage de l'algorithme de décodage SCAN}
-Tout comme les algorithmes SC et SCL, des élagages peuvent être appliqués sur le SCAN. A la différence des deux précédents, les \noeuds \texttt{REP} et \texttt{SPC} ne sont pas élagués. De plus, le concept de sous-arbre dans le SCAN évolue. Tandis que dans l'algorithme SC, un sous arbre prenait comme entrée des LLRs et produisait en sortie des sommes partielles. Dans l'algorithme SCL, les sorties des sous-arbres sont également des LLRs. Dans le cas d'un rendement 0, les sorties du \noeud sont toutes à $+\inf$, puisqu'il est certain que les bits du mots de code sont des $0$. Dans le cas d'un rendement 1, les sorties du \noeud sont tous à $0$ puisqu'en l'absence de redondance, aucune information ne peut être donnée à partir de ce sous arbre.
+Tout comme les algorithmes SC et SCL, des élagages peuvent être appliqués sur le SCAN. A la différence des deux précédents, les \noeuds \texttt{REP} et \texttt{SPC} ne sont pas élagués. De plus, le concept de sous-arbre dans le SCAN évolue. Tandis que dans l'algorithme SC, un sous arbre prenait comme entrée des LLRs et produisait en sortie des sommes partielles, dans l'algorithme SCAN, les sorties des sous-arbres sont également des LLRs. Dans le cas d'un rendement 0, les sorties du \noeud sont toutes à $+\inf$, puisqu'il est certain que les bits du mots de code sont des $0$. Dans le cas d'un rendement 1, les sorties du \noeud sont tous à $0$ puisqu'en l'absence de redondance, aucune information ne peut être donnée à partir de ce sous arbre.
 % détailler calculs évitables (g0, f0, grep)
 % discussion chase spc - r1 ? Hashemi-Sarkis + Simulations
 
