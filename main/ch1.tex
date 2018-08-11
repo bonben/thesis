@@ -13,7 +13,7 @@ Résumé
 \section{Le principe et la construction des codes polaires}
 
 \subsection{Le contexte}
-
+\label{subsec:contexte}
 
 
 \begin{figure}[t]
@@ -61,7 +61,7 @@ Le processus d'encodage peut également être modifié pour rendre le code syst�
 \end{figure}
 
 \subsection{Le phénomène de polarisation}
-
+\label{subsec:polarisation}
 L'invention des codes polaires et la définition des matrices d'encodage par Ar{\i}kan \cite{arikan_channel_2009} sont liées au phénomène de polarisation. L'ensemble constitué de l'encodeur polaire, du canal composite et du décodeur polaire peut être vu comme un ensemble de canaux de transmission qui chacun transmet un bit. Le terme \og polarisation \fg exprime le fait que ces $N$ canaux ont tendance à se diviser en deux groupes. Un groupe de canaux très fiables, avec une probabilité d'erreur faible, et un groupe de canaux peu fiables, à probabilité d'erreur forte. Cette tendance augmente quand $N$ augmente : les canaux se polarisent. Ainsi, les bits d'informations seront attribués aux canaux fiables, et des bits dits gelés, dont la valeur est connue à priori, seront attribués aux canaux peu fiables. Le processus de détermination de la position des bits gelés dans le vecteur $\mathbold{u}$ est appelé construction des codes polaires. Celle-ci est déterminante pour la performance de correction des codes polaires. Plusieurs méthodes efficaces ont été proposées \cite{tal_how_2013,trifonov_efficient_2012} pour le canal AWGN.
 
 \section{Les algorithmes de décodage de codes polaires}
@@ -77,7 +77,6 @@ Deux algorithmes de décodage ont été proposés dès l'invention des codes pol
   \renewcommand*\thesubfigure{\arabic{subfigure}} 
   \centering
   \subfloat[][Channel LLRs]{\includegraphics[width=.26\textwidth]{main/ch1_fig/sc_graph_1}}\quad\quad
-  \label{lolol}
   \subfloat[][$f$ function]{\includegraphics[width=.18\textwidth]{main/ch1_fig/sc_graph_2}}\quad\quad
   \subfloat[][$\texttt{R0}$ function]{\includegraphics[width=.2\textwidth]{main/ch1_fig/sc_graph_3}}\\
   \subfloat[][$g$ function]{\includegraphics[width=.18\textwidth]{main/ch1_fig/sc_graph_4}}\quad\quad
@@ -212,9 +211,12 @@ Cet algorithme permet donc d'augmenter le débit, puisque plus $L$ et petit, plu
 \subsection{Les algorithmes itératifs à sortie souple}
 % Parler concaténation
 
+Deux algorithmes itératifs à sortie souple ont été proposée. Le premier est appelé algorithme à Propagation de Croyance (BP). C'est le premier dans l'ordre chronologique puisqu'il fut proposé dans l'article original d'Ar{\i}kan \cite{arikan_channel_2009}. Le second fut proposé dans \cite{fayyaz_low-complexity_2014}. Leur séquencement est la seule propriété qui les différencie.
 
-\subsubsection{L'algorithme de décodage à Propagation de Croyance}
-Une ambiguïté doit tout d'abord être levée. L'ensemble des algorithmes de décodage traitant des informations souples peut être considéré comme un algorithme à propagation de croyance, y compris les algorithmes précédemment cités, basés sur l'algorithme de décodage SC. Toutefois, ce nom est aussi associé à un algorithme particulier de décodage de codes polaires \cite{arikan_channel_2009}. Dans la suite, l'acronyme BP sera utilisé pour l'algorithme spécifique de décodage de code polaire. L'algorithme BP, à la différence des précédents, est un algorithme de décodage à sortie souple. Il génère des sorties souples représentant des vraisemblances. Dans nos exemples celles-ci prendront la forme de LLRs. Au contraire de l'algorithme SC, aucune décision dure n'est effectuée au cours du décodage. Les sommes partielles sont remplacées par des LLRs. Les fonction utilisées pour les calculs des LLRs sont listées dans les Équations \ref{eq:bp}.
+La première différence entre ces deux algorithmes et ceux vues précédemment est qu'aucune décision dure n'est réalisée durant le décodage. L'information reste souple de bout en bout.
+En conséquence, les sommes partielles utilisées dans l'arbre de décodage SC sont remplacées par des LLRs. Deux ensembles de LLRs sont donc contenues dans l'arbre de décodage. Les LLRs qui ont remplacé les sommes partielles sont notés $L^b_{i,j}$.
+Ensuite, les fonctions élémentaires sont changées. les fonction $f$, $g$ et $h$ de l'algorithme SC sont remplacées par les fonctions $f_{bp}$ et $g_{bp}$ :
+
     \begin{eqnarray}
       \begin{array}{l c l}
         f_{bp}(L_a,L_b,L_c) & = & f(L_a, L_b  + L_c) \\
@@ -223,7 +225,11 @@ Une ambiguïté doit tout d'abord être levée. L'ensemble des algorithmes de d�
       \label{eq:bp}
     \end{eqnarray}
 
-\subsubsection{L'algorithme de décodage par Annulation Souple}
+Le séquencement de ces opérations est montré en figure \ref{fig:SCANSchedule} pour le noyau de taille $N=2$ dans le cas d'un décodage SCAN. La première étape est l'initialisation de la racine et des feuilles de l'arbre : les LLRs $L$ de la racine prennent la valeur des LLRs du canal. Les LLRs $L^b$ des feuilles prennent la valeur $+\infty$ dans le cas d'un bit gelé, et la valeur $0$ dans le cas d'un bit d'information. Ensuite, les fonctions $f_{bp}$ et $g_{bp}$ sont appliquées dans l'ordre indiqué.
+
+Comme évoqué précédemment, les algorithmes SCAN et BP diffèrent du point de vue de leurs séquencement. Le séquencement de l'algorithme SCAN est le même que celui du SC, en remplaçant l'application de la fonction $h$ du SC par une application conjointe des fonctions ${f_bp}$ et $g_{bp}$ comme montré en Figure~\ref{fig:SCANSchedule} (4).
+
+Enfin, les algorithmes BP et SCAN sont des algorithmes itératifs. En effet, le parcours de l'arbre peut être effectué plusieurs fois. Ainsi, les valeurs des LLRs intermédiaires évoluent d'une itération à l'autre. Ces itérations permettent d'améliorer les performances de décodage.
 
 \begin{figure}[t]
   \renewcommand*\thesubfigure{\arabic{subfigure}} 
@@ -238,6 +244,37 @@ Une ambiguïté doit tout d'abord être levée. L'ensemble des algorithmes de d�
 \end{figure}
 
 \subsection{Les performances de décodage des différents algorithmes}
+
+Dans la présente section sont présentées plusieurs courbes de performances de décodage afin de montrer les caractéristiques principales de algorithmes de décodage de codes polaires mais également d'évaluer les différents algorithmes entre eux, sans pour l'instant évoquer la complexité des implémentations qui seront largement abordés dans les chapitres suivants. Les abscisses et ordonnées des différentes courbes sont toujours les mêmes. Le rapport signal à bruit, en abscisse, est noté $E_b/N_0$. Ce rapport représente la quantité de bruit du canal considéré. En ordonnées se trouve soit le taux d'erreur binaire défini en Section \ref{subsec:contexte} le taux d'erreur trames qui est égal au nombre de trame contenant au moins une erreur divisé par le nombre total de trames transmises par la source.
+
+\begin{figure}[t]
+\input{main/ch1_fig/curves/sc_N/tikz/source.tex}
+\caption{\'Evolution des performances de décodage de l'algorithme SC quand N augmente.}
+\label{fig:sc_n}
+\end{figure}
+
+\begin{figure}[t]
+\input{main/ch1_fig/curves/sc_N/tikz/source.tex}
+\caption{\'Evolution des performances de décodage de l'algorithme SC quand $R$ augmente.}
+\label{fig:sc_n}
+\end{figure}
+
+En Figure~\ref{fig:sc_n} sont présentées les performances de décodage de l'algorithme SC pour différentes valeurs de N. Il apparait que celles-ci, à rendement constant, augmentent lorsque N augmente. Ceci est une conséquence du phénomène de polarisation. En effet, comme précisé dans la Section \ref{subsec:polarisation}, les canaux se polarisent lorsque $N$ augmente. Ainsi, plus $N$ augmentent, plus les performances se rapprochent de la limité théorique du décodage canal, nommée limite de Shannon \cite{shannon_mathematical_2001}. Celle-ci est également représentée dans la Figure~\ref{fig:sc_n}.
+
+Le rendement d'un code correcteur d'erreur est un élément déterminant de son pouvoir de correction comme illustré dans la Figure~\ref{fig:sc_r}, cette fois-ci à N constant. Le rendement est le facteur prépondérant permettant de s'adapter à la qualité du canal. Dans le cas des communications mobiles, ce rendement permet de s'adapter à la qualité changeante du canal.
+
+\begin{figure}[t]
+\input{main/ch1_fig/curves/scl/tikz/source.tex}
+\caption{Performances de décodage des différentes versions de l'algorithme SCL.}
+\label{fig:scl_perfs}
+\end{figure}
+
+Dans la Figure~\ref{fig:scl_perfs} sont montrées les courbes de performances de différentes versions de l'algorithme SCL. Tout d'abord, le facteur $L$ est déterminant. En effet plus $L$ est grand plus le taux d'erreurs est faible. Par contre, l'amélioration relative du SCL par rapport au SC est moindre pour de grandes valeurs de $N$. Il apparait également que l'algorithme CA-SCL, avec l'ajout du CRC, améliore drastiquement les performances de correction par rapport au SCL. 
+
+% Courbes avec différents N pour SC et SCL, montrer que SCL moins intéressant quand N augmente.
+
+% Courbes avec SCL-CRC
+
 
 % Toutes les simulations en point flottant
 % SC Systématique / non systématique
