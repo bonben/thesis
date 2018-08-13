@@ -7,6 +7,7 @@ mkdir -p sc_R/dat/
 mkdir -p scl_L/dat/
 mkdir -p scl_crc/dat/
 mkdir -p ascl_crc/dat/
+mkdir -p bp_scan/dat/
 
 # SC Rendement 0.5 N varie
 ${aff3ct_path}/build/bin/aff3ct  --sim-type "BFER" -C "POLAR" -m "0" -M "6" -s "0.25" -e "500" --enc-fb-gen-method "GA"  -K 64    -N "128"   --dec-type "SC" --dec-implem FAST  --dec-simd INTER --sim-stop-time 20 --chn-implem FAST --src-implem FAST --src-type RAND > sc_N/dat/SC_128.txt     # --sim-meta "Polar (128,64)      SC"                
