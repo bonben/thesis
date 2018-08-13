@@ -1,0 +1,18 @@
+%!TEX root = ../../../../../my_thesis.tex
+
+\begin{tikzpicture}
+  \begin{semilogyaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
+                       width=1.0\linewidth, height=0.70\linewidth,
+                       xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
+                       xmin=2.0, xmax=5.5, xtick={2,2.5,3,...,5.5},
+                       tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
+                       legend pos=south west, legend columns=1]
+    \addplot[mark=o       , Set1-1, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/scl_L/N_4096/dat/SCL_1.txt};   \label{plot:line1}
+    \addplot[mark=asterisk, Set1-2, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/scl_L/N_4096/dat/SCL_2.txt};   \label{plot:line2}
+    \addplot[mark=star    , Set1-3, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/scl_L/N_4096/dat/SCL_4.txt};   \label{plot:line3}
+    \addplot[mark=square  , Set1-4, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/scl_L/N_4096/dat/SCL_8.txt};   \label{plot:line4}
+    \addplot[mark=triangle, Set1-5, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/scl_L/N_4096/dat/SCL_32.txt};  \label{plot:line5}
+    \addplot[mark=pentagon, Set1-7, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/scl_L/N_4096/dat/SCL_32_CRC_16.txt};  \label{plot:line7}
+    \legend{SC,SCL $L=2$,SCL $L=4$,SCL $L=8$,SCL $L=32$, CASCL $L=32 \text{,} c=16$}
+  \end{semilogyaxis}
+\end{tikzpicture}

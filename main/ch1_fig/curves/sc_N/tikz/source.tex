@@ -3,20 +3,20 @@
 \begin{tikzpicture}
   \begin{semilogyaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
                        width=1.0\linewidth, height=0.70\linewidth,
-                       xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
-                       xmin=0.0, xmax=4.5, xtick={0,0.5,1,...,4.5}, ymin=0.0000001,ymax=1,
+                       xlabel=$E_b/N_0 \text{(dB)}$, ylabel=BER,  grid=both, grid style={gray!30},
+                       xmin=0.0, xmax=4.5, xtick={0,0.5,1,...,4.5}, ymin=0.00000001,ymax=1,
                        tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
-                       legend  style={at={(0.06,0.3)},anchor=west}, legend columns=1]
-    \addplot[mark=o       , Set1-1, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/sc_N/dat/SC_128.txt};   \label{plot:line1}
-    \addplot[mark=asterisk, Set1-2, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/sc_N/dat/SC_256.txt};   \label{plot:line2}
-    \addplot[mark=star    , Set1-3, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/sc_N/dat/SC_512.txt};   \label{plot:line3}
-    \addplot[mark=square  , Set1-4, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/sc_N/dat/SC_1024.txt};  \label{plot:line4}
-    \addplot[mark=triangle, Set1-5, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/sc_N/dat/SC_2048.txt};  \label{plot:line5}
-    \addplot[mark=diamond , Set1-6, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/sc_N/dat/SC_4096.txt};  \label{plot:line6}
-    \addplot[mark=pentagon, Set1-7, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/sc_N/dat/SC_8192.txt};  \label{plot:line7}
-    \addplot[mark=-       , Set1-8, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/sc_N/dat/SC_16384.txt}; \label{plot:line8}
-    \addplot[mark=|       , Set1-9, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/sc_N/dat/SC_32768.txt}; \label{plot:line9}
-    \addplot[mark=none, Paired-3, thick] coordinates {(0.187,0.0000001)(0.187,1)};
+                       legend  pos=north east, legend columns=1]
+    \addplot[mark=o       , Set1-1, semithick] table [x=Eb/N0, y=BER] {main/ch1_fig/curves/sc_N/dat/SC_128.txt};   \label{plot:line1}
+    \addplot[mark=asterisk, Set1-2, semithick] table [x=Eb/N0, y=BER] {main/ch1_fig/curves/sc_N/dat/SC_256.txt};   \label{plot:line2}
+    \addplot[mark=star    , Set1-3, semithick] table [x=Eb/N0, y=BER] {main/ch1_fig/curves/sc_N/dat/SC_512.txt};   \label{plot:line3}
+    \addplot[mark=square  , Set1-4, semithick] table [x=Eb/N0, y=BER] {main/ch1_fig/curves/sc_N/dat/SC_1024.txt};  \label{plot:line4}
+    \addplot[mark=triangle, Set1-5, semithick] table [x=Eb/N0, y=BER] {main/ch1_fig/curves/sc_N/dat/SC_2048.txt};  \label{plot:line5}
+    \addplot[mark=diamond , Set1-6, semithick] table [x=Eb/N0, y=BER] {main/ch1_fig/curves/sc_N/dat/SC_4096.txt};  \label{plot:line6}
+    \addplot[mark=pentagon, Set1-7, semithick] table [x=Eb/N0, y=BER] {main/ch1_fig/curves/sc_N/dat/SC_8192.txt};  \label{plot:line7}
+    \addplot[mark=-       , Set1-8, semithick] table [x=Eb/N0, y=BER] {main/ch1_fig/curves/sc_N/dat/SC_16384.txt}; \label{plot:line8}
+    \addplot[mark=|       , Set1-9, semithick] table [x=Eb/N0, y=BER] {main/ch1_fig/curves/sc_N/dat/SC_32768.txt}; \label{plot:line9}
+    \addplot[mark=none, Paired-3, thick] coordinates {(0.187,0.00000001)(0.187,1)};
 
     \legend{$N=128$,$N=256$,$N=512$,$N=1024$,$N=2048$,$N=4096$,$N=8192$,$N=16384$,$N=32768$, Limite de Shannon}
   \end{semilogyaxis}

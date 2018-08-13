@@ -31,6 +31,8 @@ Au sein du canal de communication, les signaux subissent de nombreuses perturbat
 L'ajout d'un encodeur et d'un décodeur canal dans la chaîne de transmission est un moyen efficace de réduire ce taux d'erreur. L'encodeur transforme une séquence d'information $\mathbold{b}$ de $K$ bits en un \textbf{mot de code} $\mathbold{x}$ de $N$ bits. La taille du mot de code, en nombre de bits, est supérieure à la taille de la séquence d'informations afin d'ajouter de la redondance au message transmis: le rendement du code $R=K/N$ est inférieur à $1$. Cette redondance est utilisée par le décodeur canal, ou parfois le couple démodulateur - décodeur canal, afin de réduire le taux d'erreur binaire de la chaîne de transmission. Dans la présente thèse, le décodeur canal est découplé du démodulateur. L'ensemble modulateur - canal - démodulateur peut être considéré comme une entité indépendante dont l'entrée est le mot de code $\mathbold{x}$ et la sortie une séquence d'estimation $\mathbold{L}$. Cet ensemble est appelé canal composite.
 
 \subsection{Le canal composite}
+\label{subsec:canal}
+
 Un seul et unique modèle de canal composite sera considéré tout au long de ce manuscrit. Sa modulation est une modulation à changement de phase binaire (BPSK) qui associe aux valeurs binaires d'entrée $x\in\{0,1\}$ les valeurs réelles $\hat{x}\in\{-1,1\}$, respectivement.
 
 Le canal à bruit blanc additif gaussien à double entrée (BI-AWGNC) tel que défini dans \cite[Section~1.5.1.3]{ryan2009channel} est considéré. Ce modèle est le plus utilisé pour caractériser les performances des codes correcteurs d'erreur car il se rapproche du bruit thermique évoqué précédemment, qui est souvent prépondérant. Il consiste en l'addition aux données de sortie du modulateur $\mathbold{\hat{y}}$ d'une variable réelle à distribution gaussienne centrée en $0$ et de densité spectrale $N_0$. Afin d'évaluer les performances de correction des codes correcteurs d'erreurs, les taux d'erreur seront souvent rapportés à cette densité spectrale, ou plus précisément au \textbf{rapport signal à bruit} (SNR), noté $E_b/N_0$, où $E_b=\frac{\mathbb{E}(\hat{x}^2)}{R}$ est l'énergie moyenne par bit d'information.
@@ -243,7 +245,14 @@ Enfin, les algorithmes BP et SCAN sont des algorithmes itératifs. En effet, le 
 
 \subsection{Les performances de décodage des différents algorithmes}
 % Détails sur les perfs : 32 bit
-Dans la présente section sont présentées plusieurs courbes de performances de décodage afin de montrer les caractéristiques principales de algorithmes de décodage de codes polaires mais également d'évaluer les différents algorithmes entre eux, sans pour l'instant évoquer la complexité des implémentations qui seront largement abordés dans les chapitres suivants. Les abscisses et ordonnées des différentes courbes sont toujours les mêmes. Le rapport signal à bruit, en abscisse, est noté $E_b/N_0$. Ce rapport représente la quantité de bruit du canal considéré. En ordonnées se trouve soit le taux d'erreur binaire défini en Section \ref{subsec:contexte} le taux d'erreur trames qui est égal au nombre de trame contenant au moins une erreur divisé par le nombre total de trames transmises par la source.
+Dans la présente section sont présentées plusieurs courbes de performances. 
+Elles permettent de comparer entre eux les algorithmes présentés précédemment.
+Elles montrent également l'impact des paramètres, communs à tous les algorithmes, ou spécifique à chacun, sur les performances de décodage.
+Ces paramètres et leurs effets sont important car ce sont les leviers utilisés dans les standards de communication afin de s'adapter aux contraintes extérieures.
+Les axes des différentes courbes sont toujours les mêmes.
+En abscisse se trouve le rapport signal à bruit noté $E_b/N_0$ décrit en Section \ref{subsec:canal}.
+Sur l'axe des ordonnées se trouve soit le BER dont l'expression est donnée en Section \ref{subsec:contexte}, soit le taux d'erreur trame (FER : Frame Error Rate). Le FER est égal au rapport du nombre de trames erronées sur le nombre total de trames émises, sachant qu'une trame est considérée erronée si elle contient au moins un bit erroné.
+
 
 \begin{figure}[t]
 \input{main/ch1_fig/curves/sc_N/tikz/source.tex}
@@ -257,24 +266,33 @@ Dans la présente section sont présentées plusieurs courbes de performances de
 \label{fig:sc_r}
 \end{figure}
 
-En Figure~\ref{fig:sc_n} sont présentées les performances de décodage de l'algorithme SC pour différentes valeurs de N. Il apparaît que celles-ci, à rendement constant, augmentent lorsque N augmente. Ceci est une conséquence du phénomène de polarisation. En effet, comme précisé dans la Section \ref{subsec:polarisation}, les canaux se polarisent lorsque $N$ augmente. Ainsi, plus $N$ augmentent, plus les performances se rapprochent de la limité théorique du décodage canal, nommée limite de Shannon \cite{shannon_mathematical_2001}. Celle-ci est également représentée dans la Figure~\ref{fig:sc_n}.
+La théorie de l'information de Shannon \cite{shannon_mathematical_2001} prouve qu'il existe une limite théorique à la capacité d'un canal pour un rendement de code donné.
+Cette limite est matérialisée dans la Figure \ref{fig:sc_n} par la ligne verticale dénommée \textit{Limite de Shannon}. Les codes polaires sont les premiers qui atteignent théoriquement cette limite. Cependant cette limite n'est atteinte que pour une taille de mot de code infinie.
 
-Le rendement d'un code correcteur d'erreur est un élément déterminant de son pouvoir de correction comme illustré dans la Figure~\ref{fig:sc_r}, cette fois-ci à N constant. Le rendement est le facteur prépondérant permettant de s'adapter à la qualité du canal. Dans le cas des communications mobiles, ce rendement permet de s'adapter à la qualité changeante du canal.
+La Figure~\ref{fig:sc_n} présente les performances de décodage de l'algorithme SC pour une taille de mot code croissante. S'il apparaît clairement que le taux d'erreur binaire diminue pour un rapport signal à bruit donné, la limite de Shannon est toutefois très éloignée pour les tailles de mot de code présentées. 
+
+Les codes correcteurs d'erreur reposent la notion de redondance, quantifiée par le rendement du code. Plus le rendement est faible, plus la redondance est élevée.
+Ceci est illustré en Figure~\ref{fig:sc_r}, toujours en considérant l'algorithme SC. La tendance observée est bien que plus le rendement est faible, plus le taux d'erreur est faible.
+Une seule exception apparaît, pour le rendement $R=1/8$, rendement le plus faible pourtant. Ceci est dû au fait que l'énergie par bit d'information $E_b$ prend en compte le fait que lorsqu'on diminue le rendement, on augmente l'énergie dépensée pour transmettre un bit utile. Deux tendances s'affrontent donc : augmentation de la redondance contre diminution du rapport signal à bruit.
 
 \begin{figure}[t]
 \input{main/ch1_fig/curves/scl_L/tikz/source.tex}
-\caption{Performances de décodage de l'algorithme SCL pour un code polaire (2048,1723). Différentes valeurs de $L$, et une courbe de comparaison à l'algorithme CA-SCL}
+\caption{Performances de décodage des algorithmes SC, SCL et CA-SCL pour un code polaire (2048,1723). Un CRC de taille $c=16$ est utilisé pour l'algorithme CA-SCL.}
 \label{fig:scl_l}
 \end{figure}
 
-% Rajouter des références à des cas précis
-Dans la Figure~\ref{fig:scl_perfs} sont montrées les courbes de performances de différentes versions de l'algorithme SCL. Tout d'abord, le facteur $L$ est déterminant. En effet plus $L$ est grand plus le taux d'erreurs est faible. Par contre, l'amélioration relative du SCL par rapport au SC est moindre pour de grandes valeurs de $N$. Il apparaît également que l'algorithme CA-SCL, avec l'ajout du CRC, améliore drastiquement les performances de correction par rapport à l'algorithme SCL. Il est important de noter toutefois que la taille dur CRC jour un rôle important dans les performances du code. Tout d'abord, s'il est sous-dimensionné par rapport à $K$, le nombre de bits d'informations, alors il peut apparaître un seuil. Si au contraire il est surdimensionné, alors la courbe de performance va se dégrader (décalage vers la droite).
+La Figure~\ref{fig:scl_l} introduit les performances de l'algorithme SCL. Comme précisé auparavant, l'algorithme SCL permet d'améliorer les performances de décodage des codes polaires par rapport à l'algorithme SC.
+Plusieurs choses sont à observer. Tout d'abord, l'augmentation de la taille de la liste permet dans tous les cas une meilleure correction d'erreur. Ensuite, l'utilisation de la concaténation du CRC par l'algorithme CA-SCL augmente très fortement les performances de décodage. Par exemple lorsque $L=32$, à un FER de 10\textsuperscript{-4}, il y a une différence de presque 1 dB entre les algorithmes SCL et CA-SCL.
+
+Des tendances plus fines se dégagent. Les courbes de l'algorithme SCL montrent que les gains provoqués par l'augmentation du paramètre $L$ arrivent vite à saturation. En effet, les performances obtenues pour $L=8$ et $L=32$ sont très proches, alors que la complexité de l'algorithme augmente approximativement linéairement. Au contraire, concernant l'algorithme CA-SCL dans les conditions données, l'amélioration de performances due à l'augmentation du paramètre $L$ est continue. 
+
+Dans la Figure~\ref{fig:scl_l} sont montrées les courbes de performances de différentes versions de l'algorithme SCL. Tout d'abord, le facteur $L$ est déterminant. En effet plus $L$ est grand plus le taux d'erreurs est faible. Par contre, l'amélioration relative du SCL par rapport au SC est moindre pour de grandes valeurs de $N$. Il apparaît également que l'algorithme CA-SCL, avec l'ajout du CRC, améliore drastiquement les performances de correction par rapport à l'algorithme SCL. Il est important de noter toutefois que la taille dur CRC jour un rôle important dans les performances du code. Tout d'abord, s'il est sous-dimensionné par rapport à $K$, le nombre de bits d'informations, alors il peut apparaître un seuil. Si au contraire il est surdimensionné, alors la courbe de performance se dégrade (décalage vers la droite).
 
 
 \begin{figure}[t]
 \input{main/ch1_fig/curves/scl_crc/tikz/source.tex}
 \caption{Impact de la taille du CRC sur les performances de l'algorithme SCL}
-\label{fig:ascl_crc}
+\label{fig:scl_crc}
 \end{figure}
 
 
