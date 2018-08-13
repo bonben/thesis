@@ -271,6 +271,35 @@ Le rendement d'un code correcteur d'erreur est un élément déterminant de son 
 Dans la Figure~\ref{fig:scl_perfs} sont montrées les courbes de performances de différentes versions de l'algorithme SCL. Tout d'abord, le facteur $L$ est déterminant. En effet plus $L$ est grand plus le taux d'erreurs est faible. Par contre, l'amélioration relative du SCL par rapport au SC est moindre pour de grandes valeurs de $N$. Il apparaît également que l'algorithme CA-SCL, avec l'ajout du CRC, améliore drastiquement les performances de correction par rapport à l'algorithme SCL. Il est important de noter toutefois que la taille dur CRC jour un rôle important dans les performances du code. Tout d'abord, s'il est sous-dimensionné par rapport à $K$, le nombre de bits d'informations, alors il peut apparaître un seuil. Si au contraire il est surdimensionné, alors la courbe de performance va se dégrader (décalage vers la droite).
 
 
+\begin{figure}[t]
+\input{main/ch1_fig/curves/scl_crc/tikz/source.tex}
+\caption{Impact de la taille du CRC sur les performances de l'algorithme SCL}
+\label{fig:ascl_crc}
+\end{figure}
+
+
+\begin{figure}[t]
+\input{main/ch1_fig/curves/fast_ascl_crc/tikz/source.tex}
+\caption{Impact de la taille du CRC sur les performances des l'algorithme ASCL}
+\label{fig:ascl_crc}
+\end{figure}
+
+
+\begin{figure}[t]
+\input{main/ch1_fig/curves/scf/tikz/source.tex}
+\caption{Performances de l'algorithme SCF en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512), $c=16$}
+\label{fig:ascl_crc}
+\end{figure}
+
+
+\begin{figure}[t]
+\input{main/ch1_fig/curves/bp_scan/tikz/source.tex}
+\caption{Performances des algorithmes itératifs à sortie souple en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512)}
+\label{fig:bp_scan}
+\end{figure}
+
+
+
 
 % Courbes avec différents N pour SC et SCL, montrer que SCL moins intéressant quand N augmente.
 
