@@ -228,15 +228,13 @@ Deux algorithmes itératifs à sortie souple ont été proposée. Le premier est
 La première différence entre ces deux algorithmes et ceux vues précédemment est qu'aucune décision dure n'est réalisée durant le décodage. L'information reste souple de bout en bout.
 En conséquence, les sommes partielles utilisées dans l'arbre de décodage SC sont remplacées par des LLRs. Deux ensembles de LLRs sont donc contenues dans l'arbre de décodage. Les LLRs qui ont remplacé les sommes partielles sont notés $L^b_{i,j}$.
 Ensuite, les fonctions élémentaires sont changées. les fonction $f$, $g$ et $h$ de l'algorithme SC sont remplacées par les fonctions $f_{bp}$ et $g_{bp}$ :
-
-    \begin{eqnarray}
-      \begin{array}{l c l}
-        f_{bp}(L_a,L_b,L_c) & = & f(L_a, L_b  + L_c) \\
-        g_{bp}(L_a,L_b,L_c) & = & f(L_a, L_c) + L_b
-      \end{array}
-      \label{eq:bp}
-    \end{eqnarray}
-
+\begin{eqnarray}
+  \begin{array}{l c l}
+    f_{bp}(L_a,L_b,L_c) & = & f(L_a, L_b  + L_c) \\
+    g_{bp}(L_a,L_b,L_c) & = & f(L_a, L_c) + L_b
+  \end{array}
+  \label{eq:bp}
+\end{eqnarray}
 Le séquencement de ces opérations est montré en figure \ref{fig:SCANSchedule} pour le noyau de taille $N=2$ dans le cas d'un décodage SCAN. La première étape est l'initialisation de la racine et des feuilles de l'arbre : les LLRs $L$ de la racine prennent la valeur des LLRs du canal. Les LLRs $L^b$ des feuilles prennent la valeur $+\infty$ dans le cas d'un bit gelé, et la valeur $0$ dans le cas d'un bit d'information. Ensuite, les fonctions $f_{bp}$ et $g_{bp}$ sont appliquées dans l'ordre indiqué.
 
 Comme évoqué précédemment, les algorithmes SCAN et BP diffèrent du point de vue de leurs séquencement. Le séquencement de l'algorithme SCAN est le même que celui du SC, en remplaçant l'application de la fonction $h$ du SC par une application conjointe des fonctions ${f_bp}$ et $g_{bp}$ comme montré en Figure~\ref{fig:SCANSchedule} (4).
@@ -249,25 +247,26 @@ Dans la présente section sont présentées plusieurs courbes de performances de
 
 \begin{figure}[t]
 \input{main/ch1_fig/curves/sc_N/tikz/source.tex}
-\caption{\'Evolution des performances de décodage de l'algorithme SC quand N augmente.}
+\caption{Performances de décodage de l'algorithme SC pour différentes valeurs de $N$ ($R=1/2$).}
 \label{fig:sc_n}
 \end{figure}
 
-% \begin{figure}[t]
-% \input{main/ch1_fig/curves/sc_N/tikz/source.tex}
-% \caption{\'Evolution des performances de décodage de l'algorithme SC quand $R$ augmente.}
-% \label{fig:sc_n}
-% \end{figure}
+\begin{figure}[t]
+\input{main/ch1_fig/curves/sc_R/tikz/source.tex}
+\caption{Performances de décodage de l'algorithme SC pour différentes valeurs de $R$ ($N=2048$).}
+\label{fig:sc_r}
+\end{figure}
 
 En Figure~\ref{fig:sc_n} sont présentées les performances de décodage de l'algorithme SC pour différentes valeurs de N. Il apparaît que celles-ci, à rendement constant, augmentent lorsque N augmente. Ceci est une conséquence du phénomène de polarisation. En effet, comme précisé dans la Section \ref{subsec:polarisation}, les canaux se polarisent lorsque $N$ augmente. Ainsi, plus $N$ augmentent, plus les performances se rapprochent de la limité théorique du décodage canal, nommée limite de Shannon \cite{shannon_mathematical_2001}. Celle-ci est également représentée dans la Figure~\ref{fig:sc_n}.
 
 Le rendement d'un code correcteur d'erreur est un élément déterminant de son pouvoir de correction comme illustré dans la Figure~\ref{fig:sc_r}, cette fois-ci à N constant. Le rendement est le facteur prépondérant permettant de s'adapter à la qualité du canal. Dans le cas des communications mobiles, ce rendement permet de s'adapter à la qualité changeante du canal.
 
-% \begin{figure}[t]
-% \input{main/ch1_fig/curves/scl/tikz/source.tex}
-% \caption{Performances de décodage des différentes versions de l'algorithme SCL.}
-% \label{fig:scl_perfs}
-% \end{figure}
+\begin{figure}[t]
+\input{main/ch1_fig/curves/scl_L/tikz/source.tex}
+\caption{Performances de décodage de l'algorithme SCL pour un code polaire (2048,1723). Différentes valeurs de $L$, et une courbe de comparaison à l'algorithme CA-SCL}
+\label{fig:scl_l}
+\end{figure}
+
 % Rajouter des références à des cas précis
 Dans la Figure~\ref{fig:scl_perfs} sont montrées les courbes de performances de différentes versions de l'algorithme SCL. Tout d'abord, le facteur $L$ est déterminant. En effet plus $L$ est grand plus le taux d'erreurs est faible. Par contre, l'amélioration relative du SCL par rapport au SC est moindre pour de grandes valeurs de $N$. Il apparaît également que l'algorithme CA-SCL, avec l'ajout du CRC, améliore drastiquement les performances de correction par rapport à l'algorithme SCL. Il est important de noter toutefois que la taille dur CRC jour un rôle important dans les performances du code. Tout d'abord, s'il est sous-dimensionné par rapport à $K$, le nombre de bits d'informations, alors il peut apparaître un seuil. Si au contraire il est surdimensionné, alors la courbe de performance va se dégrader (décalage vers la droite).
 
