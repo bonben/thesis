@@ -209,6 +209,18 @@ Cet algorithme permet donc d'augmenter le débit, puisque plus $L$ et petit, plu
 	% Parler du Stack Hybride ? 
 
 \subsection{Les algorithmes itératifs à sortie souple}
+
+\begin{figure}[t]
+  \renewcommand*\thesubfigure{\arabic{subfigure}} 
+  \centering
+  \subfloat[][Initialisation]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_1}}\hspace{2.5cm}
+  \subfloat[][$f_{bp}$ function]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_2}}\\
+  \hspace{0.5cm}
+  \subfloat[][$g_{bp}$ function]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_3}}\hspace{3.7cm}
+  \subfloat[][Backward functions]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_4}}
+  \caption{Fonctions élémentaires et séquencement du décodage SCAN du noyau $N=2$}
+  \label{fig:SCANSchedule}
+\end{figure}
 % Parler concaténation
 
 Deux algorithmes itératifs à sortie souple ont été proposée. Le premier est appelé algorithme à Propagation de Croyance (BP). C'est le premier dans l'ordre chronologique puisqu'il fut proposé dans l'article original d'Ar{\i}kan \cite{arikan_channel_2009}. Le second fut proposé dans \cite{fayyaz_low-complexity_2014}. Leur séquencement est la seule propriété qui les différencie.
@@ -231,18 +243,6 @@ Comme évoqué précédemment, les algorithmes SCAN et BP diffèrent du point de
 
 Enfin, les algorithmes BP et SCAN sont des algorithmes itératifs. En effet, le parcours de l'arbre peut être effectué plusieurs fois. Ainsi, les valeurs des LLRs intermédiaires évoluent d'une itération à l'autre. Ces itérations permettent d'améliorer les performances de décodage.
 
-\begin{figure}[t]
-  \renewcommand*\thesubfigure{\arabic{subfigure}} 
-  \centering
-  \subfloat[][Initialisation]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_1}}\hspace{2.5cm}
-  \subfloat[][$f_{bp}$ function]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_2}}\\
-  \hspace{0.5cm}
-  \subfloat[][$g_{bp}$ function]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_3}}\hspace{3.7cm}
-  \subfloat[][Backward functions]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_4}}
-  \caption{Fonctions élémentaires et séquencement du décodage SCAN du noyau $N=2$}
-  \label{fig:SCANSchedule}
-\end{figure}
-
 \subsection{Les performances de décodage des différents algorithmes}
 
 Dans la présente section sont présentées plusieurs courbes de performances de décodage afin de montrer les caractéristiques principales de algorithmes de décodage de codes polaires mais également d'évaluer les différents algorithmes entre eux, sans pour l'instant évoquer la complexité des implémentations qui seront largement abordés dans les chapitres suivants. Les abscisses et ordonnées des différentes courbes sont toujours les mêmes. Le rapport signal à bruit, en abscisse, est noté $E_b/N_0$. Ce rapport représente la quantité de bruit du canal considéré. En ordonnées se trouve soit le taux d'erreur binaire défini en Section \ref{subsec:contexte} le taux d'erreur trames qui est égal au nombre de trame contenant au moins une erreur divisé par le nombre total de trames transmises par la source.
@@ -263,13 +263,15 @@ En Figure~\ref{fig:sc_n} sont présentées les performances de décodage de l'al
 
 Le rendement d'un code correcteur d'erreur est un élément déterminant de son pouvoir de correction comme illustré dans la Figure~\ref{fig:sc_r}, cette fois-ci à N constant. Le rendement est le facteur prépondérant permettant de s'adapter à la qualité du canal. Dans le cas des communications mobiles, ce rendement permet de s'adapter à la qualité changeante du canal.
 
-\begin{figure}[t]
-\input{main/ch1_fig/curves/scl/tikz/source.tex}
-\caption{Performances de décodage des différentes versions de l'algorithme SCL.}
-\label{fig:scl_perfs}
-\end{figure}
+% \begin{figure}[t]
+% \input{main/ch1_fig/curves/scl/tikz/source.tex}
+% \caption{Performances de décodage des différentes versions de l'algorithme SCL.}
+% \label{fig:scl_perfs}
+% \end{figure}
+% Rajouter des références à des cas précis
+Dans la Figure~\ref{fig:scl_perfs} sont montrées les courbes de performances de différentes versions de l'algorithme SCL. Tout d'abord, le facteur $L$ est déterminant. En effet plus $L$ est grand plus le taux d'erreurs est faible. Par contre, l'amélioration relative du SCL par rapport au SC est moindre pour de grandes valeurs de $N$. Il apparait également que l'algorithme CA-SCL, avec l'ajout du CRC, améliore drastiquement les performances de correction par rapport à l'algorithme SCL. Il est important de noter toutefois que la taille dur CRC jour un rôle important dans les performances du code. Tout d'abord, s'il est sous-dimensionné par rapport à $K$, le nombre de bits d'informations, alors il peut apparaître un seuil. Si au contraire il est surdimensionné, alors la courbe de performance va se dégrader (décalage vers la droite).
 
-Dans la Figure~\ref{fig:scl_perfs} sont montrées les courbes de performances de différentes versions de l'algorithme SCL. Tout d'abord, le facteur $L$ est déterminant. En effet plus $L$ est grand plus le taux d'erreurs est faible. Par contre, l'amélioration relative du SCL par rapport au SC est moindre pour de grandes valeurs de $N$. Il apparait également que l'algorithme CA-SCL, avec l'ajout du CRC, améliore drastiquement les performances de correction par rapport au SCL. 
+
 
 % Courbes avec différents N pour SC et SCL, montrer que SCL moins intéressant quand N augmente.
 
@@ -326,9 +328,9 @@ Tout comme les algorithmes SC et SCL, des élagages peuvent être appliqués sur
 % détailler calculs évitables (g0, f0, grep)
 % discussion chase spc - r1 ? Hashemi-Sarkis + Simulations
 
-\section{Codes polaires de taille variables}
+% \section{Codes polaires de taille variables}
 % https://arxiv.org/pdf/1701.06458.pdf 4-5-6-7-8-9
 
 
-\subsection*{Conclusion}
-{}
+% \subsection*{Conclusion}
+% Dans ce chapitre ont été présentés les codes polaires, avec une emphase particulière sur les différents alogithmes de décodage. Dans les chapitres à venir, plusieurs implémentations de ces algorithmes vont être proposées. Le chapitre suivant porte sur une implémentation logicielle des algorithmes basés sur le SCL. 
