@@ -2,7 +2,7 @@
 
 \begin{tikzpicture}
   \begin{semilogyaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
-                       width=1.0\linewidth, height=0.70\linewidth,
+                       width=0.9\linewidth, height=0.6\linewidth,
                        xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
                        xmin=1.0, xmax=3.5, xtick={1,1.5,2,...,3.5},
                        tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
@@ -13,6 +13,6 @@
     \addplot[mark=square  , Set1-4, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/bp_scan/dat/SCAN_4.txt};  \label{plot:line4}
     \addplot[mark=triangle, Set1-5, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/bp_scan/dat/SC_1024.txt}; \label{plot:line5}
     \addplot[mark=pentagon, Set1-7, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/bp_scan/dat/SCL.txt};     \label{plot:line7}
-    \legend{BP 50 it., SCAN 1 it., SCAN 2 it., SCAN 4 it., SC, SCL}
+    \legend{BP 50 it., SCAN 1 it., SCAN 2 it., SCAN 4 it., SC, SCL $L=4$}
   \end{semilogyaxis}
 \end{tikzpicture}

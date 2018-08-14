@@ -170,7 +170,7 @@ Dans la Figure~\ref{fig:sc}, il apparaît que quatre fonctions $f$ sont appliqu�
 \caption{Duplication de l'arbre de décodage dans l'algorithme SCL.}
 \label{fig:scl}
 \end{figure}
-L'algorithme de décodage par Annulation Successive Liste (SCL) est une évolution de l'algorithme SC \cite{tal_how_2013}. L'algorithme SC présente en effet des performances de correction médiocres pour des codes polaires de petite taille. Le SCL améliore ces performances substantiellement. Dans l'algorithme de décodage SC décrit précédemment, des décisions dure sont réalisées à chaque traitement d'une feuille correspondant à un bit d'information (fonction \texttt{R1}). Si une erreur est commise lors de ce seuillage, celle-ci est irréversible, et le décodage du mot de code est un échec. Le principe de l'algorithme de décodage par liste est de retarder la décision dure. Au lieu d'appliquer un seuillage sur la valeur du LLR, les deux possibilités de décodage sont considérées, et l'arbre de décodage, avec l'ensemble de ses LLRs et sommes partielles, est dupliqué. Cette duplication est représentée dans la Figure~\ref{fig:scl}. Il est considéré sur la gauche de la figure un décodage au cours duquel la fonction $f$ est appliquée, dans la première étape représentée. L'étape suivante consiste en la duplication de l'arbre de décodage afin de former deux chemins. Dans le premier, l'hypothèse est que $\hat{u}_2=0$, dans le deuxième, $\hat{u}_2=1$ Le décodage continue ainsi sur les deux arbres parallèlement : l'étape suivante dans l'exemple donné est l'application de la fonction $g$. Ces deux arbres sont qualifiés de \textbf{chemins} de décodage. \`A chaque feuille de rendement 1, le même procédé est réalisé, doublant le nombre d'arbres décodés en parallèle.
+L'algorithme de décodage par Annulation Successive Liste (SCL) est une évolution de l'algorithme SC \cite{tal_how_2013}. L'algorithme SC présente en effet des performances de correction médiocres pour des codes polaires de petite taille. Le SCL améliore ces performances substantiellement. Dans l'algorithme de décodage SC décrit précédemment, des décisions dure sont réalisées à chaque traitement d'une feuille correspondant à un bit d'information (fonction \texttt{R1}). Si une erreur est commise lors de ce seuillage, celle-ci est irréversible, et le décodage du mot de code est un échec. Le principe de l'algorithme de décodage par liste est de retarder la décision dure. Au lieu d'appliquer un seuillage sur la valeur du LLR, les deux possibilités de décodage sont considérées, et l'arbre de décodage, avec l'ensemble de ses LLRs et sommes partielles, est dupliqué. Cette duplication est représentée dans la Figure~\ref{fig:scl}. Il est considéré sur la gauche de la figure un décodage au cours duquel la fonction $f$ est appliquée, dans la première étape représentée. L'étape suivante consiste en la duplication de l'arbre de décodage afin de former deux chemins. Dans le premier, l'hypothèse est que $\hat{u}_2=0$, dans le deuxième, $\hat{u}_2=1$. Le décodage continue ainsi sur les deux arbres parallèlement : l'étape suivante dans l'exemple donné est l'application de la fonction $g$. Ces deux arbres sont qualifiés de \textbf{chemins} de décodage. \`A chaque feuille de rendement 1, le même procédé est réalisé, doublant le nombre d'arbres décodés en parallèle.
 
 
 % citer article balatsoukas pour LLRs et calculs métriques
@@ -243,6 +243,20 @@ Comme évoqué précédemment, les algorithmes SCAN et BP diffèrent du point de
 
 Enfin, les algorithmes BP et SCAN sont des algorithmes itératifs. En effet, le parcours de l'arbre peut être effectué plusieurs fois. Ainsi, les valeurs des LLRs intermédiaires évoluent d'une itération à l'autre. Ces itérations permettent d'améliorer les performances de décodage.
 
+\begin{figure}[h]
+  \centering
+\input{main/ch1_fig/curves/sc_N/tikz/source.tex}
+\caption{Performances de décodage de l'algorithme SC pour différentes valeurs de $N$ ($R=1/2$).}
+\label{fig:sc_n}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+\input{main/ch1_fig/curves/sc_R/tikz/source.tex}
+\caption{Performances de décodage de l'algorithme SC pour différentes valeurs de $R$ ($N=2048$).}
+\label{fig:sc_r}
+\end{figure}
+\clearpage
 \subsection{Les performances de décodage des différents algorithmes}
 % Détails sur les perfs : 32 bit
 Dans la présente section sont présentées plusieurs courbes de performances. 
@@ -251,20 +265,8 @@ Elles montrent également l'impact des paramètres, communs à tous les algorith
 Ces paramètres et leurs effets sont important car ce sont les leviers utilisés dans les standards de communication afin de s'adapter aux contraintes extérieures.
 Les axes des différentes courbes sont toujours les mêmes.
 En abscisse se trouve le rapport signal à bruit noté $E_b/N_0$ décrit en Section \ref{subsec:canal}.
-Sur l'axe des ordonnées se trouve soit le BER dont l'expression est donnée en Section \ref{subsec:contexte}, soit le taux d'erreur trame (FER : Frame Error Rate). Le FER est égal au rapport du nombre de trames erronées sur le nombre total de trames émises, sachant qu'une trame est considérée erronée si elle contient au moins un bit erroné.
-
-
-\begin{figure}[t]
-\input{main/ch1_fig/curves/sc_N/tikz/source.tex}
-\caption{Performances de décodage de l'algorithme SC pour différentes valeurs de $N$ ($R=1/2$).}
-\label{fig:sc_n}
-\end{figure}
-
-\begin{figure}[t]
-\input{main/ch1_fig/curves/sc_R/tikz/source.tex}
-\caption{Performances de décodage de l'algorithme SC pour différentes valeurs de $R$ ($N=2048$).}
-\label{fig:sc_r}
-\end{figure}
+Sur l'axe des ordonnées se trouve soit le BER dont l'expression est donnée en Section \ref{subsec:contexte}, soit le taux d'erreur trame (FER : Frame Error Rate). Le FER est égal au rapport du nombre de trames erronées sur le nombre total de trames émises, sachant qu'une trame est considérée erronée si elle contient au moins un bit erroné. Sauf indication contraire, toutes les simulations ont été réalisées en utilisant le logiciel AFF3CT\footnote{AFF3CT est un logiciel libre permettant la simulation efficace de codes correcteurs d'erreurs : https://aff3ct.github.io/}
+\subsubsection{Impact de la taille du mot de code et du rendement}
 
 La théorie de l'information de Shannon \cite{shannon_mathematical_2001} prouve qu'il existe une limite théorique à la capacité d'un canal pour un rendement de code donné.
 Cette limite est matérialisée dans la Figure \ref{fig:sc_n} par la ligne verticale dénommée \textit{Limite de Shannon}. Les codes polaires sont les premiers qui atteignent théoriquement cette limite. Cependant cette limite n'est atteinte que pour une taille de mot de code infinie.
@@ -275,74 +277,58 @@ Les codes correcteurs d'erreur reposent la notion de redondance, quantifiée par
 Ceci est illustré en Figure~\ref{fig:sc_r}, toujours en considérant l'algorithme SC. La tendance observée est bien que plus le rendement est faible, plus le taux d'erreur est faible.
 Une seule exception apparaît, pour le rendement $R=1/8$, rendement le plus faible pourtant. Ceci est dû au fait que l'énergie par bit d'information $E_b$ prend en compte le fait que lorsqu'on diminue le rendement, on augmente l'énergie dépensée pour transmettre un bit utile. Deux tendances s'affrontent donc : augmentation de la redondance contre diminution du rapport signal à bruit.
 
-\begin{figure}[t]
-\input{main/ch1_fig/curves/scl_L/tikz/source.tex}
-\caption{Performances de décodage des algorithmes SC, SCL et CA-SCL pour un code polaire (2048,1723). Un CRC de taille $c=16$ est utilisé pour l'algorithme CA-SCL.}
-\label{fig:scl_l}
-\end{figure}
+\subsubsection{Impact des paramètres de l'algorithme SCL}
 
+\begin{figure}[ht]
+  \centering
+  \input{main/ch1_fig/curves/scl_L/tikz/source.tex}
+  \caption{Performances de décodage des algorithmes SC, SCL et CA-SCL pour un code polaire (2048,1723). Un CRC de taille $c=16$ est utilisé pour l'algorithme CA-SCL.}
+  \label{fig:scl_l}
+\end{figure}
 La Figure~\ref{fig:scl_l} introduit les performances de l'algorithme SCL. Comme précisé auparavant, l'algorithme SCL permet d'améliorer les performances de décodage des codes polaires par rapport à l'algorithme SC.
-Plusieurs choses sont à observer. Tout d'abord, l'augmentation de la taille de la liste permet dans tous les cas une meilleure correction d'erreur. Ensuite, l'utilisation de la concaténation du CRC par l'algorithme CA-SCL augmente très fortement les performances de décodage. Par exemple lorsque $L=32$, à un FER de 10\textsuperscript{-4}, il y a une différence de presque 1 dB entre les algorithmes SCL et CA-SCL.
+Plusieurs choses sont à observer. Tout d'abord, l'augmentation de la taille de la liste permet dans tous les cas une meilleure correction d'erreur. Ensuite, l'utilisation de la concaténation du CRC par l'algorithme CA-SCL augmente très fortement les performances de décodage. Par exemple lorsque $L=32$, à un FER de 10\textsuperscript{-5}, il y a une différence de 1 dB entre les algorithmes SCL et CA-SCL.
 
-Des tendances plus fines se dégagent. Les courbes de l'algorithme SCL montrent que les gains provoqués par l'augmentation du paramètre $L$ arrivent vite à saturation. En effet, les performances obtenues pour $L=8$ et $L=32$ sont très proches, alors que la complexité de l'algorithme augmente approximativement linéairement. Au contraire, concernant l'algorithme CA-SCL dans les conditions données, l'amélioration de performances due à l'augmentation du paramètre $L$ est continue. 
+Des tendances plus fines se dégagent. Les courbes de l'algorithme SCL montrent que les gains provoqués par l'augmentation du paramètre $L$ arrivent vite à saturation. En effet, les performances obtenues pour $L=8$ et $L=32$ sont très proches, alors que la complexité de l'algorithme augmente approximativement linéairement. Au contraire, concernant l'algorithme CA-SCL, l'amélioration de performances due à l'augmentation du paramètre $L$ est continue est importante. Pour $E_b/N_0=4$, le gain de FER entre $L=8$ et $L=32$ est de plus d'une décade.
 
-Dans la Figure~\ref{fig:scl_l} sont montrées les courbes de performances de différentes versions de l'algorithme SCL. Tout d'abord, le facteur $L$ est déterminant. En effet plus $L$ est grand plus le taux d'erreurs est faible. Par contre, l'amélioration relative du SCL par rapport au SC est moindre pour de grandes valeurs de $N$. Il apparaît également que l'algorithme CA-SCL, avec l'ajout du CRC, améliore drastiquement les performances de correction par rapport à l'algorithme SCL. Il est important de noter toutefois que la taille dur CRC jour un rôle important dans les performances du code. Tout d'abord, s'il est sous-dimensionné par rapport à $K$, le nombre de bits d'informations, alors il peut apparaître un seuil. Si au contraire il est surdimensionné, alors la courbe de performance se dégrade (décalage vers la droite).
+Pour un code polaire donné, la taille du CRC a également un impact sur les performances. Là encore, deux phénomènes contradictoires s'affrontent. 
+Tout d'abord, plus le CRC est long, moins il est probable que se produisent une fausse détection d'erreur ou une validation erronée d'une trame fausse. Ceci apparaît pour des valeurs élevées de $E_b/N_0$ : les algorithmes pour lesquels $c$ est trop petit sont moins performants.
+Cependant, sur la Figure~\ref{fig:scl_crc}, jusqu'à $E_b/N_0=4$, la version de l'algorithme la plus performante est celle pour laquelle $c=16$, et non pas $c=32$
+La raison est que, comme montré en Figure \ref{fig:crc}, bien que le rendement total de l'encodeur concaténé soit bien $R=\dfrac{K}{N}$, le rendement de l'encodeur polaire seulement est $R=\dfrac{c+K}{N}$. Lorsque $c$ augmente, son rendement augmente également, et ses performances baissent.
 
+L'impact de la taille du CRC sur les performances des algorithmes adaptatifs est encore plus important. Les performances de décodage des algorithmes CA-SCL, FASCL et PASCL sont représentées pour un code polaire (2048,1723) et différentes tailles de codes. En utilisant un CRC de taille $c=8$ ou $c=16$ on observe des dégradation importantes des performances entre les algorithmes adaptatifs d'une part et l'algorithme SCL de base d'autre part. La différence entre PASCL et FASCL est par contre négligeable. Ce phénomène s'explique par le fait qu'à des FER très faible, il commence à devenir probable d'obtenir des faux positifs lors du test de CRC lors du premier décodage SC dans le cadre des algorithmes adaptatifs. Toutefois, pour un CRC de taille $c=32$, il n'y a aucune différence de performances pour le code polaire étudié entre les algorithmes CASCL, PASCL et FASCL.
 
+\subsubsection{Performances de décodages des algorithmes SCAN et SCF}
+Les figures \ref{fig:scf} et \ref{fig:bp_scan} présentent les performances de décodages de ces deux algorithmes pour un code polaire (1024,512). Les courbes de performances pour l'algorithme SCF sont issues de \cite{afisiadis_low-complexity_2014} tandis que les courbes de performances de l'algorithme BP sont issues de \cite{pamuk_fpga_2011}. Les performances du SCF s'améliorent lorsque T augmente mais restent inférieures aux performances de l'algorithme SCL avec $L=4$. Le même ordre de grandeur est observé pour un SCAN à 4 itérations. Il est notable de remarquer que les performances du SCAN avec 4 itérations sont bien meilleures que celles du BP pour 50 itérations. 
 \begin{figure}[t]
-\input{main/ch1_fig/curves/scl_crc/tikz/source.tex}
-\caption{Impact de la taille du CRC sur les performances de l'algorithme SCL}
-\label{fig:scl_crc}
+  \centering
+  \subfloat[Algorithmes non adaptatif]{
+  \input{main/ch1_fig/curves/scl_crc/tikz/source.tex}
+  \label{fig:scl_crc}
+  }
+  \subfloat[Algorithmes adaptatifs]{
+  \input{main/ch1_fig/curves/fast_ascl_crc/tikz/source.tex}
+  \label{fig:ascl_crc}
+  }
+  \caption{Impact de la taille du CRC sur les performances de l'algorithme SCL pour un code (2048,1723).}
 \end{figure}
 
 
-\begin{figure}[t]
-\input{main/ch1_fig/curves/fast_ascl_crc/tikz/source.tex}
-\caption{Impact de la taille du CRC sur les performances des l'algorithme ASCL}
-\label{fig:ascl_crc}
+\begin{figure}[h]
+  \centering
+  \input{main/ch1_fig/curves/scf/tikz/source.tex}
+  \caption{Performances de l'algorithme SCF en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512), $c=16$}
+  \label{fig:scf}
 \end{figure}
 
-
-\begin{figure}[t]
-\input{main/ch1_fig/curves/scf/tikz/source.tex}
-\caption{Performances de l'algorithme SCF en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512), $c=16$}
-\label{fig:ascl_crc}
+\begin{figure}[h]
+  \centering
+  \input{main/ch1_fig/curves/bp_scan/tikz/source.tex}
+  \caption{Performances des algorithmes itératifs à sortie souple en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512)}
+  \label{fig:bp_scan}
 \end{figure}
 
+\clearpage
 
-\begin{figure}[t]
-\input{main/ch1_fig/curves/bp_scan/tikz/source.tex}
-\caption{Performances des algorithmes itératifs à sortie souple en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512)}
-\label{fig:bp_scan}
-\end{figure}
-
-
-
-
-% Courbes avec différents N pour SC et SCL, montrer que SCL moins intéressant quand N augmente.
-
-% Courbes avec SCL-CRC
-
-
-% Toutes les simulations en point flottant
-% SC Systématique / non systématique
-% Différents rendements, tailles de codes, etc...
-% Faire le lien avec réseaux mobiles
-% 
-% SC LIST
-% Ne pas trop en faire, développé en chapitre 2
-% Différents CRC (retrouver citation des CRC adaptés dans papiers SCL)
-% ASCL : montrer pour CRC non adapté (1723/2048 )
-% 
-% BP    (Thèse guillaume ?)
-% SCAN  
-% 
-% 	
-% 
-% SC Stack
-% SC FLIP
-% 
-% 
 
 \section{L'élagage de l'arbre de décodage}
 
@@ -351,7 +337,14 @@ Dans la Figure~\ref{fig:scl_l} sont montrées les courbes de performances de dif
 \subsection{L'élagage de l'algorithme de décodage SC}
 Afin de réduire le temps de décodage, il est possible d'élaguer l'arbre de décodage comme indiqué dans \cite{alamdar-yazdi_simplified_2011}. En effet, un sous-arbre dont toutes les feuilles sont de rendement 0 n'a pas besoin d'être parcouru. Comme toutes ses feuilles sont des bits gelés, alors toutes les sommes partielles du sous-arbre sont nulles. Le même élagage est possible pour des sous-arbre dont toutes les feuilles sont de rendement 1. Pour un tel sous-arbre, il suffit d'appliquer la fonction de seuillage \texttt{R1} sur chaque LLR de la racine du sous arbre pour obtenir le même résultat que s'il avait été parcouru.
 
-Deux autres types de sous arbres peuvent être identifiés, et des fonctions spécialisées permettent d'obtenir les valeurs des sommes partielles directement depuis les valeurs des LLRs de la racine du sous-arbre. Soit un sous-arbre dont le \noeud racine a une taille $M$. Si $M-1$ feuilles correspondent à des bits gelés et la dernière à un bit d'information, le sous-arbre peut être remplacé par un \noeud de répétition. Les valeurs des sommes partielles d'un tel \noeud sont soit toutes égales à $0$ soit toutes égales à $1$. Pour déterminer quelles valeurs prennent les sommes partielles, tous les LLRs du \noeud considéré sont additionnés. Si le total est supérieur à 0, alors toutes les sommes partielles sont mises à $0$, et dans le cas contraire, toutes à $1$. Le dernier est un \noeud à test de parité unique (SPC). Plusieurs étapes sont nécessaires au traitement d'un tel \noeud. Ce traitement est noté \texttt{REP} dans la suite du document. Tout d'abord, la fonction élémentaire \texttt{R1} est appliqué sur chaque LLR, comme pour un \noeud de rendement 1. La parité de ce premier vecteur de sommes partielles est testée. Si celle-ci est égale à 0, le test de parité est satisfait, et les sommes partielles ne sont pas modifiées. Dans le cas contraire, les LLRs sont triés selon leur valeur absolue. La somme partielle associée au LLR ayant la valeur absolue la plus faible est inversée. Le vecteur ainsi corrigé respecte cette fois la contrainte de parité.
+Deux autres types de sous arbres peuvent être identifiés, et des fonctions spécialisées permettent d'obtenir les valeurs des sommes partielles directement depuis les valeurs des LLRs de la racine du sous-arbre. Soit un sous-arbre dont le \noeud racine a une taille $M$. Si $M-1$ feuilles correspondent à des bits gelés et la dernière à un bit d'information, le sous-arbre peut être remplacé par un \noeud de répétition. Les valeurs des sommes partielles d'un tel \noeud sont soit toutes égales à $0$ soit toutes égales à $1$. Pour déterminer quelles valeurs prennent les sommes partielles, tous les LLRs du \noeud considéré sont additionnés. Si le total est supérieur à 0, alors toutes les sommes partielles sont mises à $0$, et dans le cas contraire, toutes à $1$. Le dernier est un \noeud à test de parité unique (SPC). Plusieurs étapes sont nécessaires au traitement d'un tel \noeud. Ce traitement est noté \texttt{REP} dans la suite du document. Tout d'abord, la fonction élémentaire \texttt{R1} est appliqué sur chaque LLR, comme pour un \noeud de rendement 1. La parité de ce premier vecteur de sommes partielles est testée. Si celle-ci est égale à 0, le test de parité est satisfait, et les sommes partielles ne sont pas modifiées. Dans le cas contraire, les LLRs sont triés selon leur valeur absolue. La somme partielle associée au LLR ayant la valeur absolue la plus faible est inversée. Le vecteur ainsi corrigé respecte cette fois la contrainte de parité. La Figure \ref{fig:sc_pruned} montre un exemple d'élagage de l'arbre de décodage SC, avec deux \noeuds \texttt{R0} et \texttt{R1} chacun de taille 2 et un \noeud SPC de taille 4. L'intérêt de l'élagage apparaît ici clairement : le nombre de fonctions appliquées, matérialisées par des flèches, diminue. Qui plus est, le parcours de l'arbre est source également de calculs, surtout concernant les implémentations logicielles. Diminuer la taille de l'arbre réduit également la complexité calculatoire de contrôle.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{main/ch1_fig/sc_tree_pruned.pdf}
+  \caption{\'Elagage de l'arbre de décodage SC.}
+  \label{fig:bp_scan}
+\end{figure}
 
 \subsection{L'élagage de l'algorithme de décodage SCL}
 
@@ -370,7 +363,7 @@ Enfin, le traitement des \noeuds \texttt{SPC} est similaire au traitement du \no
 
 
 \subsection{L'élagage de l'algorithme de décodage SCAN}
-Tout comme les algorithmes SC et SCL, des élagages peuvent être appliqués sur le SCAN. A la différence des deux précédents, les \noeuds \texttt{REP} et \texttt{SPC} ne sont pas élagués. De plus, le concept de sous-arbre dans le SCAN évolue. Tandis que dans l'algorithme SC, un sous arbre prenait comme entrée des LLRs et produisait en sortie des sommes partielles, dans l'algorithme SCAN, les sorties des sous-arbres sont également des LLRs. Dans le cas d'un rendement 0, les sorties du \noeud sont toutes à $+\inf$, puisqu'il est certain que les bits du mots de code sont des $0$. Dans le cas d'un rendement 1, les sorties du \noeud sont tous à $0$ puisqu'en l'absence de redondance, aucune information ne peut être donnée à partir de ce sous arbre.
+Tout comme les algorithmes SC et SCL, des élagages peuvent être appliqués sur le SCAN. A la différence des deux précédents, les \noeuds \texttt{REP} et \texttt{SPC} ne sont pas élagués. De plus, le concept de sous-arbre dans le SCAN évolue. Tandis que dans l'algorithme SC, un sous arbre prenait comme entrée des LLRs et produisait en sortie des sommes partielles, dans l'algorithme SCAN, les sorties des sous-arbres sont également des LLRs. Dans le cas d'un rendement 0, les sorties du \noeud sont toutes à $+\infty$, puisqu'il est certain que les bits du mots de code sont des $0$. Dans le cas d'un rendement 1, les sorties du \noeud sont tous à $0$ puisqu'en l'absence de redondance, aucune information ne peut être donnée à partir de ce sous arbre.
 % détailler calculs évitables (g0, f0, grep)
 % discussion chase spc - r1 ? Hashemi-Sarkis + Simulations
 

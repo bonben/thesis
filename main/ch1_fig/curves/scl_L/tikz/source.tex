@@ -2,9 +2,9 @@
 
 \begin{tikzpicture}
   \begin{semilogyaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
-                       width=1.0\linewidth, height=0.70\linewidth,
+                        width=0.9\linewidth, height=0.6\linewidth,    
                        xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
-                       xmin=2.5, xmax=4.5, xtick={2.5,3,3.5,...,4.5},
+                       xmin=2.5, xmax=5.5, xtick={2.5,3,3.5,...,5.5},
                        tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
                        legend pos=south west, legend columns=1]
     \addplot[mark=o       , Set1-1, semithick            , mark options={solid}] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/scl_L/dat/SCL_1.txt};          \label{plot:line1}

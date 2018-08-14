@@ -2,11 +2,11 @@
 
 \begin{tikzpicture}
   \begin{semilogyaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
-                       width=1.0\linewidth, height=0.70\linewidth,
+                       width=0.5\linewidth, height=0.6\linewidth,
                        xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
                        xmin=2.5, xmax=4.5, xtick={2.5,3,3.5,...,4.5},
                        tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
-                       legend pos=south west, legend columns=1]
+                       legend pos=south west, legend columns=1, legend style={nodes={scale=0.8, transform shape}}]
 
     \addplot[mark=o,        Paired-1,    semithick                              ] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/fast_ascl_crc/dat/SCL+CRC8.txt};     \label{plot:line5}
     \addplot[mark=o,        Paired-1!70, semithick, dashed, mark options={solid}] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/fast_ascl_crc/dat/FA-SCL+CRC8.txt};  \label{plot:line6}
@@ -17,7 +17,7 @@
     \addplot[mark=square,   Paired-5,                                           ] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/fast_ascl_crc/dat/SCL+CRC32.txt};    \label{plot:line9}
     \addplot[mark=square,   Paired-5!70, semithick, dashed, mark options={solid}] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/fast_ascl_crc/dat/FA-SCL+CRC32.txt}; \label{plot:line10}
     \addplot[mark=square,   Paired-5!40, semithick, dashdotted, mark options={solid}] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/fast_ascl_crc/dat/PA-SCL+CRC32.txt}; \label{plot:line10}
-    \legend{SCL $c=8$, FASCL $c=8$, PASCL $c=8$, SCL $c=16$, FASCL $c=16$, PASCL $c=16$, SCL $c=32$, FASCL $c=32$, PASCL $c=32$}
+    \legend{CA-SCL $c=8$, FASCL $c=8$, PASCL $c=8$, CA-SCL $c=16$, FASCL $c=16$, PASCL $c=16$, CA-SCL $c=32$, FASCL $c=32$, PASCL $c=32$}
 
   \end{semilogyaxis}
 \end{tikzpicture}

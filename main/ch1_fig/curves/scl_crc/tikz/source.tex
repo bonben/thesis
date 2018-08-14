@@ -2,11 +2,11 @@
 
 \begin{tikzpicture}
   \begin{semilogyaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
-                       width=1.0\linewidth, height=0.70\linewidth,
+                       width=0.5\linewidth, height=0.6\linewidth,    
                        xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
-                       xmin=2.0, xmax=5.5, xtick={2,2.5,3,...,5.5},
+                       xmin=2.5, xmax=5.5, xtick={2.5,3,3.5,...,5.5},
                        tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
-                       legend pos=south west, legend columns=1]
+                       legend pos=north east, legend columns=1, legend style={nodes={scale=0.8, transform shape}}]
     \addplot[mark=o       , Set1-1, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/scl_crc/dat/SCL_NOCRC.txt};\label{plot:line1}
     \addplot[mark=asterisk, Set1-2, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/scl_crc/dat/SCL_4.txt};    \label{plot:line2}
     \addplot[mark=star    , Set1-3, semithick] table [x=Eb/N0, y=FER] {main/ch1_fig/curves/scl_crc/dat/SCL_8.txt};    \label{plot:line3}
