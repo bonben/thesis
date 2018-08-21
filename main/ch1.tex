@@ -162,6 +162,7 @@ La séquence d'application des différentes fonctions est explicitée dans la Fi
 
 
 \subsubsection{Le parallélisme de l'algorithme}
+\label{subsubsec:parallel}
 Dans la Figure~\ref{fig:sc}, il apparaît que quatre fonctions $f$ sont appliquées sur le \noeud racine pour calculer les LLRs de la branche de gauche. Ces quatre fonctions sont indépendantes : leurs entrées et sorties sont disjointes. Par conséquence, elles peuvent être réalisées simultanément. Ce parallélisme existe pour chaque fonction $f$, $g$ et $h$ d'un \noeud donné. Ainsi, le niveau de parallélisme est différent selon la couche considérée et correspond à la taille du \noeud cible. Le parallélisme est donc plus grand en haut de l'arbre qu'en bas. Dans les implémentations logicielles ou matérielles de ces algorithme, ce parallélisme est utilisé pour réduire le temps de décodage et accélérer son débit. Lorsque ce parallélisme est utilisé, on parle de parallélisme \textit{intra-trame}. Un autre type de parallélisme existe et est appelé parallélisme \textit{inter-trame}. Il désigne la possibilité, dans les implémentations de codes correcteurs d'erreurs, de décoder plusieurs trames simultanément. Il possède le désavantage, contrairement au parallélisme \textit{intra-trame}, d'augmenter la latence du décodage.
 
 
