@@ -1,0 +1,75 @@
+#Run command:
+#./bin/aff3ct --term-freq "60000" --sim-type "BFER" --cde-type "POLAR" -m "0.0" -M "4.51" -K "524288" -N "1048576" --src-type "AZCW" --chn-type "AWGN_FAST" --dec-type "SC" --dec-simd "INTRA" --dec-polar-nodes "{R0,R0L,R1,REP,REPL,SPC_4+}" --cde-fb-gen-method "GA" --sim-pyber "SC" 
+#Curve name:
+#SC  N=2^20 R=1/2
+# -------------------------------------------------
+# ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----
+# -------------------------------------------------
+# Parameters:
+# * Simulation ------------------------------------
+#    ** Type                    = BFER
+#    ** SNR min (m)             = 0.000000 dB
+#    ** SNR max (M)             = 4.510000 dB
+#    ** SNR step (s)            = 0.100000 dB
+#    ** Type of bits            = int (32 bits)
+#    ** Type of reals           = float (32 bits)
+#    ** Inter frame level       = 1
+#    ** Seed                    = 0
+#    ** MPI comm. freq. (ms)    = 1000
+#    ** MPI size                = 30
+#    ** Multi-threading (t)     = 48 thread(s)
+# * Code ------------------------------------------
+#    ** Type                    = POLAR
+#    ** Info. bits (K)          = 524288
+#    ** Codeword size (N)       = 1048576
+#    ** Coset approach (c)      = off
+#    ** Sigma for code gen.     = adaptative
+#    ** Frozen bits gen. method = GA
+# * Source ----------------------------------------
+#    ** Type                    = AZCW
+# * Encoder ---------------------------------------
+#    ** Type                    = AZCW
+#    ** Systematic encoding     = on
+# * Modulator -------------------------------------
+#    ** Type                    = BPSK
+#    ** Bits per symbol         = 1
+#    ** Sampling factor         = 1
+# * Channel ---------------------------------------
+#    ** Type                    = AWGN_FAST
+#    ** Domain                  = LLR
+# * Demodulator -----------------------------------
+#    ** Sigma square            = on
+#    ** Max type                = unused
+# * Decoder ---------------------------------------
+#    ** Type (D)                = SC
+#    ** Implementation          = FAST
+#    ** SIMD strategy           = INTRA
+#    ** Polar node types        = {R0,R0L,R1,REP,REPL,SPC_4+}
+# * Monitor ---------------------------------------
+#    ** Frame error count (e)   = 100
+#    ** Bad frames tracking     = off
+#    ** Bad frames replay       = off
+#
+# The simulation is running...
+# ----------------------------------------------------------------------||---------------------
+#       Bit Error Rate (BER) and Frame Error Rate (FER) depending       ||  Global throughput  
+#                    on the Signal Noise Ratio (SNR)                    ||  and elapsed time   
+# ----------------------------------------------------------------------||---------------------
+# -------|-------|----------|----------|----------|----------|----------||----------|----------
+   Es/N0 | Eb/N0 |      FRA |       BE |       FE |      BER |      FER || SIM_CTHR |    ET/RT 
+#   (dB) |  (dB) |          |          |          |          |          ||   (Mb/s) | (hhmmss) 
+# -------|-------|----------|----------|----------|----------|----------||----------|----------
+   -3.01 |  0.00 |    19602 | 2.30e+09 |    19602 | 2.24e-01 | 1.00e+00 ||  1933.09 | 00h00'10  
+   -2.91 |  0.10 |    17406 | 2.03e+09 |    17406 | 2.22e-01 | 1.00e+00 ||  3483.98 | 00h00'05  
+   -2.81 |  0.20 |    16158 | 1.87e+09 |    16158 | 2.20e-01 | 1.00e+00 ||  3742.52 | 00h00'04  
+   -2.71 |  0.30 |    17328 | 1.98e+09 |    17328 | 2.18e-01 | 1.00e+00 ||  3780.69 | 00h00'04  
+   -2.61 |  0.40 |    15820 | 1.80e+09 |    15820 | 2.17e-01 | 1.00e+00 ||  3668.84 | 00h00'04  
+   -2.51 |  0.50 |    17662 | 1.99e+09 |    17662 | 2.15e-01 | 1.00e+00 ||  3931.66 | 00h00'04  
+   -2.41 |  0.60 |    15698 | 1.75e+09 |    15698 | 2.12e-01 | 1.00e+00 ||  3676.19 | 00h00'04  
+   -2.31 |  0.70 |    17020 | 1.70e+09 |    16695 | 1.91e-01 | 9.81e-01 ||  3715.63 | 00h00'04  
+   -2.21 |  0.80 |    17079 | 6.51e+08 |     8034 | 7.27e-02 | 4.70e-01 ||  3709.28 | 00h00'04  
+   -2.11 |  0.90 |    16137 | 81245552 |     1155 | 9.60e-03 | 7.16e-02 ||  3790.13 | 00h00'04  
+   -2.01 |  1.00 |    17870 |  7661659 |      119 | 8.18e-04 | 6.66e-03 ||  3913.39 | 00h00'04  
+   -1.91 |  1.10 |   144899 |  6304146 |      111 | 8.30e-05 | 7.66e-04 || 12953.80 | 00h00'11
+   -1.81 |  1.20 |  2381149 |  4447123 |      100 | 3.56e-06 | 4.20e-05 || 17964.22 | 00h02'18
+   -1.71 |  1.30 |  2381149 |  4447123 |      100 | 1.30e-07 | 1.06e-06 || 18725.02 | 01h21'13

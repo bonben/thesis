@@ -1,0 +1,32 @@
+\documentclass{standalone}
+
+\usepackage{amsmath}
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning, patterns}
+
+\input{colors}
+
+\begin{document}
+  \begin{tikzpicture}
+    \begin{axis}[/pgfplots/table/ignore chars={|}, footnotesize,
+                 width=1.0\linewidth, height=0.70\linewidth,
+                 ybar stacked, bar width=14pt,
+                 legend style={at={(0.5,0.95)}, anchor=north}, legend columns=-1,
+                 ylabel={Coded throughput (Mb/s)}, xlabel={Code rate ($R = K / N$)}, %symbolic x coords={tool1, tool2, tool3, tool4, tool5, tool6, tool7}, 
+                 ytick={0,1,2,3,4,5,6,7}, ymajorgrids, grid style={gray!30}, grid style={dashed, gray!50}, ymin=0, ymax=7.0, xtick=data,
+                 x tick label style={rotate=-45}, xticklabels={1/10, 2/10, 3/10, 4/10, 5/10, 6/10, 7/10, 8/10, 9/10}]
+      \addplot+[draw=black,    fill=black!50                                                                                 ] table [x=R, y expr=\thisrowno{4}              ] {../dat/data_L32_i5-6600K.txt};
+      \addplot+[draw=Paired-1, fill=Paired-1!40, postaction={pattern color = black!80!Paired-1!70, pattern=north west  lines}] table [x=R, y expr=\thisrowno{5}-\thisrowno{4}] {../dat/data_L32_i5-6600K.txt};
+      \addplot+[draw=Paired-3, fill=Paired-3!40, postaction={pattern color = black!80!Paired-3!70, pattern=north east  lines}] table [x=R, y expr=\thisrowno{6}-\thisrowno{5}] {../dat/data_L32_i5-6600K.txt};
+      \addplot+[draw=Paired-7, fill=Paired-7!40, postaction={pattern color = black!80!Paired-7!70, pattern=crosshatch  dots} ] table [x=R, y expr=\thisrowno{7}-\thisrowno{6}] {../dat/data_L32_i5-6600K.txt};
+      \addplot+[draw=Paired-5, fill=Paired-5!40, postaction={pattern color = black!80!Paired-5!70, pattern=horizontal lines} ] table [x=R, y expr=\thisrowno{8}-\thisrowno{7}] {../dat/data_L32_i5-6600K.txt};
+      \addplot+[draw=Paired-9, fill=Paired-9!40, postaction={pattern color = black!80!Paired-9!70, pattern=grid}             ] table [x=R, y expr=\thisrowno{9}-\thisrowno{8}] {../dat/data_L32_i5-6600K.txt};
+
+      \legend{\texttt{ref}\text{ }, \texttt{R0}\text{ }, \texttt{R1}\text{ }, \texttt{REP}\text{ }, \texttt{SPC4}\text{ }, \texttt{SPC4+}}
+    \end{axis}
+  \end{tikzpicture}
+\end{document}

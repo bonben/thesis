@@ -94,6 +94,7 @@ Toutefois, le parallélisme n'est utilisable que dans la partie supérieure de l
 
 
 \subsection{Déroulage}
+\label{subsec:unroll}
 Une deuxième technique utilisée dans les travaux récents est le déroulage du code source \cite{sarkis_autogenerating_2014,giard_fast_2014,cassagne_efficient_2015,cassagne_energy_2016}. Il découle de l'observation faite sur les décodeurs de l'algorithme SC qu'un temps non négligeable est passé lors de différents tests au cours du parcours de l'arbre. Or il est possible d'éviter ces tests en générant un code source déroulé avant la compilation. Une illustration de ce déroulage est donnée en Figure~\ref{fig:unrolling}. D'un coté, dans le code non déroulé en Figure \ref{fig:alg_rolled}, des appels récursifs de la fonction \textit{DecodeNode} sont réalisés, qui peuvent être coûteux. De plus, des tests doivent être réalisé pour détecter le rendement de chaque feuille afin d'appliquer les fonctions \texttt{R0} ou \texttt{R1}. Au contraire, dans l'implémentation décrite en Figure~\ref{fig:alg_unrolled}, aucun appel récursif n'est réalisé, aucun test non plus. Seul les fonctions élémentaires polaires sont appelées.
 
 De plus, l'arbre de décodage que nous prenons en exemple, en Figure~\ref{fig:unrolled_tree}, n'est pas élagué. Lorsque l'on ajoute l'élagage, le nombre de tests effectués au cours du parcours de l'arbre augmente en proportion du nombre total d'instructions, car le nombre de fonctions polaires différentes augmente. En effet, les fonctions \texttt{REP} et \texttt{SPC} sont ajoutées ainsi que des versions différentes des fonction $f$, $g$ et $h$ prenant en compte l'existence des \noeuds spécialisés de l'arbre élagué, comme décrit dans \cite{sarkis_fast_2014,cassagne_efficient_2015}. Dans certains cas, le déroulage du code source permet d'augmenter jusqu'à un facteur 2 les débits de décodage \cite{sarkis_autogenerating_2014}. La technique de déroulage a été également adaptée pour l'algorithme SCL \cite{sarkis_fast_2016}.
@@ -165,10 +166,64 @@ De plus, l'arbre de décodage que nous prenons en exemple, en Figure~\ref{fig:un
 \subsection{Cibles}
 
 \section{Généricité et Flexibilité d'un décodeur de codes polaire}
+
 \label{sec:gen_scl}
 \subsection{Définitions}
-\subsection{Réalisation}
-\subsection{Exploration}
+Les implémentations logicielles proposées sont génériques et flexibles. Afin d'éviter toute ambiguïté, ces termes doivent être définis précisément.
+D'une part, le terme \textit{généricité} définit la capacité d'un décodeur à supporter n'importe quel encodage.
+En effet, dans le contexte de télécommunications mobiles, les paramètres de l'encodeur changent constamment pour s'adapter au canal, en utilisant des méthodes adaptatives de modulation et de codage \cite{dahlman_4g:_2013} (AMC : Adaptive Modulation and Coding). Ainsi, les tailles de mot de code, les rendements, les ensembles de bits gelés évoluent. Des patrons de poinçonnage sont souvent nécessaires et des CRC sont concaténés pour détecter les erreurs et permettre des méthodes de transmission à demande de répétition automatique (ARQ : Automatic Repeat reQuest) ou leur équivalent hybride (HARQ : Hybrid ARQ). Un décodeur générique devra donc supporter toutes les combinaison possibles de chacun de ces paramètres.
+
+D'autre part, le terme \textit{flexibilité} s'applique aux paramétrage de l'algorithme et des méthodes d'implémentation du décodeur, indépendamment du schéma d'encodage. Ces paramétrages-ci ne sont généralement pas imposés par le standard. Dans le cas de l'algorithme SCL, les paramètres suivants sont concernés : les variantes de l'algorithme (FASCL, PASCL), le format de quantification des données (virgule flottante ou fixe, nombre de bits), la taille de la liste $L$ ou encore l'élagage de l'arbre de décodage. La flexibilité du décodeur amène des degrés de liberté permettant des compromis entre pouvoir de correction, latence et débit, pour un schéma d'encodage donné.
+
+Comme il sera détaillé dans les sections suivantes, tous les paramètres de généricité et de flexibilité cités sont pris en compte dans les décodeurs proposés. Ils sont déterminés par des fichiers de configurations, lus au moment de l'exécution. Aucune compilation n'est nécessaire en cas de changement de n'importe quel paramètre. De ce choix découle le fait que nous n'utilisons pas la technique de déroulage présentée en Section \ref{subsec:unroll}. En effet, cette technique implique la génération d'un code source pour chaque combinaison de paramètre différente. Ce
+
+\subsection{Généricité}
+
+\begin{figure}[t]
+\includegraphics[width=\textwidth]{main/ch2_fig/curves/code/tikz/code}
+\caption{Performances de décodage des algorithme SC et CASCL pour des tailles importantes de mots de code, $R=1/2$, CRC $c=32$ (GZip)}
+\label{fig:large_scl}
+\end{figure}
+
+Les implémentations de décodeurs proposées gèrent n'importe quelle taille de mot de code. De plus, les débits des décodeurs étant compétitifs, il est possible d'explorer d'importantes tailles de mots de code ($N\geq2^{12}$) conjointement à des profondeurs de liste importante ($L \geq 32$), comme montré dans la Figure~\ref{fig:large_scl}. $N$ prend des valeurs allant de $2^8$ à $2^{20}$ et le rendement du code est $R=1/2$. Le CRC utilisé est défini dans le standard GZip, sa longueur est $c=32$ et son polunôme \texttt{0x04C11DB7}. Des simulations pour de telle valeurs de paramètres sont rares dans la littérature, et montrent que, bien que l'algorithme SCL ait été conçu pour améliorer les performances de décodage des codes polaires pour de petites tailles ($N<2^{12}$), son utilisation pour des codes de grande taille apporte également un important gain. Dans le cas où $N=2^{12}$, l'utilisation de l'algorithme CASCL avec une taille de liste $L=32$ amène un gain de d'environ 1.2 dB lorsque le FER est égal à $10^{-5}$. Ce gain diminue cependant lorsque $N$ augmente, avec 0.75 dB pour $N=2^{16}$ et 0.5 dB pour $N=2^{20}$. Des simulations ont également été réalisées pour une profondeur de liste $L=128$. Elles montrent que le gain par rapport à $L=32$ n'est pas significatif.
+
+\subsection{Flexibilité}
+Les paramètres de flexibilité sont eux aussi configuré lors de l'exécution du programme. Ils permettent des compromis divers entre la latence, le débit et les performance de correction. Ainsi, l'algorithme de décodage peut être ajusté finement pour un code polaire donné. Dans les sections à venir, ces paramètres de flexibilité sont détaillés et leurs effets analysés.
+
+\subsubsection{Profondeur de la liste}
+\begin{figure}[t]
+\includegraphics[width=\textwidth]{main/ch2_fig/curves/L/tikz/L}
+\caption{Performances de décodage et débits de l'algorithme CASCL pour différentes valeurs de $L$ d'un code polaire ($2048,1024$) concaténé à un CRC $c=32$ (GZip).}
+\label{fig:scl_l}
+\end{figure}
+La profondeur de la liste impacte directement le pouvoir de correction et la complexité de l'algorithme. En Figure~\ref{fig:scl_l} sont représentées les courbes de FER et les débits obtenus pour l'algorithme de décodage CASCL d'un code polaire ($2048$,$1024$). La complexité calculatoire augmente linéairement : le débit est approximativement doublé lorsque $L$ est doublé. Le seul cas ne respectant pas cette assomption est celui pour lequel $L=1$ qui correspond à l'algorithme SC, bien plus rapide puisque n'ayant pas à effectuer les calculs associés à l'algorithme SCL comme le tri, la génération des candidats, le calcul du CRC. Le FER évolue également avec $L$. \`A partir de $L\geq4$ et $E_b/N_0=2$, le FER est divisé par deux lorsque $L$ est doublé.
+
+\subsubsection{Paramétrage fin de l'élagage}
+L'élagage, tel que défini en Section~\ref{subsec:pruning} est paramétrable très finement dans les implémentations de décodeurs polaires proposées. Tout d'abord, chaque type de \noeud (\texttt{R0}, \texttt{R1}, \texttt{REP} et \texttt{SPC} peut être activé ou désactivé séparément. Cette capacité est utile pour explorer l'impact de l'utilisation de chaque \noeud sur le débit codé.
+
+Il faut ici faire la distinction entre le débit codé  et le débit d'information. Soit $\mathcal{T}_F$, le nombre de trames décodées par seconde. Alors le débit d'information est $\mathcal{T}_i=K\mathcal{T}_F$, soit le nombre de bits d'informations décodés par seconde, et le débit codé est $\mathcal{T}_c=N\mathcal{T}_F$.
+
+Pour explorer l'impact de l'utilisation des \noeuds sur le débit, il est  plus pertinent d'utiliser le débit codé. En effet, si l'on utilisait le débit d'information dans la Figure~\ref{fig:nodes}, le rendement du code biaiserait les débits : le débit des codes à haut rendement auraient un débit bien supérieurs aux codes à faibles rendement.
+\begin{figure}[t]
+\includegraphics[width=\textwidth]{main/ch2_fig/curves/tree/tikz/tree}
+\caption{Impact de l'activation des \noeuds d'élagage de l'algorithme CASCL, $N=2048$, $L=32$, $c=32$.}
+\label{fig:nodes}
+\end{figure}
+
+\begin{figure}[t]
+\includegraphics[width=\textwidth]{main/ch2_fig/curves/thr_spc/tikz/thr_spc_diff}
+\caption{Effets de l'utilisation des \noeuds \texttt{SPC4+} dans l'algorithme CASCL à un FER de $10^{-5}$}
+\label{fig:spc_impact}
+\end{figure}
+
+Le débit codé de l'algorithme non élagué (\texttt{ref}) diminue lorsque le rendement augmente. Cela s'explique par le fait que les feuilles de rendement 1, plus nombreuses dans les codes à hauts rendements, sont plus long à décoder que les feuilles de rendement 0. En effet, dans l'algorithme SCL, le traitement d'une feuille de rendement 0 correspond à la mise à jour de métriques, tandis que le traitement d'une feuille de rendement 1 correspond à la génération de candidats, la mise à jour de leurs métriques, le tri de celles-ci, et des duplications d'arbres de décodage.
+
+Les aires hachurées en diagonales représentent l'amélioration des performances de décodage lorsque les \noeuds \texttt{R0} et \texttt{R1} de taille supérieures à un (c'est à dire les \noeuds plus haut que les feuilles) sont utilisés pour l'élagage. De manière attendue, l'élagage \texttt{R1} est plus efficace pour les codes à haut rendement et, inversement, l'élagage \texttt{R0} est plus efficace pour les codes à faible rendement. On observe la même tendance pour l'élagage des \noeuds \texttt{REP} plus efficace pour les codes de faibles rendements, qui en contiennent également beaucoup. La tendance est moins claire pour les \noeuds \texttt{SPC}.
+
+Il fut également observé dans \cite{sarkis_fast_2014} que lorsque la taille des \noeuds \texttt{SPC} n'est pas limitée à 4, les performances de décodage peuvent être dégradées. Dans les implémentations proposées, le choix a été fait de donner la possibilité de paramétrer finement la taille des \noeuds activés pour chaque type de \noeuds. En conséquence, leur taille est limitée à 4 dans les aires labellisées \texttt{SPC4} dans la figure \ref{fig:nodes}. Les \noeuds \texttt{SPC4+} sont de tailles supérieures. 
+
+Selon nos expérimentations, la dégradation des performances de correction due à l'utilisation des \noeuds \texttt{SPC4+} n'est pas systématique, dépendamment des caractéristique du code polaire considéré. La Figure\ref{fig:spc_impact}
+
 
 \section{Optimisations de l'implémentation logicielle des décodeurs liste}
 \label{sec:opti_scl}

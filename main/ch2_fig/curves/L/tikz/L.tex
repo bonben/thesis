@@ -1,0 +1,69 @@
+\documentclass{standalone}
+
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage{bm}
+
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+
+\input{colors}
+
+\begin{document}
+  \begin{tikzpicture}
+    \begin{semilogyaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
+                         width=1.0\linewidth, height=0.70\linewidth,
+                         xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
+                         xmin=1.0, xmax=3.5, xtick={0,0.5,1,...,3.5},
+                         tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
+                         legend pos=south west, legend columns=2]
+      \addplot[mark=diamond*,  Paired-9,  semithick, dashed, mark options={solid} ] table [x=Eb/N0, y=FER] {../dat/L_1.txt};  \label{plot:line0}
+      \addplot[mark=*,         Paired-1,  semithick, dashed, mark options={solid} ] table [x=Eb/N0, y=FER] {../dat/L_2.txt};  \label{plot:line1}
+      \addplot[mark=triangle*, Paired-3,  semithick, dashed, mark options={solid} ] table [x=Eb/N0, y=FER] {../dat/L_4.txt};  \label{plot:line2}
+      \addplot[mark=square*,   Paired-7,  semithick, dashed, mark options={solid} ] table [x=Eb/N0, y=FER] {../dat/L_8.txt};  \label{plot:line3}
+      \addplot[mark=pentagon*, Paired-11, semithick, dashed, mark options={solid} ] table [x=Eb/N0, y=FER] {../dat/L_16.txt}; \label{plot:line4}
+      \addplot[mark=otimes*,     Paired-5,  semithick, dashed, mark options={solid},every mark/.append style={solid, fill=Paired-5!40} ] table [x=Eb/N0, y=FER] {../dat/L_32.txt}; \label{plot:line5}
+      \addplot[mark=pentagon,  Paired-11!70, semithick, dashed, mark options={solid} ] table [x=Eb/N0, y=FER] {../dat/L_64.txt}; \label{plot:line6}
+      \addplot[mark=square,    Paired-7!70,  semithick, dashed, mark options={solid} ] table [x=Eb/N0, y=FER] {../dat/L_128.txt}; \label{plot:line7}
+
+       % \legend{$N=2^{8~}$ $\texttt{SCL}_{L=\text{ }32}$, \texttt{SC},
+       %         $N=2^{12}$ $\texttt{SCL}_{L=\text{ }32}$, \texttt{SC},
+       %         $N=2^{16}$ $\texttt{SCL}_{L=\text{ }32}$, \texttt{SC},
+       %         $N=2^{20}$ $\texttt{SCL}_{L=\text{ }32}$, \texttt{SC},
+       %         $N=2^{20}$ $\texttt{SCL}_{L=       128}$} 
+
+      % create a (dummy) coordinate where we want to place the legend
+      %
+      % (The matrix cannot be placed inside the `axis' environment
+      %  directly, because then a catcode error is raised.
+      %  I guess that this is caused by the `matrix of nodes' feature)
+      % \coordinate (legend) at (axis description cs:0.97,0.03);
+      \coordinate (legend) at (axis description cs:0.985,0.33);
+    \end{semilogyaxis}
+    % create the legend matrix which is placed at the created (dummy) coordinate
+    % and recall the plot specification using the `\ref' command
+    %
+    % adapt the style of that node to your needs
+    % (e.g. if you like different spacings between the rows or columns
+    %  or a fill color)
+    \matrix [
+        draw,
+        matrix of nodes,
+        anchor=south east,
+        fill=white
+    ] at (legend) {
+                         &   $L$  & $\mathcal{T}_{i}$ \footnotesize{(Mb/s)} \\
+        \ref{plot:line0} &   $1$  & 215.15  \\
+      % \ref{plot:line0} &   $1$  &  50.74  \\
+        \ref{plot:line1} &   $2$  &  26.67  \\
+        \ref{plot:line2} &   $4$  &  12.54  \\
+        \ref{plot:line3} &   $8$  &   6.00  \\
+        \ref{plot:line4} &  $16$  &   2.96  \\
+        \ref{plot:line5} &  $32$  &   1.40  \\
+        \ref{plot:line6} &  $64$  &   0.66  \\
+        \ref{plot:line7} & $128$  &   0.29  \\
+    };
+  \end{tikzpicture}
+\end{document}

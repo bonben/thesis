@@ -1,0 +1,71 @@
+
+" L=8 R=0.5"
+# ./bin/aff3ct --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 --src-type AZCW --chn-type AWGN_FAST --dec-simd INTRA --crc-type FAST --crc-poly 32-GZIP -t 1 -p 32 --cde-fb-gen-method GA --dec-type SCL -L 8
+#N 	 K 	 R 	 Eb/N0 	 CTHR_SPC4 	 ITHR_SPC4 	 CTHR_SPC 	 ITHR_SPC 	 Diff %
+128 	 64 	 0.5 	 2.50 	 6.14 	 3.07 	 7.05 	 3.53 	 14.799999999999999
+256 	 128 	 0.5 	 2.50 	 6.84 	 3.42 	 7.38 	 3.69 	 7.9
+512 	 256 	 0.5 	 2.50 	 7.12 	 3.56 	 8.17 	 4.08 	 14.7
+1024 	 512 	 0.5 	 2.50 	 7.50 	 3.75 	 8.51 	 4.25 	 13.5
+2048 	 1024 	 0.5 	 2.50 	 7.87 	 3.94 	 8.86 	 4.43 	 12.6
+4096 	 2048 	 0.5 	 2.50 	 7.57 	 3.79 	 8.73 	 4.36 	 15.299999999999999
+8192 	 4096 	 0.5 	 2.50 	 6.75 	 3.37 	 7.65 	 3.82 	 13.3
+
+
+" L=8 R=0.33"
+# ./bin/aff3ct --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 --src-type AZCW --chn-type AWGN_FAST --dec-simd INTRA --crc-type FAST --crc-poly 32-GZIP -t 1 -p 32 --cde-fb-gen-method GA --dec-type SCL --dec-polar-nodes {R0,R0L,R1,REP,REPL,} -L 8
+#N 	 K 	 R 	 Eb/N0 	 CTHR_SPC4 	 ITHR_SPC4 	 CTHR_SPC 	 ITHR_SPC 	 Diff %
+128 	 42 	 0.33 	 2.50 	 7.07 	 2.32 	 7.82 	 2.57 	 10.6
+256 	 84 	 0.33 	 2.50 	 8.16 	 2.68 	 8.93 	 2.93 	 9.4
+512 	 168 	 0.33 	 2.50 	 9.11 	 2.99 	 9.28 	 3.04 	 1.9
+1024 	 337 	 0.33 	 2.50 	 8.56 	 2.82 	 9.53 	 3.14 	 11.3
+2048 	 675 	 0.33 	 2.50 	 8.91 	 2.94 	 9.79 	 3.23 	 9.9
+4096 	 1351 	 0.33 	 2.50 	 8.01 	 2.64 	 8.79 	 2.90 	 9.700000000000001
+8192 	 2703 	 0.33 	 2.50 	 7.21 	 2.38 	 8.06 	 2.66 	 11.799999999999999
+
+
+" L=8 R=0.66"
+# ./bin/aff3ct --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 --src-type AZCW --chn-type AWGN_FAST --dec-simd INTRA --crc-type FAST --crc-poly 32-GZIP -t 1 -p 32 --cde-fb-gen-method GA --dec-type SCL -L 8
+#N 	 K 	 R 	 Eb/N0 	 CTHR_SPC4 	 ITHR_SPC4 	 CTHR_SPC 	 ITHR_SPC 	 Diff %
+128 	 84 	 0.66 	 2.50 	 5.85 	 3.84 	 6.88 	 4.51 	 17.599999999999998
+256 	 168 	 0.66 	 2.50 	 6.46 	 4.24 	 7.72 	 5.07 	 19.5
+512 	 337 	 0.66 	 2.50 	 7.25 	 4.77 	 7.64 	 5.03 	 5.4
+1024 	 675 	 0.66 	 2.50 	 7.75 	 5.11 	 8.82 	 5.81 	 13.8
+2048 	 1351 	 0.66 	 2.50 	 8.15 	 5.38 	 9.34 	 6.16 	 14.6
+4096 	 2703 	 0.66 	 2.50 	 8.28 	 5.47 	 9.33 	 6.16 	 12.7
+8192 	 5406 	 0.66 	 2.50 	 7.41 	 4.89 	 8.33 	 5.50 	 12.4
+
+
+" L=32 R=0.5"
+# ./bin/aff3ct --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 --src-type AZCW --chn-type AWGN_FAST --dec-simd INTRA --crc-type FAST --crc-poly 32-GZIP -t 1 -p 32 --cde-fb-gen-method GA --dec-type SCL -L 32
+#N 	 K 	 R 	 Eb/N0 	 CTHR_SPC4 	 ITHR_SPC4 	 CTHR_SPC 	 ITHR_SPC 	 Diff %
+128 	 64 	 0.5 	 2.50 	 1.52 	 0.76 	 1.82 	 0.91 	 19.7
+256 	 128 	 0.5 	 2.50 	 1.62 	 0.81 	 1.77 	 0.89 	 9.3
+512 	 256 	 0.5 	 2.50 	 1.62 	 0.81 	 1.90 	 0.95 	 17.299999999999997
+1024 	 512 	 0.5 	 2.50 	 1.70 	 0.85 	 1.98 	 0.99 	 16.5
+2048 	 1024 	 0.5 	 2.50 	 1.80 	 0.90 	 2.07 	 1.04 	 15.0
+4096 	 2048 	 0.5 	 2.50 	 1.71 	 0.85 	 1.99 	 1.00 	 16.400000000000002
+8192 	 4096 	 0.5 	 2.50 	 1.55 	 0.78 	 1.79 	 0.90 	 15.5
+
+
+" L=32 R=0.33"
+# ./bin/aff3ct --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 --src-type AZCW --chn-type AWGN_FAST --dec-simd INTRA --crc-type FAST --crc-poly 32-GZIP -t 1 -p 32 --cde-fb-gen-method GA --dec-type SCL --dec-polar-nodes {R0,R0L,R1,REP,REPL,} -L 32
+#N 	 K 	 R 	 Eb/N0 	 CTHR_SPC4 	 ITHR_SPC4 	 CTHR_SPC 	 ITHR_SPC 	 Diff %
+128 	 42 	 0.33 	 2.50 	 1.79 	 0.59 	 2.05 	 0.67 	 14.499999999999998
+256 	 84 	 0.33 	 2.50 	 1.98 	 0.65 	 2.23 	 0.73 	 12.6
+512 	 168 	 0.33 	 2.50 	 2.12 	 0.69 	 2.19 	 0.72 	 3.3000000000000003
+1024 	 337 	 0.33 	 2.50 	 1.93 	 0.64 	 2.18 	 0.72 	 13.0
+2048 	 675 	 0.33 	 2.50 	 2.03 	 0.67 	 2.26 	 0.74 	 11.3
+4096 	 1351 	 0.33 	 2.50 	 1.82 	 0.60 	 2.04 	 0.67 	 12.1
+8192 	 2703 	 0.33 	 2.50 	 1.64 	 0.54 	 1.86 	 0.61 	 13.4
+
+
+" L=32 R=0.66"
+# ./bin/aff3ct --sim-type BFER --cde-type POLAR -m 2.5 -M 2.5 --src-type AZCW --chn-type AWGN_FAST --dec-simd INTRA --crc-type FAST --crc-poly 32-GZIP -t 1 -p 32 --cde-fb-gen-method GA --dec-type SCL -L 32
+#N 	 K 	 R 	 Eb/N0 	 CTHR_SPC4 	 ITHR_SPC4 	 CTHR_SPC 	 ITHR_SPC 	 Diff %
+128 	 84 	 0.66 	 2.50 	 1.43 	 0.94 	 1.68 	 1.10 	 17.5
+256 	 168 	 0.66 	 2.50 	 1.51 	 0.99 	 1.86 	 1.22 	 23.200000000000003
+512 	 337 	 0.66 	 2.50 	 1.65 	 1.09 	 1.77 	 1.17 	 7.3
+1024 	 675 	 0.66 	 2.50 	 1.75 	 1.15 	 2.03 	 1.34 	 16.0
+2048 	 1351 	 0.66 	 2.50 	 1.85 	 1.22 	 2.18 	 1.44 	 17.8
+4096 	 2703 	 0.66 	 2.50 	 1.86 	 1.23 	 2.15 	 1.42 	 15.6
+8192 	 5406 	 0.66 	 2.50 	 1.67 	 1.11 	 1.94 	 1.28 	 16.2

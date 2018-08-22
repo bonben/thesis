@@ -1,0 +1,82 @@
+#Run command:
+#/panfs/panasas/cnt0026/ims1703/acassagn/aff3ct/build/./bin/aff3ct --term-freq "60000" --sim-type "BFER" --cde-type "POLAR" -m "0.0" -M "4.51" -K "32800" -N "65536" --src-type "AZCW" --chn-type "AWGN_FAST" --dec-type "ASCL_MEM" --dec-simd "INTRA" -L "32" --crc-type "FAST" --crc-poly "32-GZIP" --dec-polar-nodes "{R0,R0L,R1,REP,REPL,SPC_4}" --cde-fb-gen-method "GA" --sim-pyber "ASCL" 
+#Curve name:
+#SCL L=32 N=2^16 R=1/2
+# -------------------------------------------------
+# ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----
+# -------------------------------------------------
+# Parameters:
+# * Simulation ------------------------------------
+#    ** Type                     = BFER
+#    ** SNR min (m)              = 0.000000 dB
+#    ** SNR max (M)              = 4.510000 dB
+#    ** SNR step (s)             = 0.100000 dB
+#    ** Type of bits             = int (32 bits)
+#    ** Type of reals            = float (32 bits)
+#    ** Inter frame level        = 1
+#    ** Seed                     = 0
+#    ** MPI comm. freq. (ms)     = 1000
+#    ** MPI size                 = 30
+#    ** Multi-threading (t)      = 48 thread(s)
+# * Code ------------------------------------------
+#    ** Type                     = POLAR
+#    ** Info. bits (K)           = 32768 + 32 (CRC)
+#    ** Codeword size (N)        = 65536
+#    ** Coset approach (c)       = off
+#    ** Sigma for code gen.      = adaptative
+#    ** Frozen bits gen. method  = GA
+# * Source ----------------------------------------
+#    ** Type                     = AZCW
+# * CRC -------------------------------------------
+#    ** Type                     = FAST
+#    ** Name                     = 32-GZIP
+#    ** Polynomial (hexadecimal) = 0x4c11db7
+#    ** Size (in bit)            = 32
+#    ** Add CRC in the code rate = off
+# * Encoder ---------------------------------------
+#    ** Type                     = AZCW
+#    ** Systematic encoding      = on
+# * Modulator -------------------------------------
+#    ** Type                     = BPSK
+#    ** Bits per symbol          = 1
+#    ** Sampling factor          = 1
+# * Channel ---------------------------------------
+#    ** Type                     = AWGN_FAST
+#    ** Domain                   = LLR
+# * Demodulator -----------------------------------
+#    ** Sigma square             = on
+#    ** Max type                 = unused
+# * Decoder ---------------------------------------
+#    ** Type (D)                 = ASCL_MEM
+#    ** Implementation           = FAST
+#    ** SIMD strategy            = INTRA
+#    ** Max num. of lists (L)    = 32
+#    ** Adaptative mode          = full
+#    ** Polar node types         = {R0,R0L,R1,REP,REPL,SPC_4}
+# * Monitor ---------------------------------------
+#    ** Frame error count (e)    = 100
+#    ** Bad frames tracking      = off
+#    ** Bad frames replay        = off
+#
+# The simulation is running...
+# ----------------------------------------------------------------------||---------------------
+#       Bit Error Rate (BER) and Frame Error Rate (FER) depending       ||  Global throughput  
+#                    on the Signal Noise Ratio (SNR)                    ||  and elapsed time   
+# ----------------------------------------------------------------------||---------------------
+# -------|-------|----------|----------|----------|----------|----------||----------|----------
+   Es/N0 | Eb/N0 |      FRA |       BE |       FE |      BER |      FER || SIM_CTHR |    ET/RT 
+#   (dB) |  (dB) |          |          |          |          |          ||   (Mb/s) | (hhmmss) 
+# -------|-------|----------|----------|----------|----------|----------||----------|----------
+   -3.01 |  0.00 |    10490 | 76650800 |    10490 | 2.23e-01 | 1.00e+00 ||   282.00 | 00h00'02  
+   -2.91 |  0.10 |     9013 | 65191444 |     9013 | 2.21e-01 | 1.00e+00 ||   341.89 | 00h00'01  
+   -2.81 |  0.20 |     9180 | 65557820 |     9180 | 2.18e-01 | 1.00e+00 ||   352.70 | 00h00'01  
+   -2.71 |  0.30 |     9160 | 63937224 |     9160 | 2.13e-01 | 1.00e+00 ||   332.42 | 00h00'01  
+   -2.61 |  0.40 |     9116 | 59629292 |     9114 | 1.99e-01 | 1.00e+00 ||   362.93 | 00h00'01  
+   -2.51 |  0.50 |     9406 | 48206632 |     9215 | 1.56e-01 | 9.80e-01 ||   353.66 | 00h00'01  
+   -2.41 |  0.60 |    10648 | 24912876 |     7379 | 7.13e-02 | 6.93e-01 ||   393.67 | 00h00'01  
+   -2.31 |  0.70 |    18893 |  9152204 |     4065 | 1.48e-02 | 2.15e-01 ||   763.89 | 00h00'01  
+   -2.21 |  0.80 |    51606 |  3345547 |     1767 | 1.98e-03 | 3.42e-02 ||  2066.47 | 00h00'01  
+   -2.11 |  0.90 |   133061 |   810281 |      522 | 1.86e-04 | 3.92e-03 ||  5537.33 | 00h00'01  
+   -2.01 |  1.00 |   513893 |   246568 |      203 | 1.46e-05 | 3.95e-04 || 12949.29 | 00h00'02  
+   -1.91 |  1.10 |  3732047 |   141991 |      106 | 1.16e-06 | 2.84e-05 || 23033.51 | 00h00'10
+   -1.81 |  1.20 | 50083352 |   153119 |      100 | 9.32e-08 | 2.00e-06 || 29829.02 | 00h01'50
