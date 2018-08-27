@@ -1,0 +1,83 @@
+#Run command:
+#./bin/aff3ct --sim-type "BFER" --cde-type "POLAR" -m "1.0" -M "4.51" --sim-snr-step "0.25" -K "1755" -N "2048" --src-type "AZCW" --chn-type "AWGN_FAST" --dec-type "SCL" --dec-simd "INTRA" -L "32" --crc-type "FAST" --crc-poly "32-GZIP" --dec-polar-nodes "{R0,R0L,R1,REP,REPL,SPC_4}" --sim-pyber "SCL+CRC32" 
+#Curve name:
+#SCL+CRC32
+# -------------------------------------------------
+# ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----
+# -------------------------------------------------
+# Parameters:
+# * Simulation ------------------------------------
+#    ** Type                      = BFER
+#    ** SNR min (m)               = 1.000000 dB
+#    ** SNR max (M)               = 4.510000 dB
+#    ** SNR step (s)              = 0.250000 dB
+#    ** Type of bits              = int (32 bits)
+#    ** Type of reals             = float (32 bits)
+#    ** Inter frame level         = 1
+#    ** Seed                      = 0
+#    ** Multi-threading (t)       = 56 thread(s)
+# * Code ------------------------------------------
+#    ** Type                      = POLAR
+#    ** Info. bits (K)            = 1723 + 32 (CRC)
+#    ** Codeword size (N)         = 2048
+#    ** Coset approach (c)        = off
+#    ** Sigma for code gen.       = adaptative
+#    ** Frozen bits gen. method   = TV
+#    ** Path to the best channels = ../conf/cde/awgn_polar_codes/TV
+# * Source ----------------------------------------
+#    ** Type                      = AZCW
+# * CRC -------------------------------------------
+#    ** Type                      = FAST
+#    ** Name                      = 32-GZIP
+#    ** Polynomial (hexadecimal)  = 0x4c11db7
+#    ** Size (in bit)             = 32
+#    ** Add CRC in the code rate  = off
+# * Encoder ---------------------------------------
+#    ** Type                      = AZCW
+#    ** Systematic encoding       = on
+# * Modulator -------------------------------------
+#    ** Type                      = BPSK
+#    ** Bits per symbol           = 1
+#    ** Sampling factor           = 1
+# * Channel ---------------------------------------
+#    ** Type                      = AWGN_FAST
+#    ** Domain                    = LLR
+# * Demodulator -----------------------------------
+#    ** Sigma square              = on
+#    ** Max type                  = unused
+# * Decoder ---------------------------------------
+#    ** Type (D)                  = SCL
+#    ** Implementation            = FAST
+#    ** SIMD strategy             = INTRA
+#    ** Num. of lists (L)         = 32
+#    ** Polar node types          = {R0,R0L,R1,REP,REPL,SPC_4}
+# * Monitor ---------------------------------------
+#    ** Frame error count (e)     = 100
+#    ** Bad frames tracking       = off
+#    ** Bad frames replay         = off
+#
+# The simulation is running...
+# ----------------------------------------------------------------------||--------------------------------||---------------------
+#       Bit Error Rate (BER) and Frame Error Rate (FER) depending       ||     Decoder throughput and     ||  Global throughput  
+#                    on the Signal Noise Ratio (SNR)                    ||      latency (per thread)      ||  and elapsed time   
+# ----------------------------------------------------------------------||--------------------------------||---------------------
+# -------|-------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+   Es/N0 | Eb/N0 |      FRA |       BE |       FE |      BER |      FER ||     CTHR |     ITHR |  LATENCY || SIM_CTHR |    ET/RT 
+#   (dB) |  (dB) |          |          |          |          |          ||   (Mb/s) |   (Mb/s) |     (us) ||   (Mb/s) | (hhmmss) 
+# -------|-------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+    0.25 |  1.00 |      116 |    17734 |      116 | 8.71e-02 | 1.00e+00 ||     0.26 |     0.22 |  7984.31 ||     0.22 | 00h00'01  
+    0.50 |  1.25 |      117 |    16675 |      117 | 8.12e-02 | 1.00e+00 ||     0.29 |     0.25 |  7149.78 ||     0.60 | 00h00'00  
+    0.75 |  1.50 |      110 |    14846 |      110 | 7.69e-02 | 1.00e+00 ||     0.71 |     0.61 |  2882.33 ||     0.68 | 00h00'00  
+    1.00 |  1.75 |      109 |    13678 |      109 | 7.15e-02 | 1.00e+00 ||     0.67 |     0.57 |  3072.28 ||     0.79 | 00h00'00  
+    1.25 |  2.00 |      120 |    13740 |      120 | 6.52e-02 | 1.00e+00 ||     0.13 |     0.11 | 15546.37 ||     0.91 | 00h00'00  
+    1.50 |  2.25 |      110 |    11277 |      110 | 5.84e-02 | 1.00e+00 ||     0.46 |     0.40 |  4410.36 ||     0.85 | 00h00'00  
+    1.75 |  2.50 |      123 |     9983 |      114 | 4.62e-02 | 9.27e-01 ||     0.35 |     0.30 |  5804.16 ||     0.97 | 00h00'00  
+    2.00 |  2.75 |      157 |     6937 |      113 | 2.52e-02 | 7.20e-01 ||     0.30 |     0.26 |  6840.29 ||     1.05 | 00h00'00  
+    2.25 |  3.00 |      355 |     4962 |      107 | 7.96e-03 | 3.01e-01 ||     0.53 |     0.45 |  3866.86 ||     2.44 | 00h00'00  
+    2.50 |  3.25 |     1235 |     4251 |      106 | 1.96e-03 | 8.58e-02 ||     0.48 |     0.41 |  4268.89 ||     5.99 | 00h00'00  
+    2.75 |  3.50 |    10904 |     2892 |      103 | 1.51e-04 | 9.45e-03 ||     0.43 |     0.36 |  4811.25 ||    16.90 | 00h00'01  
+    3.00 |  3.75 |    98696 |     2866 |      100 | 1.65e-05 | 1.01e-03 ||     0.43 |     0.37 |  4768.19 ||    21.82 | 00h00'09  
+    3.25 |  4.00 |  2215980 |     2115 |      100 | 5.44e-07 | 4.51e-05 ||     0.45 |     0.39 |  4550.23 ||    24.80 | 00h03'02  
+    3.50 |  4.25 | 61762848 |     1906 |      100 | 1.76e-08 | 1.62e-06 ||     0.43 |     0.37 |  4805.90 ||    23.53 | 01h29'35  
+    3.75 |  4.50 | 2.21e+09 |     1460 |      100 | 3.77e-10 | 4.53e-08 ||     0.41 |     0.35 |  4978.97 ||    22.72 | 55h18'45  
+# End of the simulation.

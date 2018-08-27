@@ -1,0 +1,64 @@
+\documentclass{standalone}
+
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage{eulervm}
+
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+
+\input{colors}
+
+\begin{document}
+  \begin{tikzpicture}
+    \begin{groupplot}[/pgfplots/table/ignore chars={|}, %footnotesize,
+                      height=0.75\textwidth,  width=0.5\textwidth,
+                      % group style={group name=ccsds, group size= 2 by 1, horizontal sep=2cm, vertical sep=2.2cm},
+                      group style={group name=ccsds, group size= 2 by 1, horizontal sep=2cm, vertical sep=2.2cm},
+                      ymode = log, xmin=2.5, xmax=4.5, xtick={0,0.5,...,4.5},
+                      xlabel=$E_b/N_0 \text{(dB)}$, grid=both, grid style={gray!30},
+                      tick align=outside, tickpos=left, legend pos=south west]
+      \nextgroupplot[ylabel=FER]
+      \addplot[mark=o,      Paired-5,    semithick]                               table [x=Eb/N0, y=FER] {../dat/polar_2048_1723_1.0_4.5_FASCL8_CRC32_SPC4_i5-6600K.txt};  \label{plot:line1}
+      \addplot[mark=square, Paired-1,    semithick]                               table [x=Eb/N0, y=FER] {../dat/polar_2048_1723_1.0_4.5_FASCL32_CRC32_SPC4_i5-6600K.txt}; \label{plot:line2}
+      \addplot[mark=o,      Paired-5!70, semithick, dashed, mark options={solid}] table [x=Eb/N0, y=FER] {../dat/polar_2048_1723_1.0_4.5_PASCL8_CRC32_SPC4_i5-6600K.txt};  \label{plot:line3}
+      \addplot[mark=square, Paired-1!70, semithick, dashed, mark options={solid}] table [x=Eb/N0, y=FER] {../dat/polar_2048_1723_1.0_4.5_PASCL32_CRC32_SPC4_i5-6600K.txt}; \label{plot:line4}
+      % \legend{\texttt{FA-SCL} $L=\textrm{ }8$, 
+      %         \texttt{FA-SCL} $L=32$,
+      %         \texttt{PA-SCL} $L=\textrm{ }8$,
+      %         \texttt{PA-SCL} $L=32$}
+
+      % create a (dummy) coordinate where we want to place the legend
+      %
+      % (The matrix cannot be placed inside the `axis' environment
+      %  directly, because then a catcode error is raised.
+      %  I guess that this is caused by the `matrix of nodes' feature)
+      % \coordinate (legend) at (axis description cs:0.97,0.03);
+      \coordinate (legend) at (axis description cs:0.61,0.03);
+
+      \nextgroupplot[ylabel=$\mathcal{T}_i$ (Mb/s), log basis y={2}, log ticks with fixed point]
+      \addplot[mark=o,      Paired-5,    semithick]                               table [x=Eb/N0, y=ITHR] {../dat/polar_2048_1723_1.0_4.5_FASCL8_CRC32_SPC4_i5-6600K.txt};
+      \addplot[mark=square, Paired-1,    semithick]                               table [x=Eb/N0, y=ITHR] {../dat/polar_2048_1723_1.0_4.5_FASCL32_CRC32_SPC4_i5-6600K.txt};
+      \addplot[mark=o,      Paired-5!70, semithick, dashed, mark options={solid}] table [x=Eb/N0, y=ITHR] {../dat/polar_2048_1723_1.0_4.5_PASCL8_CRC32_SPC4_i5-6600K.txt};
+      \addplot[mark=square, Paired-1!70, semithick, dashed, mark options={solid}] table [x=Eb/N0, y=ITHR] {../dat/polar_2048_1723_1.0_4.5_PASCL32_CRC32_SPC4_i5-6600K.txt};
+    \end{groupplot}
+    % create the legend matrix which is placed at the created (dummy) coordinate
+    % and recall the plot specification using the `\ref' command
+    %
+    % adapt the style of that node to your needs
+    % (e.g. if you like different spacings between the rows or columns
+    %  or a fill color)
+    \matrix [
+        draw,
+        matrix of nodes,
+        anchor=south east,
+        fill=white
+    ] at (legend) {
+        $L$        & FA               & PA               \\
+        \small{8}  & \ref{plot:line1} & \ref{plot:line3} \\
+        \small{32} & \ref{plot:line2} & \ref{plot:line4} \\
+    };
+  \end{tikzpicture}
+\end{document}

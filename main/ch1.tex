@@ -217,7 +217,7 @@ Les auteurs de \cite{tal_how_2013} ont proposé de concaténer un test de redond
 \label{fig:crc}
 \end{figure}
 \subsubsection{Les algorithmes de décodage SCL adaptatifs}
-
+\label{subsubsec:adaptive}
 %Citation
 L'algorithme SCL adaptatif \cite{li_adaptive_2012} permet d'augmenter le débit des implémentations de l'algorithme CASCL. La première étape est d'appliquer l'algorithme SC sur les LLRs de sortie du canal composite. Le test du CRC est alors réalisé. S'il est satisfait, le mot de code est considéré comme bon et le décodage est terminé. Dans le cas contraire, l'algorithme SCL est appliqué. Dans le cas de l'algorithme Partiellement Adaptatif (PASCL) présenté dans \cite{sarkis_fast_2016}, l'algorithme est appliqué une seule fois avec comme taille de liste $L_{max}$. Dans le cas de l'algorithme Complètement Adaptatif (FASCL) original \cite{li_adaptive_2012}, après la première application de l'algorithme SC, l'algorithme CASCL est appliqué plusieurs fois. \`A la première itération, $L$ est égal à $2$. Si après décodage, le CRC est satisfait alors l'algorithme FASCL s'arrête, sinon il continue en doublant itérativement $L$ jusqu'à atteindre $L_{max}$.
 Ces algorithmes permettent donc d'augmenter le débit, puisque plus $L$ et petit, plus le temps de décodage de l'algorithme SCL est réduit. Cependant, ces algorithmes ont également une latence maximum plus grande par rapport à l'algorithme SCL avec $L=L_{max}$. Soit cette latence, $\mathcal{L}_{SCL}(L_{max})$, et la latence de l'algorithme SC, $\mathcal{L}_{SC}$, alors dans le Pire Cas (PC),
@@ -279,7 +279,7 @@ Ces paramètres et leurs effets sont important car ce sont les leviers utilisés
 Les axes des différentes courbes sont toujours les mêmes.
 En abscisse se trouve le rapport signal à bruit noté $E_b/N_0$ décrit en Section \ref{subsec:canal}.
 Sur l'axe des ordonnées se trouve soit le BER dont l'expression est donnée en Section \ref{subsec:contexte}, soit le taux d'erreur trame (FER : Frame Error Rate). Le FER est égal au rapport du nombre de trames erronées sur le nombre total de trames émises, sachant qu'une trame est considérée erronée si elle contient au moins un bit erroné. Sauf indication contraire, toutes les simulations ont été réalisées en utilisant le logiciel AFF3CT\footnote{AFF3CT est un logiciel libre permettant la simulation efficace de codes correcteurs d'erreurs : https://aff3ct.github.io/}.
-
+  
 \subsubsection{Impact de la taille du mot de code et du rendement}
 
 La théorie de l'information de Shannon \cite{shannon_mathematical_2001} prouve qu'il existe une limite théorique à la capacité d'un canal pour un rendement de code donné.

@@ -175,7 +175,7 @@ En effet, dans le contexte de télécommunications mobiles, les paramètres de l
 
 D'autre part, le terme \textit{flexibilité} s'applique aux paramétrage de l'algorithme et des méthodes d'implémentation du décodeur, indépendamment du schéma d'encodage. Ces paramétrages-ci ne sont généralement pas imposés par le standard. Dans le cas de l'algorithme SCL, les paramètres suivants sont concernés : les variantes de l'algorithme (FASCL, PASCL), le format de quantification des données (virgule flottante ou fixe, nombre de bits), la taille de la liste $L$ ou encore l'élagage de l'arbre de décodage. La flexibilité du décodeur amène des degrés de liberté permettant des compromis entre pouvoir de correction, latence et débit, pour un schéma d'encodage donné.
 
-Comme il sera détaillé dans les sections suivantes, tous les paramètres de généricité et de flexibilité cités sont pris en compte dans les décodeurs proposés. Ils sont déterminés par des fichiers de configurations, lus au moment de l'exécution. Aucune compilation n'est nécessaire en cas de changement de n'importe quel paramètre. De ce choix découle le fait que nous n'utilisons pas la technique de déroulage présentée en Section \ref{subsec:unroll}. En effet, cette technique implique la génération d'un code source pour chaque combinaison de paramètre différente. Ce
+Comme il sera détaillé dans les sections suivantes, tous les paramètres de généricité et de flexibilité cités sont pris en compte dans les décodeurs proposés. Ils sont déterminés par des fichiers de configurations, lus au moment de l'exécution. Aucune compilation n'est nécessaire en cas de changement de n'importe quel paramètre. De ce choix découle le fait que nous n'utilisons pas la technique de déroulage présentée en Section \ref{subsec:unroll}. En effet, cette technique implique la génération d'un code source pour chaque combinaison de paramètres différente comme proposé en \cite{sarkis_autogenerating_2014} pour l'algorithme SC.
 
 \subsection{Généricité}
 
@@ -222,14 +222,92 @@ Les aires hachurées en diagonales représentent l'amélioration des performance
 
 Il fut également observé dans \cite{sarkis_fast_2014} que lorsque la taille des \noeuds \texttt{SPC} n'est pas limitée à 4, les performances de décodage peuvent être dégradées. Dans les implémentations proposées, le choix a été fait de donner la possibilité de paramétrer finement la taille des \noeuds activés pour chaque type de \noeuds. En conséquence, leur taille est limitée à 4 dans les aires labellisées \texttt{SPC4} dans la figure \ref{fig:nodes}. Les \noeuds \texttt{SPC4+} sont de tailles supérieures. 
 
-Selon nos expérimentations, la dégradation des performances de correction due à l'utilisation des \noeuds \texttt{SPC4+} n'est pas systématique, dépendamment des caractéristique du code polaire considéré. La Figure\ref{fig:spc_impact}
+Selon nos expérimentations, la dégradation des performances de correction due à l'utilisation des \noeuds \texttt{SPC4+} n'est pas systématique mais dépendante des caractéristique du code polaire considéré. La Figure~\ref{fig:spc_impact} montre dans sa partie supérieure que les gains en débit sont significatifs selon nos expérimentations. Ils sont compris entre 8\% et 20\% selon les cas, c'est-à-dire selon la profondeur de la liste, la taille du mot de code et le rendement. La partie inférieure de la figure montre pour sa part la dégradation des performances de décodage. Pour une profondeur de liste $L=8$, en dehors d'une configuration particulière ($N=256$, $R=1/3$), la dégradation du SNR pour un FER de $10^{-5}$ est inférieure à 0.1 dB. Tandis une taille de liste $L=32$ la dégradation est généralement légèrement supérieure à 0.2 dB. Encore une fois le cas ($N=256$, $R=1/3$) est désavantageux, avec une dégradation d'environ 0.5 dB.
 
+En conclusion, l'élagage de l'arbre permet des améliorations significatives du débit des implémentations logicielle de l'algorithme SCL. Toutefois le traitement des \noeuds \texttt{SPC4+} décrit dans \cite{sarkis_fast_2016} peut provoquer une dégradation des performances de décodage dont l'importance dépend des paramètres de l'algorithme. Des tests doivent donc être réalisés pour connaître leur impact. Or la flexibilité de conception des implémentations proposées permettent de réaliser facilement de tels tests, grâce à la possibilité d'activer dynamiquement l'utilisation de n'importe quel type de \noeud spécialisé de n'importe quelle taille.
+
+\subsubsection{Quantification}
+
+\begin{figure}
+\centering
+\includegraphics{main/ch2_fig/curves/bfer/tikz/bfer_rep}
+\caption{Impact de l'utilisation des \noeuds de répétition sur des implémentations quantifiées.}
+\label{fig:bfer_rep}
+\end{figure}
+
+La quantification des variables internes de l'algorithme de décodage sont un important paramètre du décodeur. En effet les sommes partielles et les LLRs peuvent être représentées en virgule fixe sur un nombre réduits de bits \cite{balatsoukas-stimming_llr-based_2015}. Si des implémentations logicielles quantifiées de l'algorithme SC ont déjà été proposées \cite{giard_low-latency_2016}, les décodeurs proposés constituent, à la connaissance de l'auteur, la première implémentation logicielle de l'algorithme SCL permettant de représenter les LLRs et les métriques de chemin sur 8 ou 16 bits. Ces représentations permettent d'augmenter le parallélisme grâce à l'utilisation des instructions SIMD. Pour que ces quantifications fonctionnent, des précautions doivent être prises. Tout d'abord, pour les représentations 8 bits, les LLRs et les métriques sont saturées entre -127 et +127 après chaque opération. De plus les métriques de chemin sont normalisées après chaque opération de duplication et sélection de candidats : la valeur la plus faible des métriques de chemin est soustraite à chacune d'entre elles. La Figure~\ref{fig:rep_impact} montre les performances de l'algorithme CASCL pour différentes représentations des LLRs : 8 bits, 16 bits à virgule fixe et 32 bits à virgule flottante. Si les courbes 32 bits et 16 bits sont confondues et montrent que la représentation sur 16 bits ne dégrade pas les performances, il est possible d'observer que des dégradations apparaissent pour la courbe 8 bits, labellisée \texttt{REP2+}. Après étude, il s'avère que ces dégradations sont dues au traitement des \noeuds de répétition. En effet, lors de ce traitement, comme détaillé en Section \ref{subsec:pruning}, il faut ajouter tous les LLR du \noeud considéré. Or pour un \noeud de répétition de grande taille, cette addition sur 8 bits peut causer un débordement. On peut voir que lorsque les \noeuds de répétition de taille supérieure à 8 sont désactivés (\texttt{REP8-}), ces débordements n'ont plus lieu et les performances deviennent quasiment identiques à celles correspondant à la représentation 32 bits en virgule flottante.
+
+Dans le tableau \ref{tab:quantif} sont listés la latence \og pire cas \fg ($\mathcal{L}_{PC}$), la latence moyenne ($\mathcal{L}_moy$) et le débit d'information ($\mathcal{T}_i$) des algorithmes adaptatifs, PASCL et FASCL, pour les différentes quantifications. Dans le cas de la quantification 8 bits les \noeuds répétitions de taille supérieure à 8 sont désactivés afin d'effectuer les mesures à performances de décodage égales. Les représentations à virgule fixe réduisent dans la majorité des cas la latence moyenne, surtout dans les régions à haut SNR. Ceci est dû au fait que le gain dû à la quantification est plus important pour l'algorithme SC que pour l'algorithme SCL. Or, dans le cas des algorithmes adaptatifs, plus le SNR est grand, plus il est probable que le décodage SC suffise et qu'il n'y ait pas besoin de réaliser les décodages SCL. Ainsi, un débit de 425.9 Mb/s est atteint en représentation sur 8 bits pour l'algorithme FASCL, soit une augmentation de 80 Mb/s en comparaison avec la représentation sur 32 bits.
+\begin{figure}[t]
+\includegraphics{main/ch2_fig/curves/ascl/tikz/ascl}
+\caption{Performances de décodage et débits des algorithmes de décodage PASCL et FASCL pour un code polaire ($2048$,$1723$), $L=32$, et CRC $c=32$ GZip.}
+\label{fig:ascl_perfs}
+\end{figure}[t]
+
+  \begin{table}[t]
+    \renewcommand{\arraystretch}{1.1}
+    \centering
+    \caption{Comparaison de débits et latences des algotihmes SCL adaptatifs pour des représentations en virgule flottante (32 bits) et virgule fixe (16 et 8 bits). Code polaire ($2048$,$1723$), $L=32$, CRC $c=32$ (GZip)}
+    \label{tab:quantif}
+    {\small\resizebox{\linewidth}{!}{
+    \begin{tabular}{r | c | c || c | c || c | c || c | c}
+      \multirow{2}{*}{\textbf{Décodeur}} & \multirow{2}{*}{\textbf{Quantif.}} & \multirow{2}{*}{$\bm{\mathcal{L}_{PC}}$} & \multicolumn{2}{c ||}{\textbf{3.5 dB}} & \multicolumn{2}{c ||}{\textbf{4.0 dB}} & \multicolumn{2}{c}{\textbf{4.5 dB}} \\
+      \cline{4-9}
+      & & & $\bm{\mathcal{L}_{moy}}$ & $\bm{\mathcal{T}_i}$ & $\bm{\mathcal{L}_{moy}}$ & $\bm{\mathcal{T}_i}$ & $\bm{\mathcal{L}_{moy}}$ & $\bm{\mathcal{T}_i}$ \\
+      % \hline
+      \hline
+      \multirow{3}{*}{PA-SSCL} & 32-bit &  635 & 232.3 &   7.6 & 41.7 &  42.1 & 7.4 & 237.6 \\
+      %\cline{3-9}
+                               & 16-bit &  622 & 219.6 &   8.0 & 40.1 &  43.8 & 6.6 & 267.5 \\
+      %\cline{3-9}
+                               &  8-bit &  651 & 232.4 &   7.6 & 41.2 &  42.6 & 6.5 & 268.3 \\
+      \hline
+      \multirow{3}{*}{FA-SSCL} & 32-bit & 1201 &  67.2 &  26.1 &  8.5 & 207.8 & 5.1 & 345.5 \\
+      %\cline{3-9}
+                               & 16-bit & 1198 &  68.7 &  25.6 &  7.7 & 225.7 & 4.3 & 408.7 \\
+      %\cline{3-9}
+                               &  8-bit & 1259 &  71.8 &  24.4 &  7.7 & 227.3 & 4.1 & 425.9 \\
+    \end{tabular}
+    }}
+  \end{table}
+
+\subsubsection{Support de différentes variantes algorithmiques}
+Les deux versions adaptatives de l'algorithme SCL que sont les algorithmes partiellement et complètement adaptatifs (PASCL et FASCL) présentent des débits différents suivant le rapport signal à bruit $E_b/N_0$ considéré, comme montré en Figure~\ref{fig:ascl_perfs}. Pour de faibles valeurs de SNR, l'algorithme PASCL et plus avantageux, mais pour des valeurs plus élevées c'est l'algorithme FASCL qui prend l'avantage. Cependant, dans tous les cas et comme décrit en Section \ref{subsubsec:adaptive}, la latence \og pire cas \fg, autrement dit le temps nécessaire maximum que peut prendre le décodage d'une trame, est plus élevée dans le cas de l'algorithme FASCL. Ce fait est vérifié par la mesure comme reporté dans le Tableau~\ref{tab:quantif}.
+
+Voici donc présentés les caractères génériques et flexibles des décodeurs proposés. Cependant, l'objectif de ces implémentations est également d'être compétitives avec les décodeurs de la littérature du point de vue du débit et de la latence. Des améliorations permettant cette compétitivité sont présentées dans la section suivante.
 
 \section{Optimisations de l'implémentation logicielle des décodeurs liste}
 \label{sec:opti_scl}
+Trois contributions originales sont présentées dans cette section. la première porte sur l'utilisation nouvelle d'un algorithme de tri des métriques et des LLRs, la seconde sur l'accélération du contrôle de redondance cyclique et la troisième concerne la gestion des sommes partielles. 
 
-\subsection{Algorithmes de tri}
+\subsection{Algorithme de tri}
+Des algorithmes de tri sont nécessaires lors de plusieurs étapes durant l'algorithme SCL. Les métriques de chemins sont triées pour sélectionner les candidats lors des étapes de duplication (étapes (i+1) et (i+3) de la Figure~\ref{fig:scl}). De plus les LLRs doivent être triés lors du traitement des \noeuds \texttt{R1} et \texttt{SPC}. \`A cause d'un manque de détails dans la description de l'implémentation du tri dans \cite{sarkis_fast_2016}, sa reproduction est difficile. Différentes méthodes de tri sont donc explorées.
+
+Tout d'abord, lors du traitement des \noeuds \texttt{R1}, il est nécessaire d'identifier les deux LLRs les moins fiables, c'est à dire ceux possédant la valeur absolue la plus faible. Or, la méthode optimale, du point de vue du nombre de comparaisons, d'identifier les deux plus petits (ou les deux plus grands) éléments d'un ensemble est présentée dans \cite{schreier_tournament_1932} et reportée dans \cite{knuth_art_1973}. Cette méthode sera par la suite dénommée méthode de Schreier du nom de son auteur. Elle se réalise en deux étapes, présentées en Figure~\ref{fig:schreier_sort}. La première étape est l'identification du plus petit élément par la traversée d'un arbre binaire. Ensuite, cet élément est éliminé, et la branche sur laquelle il se trouvait est rejouée. Le deuxième élément le plus petit est ainsi identifié.
+
+Cette méthode s'est avérée être la plus rapide expérimentalement de toutes celles qui ont été testées : \textit{Batcher's merge exchange}, tri par bulle, tri \textit{quick-sort}, tri par tas implémenté dans la librairie standard. Elle l'était également dans les cas testés pour les \noeuds de type \texttt{SPC}. Une étude comparée montre que la méthode de Schreier est également pertinente pour le tri des métriques, puisqu'il s'agit de faire un tri partiel d'une liste de métriques.
+
+\begin{figure}
+\centering
+\subfloat[Identification du plus petit élément.]{
+\includegraphics[width=0.75\textwidth]{main/ch2_fig/sorting_a}
+\label{fig:sorting_a}
+}
+\\
+\subfloat[Identification du deuxième plus petit élément.]{
+\includegraphics[width=0.75\textwidth]{main/ch2_fig/sorting_b}
+\label{fig:sorting_b}
+}
+\caption{Méthode de Schreier}
+\label{fig:schreier_sort}
+\end{figure}
+
 \subsection{Accélération du contrôle de redondance cyclique}
+Par profilage de l'exécution d'un décodeur SCL adaptatif, il est possible d'observer que beaucoup de temps est passé à réaliser des vérifications de CRC. En effet, la complexité calculatoire du CRC est en $O(N)$ tandis que celle du reste de l'algorithme SCL est en $O(N\log N)$. Pour les valeurs de N considérées, le premier n'est pas négligeable par rapport au second. Des méthodes d'implémentation efficaces doivent donc être utilisées. Tout d'abord, les bits sont empaquetés pour être traités 32 par 32. Les sommes partielles sont stockées au départ chacune sur un entier. Pour vérifier le CRC, 32 sommes partielles sont lues et sont stockées dans un seul entier de 32 bits. Une table de conversion est utilisée pour stocker des séquences pré calculées du CRC. La lecture de ces séquences permet de réduire la complexité calculatoire totale.
+
+Dans les algorithmes adaptatifs, après un premier décodage de la trame par l'algorithme SC, un premier mot de code candidat de $N$ bits est proposé. Or le CRC est calculé sur les seuls $K$ bits d'information parmi les $N$ bits du mot de code. il est donc nécessaire de réaliser l'extraction des bits d'information. Le profilage des décodeurs montre que cette opération d'extraction représente une portion non négligeable du temps total de traitement du CRC. Or il est possible d'accélérer cette extraction en utilisant la connaissance que nous avons de l'emplacement des bits gelés par la connaissance des \noeuds d'élagage. En effet, la présence d'un \noeud de type \texttt{R1} de taille $M$ correspond à la présence de $M$ bits d'information consécutifs. Il est alors possible d'utiliser les unités matérielles SIMD afin de réaliser une extraction parallèle de multiples bits simultanément.
+
+
 \subsection{Gestion des sommes partielles}
 
 \section{Expérimentations et mesures}

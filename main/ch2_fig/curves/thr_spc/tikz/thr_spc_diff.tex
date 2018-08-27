@@ -4,7 +4,7 @@
 \usetikzlibrary{patterns}
 \usetikzlibrary{calc}
 \usetikzlibrary{matrix}
-
+\usepackage{eulervm}
 \input{colors}
 
 \begin{document}
@@ -24,7 +24,8 @@ xmax=12,
 ymin=0,
 ymax=25,
 axis x line*=top,
-ylabel={Throughput Gain (\%)},
+ylabel style={align=center}, 
+ylabel={Augmentation \\ d\'ebit (\%)},
 y label style={at={(-0.25,0.5)}},
 bar width=7pt,
 ]
@@ -59,7 +60,8 @@ xticklabels={$256$,$1024$,$4096$},
 xlabel={$L=8$},
 ymin=-0.6,
 ymax=0,
-ylabel={$E_b/N_0$ loss (dB)},
+ylabel style={align=center}, 
+ylabel={D\'egradation  \\ $E_b/N_0$ (dB)},
 bar width=7pt,
 y label style={at={(-0.25,0.5)}},
 legend style={draw=black,fill=white,legend cell align=left, at={(0.75,0.6)}}

@@ -1,0 +1,87 @@
+#Run command:
+#./bin/aff3ct --sim-type "BFER" --cde-type "POLAR" -m "1.0" -M "4.51" --sim-snr-step "0.25" -K "1755" -N "2048" --src-type "AZCW" --chn-type "AWGN_FAST" --dec-type "ASCL" --dec-simd "INTRA" -L "32" --crc-type "FAST" --crc-poly "32-GZIP" --dec-polar-nodes "{R0,R0L,R1,REP_2-8,REPL,SPC_4}" --sim-pyber "int-8 Q_{6,1} rep_{8-}" -p "8" -e "500"
+#Curve name:
+#"int-8 Q_{6,1} rep_{8-}"
+# -------------------------------------------------
+# ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----
+# -------------------------------------------------
+# Parameters:
+# * Simulation ------------------------------------
+#    ** Type                      = BFER
+#    ** SNR min (m)               = 1.000000 dB
+#    ** SNR max (M)               = 4.510000 dB
+#    ** SNR step (s)              = 0.250000 dB
+#    ** Type of bits              = signed char (8 bits)
+#    ** Type of reals             = float (32 bits)
+#    ** Type of quant. reals      = signed char (8 bits)
+#    ** Inter frame level         = 1
+#    ** Seed                      = 0
+#    ** Multi-threading (t)       = 56 thread(s)
+# * Code ------------------------------------------
+#    ** Type                      = POLAR
+#    ** Info. bits (K)            = 1723 + 32 (CRC)
+#    ** Codeword size (N)         = 2048
+#    ** Coset approach (c)        = off
+#    ** Sigma for code gen.       = adaptative
+#    ** Frozen bits gen. method   = TV
+#    ** Path to the best channels = ../conf/cde/awgn_polar_codes/TV
+# * Source ----------------------------------------
+#    ** Type                      = AZCW
+# * CRC -------------------------------------------
+#    ** Type                      = FAST
+#    ** Name                      = 32-GZIP
+#    ** Polynomial (hexadecimal)  = 0x4c11db7
+#    ** Size (in bit)             = 32
+#    ** Add CRC in the code rate  = off
+# * Encoder ---------------------------------------
+#    ** Type                      = AZCW
+#    ** Systematic encoding       = on
+# * Modulator -------------------------------------
+#    ** Type                      = BPSK
+#    ** Bits per symbol           = 1
+#    ** Sampling factor           = 1
+# * Channel ---------------------------------------
+#    ** Type                      = AWGN_FAST
+#    ** Domain                    = LLR
+# * Demodulator -----------------------------------
+#    ** Sigma square              = on
+#    ** Max type                  = unused
+# * Quantizer -------------------------------------
+#    ** Type                      = STD_FAST
+#    ** Fixed-point config.       = {6, 1}
+# * Decoder ---------------------------------------
+#    ** Type (D)                  = ASCL
+#    ** Implementation            = FAST
+#    ** SIMD strategy             = INTRA
+#    ** Max num. of lists (L)     = 32
+#    ** Polar node types          = {R0,R0L,R1,REP_2-8,REPL,SPC_4}
+# * Monitor ---------------------------------------
+#    ** Frame error count (e)     = 500
+#    ** Bad frames tracking       = off
+#    ** Bad frames replay         = off
+#
+# The simulation is running...
+# ----------------------------------------------------------------------||--------------------------------||---------------------
+#       Bit Error Rate (BER) and Frame Error Rate (FER) depending       ||     Decoder throughput and     ||  Global throughput  
+#                    on the Signal Noise Ratio (SNR)                    ||      latency (per thread)      ||  and elapsed time   
+# ----------------------------------------------------------------------||--------------------------------||---------------------
+# -------|-------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+   Es/N0 | Eb/N0 |      FRA |       BE |       FE |      BER |      FER ||     CTHR |     ITHR |  LATENCY || SIM_CTHR |    ET/RT 
+#   (dB) |  (dB) |          |          |          |          |          ||   (Mb/s) |   (Mb/s) |     (us) ||   (Mb/s) | (hhmmss) 
+# -------|-------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+    0.25 |  1.00 |      534 |    81768 |      534 | 8.72e-02 | 1.00e+00 ||     0.39 |     0.33 |  5302.45 ||     3.97 | 00h00'00  
+    0.50 |  1.25 |      539 |    77791 |      539 | 8.22e-02 | 1.00e+00 ||     0.57 |     0.49 |  3617.15 ||     9.64 | 00h00'00  
+    0.75 |  1.50 |      555 |    74988 |      555 | 7.70e-02 | 1.00e+00 ||     0.50 |     0.43 |  4068.88 ||    13.49 | 00h00'00  
+    1.00 |  1.75 |      546 |    69268 |      546 | 7.23e-02 | 1.00e+00 ||     0.55 |     0.47 |  3702.90 ||    15.53 | 00h00'00  
+    1.25 |  2.00 |      555 |    64822 |      555 | 6.66e-02 | 1.00e+00 ||     0.50 |     0.43 |  4106.16 ||    15.25 | 00h00'00  
+    1.50 |  2.25 |      557 |    55943 |      552 | 5.72e-02 | 9.91e-01 ||     0.56 |     0.48 |  3637.27 ||    13.50 | 00h00'00  
+    1.75 |  2.50 |      590 |    46664 |      553 | 4.51e-02 | 9.37e-01 ||     0.49 |     0.42 |  4181.45 ||    16.53 | 00h00'00  
+    2.00 |  2.75 |      786 |    35395 |      554 | 2.57e-02 | 7.05e-01 ||     0.57 |     0.49 |  3599.30 ||    22.10 | 00h00'00  
+    2.25 |  3.00 |     1587 |    24384 |      535 | 8.75e-03 | 3.37e-01 ||     0.96 |     0.82 |  2141.87 ||    36.89 | 00h00'00  
+    2.50 |  3.25 |     5832 |    19914 |      521 | 1.95e-03 | 8.93e-02 ||     2.09 |     1.79 |   981.49 ||    92.50 | 00h00'00  
+    2.75 |  3.50 |    40954 |    14392 |      509 | 2.00e-04 | 1.24e-02 ||     6.79 |     5.82 |   301.70 ||   308.21 | 00h00'00  
+    3.00 |  3.75 |   465979 |    13761 |      502 | 1.68e-05 | 1.08e-03 ||    20.15 |    17.26 |   101.65 ||   852.08 | 00h00'01  
+    3.25 |  4.00 | 11874983 |    10937 |      500 | 5.25e-07 | 4.21e-05 ||    43.04 |    36.88 |    47.59 ||  1475.85 | 00h00'16  
+    3.50 |  4.25 | 58388692 |     2045 |      102 | 2.00e-08 | 1.75e-06 ||    56.82 |    48.69 |    36.05 ||  1736.20 | 00h01'08 x
+    3.75 |  4.50 | 2.04e+09 |     1484 |      100 | 4.14e-10 | 4.90e-08 ||    48.81 |    41.83 |    41.96 ||  1437.97 | 00h48'27 x
+# End of the simulation.

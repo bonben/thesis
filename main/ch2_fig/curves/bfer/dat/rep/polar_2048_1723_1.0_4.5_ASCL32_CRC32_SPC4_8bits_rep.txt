@@ -1,0 +1,87 @@
+#Run command:
+#./bin/aff3ct --sim-type "BFER" --cde-type "POLAR" -m "1.0" -M "4.51" --sim-snr-step "0.25" -K "1755" -N "2048" --src-type "AZCW" --chn-type "AWGN_FAST" --dec-type "ASCL" --dec-simd "INTRA" -L "32" --crc-type "FAST" --crc-poly "32-GZIP" --dec-polar-nodes "{R0,R0L,R1,REP,REPL,SPC_4}" --sim-pyber "int-8 Q_{6,1} rep_{2+}" -p "8" -e "500" 
+#Curve name:
+#"int-8 Q_{6,1} rep_{2+}"
+# -------------------------------------------------
+# ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----
+# -------------------------------------------------
+# Parameters:
+# * Simulation ------------------------------------
+#    ** Type                      = BFER
+#    ** SNR min (m)               = 1.000000 dB
+#    ** SNR max (M)               = 4.510000 dB
+#    ** SNR step (s)              = 0.250000 dB
+#    ** Type of bits              = signed char (8 bits)
+#    ** Type of reals             = float (32 bits)
+#    ** Type of quant. reals      = signed char (8 bits)
+#    ** Inter frame level         = 1
+#    ** Seed                      = 0
+#    ** Multi-threading (t)       = 56 thread(s)
+# * Code ------------------------------------------
+#    ** Type                      = POLAR
+#    ** Info. bits (K)            = 1723 + 32 (CRC)
+#    ** Codeword size (N)         = 2048
+#    ** Coset approach (c)        = off
+#    ** Sigma for code gen.       = adaptative
+#    ** Frozen bits gen. method   = TV
+#    ** Path to the best channels = ../conf/cde/awgn_polar_codes/TV
+# * Source ----------------------------------------
+#    ** Type                      = AZCW
+# * CRC -------------------------------------------
+#    ** Type                      = FAST
+#    ** Name                      = 32-GZIP
+#    ** Polynomial (hexadecimal)  = 0x4c11db7
+#    ** Size (in bit)             = 32
+#    ** Add CRC in the code rate  = off
+# * Encoder ---------------------------------------
+#    ** Type                      = AZCW
+#    ** Systematic encoding       = on
+# * Modulator -------------------------------------
+#    ** Type                      = BPSK
+#    ** Bits per symbol           = 1
+#    ** Sampling factor           = 1
+# * Channel ---------------------------------------
+#    ** Type                      = AWGN_FAST
+#    ** Domain                    = LLR
+# * Demodulator -----------------------------------
+#    ** Sigma square              = on
+#    ** Max type                  = unused
+# * Quantizer -------------------------------------
+#    ** Type                      = STD_FAST
+#    ** Fixed-point config.       = {6, 1}
+# * Decoder ---------------------------------------
+#    ** Type (D)                  = ASCL
+#    ** Implementation            = FAST
+#    ** SIMD strategy             = INTRA
+#    ** Max num. of lists (L)     = 32
+#    ** Polar node types          = {R0,R0L,R1,REP,REPL,SPC_4}
+# * Monitor ---------------------------------------
+#    ** Frame error count (e)     = 500
+#    ** Bad frames tracking       = off
+#    ** Bad frames replay         = off
+#
+# The simulation is running...
+# ----------------------------------------------------------------------||--------------------------------||---------------------
+#       Bit Error Rate (BER) and Frame Error Rate (FER) depending       ||     Decoder throughput and     ||  Global throughput  
+#                    on the Signal Noise Ratio (SNR)                    ||      latency (per thread)      ||  and elapsed time   
+# ----------------------------------------------------------------------||--------------------------------||---------------------
+# -------|-------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+   Es/N0 | Eb/N0 |      FRA |       BE |       FE |      BER |      FER ||     CTHR |     ITHR |  LATENCY || SIM_CTHR |    ET/RT 
+#   (dB) |  (dB) |          |          |          |          |          ||   (Mb/s) |   (Mb/s) |     (us) ||   (Mb/s) | (hhmmss) 
+# -------|-------|----------|----------|----------|----------|----------||----------|----------|----------||----------|----------
+    0.25 |  1.00 |      555 |    84933 |      555 | 8.72e-02 | 1.00e+00 ||     0.08 |     0.07 | 26108.87 ||     0.52 | 00h00'02  
+    0.50 |  1.25 |      555 |    80352 |      555 | 8.25e-02 | 1.00e+00 ||     0.13 |     0.11 | 15340.96 ||     1.37 | 00h00'00  
+    0.75 |  1.50 |      540 |    73049 |      540 | 7.71e-02 | 1.00e+00 ||     0.20 |     0.17 | 10162.24 ||     2.24 | 00h00'00  
+    1.00 |  1.75 |      555 |    70048 |      555 | 7.19e-02 | 1.00e+00 ||     0.12 |     0.10 | 17500.36 ||     2.33 | 00h00'00  
+    1.25 |  2.00 |      540 |    63056 |      540 | 6.65e-02 | 1.00e+00 ||     0.19 |     0.17 | 10507.07 ||     2.36 | 00h00'00  
+    1.50 |  2.25 |      547 |    55270 |      544 | 5.76e-02 | 9.95e-01 ||     0.17 |     0.15 | 12087.27 ||     2.30 | 00h00'00  
+    1.75 |  2.50 |      565 |    44959 |      538 | 4.53e-02 | 9.52e-01 ||     0.22 |     0.19 |  9304.60 ||     2.54 | 00h00'00  
+    2.00 |  2.75 |      782 |    34819 |      548 | 2.54e-02 | 7.01e-01 ||     0.12 |     0.10 | 17612.28 ||     0.90 | 00h00'01  
+    2.25 |  3.00 |     1685 |    24943 |      543 | 8.43e-03 | 3.22e-01 ||     0.34 |     0.29 |  6013.61 ||     6.29 | 00h00'00  
+    2.50 |  3.25 |     5956 |    20455 |      524 | 1.96e-03 | 8.80e-02 ||     0.53 |     0.45 |  3899.27 ||    16.77 | 00h00'00  
+    2.75 |  3.50 |    41104 |    14981 |      513 | 2.08e-04 | 1.25e-02 ||     2.42 |     2.07 |   846.89 ||    85.35 | 00h00'00  
+    3.00 |  3.75 |   473156 |    14251 |      502 | 1.72e-05 | 1.06e-03 ||     8.22 |     7.04 |   249.13 ||   310.11 | 00h00'03  
+    3.25 |  4.00 | 10336364 |    13729 |      500 | 7.57e-07 | 4.84e-05 ||    20.83 |    17.85 |    98.33 ||   706.94 | 00h00'29  
+    3.50 |  4.25 | 47638672 |     4456 |      127 | 5.33e-08 | 2.67e-06 ||    27.73 |    23.76 |    73.86 ||   850.26 | 00h01'54 x
+    3.75 |  4.50 | 4.70e+08 |     5408 |      101 | 6.56e-09 | 2.15e-07 ||    30.75 |    26.35 |    66.60 ||   912.46 | 00h17'34 x
+# End of the simulation.
