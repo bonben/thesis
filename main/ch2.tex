@@ -9,7 +9,7 @@
 \newpage
 
 
-\section*{Introduction}
+\section{Introduction}
 
 \begin{figure}[t]
   \centering
@@ -309,12 +309,77 @@ Dans les algorithmes adaptatifs, après un premier décodage de la trame par l'a
 
 
 \subsection{Gestion des sommes partielles}
+Dans cette section est décrite la gestion des sommes partielles dans les décodeurs proposés.
+Les sommes partielles sont des décisions dures et leurs valeurs sont donc binaires. Cependant, dans les implémentations logicielles proposées, afin d'utiliser efficacement les instructions SIMD, les LLRs et les sommes partielles sont représentés sur par des entiers de même dimension, notée $Q$, en octets. Selon la représentation choisie, 32, 16 ou 8 bits, $Q$ peut donc prendre les valeurs 4, 2 ou 1. 
+Dans les précédentes implémentations logicielles de l'algorithme SCL \cite{sarkis_fast_2016,sarkis_increasing_2014,shen_low-latency_2016}, un emplacement mémoire de $Q$ bits est alloué à chaque niveau de l'arbre de décodage comme décrit dans \cite{tal_list_2011}. La taille de l'emplacement mémoire associé à un niveau de l'arbre est égal à la taille des \noeuds du niveau en question. Soit $n=\log_2(N)$, le nombre total de niveaux est $n+1$ et la taille d'un \noeud au niveau $l$ est égal à $2^{n-l}$. L'empreinte mémoire pour les sommes partielles d'un arbre de décodage est égale à : 
+\begin{equation}
+\sum^n_{l=0}2^{n-l}=2N-1
+\end{equation}
+Pour l'algorithme SCL dans lequel L arbres de décodage sont nécessaires, l'empreinte mémoire totale pour l'algorithme SCL est donc $L(2N-1)$. Cependant cette empreinte mémoire peut être réduite. En effet, dans l'algorithme SC, les sommes partielles d'un \noeud donné de l'arbre de décodage ne sont utilisées qu'une fois au cours du décodage, donc ces emplacements mémoire peuvent être recyclés. Ainsi l'empreinte mémoire peut être réduite de $2N-1$ à $N$ dans l'algorithme SC \cite{leroux_hardware_2011}. De la même manière, il est possible de réduire cette empreinte mémoire de $L(2N-1)$ à $LN$ pour l'algorithme SCL.
 
-\section{Expérimentations et mesures}
+Lors des étapes de duplication et de sélection de l'algorithme SCL, étapes $(i+1)$ et $(i+3)$ de la Figure \ref{fig:scl}, il est nécessaire de assigner les sommes partielles d'un arbre de décodage original à un nouvel arbre. Deux méthodes sont possibles pour réaliser cette assignation. La première, notée $SCL_{cpy}$, consiste à systématiquement copier les $N$ sommes partielles sauvegardée dans l'emplacement mémoire du premier arbre de décodage vers l'emplacement mémoire du second. La deuxième, présentée dans \cite{tal_list_2011}, est de réaliser cette assignation par l'utilisation de pointeurs. Ainsi, tant que les sommes partielles de chaque arbre ne diffèrent pas, ils utilisent le même emplacement mémoire. Cette méthode est notée $SCL_{ptr}$.
+
+La méthode $SCL_{ptr}$ semble plus efficace puisqu'elle évite des copies inutiles. Cependant, nos expérimentations montrent que le surplus de calculs nécessaire à la gestion des pointeurs pénalise cette méthode pour des codes de petite et moyenne taille, comme montré en Figure~\ref{fig:scl_mem} qui représente les débits des implémentations de l'algorithme SCL utilisant chacune des méthodes, pour différentes valeurs de $N$, un rendement constant, $R=1/2$ et une profondeur de liste $L=32$. Ces courbes montrent que la méthode $SCL_{cpy}$ permet des débits plus rapides pour $N<8192$ tandis que le méthode $SCL_{ptr}$ est plus avantageuse pour des débits supérieurs. La Figure~\ref{fig:scl_mem} montre également l'impact du format utilisé pour la représentation des LLRs et des sommes partielles. Pour de très grandes valeurs de $N$, la représentation sur 8 bits est plus efficace, puisqu'elle occupe moins d'espace mémoire et que les échecs d'accès à la mémoire cache sont plus rares. 
+
+\begin{figure}
+\centering
+\includegraphics{main/ch2_fig/curves/thr/tikz/thr}
+\caption{Comparaison des débits associés aux méthodes $SCL_{cpy}$ et $SCL_{ptr}$ pour différentes valeurs de $N$.}
+\label{fig:scl_mem}
+\end{figure}
+
+
+
+
+\section{Mesures et comparaisons}
 \label{sec:exp_scl}
 
-\subsection{Comparaison des cibles}
-\subsection{Comparaison des algorithmes}
+Les débits et latences des implémentations proposées sont détaillées dans cette section. Tous les résultats proposés ont été générés grâce à l'outil AFF3CT \cite{aff3ct_aff3ct:_2016}. Le code source de ce logiciel est ouvert et disponible en ligne. Ainsi, tous les résultats sont facilement reproductibles. La cible matérielle est un CPU Intel i5-6600K d'architecture Skylake. Le jeu d'instruction SIMD AVX2 est utilisé. Sa fréquence pour les résultats reportés est 3.9 GHz. La compilation a été effectuée sur un OS Linux avec le compilateur C++ de GNU (version 5.4.0) et les options de compilation suivantes : \texttt{-Ofast -march=native -funroll-loops}.
+
+\subsection{Algorithme complètement adaptatif}
+L'algorithme FASCL permet d'atteindre les débits les plus élevés. Comme il est montré dans le Tableau~\ref{tab:quantif}, l'implémentation de cet algorithme avec un représentation sur 8 bits des LLRs et des sommes partielles permet d'atteindre un débit de 425 Mb/s pour un code polaire (2048,1723) et le CRC GZip de taille 32 bits lorsque $E_b/N_0=4.5dB$. Ce débit est pratiquement deux fois supérieur à celui obtenu avec l'algorithme PASCL. Le rapport signal à bruit pour lequel la différence entre PASCL et FASCL est la plus grande (380\%), est dans le domaine où le FER est compris entre $10^{-3}$ et $10^{-5}$. Il s'agit du domaine ciblé pour les communications sans fils comme LTE ou le futur réseau 5G. Dans ces conditions, le débit de l'algorithme FASCL est d'approximativement 230Mb/s tandis que celui de PASCL est d'approximativement 40 Mb/s. Rappelons toutefois que la latence dans le pire cas est plus élevée dans le cas de l'algorithme FASCL.
+
+    \begin{table}[t]
+      \centering
+      \caption{Comparaison des débits et latences des décodeurs proposés avec des décodeurs de l'état de l'art. Représentation des LLRs et sommes partielles sur 32 bits. Code polaire (2048,1723), $L=32$, CRC GZip $c=32$.}
+      \label{tab:res}
+      {\small\resizebox{\linewidth}{!}{
+      \begin{tabular}{r|r|c|c c c}
+        \multirow{2}{*}{\textbf{Target}} & \multirow{2}{*}{\textbf{Décodeur}}  & \multirow{1}{*}{\textbf{$\bm{\mathcal{L}_{PC}}$}} & \multicolumn{3}{c}{$\bm{\mathcal{T}_i}$ (Mb/s)} \\
+        \cline{4-6}
+        &                           & ($\mu s$)                          & \textbf{3.5 dB} & \textbf{4.0 dB} & \textbf{4.5 dB} \\
+        \hline
+        % \hline
+        \multirow{1}{*}{i7-4790K}
+        & CASCL \cite{shen_low-latency_2016} & 1572                           & 1.10            & 1.10            & 1.10            \\
+        \hline
+        \multirow{3}{*}{i7-2600}
+        & CASCL \cite{sarkis_increasing_2014} & 23000                          & 0.07            & 0.07            & 0.07            \\
+        & CASSCL\cite{sarkis_increasing_2014} & 3300                           & 0.52            & 0.52            & 0.52            \\
+        & PASSCL \cite{sarkis_increasing_2014} & $\approx$ 3300                 & 0.9             & 4.90            & 54.0            \\
+        \hline
+        \multirow{3}{*}{i7-2600}
+        & CASCL  \cite{sarkis_fast_2016}   & 2294                           & 0.76            & 0.76            & 0.76            \\
+        & CASSCL \cite{sarkis_fast_2016}   & 433                            & 4.0             & 4.0             & 4.0             \\
+        & PASSCL \cite{sarkis_fast_2016}   & $\approx$ 433                  & 8.6             & 33.0            & 196.0           \\
+        \hline
+        \multirow{4}{*}{i7-2600}
+        & CASCL proposé                    & 4819                           & 0.37            & 0.37            & 0.37            \\
+        & CASSCL proposé                   & 770                            & 2.3             & 2.3             & 2.3             \\
+        & PASSCL proposé                   & 847                            & 5.5             & 31.1            & 168.4           \\
+        & FASSCL proposé                   & 1602                           & 19.4            & 149.0           & 244.3           \\
+        \hline
+        \multirow{4}{*}{i5-6600K}
+        & CASCL proposé                    & 3635                           & 0.48            & 0.48            & 0.48            \\
+        & CASSCL proposé                   & 577                            & 3.0             & 3.0             & 3.0             \\
+        & PASSCL proposé                   & 635                            & 7.6             & 42.1            & 237.6           \\
+        & FASSCL proposé                   & 1201                           & 26.1            & 207.8           & 345.5           \\
+      \end{tabular}
+      }}
+    \end{table}
+
 \subsection{Comparaison avec l'état de l'art}
- 
-\section*{Conclusion}
+Les débits et latences des décodeurs proposés sont listés et comparés avec ceux de certains décodeurs de l'état de l'art dans le tableau \ref{tab:res}. Pour tous les décodeurs, les \noeuds SPC4+ ne sont pas utilisés afin de ne pas dégrader les performances de décodage. La latence donnée dans le Tableau \ref{tab:res} est la latence \og pire cas \fg et le débit est le débit d'information moyen. La première version, CASCL, est l'implémentation de l'algorithme CASCL sans aucun élagage tandis que les versions notées CASSCL, FASSCL et PASSCL utilisent l'élagage de l'arbre. Le débit du décodeur CASSCL proposé (2.3 Mb/s) est seulement divisé par deux lorsque l'on compare avec l'implémentation spécifique déroulée de l'algorithme CASSCL décrite en \cite{sarkis_fast_2016} (4.0 Mb/s). Elle est approximativement 4 fois plus rapide que l'implémentation générique proposée en \cite{sarkis_increasing_2014} (0.52 Mb/s) et 2 fois plus rapide que celle proposée en \cite{shen_low-latency_2016}, ceci grâce aux améliorations algorithmiques proposées en Section \ref{sec:opti_scl}. De plus, les implémentations proposées présentent une flexibilité et une généricité bien plus grandes que celles proposées dans \cite{sarkis_increasing_2014,shen_low-latency_2016}. En effet, les représentations quantifiées, la possibilité de définir des patrons de poinçonnage et la possibilité d'utiliser les algorithmes adaptatifs n'étaient pas données. En utilisant la même cible matérielle (i7-2600), l'implémentation de l'algorithme PASSCL présente des débits proches de l'implémentation spécifique déroulée de \cite{sarkis_fast_2016}, tandis que le débit obtenu pour l'algorithme FASSCL est lui bien meilleur (jusqu'à 244 Mb/s pour $E_b/N_0=4.5dB$).
+
+
+\section{Conclusion}

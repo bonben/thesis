@@ -1,0 +1,57 @@
+\documentclass{standalone}
+
+\usepackage{amsmath}
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+
+\input{colors}
+
+\begin{document}
+  \begin{tikzpicture}
+    \begin{axis}[/pgfplots/table/ignore chars={|}, %footnotesize,
+                 width=1.0\linewidth, height=0.675\linewidth,
+                 xlabel=$N$, ylabel=D\'ebit (Mb/s), grid=both, grid style={gray!30}, xmode=log, log basis x={2},
+                 xmin=128, xmax=4194304,
+                 tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}] 
+                 legend pos=south west, legend columns=2]
+        \addplot[mark=o,        Paired-5,    semithick                              ] table [x=N, y=ITHR] {../dat/data_i5-6600K_scl_cpy_8.txt};  \label{plot:line1}
+        \addplot[mark=o,        Paired-5!70, semithick, dashed, mark options={solid}] table [x=N, y=ITHR] {../dat/data_i5-6600K_scl_ptr_8.txt};  \label{plot:line2}
+        \addplot[mark=triangle, Paired-3,    semithick                              ] table [x=N, y=ITHR] {../dat/data_i5-6600K_scl_cpy_16.txt}; \label{plot:line3}
+        \addplot[mark=triangle, Paired-3!70, semithick, dashed, mark options={solid}] table [x=N, y=ITHR] {../dat/data_i5-6600K_scl_ptr_16.txt}; \label{plot:line4}
+        \addplot[mark=square,   Paired-1,    semithick                              ] table [x=N, y=ITHR] {../dat/data_i5-6600K_scl_cpy_32.txt}; \label{plot:line5}
+        \addplot[mark=square,   Paired-1!70, semithick, dashed, mark options={solid}] table [x=N, y=ITHR] {../dat/data_i5-6600K_scl_ptr_32.txt}; \label{plot:line6}
+        % \legend{\text{ }8-bit $\texttt{SCL}_{\texttt{cpy}}$, \text{ }8-bit $\texttt{SCL}_{\texttt{ptr}}$,
+        %                16-bit $\texttt{SCL}_{\texttt{cpy}}$,        16-bit $\texttt{SCL}_{\texttt{ptr}}$,
+        %                32-bit $\texttt{SCL}_{\texttt{cpy}}$,        32-bit $\texttt{SCL}_{\texttt{ptr}}$}
+
+        % create a (dummy) coordinate where we want to place the legend
+        %
+        % (The matrix cannot be placed inside the `axis' environment
+        %  directly, because then a catcode error is raised.
+        %  I guess that this is caused by the `matrix of nodes' feature)
+        % \coordinate (legend) at (axis description cs:0.97,0.03);
+        \coordinate (legend) at (axis description cs:0.405,0.03);
+    \end{axis}
+        % create the legend matrix which is placed at the created (dummy) coordinate
+        % and recall the plot specification using the `\ref' command
+        %
+        % adapt the style of that node to your needs
+        % (e.g. if you like different spacings between the rows or columns
+        %  or a fill color)
+        \matrix [
+            draw,
+            matrix of nodes,
+            anchor=south east,
+            fill=white
+        ] at (legend) {
+                                   & \small{SSCL}$_{\texttt{cpy}}$ & \small{SSCL}$_{\texttt{ptr}}$ \\
+            \text{ }\small{8-bit}  & \ref{plot:line1}              & \ref{plot:line2}              \\
+                    \small{16-bit} & \ref{plot:line3}              & \ref{plot:line4}              \\
+                    \small{32-bit} & \ref{plot:line5}              & \ref{plot:line6}              \\
+        };
+  \end{tikzpicture}
+\end{document}
