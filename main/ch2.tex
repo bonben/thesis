@@ -194,9 +194,9 @@ Les paramètres de flexibilité sont eux aussi configuré lors de l'exécution d
 \begin{figure}[t]
 \includegraphics[width=\textwidth]{main/ch2_fig/curves/L/tikz/L}
 \caption{Performances de décodage et débits de l'algorithme CASCL pour différentes valeurs de $L$ d'un code polaire ($2048,1024$) concaténé à un CRC $c=32$ (GZip).}
-\label{fig:scl_l}
+\label{fig:scl_l_thr}
 \end{figure}
-La profondeur de la liste impacte directement le pouvoir de correction et la complexité de l'algorithme. En Figure~\ref{fig:scl_l} sont représentées les courbes de FER et les débits obtenus pour l'algorithme de décodage CASCL d'un code polaire ($2048$,$1024$). La complexité calculatoire augmente linéairement : le débit est approximativement doublé lorsque $L$ est doublé. Le seul cas ne respectant pas cette assomption est celui pour lequel $L=1$ qui correspond à l'algorithme SC, bien plus rapide puisque n'ayant pas à effectuer les calculs associés à l'algorithme SCL comme le tri, la génération des candidats, le calcul du CRC. Le FER évolue également avec $L$. \`A partir de $L\geq4$ et $E_b/N_0=2$, le FER est divisé par deux lorsque $L$ est doublé.
+La profondeur de la liste impacte directement le pouvoir de correction et la complexité de l'algorithme. En Figure~\ref{fig:scl_l_thr} sont représentées les courbes de FER et les débits obtenus pour l'algorithme de décodage CASCL d'un code polaire ($2048$,$1024$). La complexité calculatoire augmente linéairement : le débit est approximativement doublé lorsque $L$ est doublé. Le seul cas ne respectant pas cette assomption est celui pour lequel $L=1$ qui correspond à l'algorithme SC, bien plus rapide puisque n'ayant pas à effectuer les calculs associés à l'algorithme SCL comme le tri, la génération des candidats, le calcul du CRC. Le FER évolue également avec $L$. \`A partir de $L\geq4$ et $E_b/N_0=2$, le FER est divisé par deux lorsque $L$ est doublé.
 
 \subsubsection{Paramétrage fin de l'élagage}
 L'élagage, tel que défini en Section~\ref{subsec:pruning} est paramétrable très finement dans les implémentations de décodeurs polaires proposées. Tout d'abord, chaque type de \noeud (\texttt{R0}, \texttt{R1}, \texttt{REP} et \texttt{SPC} peut être activé ou désactivé séparément. Cette capacité est utile pour explorer l'impact de l'utilisation de chaque \noeud sur le débit codé.
