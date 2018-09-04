@@ -379,102 +379,81 @@ L'algorithme FASCL permet d'atteindre les débits les plus élevés. Comme il es
     \end{table}
 
 \subsection{Comparaison avec l'état de l'art}
+
 Les débits et latences des décodeurs proposés sont listés et comparés avec ceux de certains décodeurs de l'état de l'art dans le tableau \ref{tab:res}. Pour tous les décodeurs, les \noeuds SPC4+ ne sont pas utilisés afin de ne pas dégrader les performances de décodage. La latence donnée dans le Tableau \ref{tab:res} est la latence \og pire cas \fg et le débit est le débit d'information moyen. La première version, CASCL, est l'implémentation de l'algorithme CASCL sans aucun élagage tandis que les versions notées CASSCL, FASSCL et PASSCL utilisent l'élagage de l'arbre. Le débit du décodeur CASSCL proposé (2.3 Mb/s) est seulement divisé par deux lorsque l'on compare avec l'implémentation spécifique déroulée de l'algorithme CASSCL décrite en \cite{sarkis_fast_2016} (4.0 Mb/s). Elle est approximativement 4 fois plus rapide que l'implémentation générique proposée en \cite{sarkis_increasing_2014} (0.52 Mb/s) et 2 fois plus rapide que celle proposée en \cite{shen_low-latency_2016}, ceci grâce aux améliorations algorithmiques proposées en Section \ref{sec:opti_scl}. De plus, les implémentations proposées présentent une flexibilité et une généricité bien plus grandes que celles proposées dans \cite{sarkis_increasing_2014,shen_low-latency_2016}. En effet, les représentations quantifiées, la possibilité de définir des patrons de poinçonnage et la possibilité d'utiliser les algorithmes adaptatifs n'étaient pas données. En utilisant la même cible matérielle (i7-2600), l'implémentation de l'algorithme PASSCL présente des débits proches de l'implémentation spécifique déroulée de \cite{sarkis_fast_2016}, tandis que le débit obtenu pour l'algorithme FASSCL est lui bien meilleur (jusqu'à 244 Mb/s pour $E_b/N_0=4.5dB$).
 
+\subsubsection{Performances sur différentes cibles matérielles}
 
-  \begin{table}[t]
-    \centering
-    \caption{Comparaison des débits des décodeurs proposés sur différentes cibles matérielles. $L=32$. CRC GZip $c=32$.}
-    \label{tab:res}
-    {\small\resizebox{\linewidth}{!}{
-    \begin{tabular}{r|c|c|c c c | c c c | c c c}
-      \multirow{3}{*}{\centering \textbf{Target}}  & \multirow{3}{*}{\begin{minipage}{0.5in}\centering \textbf{Freq. (MHz)}\end{minipage}} & \multirow{3}{*}{\centering \textbf{Algo.}}  & \multicolumn{3}{c|}{$\mathbold{p=8}$} & \multicolumn{3}{c|}{$\mathbold{p=16}$} & \multicolumn{3}{c}{$\mathbold{p=32}$} \\
-      \cline{4-12}
-      & &                            & \textbf{3.5} & \textbf{4.0} & \textbf{4.5} & \textbf{3.5} & \textbf{4.0} & \textbf{4.5} & \textbf{3.5} & \textbf{4.0} & \textbf{4.5} \\
-      & &                            & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  \\
-      \hline
-      \hline
-      \multirow{3}{*}{\begin{minipage}{0.5in}\centering i7 4790\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 3592\end{minipage}} 
-        & CASCL                         & 2.26  & 2.12   & 2.01   & 2.39   & 2.27   & 2.11    & 2.16 & 2.07   & 1.93 \\
-      & & FASCL                         & 41.83 & 261.41 & 347.94 & 41.33  & 245.56 & 330.54  & 39.9 & 195.66 & 234.56 \\
-      & & PASCL                         & 8.54  & 59.68  & 265.24 & 8.69   & 60.27  & 255.07  & 8.1  & 54.52  & 189.67 \\
-      \hline
-      \multirow{3}{*}{\begin{minipage}{0.5in}\centering Ryzen 2700X\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 4160\end{minipage}} 
-        & CASCL                         & 2.51  & 2.41  & 2.27   & 2.64    & 2.48   & 2.29   & 2.24  & 2.12   & 2.03 \\
-      & & FASCL                         & 43.62 & 276.6 & 378.62 &   43.53 & 264.65 & 345.24 & 39.48 & 208.57 &   263.31 \\
-      & & PASCL                         & 9.46  & 64.12 & 285.42 &   9.72  & 66.63  & 276.38 & 8.28  & 55.48  & 211.19 \\
-      \hline
-      \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A73\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 2360\end{minipage}} 
-        & CASCL                        & 1.84  & 1.72   & 1.64   & 1.72  & 1.64   & 1.57   & 1.45  & 1.37   & 1.33 \\
-      & & FASCL                        & 34.56 & 154.67 & 190.72 & 31.98 & 124.11 & 145.71 & 29.63 & 106.85 &   120.82 \\
-      & & PASCL                        & 6.97  & 44.26  & 157.29 & 6.50  & 40.04  & 124.26 & 5.60  & 35.42  & 104.77 \\
-      \hline
-      \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A15\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 1400\end{minipage}} 
-        & CASCL                         & 0.48 & 0.46  & 0.45  & 0.48 &   0.46  & 0.44  & 0.42 & 0.4   & 0.38  \\
-      & & FASCL                         & 9.29 & 44.92 & 58.41 & 8.76 &   37.75 & 45.9  & 8.27 & 30.28 & 36.19 \\
-      & & PASCL                         & 1.86 & 11.87 & 46.16 & 1.8  & 11.35   & 38.97 & 1.58 & 9.72  & 28.28 \\
-      \hline
-      \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A53\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 1840\end{minipage}} 
-        & CASCL                         & 0.48 & 0.48  &  0.44  & 0.51  & 0.51  & 0.48  & 0.44 & 0.40  & 0.40 \\
-      & & FASCL                         & 9.91 & 49.93 &  68.30 & 9.77  & 41.52 & 50.59 & 8.19 & 30.51 & 35.23 \\
-      & & PASCL                         & 1.94 & 12.84 &  50.96 & 2.05  & 13.24 & 41.08 & 1.68 & 10.97 & 29.37 \\
-      \hline
-      \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A7\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 1400\end{minipage}} 
-        & CASCL                         & 0.27  & 0.26 & 0.25  & 0.24 & 0.23 & 0.23  & 0.16 & 0.15  & 0.15   \\
-      & & FASCL                         & 4.9   & 22.7 & 28.26 & 4.32 & 18.1 & 21.55 & 3.52 & 11.81 & 13.3   \\
-      & & PASCL                         & 1.03  & 6.47 & 22.86 & 0.89 & 5.57 & 17.46 & 0.62 & 3.97  & 12.58  \\
-    \end{tabular}
-    }}
-  \end{table}
+La description logicielle des décodeurs proposés est portable, grâce en particulier à l'utilisation du langage C++11 et de la librairie MIPP \cite{cassagne2018mipp} pour ce qui concerne les instructions SIMD. Ainsi, il est optimisé pour être exécuté sur des processeurs du marché de l'électronique embarquée, d'architecture ARM. Ces cibles sont avantageuses du point de vue de la consommation énergétique pour l'algorithme de décodage SC \cite{cassagne_energy_2016}. Des résultats d'exécution sur plusieurs cibles sont présentées dans le Tableau~\ref{tab:port}. Les métriques prises en compte sont le débit d'information ($\bm{\mathcal{T}_i}$), le nombre de cycle d'horloge nécessaire pour décoder une trame, et l'énergie dépensée par bit décodée ($\bm{\mathcal{E}_b}$). Le Tableau~\ref{tab:port}, présente les résultats d'exécution sur un \coeur.
 
- 
+Les deux premières cibles matérielles considérées sont deux processeurs à usage général pour station de travail, un Intel i7 4790 et un AMD Ryzen 2700X. Leur architecture est de type x86-64 et tous deux possèdent les instruction SIMD AVX2. Les fréquences affichées sont celles mesurées au moment de l'exécution du programme, tout comme la puissance nécessaire pour le calcul de ($\bm{\mathcal{E}_b}$). Le logiciel utilisé pour ces mesures est HWiNFO \cite{noauthor_hwinfo_nodate}. La puissance mesurée est celle du \coeur de processeur seulement, excluant la consommation d'énergie de la mémoire principale et de la mémoire cache de niveau 3.
+
+Ensuite, les résultats d'exécution des implémentations sur quatre versions différentes de processeurs ARM sont présentés. Deux cartes d'évaluation ont été utilisées pour cela. La carte Hikey960 embarque la puce Kirin960 de Hisilicon. Il s'agit d'une puce à 8 \coeurs, 4 Cortex A73 et 4 Cortex A53 qui correspondent à la microarchitecture ARMv8-A. La valeur de puissance consommée n'est pas mesurée, car aucun capteur ne permet de telle mesure sur cette carte. Les consommations annoncées par le constructeur sont considérées \cite{humrick_hisilicon_nodate}. La carte Odroid XU4 embarque la puce Samsung Exynos 5422 à 4 \coeurs Cortex A15 et 4 \coeurs Cortex A7 de mircoarchitecture ARMv7-A. La puissance considérée pour chacun des \coeurs est issue de \cite{holmgren_energy_nodate,benmoussa_performance_nodate}. Tous les \coeurs ARM possèdent le jeu d'instruction SIMD NEON.
+
+Tout d'abord, les processeurs de station de travail affichent de plus hauts débits que les processeurs ARM, de manière assez logique lorsque l'on considère la fréquence de fonctionnement. On observe également que malgré des fréquences de fonctionnement proches, le Cortex A73 présente un débit environ deux fois plus élevé que le Cortex A15, cela étant sans doute lié au changement de microarchitecture entre les deux générations. Un écart du même ordre de grandeur est observé entre les Cortex A53 et A7, qui sont des \coeurs à faible consommation énergétique.
+
+Du point de vue du nombre de cycles d'horloge nécessaire au décodage d'une trame, il est important d'observer que le Cortex A73 est très compétitif par rapport aux processeurs de station de travail, le i7 et le Ryzen. En conséquence, puisque sa puissance est bien inférieure ($\approx 2 W$ en charge contre $\approx 15 W$), l'efficacité énergétique est elle 4 à 5 fois supérieures. Les Cortex A7 et A53 sont proches en termes d'efficacité énergétique tandis que le Cortex A15 est en retrait.
+
+
   \begin{table}[t]
     \centering
     \caption{Comparaison des débits des décodeurs proposés sur différentes cibles matérielles. Représentation en virgule fixe sur 8 bits , $E_b/N_0 = 4.5dB$, CRC GZip $c=32$.}
-    \label{tab:res}
+    \label{tab:port}
     {\small\resizebox{\linewidth}{!}{
-    \begin{tabular}{r|c|c|c c c| c c c| c c c}
-      \multirow{3}{*}{\centering \textbf{Target}}  & \multirow{3}{*}{\begin{minipage}{0.5in}\centering \textbf{Freq. (MHz)}\end{minipage}} & \multirow{3}{*}{\centering \textbf{Algo.}}  & \multicolumn{3}{c|}{$\bm{\mathcal{T}_i}$ \textbf{Mb/s}} & \multicolumn{3}{c|}{\textbf{CCs}} & \multicolumn{3}{c}{$\mathbold{E_b}$ \textbf{(nJ/bit)}} \\
-      \cline{4-12}
-       & & & a & b & c & d & e & f & g & h & i\\
-       & & & a & b & c & d & e & f & g & h & i\\
+    \begin{tabular}{r|c|c|c c c c| c c c| c c c}
+      \multirow{3}{*}{\centering \textbf{Target}}  & \multirow{3}{*}{\begin{minipage}{0.5in}\centering \textbf{Freq. (MHz)}\end{minipage}} & \multirow{3}{*}{\centering \textbf{Algo.}}  & & \multicolumn{3}{c|}{$\bm{\mathcal{T}_i}$ \textbf{(Mb/s)}} & \multicolumn{3}{c|}{\textbf{\# Cycles par trame}} & \multicolumn{3}{c}{$\bm{\mathcal{E}_b}$ \textbf{(nJ/bit)}} \\
+      \cline{4-13}
+       & & & & \textbf{3.5} & \textbf{4.0} & \textbf{4.5} & \textbf{3.5} & \textbf{3.5} & \textbf{3.5} & \textbf{3.5} & \textbf{4.0} & \textbf{4.5} \\
+       & & & & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  \\
       \hline
       \hline
       \multirow{3}{*}{\begin{minipage}{0.5in}\centering i7 4790\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 3592\end{minipage}} 
-        & CASCL                         & 2.39   & 2.27   & 2.11    & 2590  & 2726 & 2933 &0    & 0    & 0    \\
-      & & FASCL                         & 41.33  & 245.56 & 330.54  & 150   & 25   & 19   &0    & 0    & 0    \\
-      & & PASCL                         & 8.69   & 60.27  & 255.07  & 712   & 103  & 24   &0    & 0    & 0    \\
+        & CASCL &                         & 2.39   & 2.27   & 2.11    & 2590  & 2726 & 2933 & 6192 & 6520 & 7014 \\
+      & & FASCL &                         & 41.33  & 245.56 & 330.54  & 150   & 25   & 19   & 358  & 60   & 45   \\
+      & & PASCL &                         & 8.69   & 60.27  & 255.07  & 712   & 103  & 24   & 1703 & 246  & 58   \\
       \hline
       \multirow{3}{*}{\begin{minipage}{0.5in}\centering Ryzen 2700X\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 4160\end{minipage}} 
-        & CASCL                         & 2.64    & 2.48   & 2.29   & 2715  & 2890 & 3130 &0    & 0    & 0    \\
-      & & FASCL                         &   43.53 & 264.65 & 345.24 & 165   & 27   & 21   &0    & 0    & 0    \\
-      & & PASCL                         &   9.72  & 66.63  & 276.38 & 737   & 108  & 26   &0    & 0    & 0    \\
+        & CASCL &                         & 2.64    & 2.48   & 2.29   & 2715  & 2890 & 3130 & 5227 & 5565 & 6026 \\
+      & & FASCL &                         &   43.53 & 264.65 & 345.24 & 165   & 27   & 21   & 317  & 52   & 40   \\
+      & & PASCL &                         &   9.72  & 66.63  & 276.38 & 737   & 108  & 26   & 1420 & 207  & 50   \\
       \hline
       \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A73\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 2360\end{minipage}} 
-        & CASCL                         & 1.72  & 1.64   & 1.57     & 2364  & 2479 & 2590 &1053 & 1105 & 1154 \\
-      & & FASCL                         & 31.98 & 124.11 & 145.71   & 127   & 33   & 28   &57   & 15   & 12   \\
-      & & PASCL                         & 6.50  & 40.04  & 124.26   & 626   & 102  & 33   &279  & 45   & 15   \\
+        & CASCL &                         & 1.72  & 1.64   & 1.57     & 2364  & 2479 & 2590 & 1053 & 1105 & 1154  \\
+      & & FASCL &                         & 31.98 & 124.11 & 145.71   & 127   & 33   & 28   & 57   & 15   & 12    \\
+      & & PASCL &                         & 6.50  & 40.04  & 124.26   & 626   & 102  & 33   & 279  & 45   & 15    \\
       \hline
       \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A15\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 2000\end{minipage}} 
-        & CASCL                         & 0.48 &   0.46  & 0.44     & 5025  & 5244 & 5482 &3646 & 3804 & 3977 \\
-      & & FASCL                         & 8.76 &   37.75 & 45.9     & 275   & 64   & 53   &200  & 46   & 38   \\
-      & & PASCL                         & 1.8  & 11.35   & 38.97    & 1340  & 213  & 62   &972  & 154  & 45   \\
+        & CASCL &                         & 0.69  & 0.66  & 0.63     & 5025  & 5244 & 5482 & 3646 & 3804 & 3977   \\
+      & & FASCL &                         & 12.51 & 53.93 & 65.57    & 275   & 64   & 53   & 200  & 46   & 38     \\
+      & & PASCL &                         & 2.57  & 16.21 & 55.67    & 1340  & 213  & 62   & 972  & 154  & 45     \\
       \hline
       \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A53\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 1840\end{minipage}} 
-        & CASCL                         & 0.51  & 0.51  & 0.48      & 6216  & 6216 & 6605 &1282 & 1282 & 1363 \\
-      & & FASCL                         & 9.77  & 41.52 & 50.59     & 324   & 76   & 63   &67   & 16   & 13   \\
-      & & PASCL                         & 2.05  & 13.24 & 41.08     & 1546  & 239  & 77   &319  & 49   & 16   \\
+        & CASCL &                         & 0.45 & 0.45  & 0.41      & 7064 & 7064 & 7653 & 1457 & 1457 & 1579     \\
+      & & FASCL &                         & 9.36 & 47.12 & 64.45     & 339  & 67   & 49   & 70   & 14   & 10       \\
+      & & PASCL &                         & 1.83 & 12.12 & 48.09     & 1733 & 262  & 66   & 357  & 54   & 14       \\
       \hline
       \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A7\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 1400\end{minipage}} 
-        & CASCL                          & 0.24 & 0.23 & 0.23       & 10051 & 10488& 10488 &1250 & 1304 & 1304 \\
-      & & FASCL                          & 4.32 & 18.1 & 21.55      & 558   & 133  & 112   &69   & 17   & 14   \\
-      & & PASCL                          & 0.89 & 5.57 & 17.46      & 2710  & 433  & 138   &337  & 54   & 17   \\
+        & CASCL &                          & 0.24 & 0.23 & 0.23       & 10051 & 10488& 10488 &1250 & 1304 & 1304 \\
+      & & FASCL &                          & 4.32 & 18.1 & 21.55      & 558   & 133  & 112   &69   & 17   & 14   \\
+      & & PASCL &                          & 0.89 & 5.57 & 17.46      & 2710  & 433  & 138   &337  & 54   & 17   \\
     \end{tabular}
     }}
   \end{table}
 
  
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
