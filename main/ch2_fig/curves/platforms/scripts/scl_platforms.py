@@ -26,8 +26,8 @@ N_K_idx  = idx
 idx   += 1
 
 L_list    = [
-             "-L 8" ,
-             "-L 16",
+             # "-L 8" ,
+             # "-L 16",
              "-L 32"
             ]
 L_idx  = idx
@@ -35,24 +35,24 @@ idx   += 1
 
 p_list    = [
              "-p 8",
-             "-p 16",
-             "-p 32"
+             # "-p 16",
+             # "-p 32"
             ]
 p_idx  = idx
 idx   += 1
 
 SNR_list  = [
-             "-m 3.5 -M 3.5",
-             "-m 4.0 -M 4.0",
+             # "-m 3.5 -M 3.5",
+             # "-m 4.0 -M 4.0",
              "-m 4.5 -M 4.5"
             ]
 SNR_idx  = idx
 idx   += 1
 
 algo_list = [
-             "--dec-type SCL",
+             # "--dec-type SCL",
              "--dec-type ASCL",
-             "--dec-type ASCL --dec-partial-adaptive"
+             # "--dec-type ASCL --dec-partial-adaptive"
             ]
 algo_idx  = idx
 idx   += 1
@@ -107,7 +107,8 @@ for run in runs:
 
 	process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	(stdout, stderr) = process.communicate()
-
+      
+	print(args)
 	lines = stdout.decode('utf-8').split('\n')
 	for line in lines:
 		if "decode_siho" in line :

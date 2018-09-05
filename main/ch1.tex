@@ -36,12 +36,9 @@ Un seul et unique modèle de canal composite sera considéré tout au long de ce
 Le canal composite considéré est basé sur un canal à bruit blanc additif gaussien à entrée binaire (BI-AWGNC : Binary Input - Additive White Gaussian Noise Channel) tel que défini dans \cite[Section~1.5.1.3]{ryan2009channel}. Ce modèle est classiquement utilisé pour caractériser les performances des codes correcteurs d'erreur. Il consiste en l'addition aux données de sortie du modulateur $\mathbold{\tilde{x}}$ d'une variable aléatoire à valeurs réelles ayant une distribution gaussienne centrée en $0$ et de densité spectrale $N_0$. Afin d'évaluer les performances de correction des codes correcteurs d'erreurs, les taux d'erreurs seront souvent rapportés à cette densité spectrale, ou plus précisément au \textbf{rapport signal à bruit} (SNR), noté $E_b/N_0$, où $E_b=\frac{\mathbb{E}(\hat{x}^2)}{R}$ est l'énergie moyenne par bit d'information.
 
 Les estimations en sortie du démodulateur sont données sous la forme de rapport de vraisemblance logarithmique (LLR : Logarithmical Likelihood Ratio). Leur signe détermine pour chaque donnée $\hat{y}_i \in \mathbold{\hat{y}}$ la valeur binaire d'entrée $\hat{x}_i \in \mathbold{\hat{x}}$ la plus probable. La valeur absolue correspond au degré de fiabilité de l'information. Plus de détails sur le modèle de canal et la définition des LLRs sont donnés en Annexe \ref{append:decoding_nodes}. L'expression mathématique de $L_i$ est la suivante : 
-
 \begin{equation*}
   L_i = \log\left(\dfrac{P_r(y_i | x_i = 0)}{P_r(y_i | x_i = 1)}\right)
 \end{equation*}
-
-
 \subsection{Les codes polaires}
 Les codes polaires \cite{arikan_channel_2009} sont des codes en blocs linéaires \cite{morelos-zaragoza_art_2006}. Soient les ensembles $\mathbb{B}^n = \{0,1\}^n$, et une matrice $G \in \mathbb{B}^K \times \mathbb{B}^N$, l'encodage d'un code en blocs linéaire est une application linéaire injective de $\mathbb{B}^K$ vers $\mathbb{B}^N$ qui à un élément $\mathbold{b} \in \mathbb{B}^K$ associe un élément $\mathbold{x} \in \mathbb{B}^N$ tel que $x=\mathbold{b}G$. Les codes polaires peuvent ainsi être défini comme un ensemble de codes en blocs linéaires ayant une matrice génératrice avec une forme particulière.
 
