@@ -20,7 +20,7 @@ N_K_list    = [
              # "-N 2048 -K 682",
              # "-N 2048 -K 1024",
              # "-N 2048 -K 1365",
-             "-N 2048 -K 1723",
+             "-N 2048 -K 1755",
             ]
 N_K_idx  = idx
 idx   += 1
@@ -41,29 +41,26 @@ p_list    = [
 p_idx  = idx
 idx   += 1
 
+
 SNR_list  = [
-             # "-m 3.5 -M 3.5",
-             # "-m 4.0 -M 4.0",
+             "-m 3.5 -M 3.5",
+             "-m 4.0 -M 4.0",
              "-m 4.5 -M 4.5"
             ]
 SNR_idx  = idx
 idx   += 1
 
 algo_list = [
-             # "--dec-type SCL",
+             "--dec-type SCL",
              "--dec-type ASCL",
-             # "--dec-type ASCL --dec-partial-adaptive"
+             "--dec-type ASCL --dec-partial-adaptive"
             ]
 algo_idx  = idx
 idx   += 1
-
 runs = []
 # generate any combination
 for combination in itertools.product(N_K_list, L_list, p_list, SNR_list, algo_list):
     runs.append(combination)
-
-
-print(len(runs))
 
 args_base = []
 
@@ -108,7 +105,6 @@ for run in runs:
 	process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	(stdout, stderr) = process.communicate()
       
-	print(args)
 	lines = stdout.decode('utf-8').split('\n')
 	for line in lines:
 		if "decode_siho" in line :
@@ -118,7 +114,5 @@ for run in runs:
 			avg_lat = cols[9]
 			max_lat = cols[11]
 	run = list(run)
-	run.append("thr "     + ithr + " Mb/s")
-	run.append("avg_lat " + avg_lat + " us")
-	run.append("max_lat " + max_lat + " us")
-	print(run)
+
+	print(str(run) + " : " + ithr)
