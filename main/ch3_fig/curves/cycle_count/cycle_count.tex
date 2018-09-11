@@ -1,0 +1,109 @@
+\documentclass{standalone}
+
+\usepackage{amsmath}
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning, patterns}
+\pgfplotsset{
+/pgfplots/ybar legend/.style={
+/pgfplots/legend image code/.code={%
+\draw[##1,/tikz/.cd,bar width=0.1cm,yshift=-0.2em,bar shift=0.5*\pgfplotbarwidth]
+plot coordinates {(0.5*\pgfplotbarwidth,0.6em) (2.5*\pgfplotbarwidth,0.4em) (4.5*\pgfplotbarwidth,0.2em)};},
+}
+}
+\input{colors}
+
+\begin{document}
+\begin{tikzpicture} 
+
+\begin{axis}[
+  name=plot1,
+  height=0.56\textwidth,  width=0.5\textwidth,
+  axis y line*=left,
+  ylabel={cycle number},
+  symbolic x coords={1024,512,256,128,64},
+  xtick=data, xlabel={N},
+  ybar,
+  ymax=15000, ymin=0, enlarge x limits=0.15, bar width=0.3cm
+  ] 
+\addplot[Paired-1, fill, fill opacity=0.3, postaction={pattern color = black!80!Paired-1!70, pattern= north east lines}] 
+  coordinates {(1024,14030) (512,7058)  (256,3893) (128,2457) (64,1349)}; \label{plot:A57_1_2}
+\addplot[Paired-5, fill, fill opacity=0.3                                                                              ] 
+  coordinates {(1024,6023)  (512,3260)  (256,1639) (128,865)  (64,342) };  \label{plot:ASIP_1_2}
+\end{axis} 
+
+\begin{axis}[
+  height=0.56\textwidth,  width=0.5\textwidth,
+  legend style={at={(1.2,-0.15)}, 
+                anchor=north,
+                legend columns=2
+                }, 
+  axis y line*=right,
+  axis x line=none,
+  ymin=0, ymax=5, enlarge x limits=0.15,
+]
+\coordinate (legend) at (axis description cs:0.45,0.97);
+
+\addplot[smooth,mark=*,Paired-9]
+  coordinates{
+    (0     ,2.3)
+    (0.0148,2.2)
+    (0.0295,2.4)
+    (0.0441,2.8)
+    (0.059 ,3.9)
+};
+\end{axis}
+
+\begin{axis}[
+  name=plot2,
+  at={($(plot1.east)+(1.6cm,0)$)},anchor=west,
+  height=0.56\textwidth,  width=0.5\textwidth,
+  symbolic x coords={1024,512,256,128,64},
+  xtick=data, xlabel=N,
+  ybar,
+  axis y line*=none,
+  ymax=15000, ymin=0, enlarge x limits=0.15, bar width=0.3cm
+  ] 
+\addplot[Paired-1, fill, fill opacity=0.3, postaction={pattern color = black!80!Paired-1!70, pattern= north east lines}] 
+  coordinates {(1024,11210) (512,6245)  (256,3201) (128,1903) (64,1159)}; \label{plot:A57_1_4}
+\addplot[Paired-5, fill, fill opacity=0.3                                                                              ] 
+  coordinates {(1024,5200)  (512,2904)  (256,1523) (128,669)  (64,338)};  \label{plot:ASIP_1_4}
+\end{axis} 
+
+\begin{axis}[
+  height=0.56\textwidth,  width=0.5\textwidth,
+  at={($(plot1.east)+(1.6cm,0)$)},anchor=west,
+  axis y line*=right,
+  axis x line=none,
+  ymin=0, ymax=5, enlarge x limits=0.15,
+  ylabel=cycle ratio
+]
+\addplot[smooth,mark=*,Paired-9]
+  coordinates{
+    (0     ,2.2)
+    (0.0148,2.2)
+    (0.0295,2.1)
+    (0.0441,2.8)
+    (0.059 ,3.4)
+};\label{plot:reduction}
+\end{axis}
+
+  \matrix [
+      draw,
+      matrix of nodes,
+      anchor=north,
+      fill=white
+  ] at (legend) {
+      A57     & \ref{plot:A57_1_4}   \\
+      ASIP    & \ref{plot:ASIP_1_4}  \\
+      Ratio   & \ref{plot:reduction}    \\
+  };
+
+  \node [align=left, text width=5.4cm] at (2.5,-1.4) {(a): Cycle count and ratio for a code rate of 1/2} ;
+  \node [align=left, text width=5.4cm] at (8.5,-1.4) {(b): Cycle count and ratio for a code rate of 1/4};
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,96 @@
+#Run command:
+#./bin/aff3ct -p "8" --sim-type "BFER" -C "POLAR" -K "512" -N "1024" -m "1.0" -M "4.51" -s "0.25" -e "100" --enc-fb-gen-method "5G" --dec-type "SC" --src-type "AZCW" --dec-implem "FAST" --dec-simd "INTRA" --qnt-bits "6" --qnt-dec "1" --enc-fb-awgn-path "../conf/cde/awgn_polar_codes/5G/N_1024.pc" -t "8" --chn-type "AWGN_FAST" --sim-pyber "SC_5G_512_1024" 
+#Curve name:
+#SC_5G_512_1024
+# -------------------------------------------------
+# ---- A FAST FORWARD ERROR CORRECTION TOOL >> ----
+# -------------------------------------------------
+# Parameters :
+# * Simulation ------------------------------------
+#    ** Type                  = BFER
+#    ** Type of bits          = int8
+#    ** Type of reals         = float32
+#    ** Type of quant. reals  = int8
+#    ** Date (UTC)            = 2017-11-12 19:10:56
+#    ** Git version           = v1.3.0-34-g021aaca
+#    ** Code type (C)         = POLAR
+#    ** SNR min (m)           = 1.000000 dB
+#    ** SNR max (M)           = 4.510100 dB
+#    ** SNR step (s)          = 0.250000 dB
+#    ** Seed                  = 0
+#    ** Statistics            = off
+#    ** Debug mode            = off
+#    ** Multi-threading (t)   = 8 thread(s)
+#    ** SNR type              = EB
+#    ** Coset approach (c)    = no
+#    ** Coded monitoring      = no
+#    ** Bad frames tracking   = off
+#    ** Bad frames replay     = off
+#    ** Bit rate              = 0.500000
+#    ** Inter frame level     = 1
+# * Source ----------------------------------------
+#    ** Type                  = AZCW
+#    ** Info. bits (K_info)   = 512
+# * Codec -----------------------------------------
+#    ** Type                  = POLAR
+#    ** Info. bits (K)        = 512
+#    ** Codeword size (N_cw)  = 1024
+#    ** Frame size (N)        = 1024
+#    ** Code rate             = 0.500000
+# * Encoder ---------------------------------------
+#    ** Type                  = AZCW
+#    ** Systematic            = yes
+#    Frozen bits generator ------------------------
+#    ** Type                  = 5G
+#    ** Sigma                 = adaptive
+#    ** Path                  = ../conf/cde/awgn_polar_codes/5G/N_1024.pc
+# * Decoder ---------------------------------------
+#    ** Type (D)              = SC
+#    ** Implementation        = FAST
+#    ** Systematic            = yes
+#    ** SIMD strategy         = INTRA
+#    ** Polar node types      = {R0,R0L,R1,REP,REPL,SPC}
+# * Modem -----------------------------------------
+#    ** Type                  = BPSK
+#    ** Bits per symbol       = 1
+#    ** Sampling factor       = 1
+#    ** Sigma square          = on
+# * Channel ---------------------------------------
+#    ** Type                  = AWGN_FAST
+#    ** Complex               = off
+#    ** Add users             = off
+# * Quantizer -------------------------------------
+#    ** Type                  = STD
+#    ** Fixed-point config.   = {6, 1}
+# * Monitor ---------------------------------------
+#    ** Frame error count (e) = 100
+# * Terminal --------------------------------------
+#    ** Type                  = STD
+#    ** Enabled               = yes
+#    ** Frequency (ms)        = 500
+#
+# The simulation is running...
+# ----------------------------------------------------------------------||---------------------
+#       Bit Error Rate (BER) and Frame Error Rate (FER) depending       ||  Global throughput  
+#                    on the Signal Noise Ratio (SNR)                    ||  and elapsed time   
+# ----------------------------------------------------------------------||---------------------
+# -------|-------|----------|----------|----------|----------|----------||----------|----------
+   Es/N0 | Eb/N0 |      FRA |       BE |       FE |      BER |      FER ||  SIM_THR |    ET/RT 
+#   (dB) |  (dB) |          |          |          |          |          ||   (Mb/s) | (hhmmss) 
+# -------|-------|----------|----------|----------|----------|----------||----------|----------
+   -2.01 |  1.00 |     1289 |    73150 |     1002 | 1.11e-01 | 7.77e-01 ||     6.31 | 00h00'00  
+   -1.76 |  1.25 |     1789 |    63949 |     1004 | 6.98e-02 | 5.61e-01 ||    90.49 | 00h00'00  
+   -1.51 |  1.50 |     2714 |    54846 |     1002 | 3.95e-02 | 3.69e-01 ||   124.29 | 00h00'00  
+   -1.26 |  1.75 |     4680 |    47630 |     1002 | 1.99e-02 | 2.14e-01 ||   169.19 | 00h00'00  
+   -1.01 |  2.00 |     9122 |    42609 |     1002 | 9.12e-03 | 1.10e-01 ||   200.57 | 00h00'00  
+   -0.76 |  2.25 |    24278 |    35546 |     1000 | 2.86e-03 | 4.12e-02 ||   246.76 | 00h00'00  
+   -0.51 |  2.50 |    65576 |    30247 |     1000 | 9.01e-04 | 1.52e-02 ||   267.53 | 00h00'00  
+   -0.26 |  2.75 |   189763 |    23059 |     1000 | 2.37e-04 | 5.27e-03 ||   278.77 | 00h00'00  
+   -0.01 |  3.00 |   592578 |    18019 |     1000 | 5.94e-05 | 1.69e-03 ||   245.49 | 00h00'01  
+    0.24 |  3.25 |  1848733 |    13876 |     1000 | 1.47e-05 | 5.41e-04 ||   177.01 | 00h00'05  
+    0.49 |  3.50 |  7719391 |    15567 |     1397 | 3.94e-06 | 1.81e-04 ||   243.03 | 00h00'16 x
+    0.74 |  3.75 |  5276296 |     3125 |      343 | 1.16e-06 | 6.50e-05 ||   194.73 | 00h00'13 
+    0.99 |  4.00 | 15799808 |     2749 |      325 | 3.40e-07 | 2.06e-05 ||   206.50 | 00h00'39 x
+    1.24 |  4.25 | 16601416 |      827 |      100 | 9.73e-08 | 6.02e-06 ||   204.80 | 00h00'41  
+    1.49 |  4.50 | 48979768 |      820 |      100 | 3.27e-08 | 2.04e-06 ||   175.07 | 00h02'23  
+# End of the simulation.
