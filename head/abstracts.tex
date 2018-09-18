@@ -7,13 +7,34 @@
 \vskip1em
 
 
-Résumé
+Les codes correcteurs d'erreurs sont des algorithmes indispensable dans tout système de communication ou de stockage numérique.
+Les codes polaires constituent une classe de ces algorithmes qui suscitent l'intérêt des chercheurs et des industriels, comme en atteste sa sélection pour le codage des canaux de contrôle dans la prochaine génération de téléphonie mobile (5G). 
 
+%% Option 1 : Cloud-RAN
+Un des enjeux du nouveau réseau radio est la virtualisation des traitements numériques, dont les algorithmes de codage. Décrire ces algorithmes de traitement de manière logicielle et les déployer sur des architectures programmables permettra une plus grande flexibilité du réseau. Cela permettra l'équilibrage de l'effort de calcul sur l'ensemble du réseau ainsi que la coopération entre cellules afin de réduire la consommation d'énergie, d'augmenter le débit et de diminuer la latence.
+%% Option 2 : exploration
+
+
+La première contribution majeure de cette thèse est l'implémentation logicielle d'une famille d'algorithme de décodage de codes polaires, dite "à Liste" , sur des processeurs à usage général. L'accent est mis sur la généricité et la flexibilité du décodeur. Les performances de débit de certains de ces algorithmes sont les plus élevés à ce jour sur les cibles considérées.
+
+Les deuxième et troisième contributions majeures sont les propositions de deux nouvelles architectures programmables performantes pour les algorithmes considérés. Ces architectures font partie de la famille des processeurs à jeu d'instruction dédiés à l'application. Il est montré que ces architectures, bien que très flexibles, permettent de très bonnes performances en termes de débits et de latence, tout en diminuant drastiquement la consommation d'énergie.
+ 
 \vskip0.5cm
 \emph{Mots clefs :} Polar-codes...
 
+Error-correcting codes are essential algorithms in any digital communication chain or digital storage system.
+Polar codes are a class of these algorithms that are of interest to both academic and industrial actors, as evidenced by its selection for control channels in the next generation of mobile telephony (5G). 
+
+%% Option 1 : Cloud-RAN
+One of the challenges of new radio networks is the virtualization of digital processing, including coding algorithms. A software description of this algortihms and their deployment on programmable architectures will allow greater network flexibility. The induced dynamic balancing of the computational effort across the network, as well as inter-cell cooperation could lead to energy consumption reduction, increase of the data rate and latency reduction.
+%% Option 2: Exploration
 
 
+The first major contribution of this thesis is the software implementation of a family of polar code decoding algorithms, called "List", on general purpose processors. The emphasis is on the genericity and flexibility of the decoder. The throughput performance of some of these algorithms is the highest to date on the hardware targets considered.
+
+The second and third major contributions are the proposals for two new high-performance programmable architectures for the algorithms under consideration. These architectures are part of the family of
+Application Specific Instruction-set Processors (ASIP). It is shown that these architectures, although flexible, lead to state-of-the-art performance in terms of throughput and latency, while drastically reducing energy consumption.
+ 
 
 \cleardoublepage
 \chapter*{Abstract}
