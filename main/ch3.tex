@@ -48,6 +48,7 @@ Dans le domaine de l'embarqué, les processeurs utilisés sont souvent de type R
 \centering
 \includegraphics[width=0.75\textwidth]{main/ch3_fig/pipelines}
 \caption{Pipeline à 5 étages}
+\label{fig:pipelines}
 \end{figure}
 
 
@@ -56,22 +57,28 @@ L'ajout de registres de pipeline représentés dans la Figure~\ref{fig:pipelines
 Voici donc les grandes lignes de l'architecture RISC définie dans \cite{hennessy2011computer} et qui fait figure de référence dans le domaine. En effet, ce même pipeline à cinq étages, à quelques différences près mais dont la structure est proche, se retrouve dans de nombreux processeurs du marché. L'architecture de base des processeurs Tensilica est une architecture RISC.
 
 \subsection{Les processeurs à jeu d'instructions spécifiques à l'application}
+
 \begin{figure}[t]
-\centering
-\includegraphics[width=0.75\textwidth]{main/ch3_fig/pipelines}
-\caption{Pipeline à 5 étages}
+  \centering
+  \subfloat[Flot basé sur la particularisation d’un processeur de base]{
+  \includegraphics[width=0.51\textwidth]{main/ch3_fig/methodo_b}
+  \label{fig:methodo_a}
+  }
+  \quad
+  \subfloat[Flot basé sur la spécification complète du processeur.]{
+  \includegraphics[width=0.4075\textwidth]{main/ch3_fig/methodo_a}
+  \label{fig:methodo_b}
+  }
+  \caption{Méthodologies de conception des ASIP}
+  \label{fig:asip_methods}
 \end{figure}
-Deux principales méthodologies de conception d'ASIP sont principalement utilisées. Ces deux méthodologies sont représentées schématiquement dans la Figure~\ref{fig:asip_methods}. La première correspond à l'approche Tensilica. Une architecture de base, peu complexe en terme d'aire occupée et à faible consommation, est au \coeur de l'ASIP. Cette architecture de base est ensuite configurée et étendue. La deuxième méthode présentée en Figure~\ref{fig:asip_methods_b}. Elle repose sur l'utilisation d'un langage de description architecturale (ADL : Architecture Description Language). Les outils de conceptions prennent comment entrée la description architecturale écrite dans ce langage pour générer la description matérielle du processeur, un simulateur d'instruction, un compilateur, etc... Cette méthodologie de conception s'approche davantage de celle utilisée dans le Chapitre~\ref{chap:tta}.
+
+
+Deux principales méthodologies de conception d'ASIP sont principalement utilisées. Ces deux méthodologies sont représentées schématiquement dans la Figure~\ref{fig:asip_methods}. La première correspond à l'approche Tensilica. Une architecture de base, peu complexe en terme d'aire occupée et à faible consommation, est au \coeur de l'ASIP. Cette architecture de base est ensuite configurée et étendue. La deuxième méthode présentée en Figure~\ref{fig:methodo_b}. Elle repose sur l'utilisation d'un langage de description architecturale (ADL : Architecture Description Language). Les outils de conceptions prennent comment entrée la description architecturale écrite dans ce langage pour générer la description matérielle du processeur, un simulateur d'instruction, un compilateur, etc... Cette méthodologie de conception s'approche davantage de celle utilisée dans le Chapitre~\ref{chap:tta}.
 
 En ce qui concerne le processeur basé sur l'approche Tensilica, il s'agit donc de paramétrer et d'étendre un processeur de base. Chaque élément du pipeline de base peut être configuré.
 L'interface vers la mémoire d'instruction peut être définie : nombre de bits par ligne de cache, associativité de la mémoire, taille de la mémoire. Le nombre de registres dans le fichier de registre à usage général peut être également modifié. De nombreuses opérations peuvent être ajoutées ou enlevées de l'ALU : \textcolor{red}{BLABLA}
 
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{main/ch3_fig/methodos}
-\caption{Méthodologies de conception des ASIP}
-\end{figure}
 
 
 \subsection{Le flot de conception Tensilica}
