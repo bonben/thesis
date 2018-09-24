@@ -23,11 +23,12 @@ Les Chapitres \ref{chap:tensilica} et \ref{chap:tta} de ce manuscrit présentent
 L'architecture ASIP que nous avons développée est basée sur une processur de type RISC (Reduced Instruction Set Computer). Dans une première sous-section, les principes des architectures RISC sont présentés. Le concept d'ASIP sera ensuite introduit ainsi que leurs deux grandes méthodologies de conception. Le flot de conception de l'outil logiciel utilisé pour concevoir notre ASIP sera ensuite présenté.
 
 \subsection{Les processeurs RISC}
-
+\label{subsec:risc}
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{main/ch3_fig/stages}
 \caption{\'Etages d'un processeur RISC}
+\label{fig:risc}
 \end{figure}
 
 Dans le domaine de l'embarqué, les processeurs utilisés sont souvent de type RISC. Cette classe de processeurs a été introduite dans \cite{hennessy2011computer}. Par une analyse statistique et quantitative des applications traitées par les architectures de processeurs, les auteurs ont abouti à une microarchitecture de processeurs composée de 5 étages. Une unité matérielle est associée à chacun des étages, comme montré dans la figure \ref{fig:stages}.
@@ -58,25 +59,27 @@ Voici donc les grandes lignes de l'architecture RISC définie dans \cite{henness
 
 \subsection{Les processeurs à jeu d'instructions spécifiques à l'application}
 
-\begin{figure}[t]
+\begin{figure}[]
   \centering
-  \subfloat[Flot basé sur la particularisation d’un processeur de base]{
-  \includegraphics[width=0.51\textwidth]{main/ch3_fig/methodo_b}
-  \label{fig:methodo_a}
-  }
-  \quad
   \subfloat[Flot basé sur la spécification complète du processeur.]{
-  \includegraphics[width=0.4075\textwidth]{main/ch3_fig/methodo_a}
-  \label{fig:methodo_b}
+  \includegraphics[scale=0.83]{main/ch3_fig/methodo_a}
+  \label{fig:methodo_adl}
+  }
+  \\
+  \subfloat[Flot basé sur la particularisation d’un processeur de base]{
+  \includegraphics[scale=0.83]{main/ch3_fig/methodo_b}
+  \label{fig:methodo_tensilica}
   }
   \caption{Méthodologies de conception des ASIP}
   \label{fig:asip_methods}
 \end{figure}
 
 
-Deux principales méthodologies de conception d'ASIP sont principalement utilisées. Ces deux méthodologies sont représentées schématiquement dans la Figure~\ref{fig:asip_methods}. La première correspond à l'approche Tensilica. Une architecture de base, peu complexe en terme d'aire occupée et à faible consommation, est au \coeur de l'ASIP. Cette architecture de base est ensuite configurée et étendue. La deuxième méthode présentée en Figure~\ref{fig:methodo_b}. Elle repose sur l'utilisation d'un langage de description architecturale (ADL : Architecture Description Language). Les outils de conceptions prennent comment entrée la description architecturale écrite dans ce langage pour générer la description matérielle du processeur, un simulateur d'instruction, un compilateur, etc... Cette méthodologie de conception s'approche davantage de celle utilisée dans le Chapitre~\ref{chap:tta}.
+Les méthodologies de conception des ASIP peuvent être divisées en deux famille. La première famille correspond à un flot de conception basé sur la spécification complète du processeur, représentée dans la Figure \ref{fig:methodo_adl}. Le modèle du processeur est décrit dans un langage de description architectural (ADL : Architecture Description Language) \cite{mishra2011processor}. Ces langages de description permettent de définir précisément l'architecture d'un processeur. Ils peuvent être de différents types. Les ADLs structurels décrivent les composants des processeurs ainsi que leurs interconnexions. Les ADLs comportementaux décrivent quand à eux le comportement du jeu d'instructions du processeur. Des langages de description mixtes permettent quant à eux de décrire simultanément la structure et le comportement du langage. Le flot de conception utilisé pour concevoir le processeur décrit dans le Chapitre \ref{chap:tta} utilise de tels langages de description afin de générer le modèle matériel du processeur.
 
-En ce qui concerne le processeur basé sur l'approche Tensilica, il s'agit donc de paramétrer et d'étendre un processeur de base. Chaque élément du pipeline de base peut être configuré.
+
+La deuxième famille de méthodologies représentée dans la Figure \ref{fig:methodo_tensilica} correspond à l'approche utilisée par les outils Tensilica, utilisés pour concevoir l'ASIP proposé dans ce chapitre. Une architecture de base, peu complexe en terme d'aire occupée et à faible consommation constitue la brique de base du processeur. Dans le cas des outils Tensilica, l'architecture de base est un processeur RISC doté d'un pipeline de 5 étages tels que présenté dans la Section \ref{subsec:risc}. Afin de spécialiser le processeur, deux axes de de conception sont disponibles. Premièrement, le pipeline de base, dont les principales unités matérielles ont été désignées dans la figure \ref{fig:risc} sont paramétrable. Leurs caractéristiques (profondeur et largeur de la file de registre, intergace avec les mémoires...) sont modifiables. Des fonctions peuvent être ajoutées ou enlevées, comme il est montré en Figure \ref{fig:methodo_tensilica} : unité de traitement des points flottants (FPU : Floating Point Unit) unité d'accélération des multiplications (MUL) ou des divisions (DIV)... Le deuxième axe est la possibilité d'étendre le jeu d'instructions. Grâce à un langage de description matériel propre à Tensilica (TIE : Tensilica Instruction Extension) \cite{tie2017reference}. Il est possible dans notre cas d'un processeur spécialisé dans le décodage de codes polaires d'ajouter des unités matérielles accélérant les fonctions élémentaires $f$, $g$, $h$.
+
 L'interface vers la mémoire d'instruction peut être définie : nombre de bits par ligne de cache, associativité de la mémoire, taille de la mémoire. Le nombre de registres dans le fichier de registre à usage général peut être également modifié. De nombreuses opérations peuvent être ajoutées ou enlevées de l'ALU : \textcolor{red}{BLABLA}
 
 
@@ -84,13 +87,19 @@ L'interface vers la mémoire d'instruction peut être définie : nombre de bits 
 \subsection{Le flot de conception Tensilica}
 \label{tensilica_design}
 \section{Un ASIP dédié au décodage de codes polaires}
-\subsection{Implémentations matérielles de l'algorithme SC}
 \label{subsec:sota_sc}
-\subsection{Configuration}
+\subsection{Paramétrage du processeur de base}
 \subsubsection{Architecture de base}
-La philosophie de conception de l'ASIP proposé est de réaliser l'ensemble des fonctions élémentaires polaires à l'aide d'unités matérielles spécialisées, tandis que les opérations de contrôle sont effectuées par les unités matérielles de base du processeur XTensa. Ce processeur de base est donc dépourvu de tout accélérateur matériel optionnel. Il n'y a pas d'unité de calcul flottant, d'unité MAC (Multiple and Accumulate) ou d'unité accélérant les divisions.
+La philosophie de conception de l'ASIP proposé est de réaliser l'ensemble des fonctions élémentaires polaires à l'aide d'unités matérielles spécialisées, tandis que les opérations de contrôle sont effectuées par les unités matérielles de base du processeur XTensa. Ce processeur de base est donc dépourvu de tout accélérateur matériel de calcul. Il n'y a pas d'unité de calcul flottant, d'unité MAC (Multiple and Accumulate), d'unité accélérant les divisions ou les multiplications.
 
-Par contre, la fonctionnalité FLIX () de Tensilica correspond à la possibilité d'ajouter des pipelines d'exécution dans l'ALU principale. Cela permet au processeur d'exécuter plusieurs instructions en parallèle. Il est possible de configurer les instructions réalisées par chaque pipeline. Notre choix s'est porté sur une configuration nommée FLIX3 prédéfinie par l'outil de conception. Ainsi, trois instructions faisant partie du jeu d'instruction de base peuvent être appliquées sur trois données de 32 bits simultanément. Ce parallélisme d'instruction permet de réaliser plus rapidement les fonctions de contrôle et de calcul d'adresse. 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{main/ch3_fig/flix}
+\caption{Fonctionnalité FLIX.}
+\label{fig:flix}
+\end{figure}
+
+La fonctionnalité FLIX de Tensilica correspond à la possibilité d'ajouter des ALUs supplémentaires au pipeline principal. Cela permet au processeur d'exécuter plusieurs instructions en parallèle. Il est possible de configurer les instructions réalisées par chaque pipeline. Notre choix s'est porté sur une configuration nommée FLIX3 prédéfinie par l'outil de conception. Ainsi, trois instructions faisant partie du jeu d'instruction de base peuvent être appliquées sur trois données de 32 bits simultanément. Ce parallélisme d'instruction permet de réaliser plus rapidement les fonctions de contrôle et de calcul d'adresse. La fonctionnalité FLIX est représentée en Figure \ref{fig:flix}.
 
 \subsubsection{Quantification des données}
 Il est démontré dans \cite{sarkis_fast_2014} que des LLRs représentés sur 6 bits permettent d'égaler les performances de décodage d'implémentations en virgule flottante. Cependant, il est plus simple dans une implémentation logicielle de représenter ces données sur 8 bits puisque les langages de programmation définisse de tels types de données. Comme montré dans \cite{leroux_hardware_2011}, à un niveau $d$ de l'arbre de décodage doivent être stockés $2^{n-d}$ LLRs. La taille de la mémoire permettant de stocker les LLRs est donc de $2^{n+1}-1$ octets.
@@ -98,11 +107,17 @@ Il est démontré dans \cite{sarkis_fast_2014} que des LLRs représentés sur 6 
 Les sommes partielles sont des valeurs binaires. Cependant, encore une fois, la manipulation des sommes partielles dans le langage de description logicielle est plus aisée si l'on utilise un entier de 8 bits pour représenter chaque somme partielle. Il serait cependant possible d'utiliser un entier pour représenter 8 sommes partielles, ce qui réduirait l'empreinte mémoire de celles-ci. Cela nécessiterait cependant des opérations de masquage supplémentaires et plus d'irrégularités dans les accès aux données.
 
 \subsubsection{Configuration de la mémoire cache}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{main/ch3_fig/curves/memory/tikz/memory}
+\caption{Nombre d'échecs d'accès à la mémoire cache en fonction de la taille de la mémoire.}
+\label{fig:tensilica_mem}
+\end{figure}
 Le choix a été fait d'augmenter au maximum le parallélisme des instructions élémentaires nécessaires au décodage de codes polaires. La taille maximum des registres du processeur XTensa, qui est donc la taille utilisée dans l'ASIP proposé, est de 512 bits. Afin de pouvoir charger et sauvegarder des données depuis et vers la mémoire cache en un seul cycle d'horloge, la largeur d'une ligne de mémoire cache est également de 512 bits. La taille de ces mémoires ainsi que leur associativité est également configurable. Des expérimentations ont été réalisées afin de sélectionner ces valeurs. Dans tous les cas testés, un associativité à 4 voies pour les mémoires d'instructions et de données est permet les meilleures performances.
 
-En ce qui concerne la taille de la cache, bien que le plus petit nombre d'échec d'accès à la mémoire cache soit atteint pour la taille de cache la plus grande (128 kilooctets), une mémoire d'instruction de 8 kilooctets ainsi qu'une mémoire de données de 8 kilooctets sont suffisantes pour atteindre un nombre d'échecs de cache seulement 5 \%
-plus grand que la valeur optimale.
+En ce qui concerne la taille de la cache, bien que le plus petit nombre d'échec d'accès à la mémoire cache soit atteint pour la taille de cache la plus grande (128 kilooctets), une mémoire d'instruction de 8 kilooctets ainsi qu'une mémoire de données de 8 kilooctets sont suffisantes pour atteindre un nombre d'échecs de cache seulement 10 \% plus grand que la valeur optimale. Les mesures réalisées sont reportées dans la Figure \ref{fig:tensilica_mem}
 
+\subsection{Implémentations matérielles de l'algorithme SC}
 \subsection{Instructions spécialisées}
 \begin{figure}[t]
   \centering

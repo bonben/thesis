@@ -1,0 +1,47 @@
+\documentclass{standalone}
+
+\usepackage{amsmath}
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning}
+
+
+
+\input{colors}
+
+\begin{document}
+  \begin{tikzpicture}
+    \begin{semilogxaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
+                         width=0.5\linewidth, height=0.55\linewidth,
+                         xlabel=Data cache size (KB), ylabel=\# of data cache misses,  grid=both, grid style={gray!30},
+                         xmin = 1, xmax=140,
+                         tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
+                         ]
+      \addplot[mark=o,        Paired-1, semithick                              ] table [x=size, y=misses] {../dat/dcache.txt}; \label{plot:line1}
+      \addplot[mark=none, red, domain={1:140},] {1212};
+      \coordinate (legend) at (axis description cs:1.02,0.55);
+    \end{semilogxaxis}
+
+
+
+  \end{tikzpicture}
+    \begin{tikzpicture}
+    \begin{semilogxaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
+                         width=0.5\linewidth, height=0.55\linewidth,
+                         xlabel=Instruction cache size (KB), ylabel=\# of instruction cache misses,  grid=both, grid style={gray!30},
+                         xmin = 1, xmax=140,
+                         tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
+                         ]
+      \addplot[mark=o,        Paired-1, semithick                              ] table [x=size, y=misses] {../dat/icache.txt}; \label{plot:line2}
+      \addplot[mark=none, red, domain={1:140},] {1133};
+
+      \coordinate (legend) at (axis description cs:1.02,0.55);
+    \end{semilogxaxis}
+
+
+
+  \end{tikzpicture}
+\end{document}
