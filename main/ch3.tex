@@ -96,6 +96,7 @@ La philosophie de conception de l'ASIP proposé est de réaliser l'ensemble des 
 \centering
 \includegraphics[width=\textwidth]{main/ch3_fig/flix}
 \caption{Fonctionnalité FLIX.}
+\subsubsection{Implémentation matérielle}
 \label{fig:flix}
 \end{figure}
 
@@ -118,7 +119,10 @@ Le choix a été fait d'augmenter au maximum le parallélisme des instructions �
 En ce qui concerne la taille de la cache, bien que le plus petit nombre d'échec d'accès à la mémoire cache soit atteint pour la taille de cache la plus grande (128 kilooctets), une mémoire d'instruction de 8 kilooctets ainsi qu'une mémoire de données de 8 kilooctets sont suffisantes pour atteindre un nombre d'échecs de cache seulement 10 \% plus grand que la valeur optimale. Les mesures réalisées sont reportées dans la Figure \ref{fig:tensilica_mem}
 
 \subsection{Implémentations matérielles de l'algorithme SC}
-\subsection{Instructions spécialisées}
+
+
+
+\subsection{Instructions spécialisées à parallélisme maximum}
 \begin{figure}[t]
   \centering
   \subfloat[Fonction $f$]{
@@ -131,7 +135,6 @@ En ce qui concerne la taille de la cache, bien que le plus petit nombre d'échec
   }
   \caption{Unités matérielles des fonctions $f$ et $g$}
 \end{figure}
-\subsubsection{Implémentation matérielle}
 La conception des instructions spécialisées est basée sur les unités matérielles décrites dans la littérature des implémentations matérielles de l'algorithme SC décrites en Section \ref{subsec:sota_sc}. Ces instructions spécialisées sont donc décrites à l'aide du langage TIE de Tensilica.
 L'implémentation de la fonction $f$ est représentée dans la Figure~\ref{f_tie}. Les deux entrées sont les LLRs notés $L_a$ et $L_b$ et la sortie est notée $f(L_a,L_b)$. Souvent, pour réduire le chemin critique, les LLRs sont représentés en \og signe-amplitude \fg : un bit est utilisé pour le signe, et le reste pour la valeur absolue, toujours positive. Dans notre implémentation, les valeurs négatives sont représentées en complément à deux, car il s'agit du mode de représentation utilisé dans les processeurs XTensa.
 La fonction $g$ est représentée dans la Figure~\ref{g_tie}. Elle consiste en une addition simple avec une inversion de signe selon la valeur de la somme partielle $s_a$.
@@ -141,7 +144,7 @@ Comme présenté dans la Section~\ref{subsec:pruning}, le traitement d'un \noeud
 
 L'unité matérielle de traitement des \noeuds \texttt{SPC} est représentée dans la Figure~\ref{fig:spc_tie}
 
-\subsubsection{Unités matérielles \textit{in-register}}
+\subsection{Unités matérielles \textit{in-register}}
 
 Dans les implémentations logicielles classiques, la séquence d'opérations nécessaire à l'exécution des fonctions élémentaires polaires est la suivante : i) chargement depuis la mémoire cache vers les registres des variables d'entrée (LLRs et / ou sommes partielles), ii) calcul du résultat de la fonction élémentaire, en une ou plusieurs étapes, dont la sortie est stockée dans un registre, iii) sauvegarde de cette variable de sortie dans la mémoire cache du processeur.
 
@@ -162,7 +165,39 @@ Cette méthode reproduit donc comme voulu le fonctionnement des implémentations
 
 Elle résout également un problème récurrent des implémentations logicielles utilisant du parallélisme : l'alignement des données. En effet, pour pouvoir appliquer une fonction vectorielle des données de deux registres vectoriels, il est nécessaire de les aligner, ce qui nécessite d'effectuer des opérations supplémentaires. Dans l'implémentation \textit{in-register}, l'alignement est prévu en amont et implémenté dans l'unité matérielle. Aucune instruction supplémentaire n'est nécessaire. 
 
+La Figure \ref{fig:full_tensilica} représente l'ASIP proposé, avec l'intégralité des spécialisations réalisées, de l'ajustement des tailles de mémoires et registres à l'ajout d'instructions spécialisées en passant par l'utilsation de la fonctionnalité FLIX3.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{main/ch3_fig/full_tensilica}
+\caption{Architecture de l'ASIP proposé.}
+\end{figure}
+
 \subsection{Description logicielle}
+\begin{figure}[hb]
+\begin{lstlisting}[language=C++, numbers=left, numbersep=0.3em, tabsize=2, basicstyle=\footnotesize\ttfamily]
+inline void f_64(signed char* la, 
+                 signed char* lb, 
+                 signed char* lc)
+{
+  p512_a = (VR512*) la; // transtyper de char* vers VR512
+  p512_b = (VR512*) lb; // transtyper de char* vers VR512
+  p512_c = (VR512*) lc; // transtyper de char* vers VR512
+
+  v512_a = *p512_a;     // chargement des donnees vers VR512
+  v512_b = *p512_b;     // chargement des donnees vers VR512
+  
+  // execution de l'instruction specialisee
+  v512_c = custom_f_64(v512_a, v512_b); 
+
+  *p512_c = v512_c;     // sauvegarde du resultat en cache
+}
+\end{lstlisting}
+\caption{Description logicielle de l'exécution d'une instruction spécialisée.}
+\label{fig:f_code}
+\end{figure}
+L'ASIP ainsi proposé permet donc l'exécution efficace de l'algorithme de décodage de codes polaires SC. Le décodage est décrit de manière logicielle, en langage C augmenté des instructions spécialisées. Un extrait du code source est donné dans la Figure~\ref{fig:f_code}. Tout d'abord, les fichiers d'en-tête produits par les outils de conception définissent des types associés aux fichiers de registres vectoriels (\texttt{VR512}). Afin de charger une donnée en mémoire cache vers ces registres vectoriels, il est nécessaire de créer des pointeurs vers ces variables de type (\texttt{VR512}). Les données sont ensuite chargées vers deux de ces registres vectoriels. La fonction spécialisée, ici la fonction \texttt{custom\_f\_64} est ensuite appliquée. Le résultat doit ensuite être stockée dans la mémoire cache.
+
 Lors du développement, il est apparu qu'il était difficile de réduire le temps passé à réaliser les opérations liées au parcours de l'arbre et aux différents tests. L'utilisation de l'option FLIX3 a permis de réduire ce temps, mais pas suffisamment. La technique de déroulage présentée en Section~\ref{subsec:unroll} permet de réduire ce temps. Dérouler le code signifie sacrifier en flexibilité. En effet, il faut générer une version différente du code pour un ensemble donné de paramètres.
 
 Une alternative est utilisée dans l'implémentation proposée. Tout d'abord, toutes les fonctions élémentaires pour le décodage de code polaires possèdent le même prototype de fonctions dans la description logicielle. Le type de fonction à appliquer ($f$, $g$, $h$, \texttt{R0}, \texttt{R1}, \texttt{SPC}, \texttt{REP}) est passé en paramètre de la fonction, accompagné des adresses auxquelles accéder aux données à lire et écrire. De cette manière, il est possible de créer, un tableau contenant les pointeurs des fonctions à appeler. L'algorithme permettant de déterminer la séquence de fonctions à exécuter prend comme entrée le tableau de bits gelés correspondant au code polaire traité.
@@ -176,16 +211,16 @@ La version académique des outils de design de Tensilica ne permettent pas d'eff
 
 \subsection{Comparaison avec un processeur ARM}
 
-\begin{figure}
+
+Le logiciel AFF3CT développé par l'équipe CSN du laboratoire IMS de Bordeaux est utilisé pour exécuter une implémentation optimisée de l'algorithme SC sur un processeur ARM Cortex A57. La méthode de parallélisation \textit{intra-trame} est utilisée, et les LLRs sont représentés sur 8 bits avec virgule fixe. La taille des données gérées par les instructions NEON est de 128 bits, donc le parallélisme est égal à 16. Les résultats ici reportés ont été fournis par les auteurs de \cite{cassagne_energy_2016}. Dans ces résultats, la consommation de la mémoire RAM n'est pas prise en compte.
+La Figure~\ref{fig:cycle_count} montre le nombre moyens de coups d'horloges nécessaire à chaque processeur pour décoder une trame. Le processeur proposé réduit significativement grâce à l'utilisation d'unités matérielles de calcul spécialisées. La courbe tracée représente le rapport entre les nombres de cycle d'horloge de chaque processeur. Ce rapport est d'autant plus grand que $N$ est faible. Ceci est dû au fait que lorsque $N$ est faible, ce sont les instructions \textit{en registre} qui sont le plus utilisées. Or ces instructions sont les plus efficaces.
+Cependant, ce nombre réduit de coups d'horloge est contrebalancé par une fréquence réduite comme montré dans le Tableau~\ref{tab:asip}. Néanmoins, même dans le scénario le plus pessimiste, avec une fréquence de 400 MHz, le débit atteint par le processeur proposé est similaire à celui obtenu avec le processeur ARM. Qui plus est, l'énergie dépensée par bit décodé est 10 fois inférieur pour l'ASIP.
+\begin{figure}[t]
 \centering
 \includegraphics{main/ch3_fig/curves/cycle_count/cycle_count}
 \caption{Comparaison du nombre de cycles de d'horloge nécessaires au décodage SC entre le Cortex ARM A57 et l'ASIP proposé.}
 \label{fig:cycle_count}
 \end{figure}
-
-Le logiciel AFF3CT développé par l'équipe CSN du laboratoire IMS de Bordeaux est utilisé pour exécuter une implémentation optimisée de l'algorithme SC sur un processeur ARM Cortex A57. La méthode de parallélisation \textit{intra-trame} est utilisée, et les LLRs sont représentés sur 8 bits avec virgule fixe. La taille des données gérées par les instructions NEON est de 128 bits, donc le parallélisme est égal à 16. Les résultats ici reportés ont été fournis par les auteurs de \cite{cassagne_energy_2016}. Dans ces résultats, la consommation de la mémoire RAM n'est pas prise en compte.
-La Figure~\ref{fig:cycle_count} montre le nombre moyens de coups d'horloges nécessaire à chaque processeur pour décoder une trame. Le processeur proposé réduit significativement grâce à l'utilisation d'unités matérielles de calcul spécialisées. La courbe tracée représente le rapport entre les nombres de cycle d'horloge de chaque processeur. Ce rapport est d'autant plus grand que $N$ est faible. Ceci est dû au fait que lorsque $N$ est faible, ce sont les instructions \textit{en registre} qui sont le plus utilisées. Or ces instructions sont les plus efficaces.
-Cependant, ce nombre réduit de coups d'horloge est contrebalancé par une fréquence réduite comme montré dans le Tableau~\ref{tab:asip}. Néanmoins, même dans le scénario le plus pessimiste, avec une fréquence de 400 MHz, le débit atteint par le processeur proposé est similaire à celui obtenu avec le processeur ARM. Qui plus est, l'énergie dépensée par bit décodé est 10 fois inférieur pour l'ASIP.
 
 \subsection{Comparaison avec un processeur d'architecture x86}
 Les débits, latences et l'énergie consommée par bit du décodeur logiciel SC inclus dans le logiciel aff3ct ont également été mesurées sur un processeur Intel i7-4712HQ.
