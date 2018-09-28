@@ -234,10 +234,13 @@ Une alternative est utilisée dans l'implémentation proposée. Tout d'abord, to
     \caption{Impact de chaque amélioration de l'ASIP sur le nombre de cycles d'horloges nécessaires pour décoder une trame, le débit et la surface occupée. La taille des mémoires n'est pas prise en compte pour la surface occupée. Décodage d'un code polaire (32768,29492). Fréquence considérée : 835 MHz.}
     \label{tab:quantif}
     {\small\resizebox{\linewidth}{!}{
-    \begin{tabular}{l | c | c | c |}
-    \multirow{2}{*}{\textbf{Version du processeur}}       & \textbf{\# cycles}   & $mathcal{T}_i$  &   \textbf{Surface}          \\
+    \begin{tabular}{l | c  c  c }
+    \multirow{2}{*}{\textbf{Version du processeur}}       & \multirow{2}{*}{\textbf{\# cycles}}   & $\bm{\mathcal{T}_i}$  &   \textbf{Surface}          \\
                                                  &             &  \textbf{(Mb/s)}          &  \textbf{(portes)}          \\
-    \hline
+    \cmidrule(lr){1-1}
+    \cmidrule(lr){2-2}
+    \cmidrule(lr){3-3}
+    \cmidrule(lr){4-4}
 Processeur de base                               &   $7.30.10^6$  &   $3.4$            & $160000$             \\
 
 + instructions P\textsubscript{max} $f$ et $g$   &   $2.64.10^6$  &   $9.3$            & $210500$             \\
