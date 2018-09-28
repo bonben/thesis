@@ -120,6 +120,21 @@ En ce qui concerne la taille de la cache, bien que le plus petit nombre d'échec
 
 \subsection{Implémentations matérielles de l'algorithme SC}
 
+\begin{figure}
+\centering
+\includegraphics[scale=0.75]{main/ch3_fig/PE}
+\caption{Unité matérielle élémentaire (PE : Processing Element).}
+\label{fig:pe}
+\end{figure}
+
+Les instructions spécialisées choisies pour étendre le jeu d'instructions de l'ASIP s'inspirent des unités de traitement développées dans la littérature pour les circuits dédiés au décodage de codes polaires SC. Dans \cite{leroux_hardware_2011} plusieurs architectures furent proposées. La plus élémentaire est l'architecture \og papillon \fg. Lors du décodage, la fonction $f$ doit être appliqué $N/2$ fois à chaque niveau de l'arbre, et la fonction $g$ également. Au total, il est nécessaire d'appliquer $\frac{N}{2} \log N$ fois les fonctions $f$ et $g$. Pour cela, des unités matérielles élementaires (PE : Processing Elements) sont utilisées. Un PE permet de réaliser un calcul de $f$ et un calcul de $g$. Un tel élément est représenté dans la figure \ref{fig:pe}. Dans l'architecture \og papillon \fg, un PE est associé à chaque application des fonctions $f$ et $g$. Il y a donc au total $\frac{N}{2} \log N$ PEs.
+
+Cependant, cette architecture est sous-optimale en termes de complexité. Le séquencement particulier de l'algorithme de décodage SC fait qu'à un niveau de l'arbre de décodage donné, tous les PEs ne sont pas utilisés simultanément. L'architecture \og ligne \fg prend avantage de ce fait pour réduire le nombre de PEs nécessaire par niveau. \`A un niveau $l$ donné sont associés seulement $2^{n-l-1}$ PEs. Le nombre total de PEs pour cette architecture est donc : 
+\begin{equation*}
+\mathcal{N}_{PE} = \displaystyle\sum_{l=0}^{n-1} 2^{n-l-1} = N-1
+\end{equation*}
+
+Dans \cite{leroux_semi-parallel_2013} il est proposé de réduire davantage ce nombre de PEs. Le nombre de PEs est fixé à P. Ils sont alors réutilisés d'un niveau à l'autre.
 
 
 \subsection{Instructions spécialisées à parallélisme maximum}
@@ -136,8 +151,8 @@ En ce qui concerne la taille de la cache, bien que le plus petit nombre d'échec
   \caption{Unités matérielles des fonctions $f$ et $g$}
 \end{figure}
 La conception des instructions spécialisées est basée sur les unités matérielles décrites dans la littérature des implémentations matérielles de l'algorithme SC décrites en Section \ref{subsec:sota_sc}. Ces instructions spécialisées sont donc décrites à l'aide du langage TIE de Tensilica.
-L'implémentation de la fonction $f$ est représentée dans la Figure~\ref{f_tie}. Les deux entrées sont les LLRs notés $L_a$ et $L_b$ et la sortie est notée $f(L_a,L_b)$. Souvent, pour réduire le chemin critique, les LLRs sont représentés en \og signe-amplitude \fg : un bit est utilisé pour le signe, et le reste pour la valeur absolue, toujours positive. Dans notre implémentation, les valeurs négatives sont représentées en complément à deux, car il s'agit du mode de représentation utilisé dans les processeurs XTensa.
-La fonction $g$ est représentée dans la Figure~\ref{g_tie}. Elle consiste en une addition simple avec une inversion de signe selon la valeur de la somme partielle $s_a$.
+L'implémentation de la fonction $f$ est représentée dans la Figure~\ref{fig:f_tie}. Les deux entrées sont les LLRs notés $L_a$ et $L_b$ et la sortie est notée $f(L_a,L_b)$. Souvent, pour réduire le chemin critique, les LLRs sont représentés en \og signe-amplitude \fg : un bit est utilisé pour le signe, et le reste pour la valeur absolue, toujours positive. Dans notre implémentation, les valeurs négatives sont représentées en complément à deux, car il s'agit du mode de représentation utilisé dans les processeurs XTensa.
+La fonction $g$ est représentée dans la Figure~\ref{fig:g_tie}. Elle consiste en une addition simple avec une inversion de signe selon la valeur de la somme partielle $s_a$.
 La fonction $h$ n'est pas représentée, il s'agit simplement d'un ou-exclusif entre les sommes partielles d'entrées. Les fonctions \texttt{R0} et \texttt{R1} sont également très simples est leur représentation graphique n'est pas utile, puisqu'il s'agit d'une mise à zéro dans le premier cas, et d'un seuillage dans le deuxième, c'est à dire une simple copie du bit de poids fort.
 
 Comme présenté dans la Section~\ref{subsec:pruning}, le traitement d'un \noeud de répétition consiste en l'addition de tous les LLRs d'entrée pour former la variable notée \og \texttt{accum} \fg dans la Figure~\ref{fig:rep_tie}. Puis de la détection du signe de cette variable, qui détermine le vecteur $s$ en sortie. Un arbre binaire est parcouru afin de réaliser l'addition nécessaire. Pour éviter tout débordement, la taille du registre de stockage de la variable \texttt{accum} est de 32 bits.
@@ -171,10 +186,20 @@ La Figure \ref{fig:full_tensilica} représente l'ASIP proposé, avec l'intégral
 \centering
 \includegraphics[width=\textwidth]{main/ch3_fig/full_tensilica}
 \caption{Architecture de l'ASIP proposé.}
+\label{fig:full_tensilica}
 \end{figure}
 
 \subsection{Description logicielle}
+L'ASIP ainsi proposé permet donc l'exécution efficace de l'algorithme de décodage de codes polaires SC. Le décodage est décrit de manière logicielle, en langage C augmenté des instructions spécialisées. Un extrait du code source est donné dans la Figure~\ref{fig:f_code}. Tout d'abord, les fichiers d'en-tête produits par les outils de conception définissent des types associés aux fichiers de registres vectoriels (\texttt{VR512}). Afin de charger une donnée en mémoire cache vers ces registres vectoriels, il est nécessaire de créer des pointeurs vers ces variables de type (\texttt{VR512}). Les données sont ensuite chargées vers deux de ces registres vectoriels. La fonction spécialisée, ici la fonction \texttt{custom\_f\_64} est ensuite appliquée. Le résultat doit ensuite être stockée dans la mémoire cache.
 \begin{figure}[hb]
+\lstset{language=C++,
+        basicstyle=\footnotesize\ttfamily,
+        keywordstyle=\bfseries\color{green!40!black},
+        commentstyle=\itshape\color{purple!40!black},
+        identifierstyle=\color{blue},
+        stringstyle=\color{orange},
+        morecomment=[l][\color{magenta}]{\#}
+}
 \begin{lstlisting}[language=C++, numbers=left, numbersep=0.3em, tabsize=2, basicstyle=\footnotesize\ttfamily]
 inline void f_64(signed char* la, 
                  signed char* lb, 
@@ -184,29 +209,124 @@ inline void f_64(signed char* la,
   p512_b = (VR512*) lb; // transtyper de char* vers VR512
   p512_c = (VR512*) lc; // transtyper de char* vers VR512
 
-  v512_a = *p512_a;     // chargement des donnees vers VR512
-  v512_b = *p512_b;     // chargement des donnees vers VR512
+  v512_a = *p512_a; // chargement des donnees vers VR512
+  v512_b = *p512_b; // chargement des donnees vers VR512
   
   // execution de l'instruction specialisee
   v512_c = custom_f_64(v512_a, v512_b); 
-
-  *p512_c = v512_c;     // sauvegarde du resultat en cache
+  
+  // sauvegarde du resultat en cache
+  *p512_c = v512_c;     
 }
 \end{lstlisting}
 \caption{Description logicielle de l'exécution d'une instruction spécialisée.}
 \label{fig:f_code}
 \end{figure}
-L'ASIP ainsi proposé permet donc l'exécution efficace de l'algorithme de décodage de codes polaires SC. Le décodage est décrit de manière logicielle, en langage C augmenté des instructions spécialisées. Un extrait du code source est donné dans la Figure~\ref{fig:f_code}. Tout d'abord, les fichiers d'en-tête produits par les outils de conception définissent des types associés aux fichiers de registres vectoriels (\texttt{VR512}). Afin de charger une donnée en mémoire cache vers ces registres vectoriels, il est nécessaire de créer des pointeurs vers ces variables de type (\texttt{VR512}). Les données sont ensuite chargées vers deux de ces registres vectoriels. La fonction spécialisée, ici la fonction \texttt{custom\_f\_64} est ensuite appliquée. Le résultat doit ensuite être stockée dans la mémoire cache.
 
 Lors du développement, il est apparu qu'il était difficile de réduire le temps passé à réaliser les opérations liées au parcours de l'arbre et aux différents tests. L'utilisation de l'option FLIX3 a permis de réduire ce temps, mais pas suffisamment. La technique de déroulage présentée en Section~\ref{subsec:unroll} permet de réduire ce temps. Dérouler le code signifie sacrifier en flexibilité. En effet, il faut générer une version différente du code pour un ensemble donné de paramètres.
 
 Une alternative est utilisée dans l'implémentation proposée. Tout d'abord, toutes les fonctions élémentaires pour le décodage de code polaires possèdent le même prototype de fonctions dans la description logicielle. Le type de fonction à appliquer ($f$, $g$, $h$, \texttt{R0}, \texttt{R1}, \texttt{SPC}, \texttt{REP}) est passé en paramètre de la fonction, accompagné des adresses auxquelles accéder aux données à lire et écrire. De cette manière, il est possible de créer, un tableau contenant les pointeurs des fonctions à appeler. L'algorithme permettant de déterminer la séquence de fonctions à exécuter prend comme entrée le tableau de bits gelés correspondant au code polaire traité.
 
+
+ \begin{table}[hb]
+    \renewcommand{\arraystretch}{1.1}
+    \centering
+    \caption{Impact de chaque amélioration de l'ASIP sur le nombre de cycles d'horloges nécessaires pour décoder une trame, le débit et la surface occupée. La taille des mémoires n'est pas prise en compte pour la surface occupée. Décodage d'un code polaire (32768,29492). Fréquence considérée : 835 MHz.}
+    \label{tab:quantif}
+    {\small\resizebox{\linewidth}{!}{
+    \begin{tabular}{l | c | c | c |}
+    \multirow{2}{*}{\textbf{Version du processeur}}       & \textbf{\# cycles}   & $mathcal{T}_i$  &   \textbf{Surface}          \\
+                                                 &             &  \textbf{(Mb/s)}          &  \textbf{(portes)}          \\
+    \hline
+Processeur de base                               &   $7.30.10^6$  &   $3.4$            & $160000$             \\
+
++ instructions P\textsubscript{max} $f$ et $g$   &   $2.64.10^6$  &   $9.3$            & $210500$             \\
+
++ instructions P\textsubscript{max} \texttt{R0},
+\texttt{R1},\texttt{SPC} et \texttt{REP}         & $534.00.10^3$  &   $ 46$            & $272000$             \\
+
++ FLIX3                                          & $296.00.10^3$  &   $ 83$            & $311900$             \\
+
++ instructions \textit{in-register}              & $192.00.10^3$  &   $128$            & $445500$             \\
+
++ pseudo unrolled                                & $151.00.10^3$  &   $163$            & $445500$             \\
+    \end{tabular}
+    }}
+  \end{table}
+
+\begin{figure}[ht]
+\lstset{language=C++,
+        basicstyle=\footnotesize\ttfamily,
+        keywordstyle=\bfseries\color{green!40!black},
+        commentstyle=\itshape\color{purple!40!black},
+        identifierstyle=\color{blue},
+        stringstyle=\color{orange},
+        morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}[language=C++, numbers=left, numbersep=0.3em, tabsize=2, basicstyle=\footnotesize\ttfamily]
+// fonction polaire spécialisée
+void u_f_64(struct polar_operation& op)
+{
+    for(int i = 0; i < op.n_elmts; i+=64)
+      F_64(op.arg0 + i, op.arg1 + i, op.arg2 + i);
+}
+
+// fonction polaire générique
+typedef void (*polar_func)(struct polar_operation&);
+
+// structure passée en argument de la fonction générique
+struct polar_operation
+{
+  polar_func   p_func; // pointeur vers la fonction polaire spécialisée 
+
+  signed char* arg0; // les arguments des fonctions polaires spécialisées
+  signed char* arg1; // ces arguments sont souvent des adresses
+  signed char* arg2;
+  signed char* arg3;
+
+  int          n_elmts; // le nombre d'éléments traités en parallèle
+  int          off_s; // un offset nécessaire pour l'accès aux PSs
+};
+
+// le tableau polar_op_vec est initialisé lors de la construction
+// du décodeur il contient la séquence des "polar operation"
+std::vector<struct polar_operation> polar_op_vec;
+
+// boucle principale du décodage
+virtual void decode()
+{
+  const int n_op = polar_op_vec.size();
+  for (int i = 0; i < n_op; i++)
+  {
+    // chaque fonction du tableau "polar_op_vec" est appelée
+    polar_op_vec[i].p_func(polar_op_vec[i]); 
+  }
+}
+\end{lstlisting}
+\caption{Description logicielle du pseudo-déroulage.}
+\label{fig:tensilica_code}
+\end{figure}
+\clearpage
+
+
+
+%   cycles  debit Area (gates)
+% Base                                    7.30E+06    3.38E+06    116.00E+03
+% instructions spécialisées f & g         2.64E+06    9.34E+06    144.00E+03
+% instructions spécialisées REP R0 SPC R1 534.00E+03  46.17E+06   161.00E+03
+% FLIX                                    296.00E+03  83.29E+06   222.00E+03
+% In-register                             192.00E+03  128.41E+06  524.00E+03
+% Unrolling                               151.00E+03  163.28E+06  524.00E+03
+
+
+
+
+
 \section{Expérimentations et mesures}
 \label{sec:tensilica_res}
 
 
-Les codes polaires considérés ont été construits selon le document spécifiant les techniques de modulation et de codage pour le standard 5G \cite{}. 
+Les codes polaires considérés ont été construits selon le document spécifiant les techniques de modulation et de codage pour le standard 5G \cite{3gpp_ts_2017-1}. 
 La version académique des outils de design de Tensilica ne permettent pas d'effectuer une synthèse logique du processeur ou d'accéder à sa description RTL. Seules des estimations de la fréquence, de la consommation et de l'aire occupée sont données. En sélectionnant la technologie HPM 28nm de TSMC, la puissance consommée estimée pour l'ASIP est de 111 mW, et l'aire occupée est 0.475 mm\textsuperscript{2}. La fréquence estimée est 835 MHz. Cependant, les instructions spécialisées ne sont pas prises en compte pour l'estimation de la fréquence. En conséquence, un scénario plus pessimiste où la fréquence de fonctionnement est 400 MHz est également présentée. Avec cette fréquence réduite, la consommation estimée devient 49 mW et l'aire occupée 0.374 mm\textsuperscript{2}.
 
 \subsection{Comparaison avec un processeur ARM}

@@ -46,10 +46,16 @@ Les processeurs à usage général (GPPs : General Purpose Processors) modernes 
 
 Réduire le temps d'exécution des algorithmes de décodage de codes polaires par l'utilisation d'instructions SIMD est une technique classique utilisée dans de nombreuses implémentations de l'algorithme SC \cite{sarkis_fast_2014,giard_fast_2014,giard_low-latency_2016,sarkis_autogenerating_2014,gal_software_2014,cassagne_efficient_2015,cassagne_energy_2016,gal_multi-gb/s_2015} comme de l'algorithme SCL \cite{sarkis_fast_2016,sarkis_increasing_2014,shen_low-latency_2016}. Dans nos travaux est utilisée une librairie générique et portable implémentant les fonctions élémentaires des codes polaires \cite{cassagne_efficient_2015}. Elle est basée elle-même sur la librairie MIPP \cite{cassagne2018mipp} qui est une encapsulation des instructions SIMD dont la description logicielle est écrite dans le langage C++.
 
-  \lstset{linewidth=0.7\textwidth, xleftmargin=0.025\textwidth, xrightmargin=0.05\textwidth}
-
-  \begin{figure}[t]
-  \begin{lstlisting}[language=C++, numbers=left, numbersep=0.3em, tabsize=2, basicstyle=\footnotesize\ttfamily]
+\begin{figure}[t]
+\lstset{language=C++,
+        basicstyle=\footnotesize\ttfamily,
+        keywordstyle=\bfseries\color{green!40!black},
+        commentstyle=\itshape\color{purple!40!black},
+        identifierstyle=\color{blue},
+        stringstyle=\color{orange},
+        morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}[language=C++, numbers=left, numbersep=0.3em, tabsize=2, basicstyle=\footnotesize\ttfamily]
 class API_polar
 {
   template <typename R>
