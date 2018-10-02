@@ -120,11 +120,37 @@ En ce qui concerne la taille de la cache, bien que le plus petit nombre d'échec
 
 \subsection{Implémentations matérielles de l'algorithme SC}
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[scale=0.75]{main/ch3_fig/PE}
 \caption{Unité matérielle élémentaire (PE : Processing Element).}
 \label{fig:pe}
+\end{figure}
+
+
+\begin{figure}
+\vspace*{2cm}
+  \centering
+  \subfloat[Fonction $f$]{
+  \includegraphics[scale=0.45]{main/ch3_fig/f_tie}
+  \label{fig:f_tie}
+  }
+  \subfloat[Fonction $g$]{
+  \includegraphics[scale=0.45]{main/ch3_fig/g_tie}
+  \label{fig:g_tie}
+  }
+  \\
+  \vspace*{3cm}
+  \subfloat[Fonction \texttt{REP}]{
+  \includegraphics[scale=0.75]{main/ch3_fig/rep_tie}
+  \label{fig:rep_tie}
+  } \quad
+  \subfloat[Fonction \texttt{SPC}]{
+  \includegraphics[scale=0.75]{main/ch3_fig/spc_tie}
+  \label{fig:spc_tie}
+  }
+  \vspace*{2cm}
+  \caption{Unités matérielles des instructions spécialisées}
 \end{figure}
 
 Les instructions spécialisées choisies pour étendre le jeu d'instructions de l'ASIP s'inspirent des unités de traitement développées dans la littérature pour les circuits dédiés au décodage de codes polaires SC. Dans \cite{leroux_hardware_2011} plusieurs architectures furent proposées. La plus élémentaire est l'architecture \og papillon \fg. Lors du décodage, la fonction $f$ doit être appliqué $N/2$ fois à chaque niveau de l'arbre, et la fonction $g$ également. Au total, il est nécessaire d'appliquer $\frac{N}{2} \log N$ fois les fonctions $f$ et $g$. Pour cela, des unités matérielles élementaires (PE : Processing Elements) sont utilisées. Un PE permet de réaliser un calcul de $f$ et un calcul de $g$. Un tel élément est représenté dans la figure \ref{fig:pe}. Dans l'architecture \og papillon \fg, un PE est associé à chaque application des fonctions $f$ et $g$. Il y a donc au total $\frac{N}{2} \log N$ PEs.
@@ -136,20 +162,10 @@ Cependant, cette architecture est sous-optimale en termes de complexité. Le sé
 
 Dans \cite{leroux_semi-parallel_2013} il est proposé de réduire davantage ce nombre de PEs. Le nombre de PEs est fixé à P. Ils sont alors réutilisés d'un niveau à l'autre.
 
-
 \subsection{Instructions spécialisées à parallélisme maximum}
-\begin{figure}[t]
-  \centering
-  \subfloat[Fonction $f$]{
-  \includegraphics[scale=0.45]{main/ch3_fig/f_tie}
-  \label{fig:f_tie}
-  }
-  \subfloat[Fonction $g$]{
-  \includegraphics[scale=0.45]{main/ch3_fig/g_tie}
-  \label{fig:g_tie}
-  }
-  \caption{Unités matérielles des fonctions $f$ et $g$}
-\end{figure}
+
+
+
 La conception des instructions spécialisées est basée sur les unités matérielles décrites dans la littérature des implémentations matérielles de l'algorithme SC décrites en Section \ref{subsec:sota_sc}. Ces instructions spécialisées sont donc décrites à l'aide du langage TIE de Tensilica.
 L'implémentation de la fonction $f$ est représentée dans la Figure~\ref{fig:f_tie}. Les deux entrées sont les LLRs notés $L_a$ et $L_b$ et la sortie est notée $f(L_a,L_b)$. Souvent, pour réduire le chemin critique, les LLRs sont représentés en \og signe-amplitude \fg : un bit est utilisé pour le signe, et le reste pour la valeur absolue, toujours positive. Dans notre implémentation, les valeurs négatives sont représentées en complément à deux, car il s'agit du mode de représentation utilisé dans les processeurs XTensa.
 La fonction $g$ est représentée dans la Figure~\ref{fig:g_tie}. Elle consiste en une addition simple avec une inversion de signe selon la valeur de la somme partielle $s_a$.
