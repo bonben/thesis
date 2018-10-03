@@ -212,7 +212,7 @@ La profondeur de la liste impacte directement le pouvoir de correction et la com
 \subsubsection{Paramétrage fin de l'élagage}
 L'élagage, tel que défini dans la Section~\ref{subsec:pruning} est paramétrable très finement dans les implémentations de décodeurs polaires proposées. Tout d'abord, chaque type de \noeud (\texttt{R0}, \texttt{R1}, \texttt{REP} et \texttt{SPC}) peut être activé ou désactivé séparément. Cette capacité est utile pour explorer l'impact de l'utilisation de chaque \noeud sur le débit.
 
-Il faut ici faire la distinction entre le débit codé et le débit d'information. Soit $\mathcal{T}_F$, le nombre de trames décodées par seconde. Alors la valeur du débit d'information est $\mathcal{T}_i=K\mathcal{T}_F$, soit le nombre de bits d'informations décodés par seconde, tandis que la valeur débit codé est $\mathcal{T}_c=N\mathcal{T}_F$.
+Il faut ici faire la distinction entre le débit codé et le débit d'information. Soit $\mathcal{T}_F$, le nombre de mots de code décodées par seconde. Alors la valeur du débit d'information est $\mathcal{T}_i=K\mathcal{T}_F$, soit le nombre de bits d'informations décodés par seconde, tandis que la valeur débit codé est $\mathcal{T}_c=N\mathcal{T}_F$.
 
 Pour explorer l'impact de l'utilisation des \noeuds sur le débit, il est  plus pertinent d'utiliser le débit codé. En effet, si l'on utilisait le débit d'information dans la Figure~\ref{fig:nodes}, le rendement du code biaiserait les débits : le débit des codes à haut rendement auraient un débit bien supérieur aux codes à faibles rendement.
 \begin{figure}[t]
@@ -302,14 +302,14 @@ La Figure~\ref{fig:ascl_perfs} montre que les deux versions adaptatives de l'alg
 L'explication de ce phénomène est la suivante : à faible SNR, la probabilité d'échec de décodage est très forte. La plupart du temps, l'algorithme adaptatif doit déclencher un décodage avec $L=L_{max}$ (ici $L_{max}=32$). Pour l'algorithme PASCL, dans ce cas précis où le décodage avec $L=32$ est nécessaire, deux décodages successifs seront déclenchés : le décodage SC et le décodage SCL avec $L=32$. Pour l'algorithme FASCL, des exécutions intermédiaires de l'algorithme seront effectuées, pour $L=\{2,4,8,16\}$. En résumé, dans le cas le plus fréquent à faible SNR, l'algorithme PASCL est plus rapide que l'algorithme FASCL.
 \`A fort SNR, le cas le plus probable est une réussite du décodage. Lorsque l'algorithme SC est suffisant pour décoder la trame, les algorithmes FASCL et PASCL seront équivalents. La Figure~\ref{fig:ascl_perfs} montre en effet que les débits des implémentations des deux algorithmes sont proches pour les valeurs les plus fortes de $E_b/N_0$ représentées. C'est par contre pour des valeurs intermédiaires de SNR que le FASCL présente des débits supérieurs à ceux de l'algorithme PASCL, car l'exécution de l'algorithme SCL avec des valeurs intermédiaires de $L$ devient pertinent. Cependant, dans tous les cas et comme décrit dans la Section \ref{subsubsec:adaptive}, la latence \og pire cas \fg, autrement dit le temps maximum nécessaire que peut prendre le décodage d'une trame, est plus élevée pour l'algorithme FASCL. Ce fait est vérifié par la mesure comme reporté dans le Tableau~\ref{tab:quantif}.
 
-La section \ref{sec:gen_scl} a permis de définir les concepts de généricité et de flexibilité du décodeur. Des contributions originales liées à la flexibilité ont également été introduites : la représentation sur 8 et 16 bits en virgule fixe des données pour les algorithmes à liste, la configuration dynamique de l'élagage de l'arbre de décodage et le support de l'algorithme FASCL. Cependant, ces implémentations doivent être compétitives avec les décodeurs de la littérature du point de vue du débit et de la latence. Des améliorations permettant d'atteindre de hauts débits et de faibles latences sont présentées dans la section suivante.
+La section \ref{sec:gen_scl} a permis de définir les concepts de généricité et de flexibilité du décodeur. Des contributions propres aux décodeurs proposés et liées à leur flexibilité ont également été introduites : la représentation sur 8 et 16 bits en virgule fixe des données pour les algorithmes à liste, la configuration dynamique de l'élagage de l'arbre de décodage et le support de l'algorithme FASCL. Cependant, ces implémentations doivent être compétitives avec les décodeurs de la littérature du point de vue du débit et de la latence. Des améliorations permettant d'atteindre de hauts débits et de faibles latences sont présentées dans la section suivante.
 
 \section{Optimisations de l'implémentation logicielle des décodeurs liste}
 \label{sec:opti_scl}
-Trois contributions originales sont présentées dans cette section. la première porte sur l'utilisation nouvelle d'un algorithme de tri des métriques et des LLRs, la seconde sur l'accélération du contrôle de redondance cyclique et la troisième concerne la gestion des sommes partielles. 
+Cette section \ref{sec:opti_scl} présente trois contributions originales. La première porte sur l'utilisation nouvelle d'un algorithme de tri des métriques et des LLRs, la seconde sur l'accélération du contrôle de redondance cyclique et la troisième concerne la gestion des sommes partielles. 
 
 \subsection{Algorithme de tri}
-Des algorithmes de tri sont nécessaires lors de plusieurs étapes durant l'algorithme SCL. Les métriques de chemins sont triées pour sélectionner les candidats lors des étapes de duplication (étapes (i+1) et (i+3) de la Figure~\ref{fig:scl}). De plus les LLRs doivent être triés lors du traitement des \noeuds \texttt{R1} et \texttt{SPC}. \`A cause d'un manque de détails dans la description de l'implémentation du tri dans \cite{sarkis_fast_2016}, sa reproduction est difficile. Différentes méthodes de tri ont donc été explorées.
+Des algorithmes de tri partiel sont nécessaires lors de plusieurs étapes durant l'algorithme SCL. Les $L$ métriques de chemins les plus faibles doivent être identifiées pour sélectionner les candidats lors des étapes de duplication (étapes (i+1) et (i+3) de la Figure~\ref{fig:scl}). De plus, les 2 LLRs ayant les valeurs absolues les plus faibles doivent être identifiés lors du traitement des \noeuds \texttt{R1} et enfin les 4 LLRs les plus faibles lors du traitement d'un \noeud \texttt{SPC}. \`A cause d'un manque de détails dans la description de l'implémentation du tri dans \cite{sarkis_fast_2016}, sa reproduction est difficile. Différentes méthodes de tri ont donc été explorées.
 \begin{figure}[t]
 \centering
 \subfloat[Identification du plus petit élément.]{
@@ -325,7 +325,7 @@ Des algorithmes de tri sont nécessaires lors de plusieurs étapes durant l'algo
 \label{fig:schreier_sort}
 \end{figure}
 
-Tout d'abord, lors du traitement des \noeuds \texttt{R1}, il est nécessaire d'identifier les deux LLRs les moins fiables, c'est à dire ceux possédant la valeur absolue la plus faible. Or, la méthode optimale, du point de vue du nombre de comparaisons, d'identifier les deux plus petits (ou les deux plus grands) éléments d'un ensemble est présentée dans \cite{schreier_tournament_1932} et reportée dans \cite{knuth_art_1973}. Cette méthode sera par la suite dénommée méthode de Schreier du nom de son auteur. Elle se réalise en deux étapes, présentées en Figure~\ref{fig:schreier_sort}. La première étape est l'identification du plus petit élément par la traversée d'un arbre binaire. Ensuite, cet élément est éliminé, et la branche sur laquelle il se trouvait est rejouée. Le deuxième élément le plus petit est ainsi identifié.
+Schreier \cite{schreier_tournament_1932} donne la méthode optimale en termes de nombre de comparaisons nécessaire pour identifier les deux plus petits (ou les deux plus grands) éléments d'un ensemble. Cette technique est également détaillée dans \cite{knuth_art_1973}. Elle se réalise en deux étapes, présentées en Figure~\ref{fig:schreier_sort}. La première étape est l'identification du plus petit élément par la traversée d'un arbre binaire. Ensuite, cet élément est éliminé, et la branche sur laquelle il se trouvait est rejouée. Le deuxième élément le plus petit est ainsi identifié.
 
 Cette méthode s'est avérée être la plus rapide expérimentalement de toutes celles qui ont été testées : \textit{Batcher's merge exchange}, tri par bulle, tri \textit{quick-sort}, tri par tas implémenté dans la librairie standard. Elle l'était également dans les cas testés pour les \noeuds de type \texttt{SPC}. Une étude comparée montre que la méthode de Schreier est également pertinente pour le tri des métriques, l'utilisation d'autres algorithmes n'apportant pas de gain significatif.
 
@@ -347,24 +347,46 @@ Dans un souci de simplicité de la description logicielle, le choix a donc été
   \label{fig:extract}
 \end{figure}
 
-Par profilage de l'exécution d'un décodeur SCL adaptatif, il est possible d'observer que beaucoup de temps est passé à réaliser des vérifications de CRC. En effet, la complexité calculatoire du CRC est en $O(N)$ tandis que celle du reste de l'algorithme SCL est en $O(N\log N)$. Pour les valeurs de N considérées, le premier n'est pas négligeable par rapport au second. Des méthodes d'implémentation efficaces doivent donc être utilisées. Tout d'abord, les bits sont empaquetés pour être traités 32 par 32. Les sommes partielles sont stockées au départ chacune sur un entier. Pour vérifier le CRC, 32 sommes partielles sont lues et sont stockées dans un seul entier de 32 bits. Une table de conversion est utilisée pour stocker des séquences pré calculées du CRC. La lecture de ces séquences permet de réduire la complexité calculatoire totale.
+Par profilage de l'exécution d'un décodeur SCL adaptatif, il est possible d'observer que beaucoup de temps est passé à réaliser des vérifications de CRC.
+En effet, à chaque décodage (y compris le premier décodage SC), il est nécessaire de réaliser une vérification du CRC.
+De plus, la complexité calculatoire d'une vérification de CRC est en $O(N)$ tandis que celle du reste de l'algorithme SCL est en $O(N\log N)$.
+En conséquence, pour les valeurs de N considérées ($N<8192$), le temps nécessaire aux traitement du CRC n'est pas négligeable par rapport au temps nécessaire aux décodages de codes polaires.
 
-Dans les algorithmes adaptatifs, après un premier décodage de la trame par l'algorithme SC, un premier mot de code candidat $\mathbold{\hat{u}}$ de $N$ bits est proposé. Or le CRC est calculé sur les seuls $K$ bits d'information de $\mathbold{\hat{b}}$ parmi les $N$ bits du mot de code. il est donc nécessaire de réaliser l'extraction des bits d'information. L'implémentation naïve représentée dans la Figure~\ref{fig:extract1} consiste à réaliser cette extraction bit par bit. Pour chaque bit, un test est réalisé pour savoir s'il s'agit d'un bit gelé ou d'un bit d'information. Le profilage des décodeurs montre que cette opération d'extraction représente une portion non négligeable du temps total de traitement du CRC. Or il est possible de l'accélérer en utilisant la connaissance préalable de l'emplacement des bits gelés par la connaissance des \noeuds d'élagage. En effet, la présence d'un \noeud de type \texttt{R1} de taille $4$ correspond à la présence de $4$ bits d'information consécutifs dans le vecteur $\mathbold{\hat{u}}$ comme représenté en Figure~\ref{fig:extract2}. Il est alors possible d'utiliser une fonction spécialisée de la librairie stdlib (\texttt{std::copy})  afin de réaliser une extraction parallèle de multiples bits simultanément. Ce procédé est également réalisable sur les \noeuds \texttt{SPC} à condition d'exclure le bit gelé du \noeud en question.
+Tout d'abord, pour réduire le temps de vérification, des méthodes d'implémentation efficaces doivent être utilisées. 
+Les bits sont empaquetés pour être traités 32 par 32.
+Au départ les sommes partielles sont stockées chacune sur un entier.
+Pour vérifier le CRC, 32 sommes partielles sont lues et sont stockées dans un seul entier de 32 bits.
+Une table de conversion est utilisée pour stocker des séquences pré calculées du CRC.
+La lecture de ces séquences permet de réduire la complexité calculatoire totale.
 
-Cette technique est particulièrement efficace dans le cas des algorithmes adaptatifs, au cours desquels cette extraction doit être réalisée de multiples fois. Ainsi, pour l'algorithme FASCL sur un code polaire (2048,1723) et un CRC de taille $c=32$ à $E_b/N_0 = 4.5dB$, le gain de performance est de 63\%, portant le débit de 262 Mb/s à 426 Mb/s.
+Après chaque décodage SC ou SCL au sein des décodeurs adaptatifs, des mots de code candidats $\mathbold{\hat{u}}$ de $N$ bits sont produits.
+Toutefois, le CRC est calculé sur les $K$ bits d'information de $\mathbold{\hat{b}}$ parmi les $N$ bits du mot de code.
+Il est donc nécessaire de réaliser l'extraction des bits d'information.
+L'implémentation naïve représentée dans la Figure~\ref{fig:extract1} consiste à réaliser cette extraction bit par bit.
+Pour chaque bit, un test est réalisé pour savoir s'il s'agit d'un bit gelé ou d'un bit d'information.
+Le profilage des décodeurs montre que cette opération d'extraction représente une portion non négligeable du temps total de traitement du CRC.
+Il est possible de l'accélérer en utilisant la connaissance préalable de l'emplacement des bits gelés par la connaissance des \noeuds d'élagage.
+En effet, la présence d'un \noeud de type \texttt{R1} de taille $4$ correspond à la présence de $4$ bits d'information consécutifs dans le vecteur $\mathbold{\hat{u}}$ comme représenté en Figure~\ref{fig:extract2}.
+La fonction (\texttt{std::copy}) de la librairie standard C++ permet de réaliser une extraction parallèle de multiples bits.
+Ce procédé est également réalisable sur les \noeuds \texttt{SPC} à condition d'exclure le bit gelé du \noeud en question.
+
+Cette technique est particulièrement efficace dans le cas des algorithmes adaptatifs, au cours desquels cette extraction doit être réalisée de multiples fois.
+Ainsi, pour l'algorithme FASCL sur un code polaire (2048,1723) et un CRC de taille $c=32$ à $E_b/N_0 = 4.5dB$, le gain de performance est de 63\%, portant le débit de 262 Mb/s à 426 Mb/s.
 
 \subsection{Gestion des sommes partielles}
 Dans cette section est décrite la gestion des sommes partielles dans les décodeurs proposés.
-Les sommes partielles sont des décisions dures et leurs valeurs sont donc binaires. Cependant, dans les implémentations logicielles proposées, afin d'utiliser efficacement les instructions SIMD, les LLRs et les sommes partielles sont représentés sur par des entiers de même dimension, notée $Q$, en octets. Selon la représentation choisie, 32, 16 ou 8 bits, $Q$ peut donc prendre les valeurs 4, 2 ou 1. 
-Dans les précédentes implémentations logicielles de l'algorithme SCL \cite{sarkis_fast_2016,sarkis_increasing_2014,shen_low-latency_2016}, un emplacement mémoire de $Q$ bits est alloué à chaque niveau de l'arbre de décodage comme décrit dans \cite{tal_list_2011}. La taille de l'emplacement mémoire associé à un niveau de l'arbre est égal à la taille des \noeuds du niveau en question. Soit $n=\log_2(N)$, le nombre total de niveaux est $n+1$ et la taille d'un \noeud au niveau $l$ est égal à $2^{n-l}$. L'empreinte mémoire pour les sommes partielles d'un arbre de décodage est égale à : 
+Les sommes partielles sont des décisions dures et leurs valeurs sont donc binaires. Cependant, dans les implémentations logicielles proposées, afin d'utiliser efficacement les instructions SIMD, les LLRs et les sommes partielles sont stockés sur des entiers de même dimension, notée $Q$, en octets. Selon la représentation choisie, 32, 16 ou 8 bits, $Q$ peut donc prendre les valeurs 4, 2 ou 1. 
+Dans les précédentes implémentations logicielles de l'algorithme SCL \cite{sarkis_fast_2016,sarkis_increasing_2014,shen_low-latency_2016}, un emplacement mémoire de $Q$ octets est alloué à chaque niveau de l'arbre de décodage comme décrit dans \cite{tal_list_2011}. La taille de l'emplacement mémoire associé à un niveau de l'arbre est égal à la taille des \noeuds du niveau en question. Soit $n=\log_2(N)$, le nombre total de niveaux est $n+1$ et la taille d'un \noeud au niveau $l$ est égal à $2^{n-l}$. L'empreinte mémoire pour les sommes partielles d'un arbre de décodage est égale à : 
 \begin{equation}
 \sum^n_{l=0}2^{n-l}=2N-1
 \end{equation}
-Pour l'algorithme SCL dans lequel L arbres de décodage sont nécessaires, l'empreinte mémoire totale pour l'algorithme SCL est donc $L(2N-1)$. Cependant cette empreinte mémoire peut être réduite. En effet, dans l'algorithme SC, les sommes partielles d'un \noeud donné de l'arbre de décodage ne sont utilisées qu'une fois au cours du décodage, donc ces emplacements mémoire peuvent être recyclés. Ainsi l'empreinte mémoire peut être réduite de $2N-1$ à $N$ dans l'algorithme SC \cite{leroux_hardware_2011}. De la même manière, il est possible de réduire cette empreinte mémoire de $L(2N-1)$ à $LN$ pour l'algorithme SCL.
+Pour l'algorithme SCL dans lequel L arbres de décodage sont nécessaires, l'empreinte mémoire totale est donc $L(2N-1)$. Cependant, dans l'algorithme SC, les sommes partielles d'un \noeud donné de l'arbre de décodage ne sont utilisées qu'une fois au cours du décodage, donc ces emplacements mémoire peuvent par conséquent être réutilisés. De cette façon, l'empreinte mémoire est réduite de $2N-1$ à $N$ dans l'algorithme SC \cite{leroux_hardware_2011}. De la même manière, il est possible de réduire cette empreinte mémoire de $L(2N-1)$ à $LN$ pour l'algorithme SCL.
 
-Lors des étapes de duplication et de sélection de l'algorithme SCL, étapes $(i+1)$ et $(i+3)$ de la Figure \ref{fig:scl}, il est nécessaire de assigner les sommes partielles d'un arbre de décodage original à un nouvel arbre. Deux méthodes sont possibles pour réaliser cette assignation. La première, notée $SCL_{cpy}$, consiste à systématiquement copier les $N$ sommes partielles sauvegardée dans l'emplacement mémoire du premier arbre de décodage vers l'emplacement mémoire du second. La deuxième, présentée dans \cite{tal_list_2011}, est de réaliser cette assignation par l'utilisation de pointeurs. Ainsi, tant que les sommes partielles de chaque arbre ne diffèrent pas, ils utilisent le même emplacement mémoire. Cette méthode est notée $SCL_{ptr}$.
+Lors des étapes de duplication et de sélection de l'algorithme SCL, étapes $(i+1)$ et $(i+3)$ de la Figure \ref{fig:scl}, il est nécessaire d'affecter les sommes partielles d'un arbre de décodage original à un nouvel arbre. Deux méthodes sont envisageables pour réaliser cette affectation. La première, notée $SCL_{cpy}$, consiste à systématiquement copier les $N$ sommes partielles sauvegardées dans l'emplacement mémoire du premier arbre de décodage vers l'emplacement mémoire du second. La deuxième, présentée dans \cite{tal_list_2011}, est de réaliser cette affectation par l'utilisation de pointeurs. Ainsi, tant que les sommes partielles de chaque arbre ne diffèrent pas, ils utilisent le même emplacement mémoire. Cette méthode est notée $SCL_{ptr}$.
 
-La méthode $SCL_{ptr}$ semble plus efficace puisqu'elle évite des copies inutiles. Cependant, nos expérimentations montrent que le surplus de calculs nécessaire à la gestion des pointeurs pénalise cette méthode pour des codes de petite et moyenne taille, comme montré en Figure~\ref{fig:scl_mem} qui représente les débits des implémentations de l'algorithme SCL utilisant chacune des méthodes, pour différentes valeurs de $N$, un rendement constant, $R=1/2$ et une profondeur de liste $L=32$. Ces courbes montrent que la méthode $SCL_{cpy}$ permet des débits plus rapides pour $N<8192$ tandis que le méthode $SCL_{ptr}$ est plus avantageuse pour des débits supérieurs. La Figure~\ref{fig:scl_mem} montre également l'impact du format utilisé pour la représentation des LLRs et des sommes partielles. Pour de très grandes valeurs de $N$, la représentation sur 8 bits est plus efficace, puisqu'elle occupe moins d'espace mémoire et que les échecs d'accès à la mémoire cache sont plus rares. 
+La méthode $SCL_{ptr}$ semble plus efficace puisqu'elle évite des copies inutiles. Cependant, nos expérimentations montrent que le surplus de calculs nécessaire à la gestion des pointeurs pénalise cette méthode pour des codes de petite et moyenne taille. La Figure~\ref{fig:scl_mem} représente les débits des implémentations de l'algorithme SCL utilisant chacune des méthodes, pour différentes valeurs de $N$, un rendement constant, $R=1/2$ et une profondeur de liste $L=32$. Ces courbes montrent que la méthode $SCL_{cpy}$ permet des débits plus élevés pour $N<8192$ tandis que le méthode $SCL_{ptr}$ est plus avantageuse pour des débits supérieurs. La Figure~\ref{fig:scl_mem} montre également l'impact du format utilisé pour la représentation des LLRs et des sommes partielles. Pour de très grandes valeurs de $N$, la représentation sur 8 bits est plus efficace, puisqu'elle occupe moins d'espace mémoire et que les échecs d'accès à la mémoire cache sont plus rares. 
+
+La section \ref{sec:opti_scl} nous a permis de présenter trois optimisations originales permettant d'augmenter le débit et de réduire la latence des implémentations des algorithmes de décodage de codes polaire à liste : nouvel algorithme de tri, accélération du traitement du CRC, et nouvelle méthode de gestion des sommes partielles.
 
 \begin{figure}
 \centering
@@ -389,36 +411,31 @@ L'algorithme FASCL permet d'atteindre les débits les plus élevés. Comme il es
       \caption{Comparaison des débits et latences des décodeurs proposés avec des décodeurs de l'état de l'art. Représentation des LLRs et sommes partielles sur 32 bits. Code polaire (2048,1723), $L=32$, CRC GZip $c=32$.}
       \label{tab:res}
       {\small\resizebox{\linewidth}{!}{
-      \begin{tabular}{r|r|c|c c c}
-        \multirow{2}{*}{\textbf{Target}} & \multirow{2}{*}{\textbf{Décodeur}}  & \multirow{1}{*}{\textbf{$\bm{\mathcal{L}_{PC}}$}} & \multicolumn{3}{c}{$\bm{\mathcal{T}_i}$ (Mb/s)} \\
-        \cline{4-6}
-        &                           & ($\mu s$)                          & \textbf{3.5 dB} & \textbf{4.0 dB} & \textbf{4.5 dB} \\
+      \begin{tabular}{r|l|c|c|c c c}
+        \multirow{2}{*}{\textbf{Target}} & \multirow{2}{*}{\textbf{Algorithme}} & \multirow{2}{*}{\textbf{Version}}  & \multirow{1}{*}{\textbf{$\bm{\mathcal{L}_{PC}}$}} & \multicolumn{3}{c}{$\bm{\mathcal{T}_i}$ (Mb/s)} \\
+        \cline{5-7}
+        &                        &   & ($\mu s$)                          & \textbf{3.5 dB} & \textbf{4.0 dB} & \textbf{4.5 dB} \\
         \hline
         % \hline
-        \multirow{1}{*}{i7-4790K}
-        & CASCL \cite{shen_low-latency_2016} & 1572                           & 1.10            & 1.10            & 1.10            \\
+        i7-4790K & CASCL  & \cite{shen_low-latency_2016}      & 1572                           & 1.10            & 1.10            & 1.10            \\
         \hline
-        \multirow{3}{*}{i7-2600}
-        & CASCL \cite{sarkis_increasing_2014} & 23000                          & 0.07            & 0.07            & 0.07            \\
-        & CASSCL\cite{sarkis_increasing_2014} & 3300                           & 0.52            & 0.52            & 0.52            \\
-        & PASSCL \cite{sarkis_increasing_2014} & $\approx$ 3300                 & 0.9             & 4.90            & 54.0            \\
+        i7-2600  & CASCL  & \cite{sarkis_increasing_2014}     & 23000                          & 0.07            & 0.07            & 0.07            \\
+        i7-2600  & CASCL  & \cite{sarkis_fast_2016}           & 2294                           & 0.76            & 0.76            & 0.76            \\
+        i7-2600  & CASCL  & Ce travail                        & 4819                           & 0.37            & 0.37            & 0.37            \\
+        i5-6600K & CASCL  & Ce travail                        & 3635                           & 0.48            & 0.48            & 0.48            \\
         \hline
-        \multirow{3}{*}{i7-2600}
-        & CASCL  \cite{sarkis_fast_2016}   & 2294                           & 0.76            & 0.76            & 0.76            \\
-        & CASSCL \cite{sarkis_fast_2016}   & 433                            & 4.0             & 4.0             & 4.0             \\
-        & PASSCL \cite{sarkis_fast_2016}   & $\approx$ 433                  & 8.6             & 33.0            & 196.0           \\
+        i7-2600  & CASSCL & \cite{sarkis_increasing_2014}    & 3300                           & 0.52            & 0.52            & 0.52            \\
+        i7-2600  & CASSCL & \cite{sarkis_fast_2016}          & 433                            & 4.0             & 4.0             & 4.0             \\
+        i7-2600  & CASSCL & Ce travail                       & 770                            & 2.3             & 2.3             & 2.3             \\
+        i5-6600K & CASSCL & Ce travail                       & 577                            & 3.0             & 3.0             & 3.0             \\
         \hline
-        \multirow{4}{*}{i7-2600}
-        & CASCL proposé                    & 4819                           & 0.37            & 0.37            & 0.37            \\
-        & CASSCL proposé                   & 770                            & 2.3             & 2.3             & 2.3             \\
-        & PASSCL proposé                   & 847                            & 5.5             & 31.1            & 168.4           \\
-        & FASSCL proposé                   & 1602                           & 19.4            & 149.0           & 244.3           \\
+        i7-2600  & PASSCL & \cite{sarkis_increasing_2014}    & $\approx$ 3300                 & 0.9             & 4.90            & 54.0            \\
+        i7-2600  & PASSCL & \cite{sarkis_fast_2016}          & $\approx$ 433                  & 8.6             & 33.0            & 196.0           \\
+        i7-2600  & PASSCL & Ce travail                       & 847                            & 5.5             & 31.1            & 168.4           \\
+        i5-6600K & PASSCL & Ce travail                       & 635                            & 7.6             & 42.1            & 237.6           \\
         \hline
-        \multirow{4}{*}{i5-6600K}
-        & CASCL proposé                    & 3635                           & 0.48            & 0.48            & 0.48            \\
-        & CASSCL proposé                   & 577                            & 3.0             & 3.0             & 3.0             \\
-        & PASSCL proposé                   & 635                            & 7.6             & 42.1            & 237.6           \\
-        & FASSCL proposé                   & 1201                           & 26.1            & 207.8           & 345.5           \\
+        i7-2600  & FASSCL & Ce travail                       & 1602                           & 19.4            & 149.0           & 244.3           \\
+        i5-6600K & FASSCL & Ce travail                       & 1201                           & 26.1            & 207.8           & 345.5           \\
       \end{tabular}
       }}
     \end{table}
@@ -428,18 +445,6 @@ L'algorithme FASCL permet d'atteindre les débits les plus élevés. Comme il es
 Les débits et latences des décodeurs proposés sont listés et comparés avec ceux de certains décodeurs de l'état de l'art dans le tableau \ref{tab:res}. Pour tous les décodeurs, les \noeuds SPC4+ ne sont pas utilisés afin de ne pas dégrader les performances de décodage. La latence donnée dans le Tableau \ref{tab:res} est la latence \og pire cas \fg et le débit est le débit d'information moyen. La première version, CASCL, est l'implémentation de l'algorithme CASCL sans aucun élagage tandis que les versions notées CASSCL, FASSCL et PASSCL utilisent l'élagage de l'arbre. Le débit du décodeur CASSCL proposé (2.3 Mb/s) est seulement divisé par deux lorsque l'on compare avec l'implémentation spécifique déroulée de l'algorithme CASSCL décrite en \cite{sarkis_fast_2016} (4.0 Mb/s). Elle est approximativement 4 fois plus rapide que l'implémentation générique proposée en \cite{sarkis_increasing_2014} (0.52 Mb/s) et 2 fois plus rapide que celle proposée en \cite{shen_low-latency_2016}, ceci grâce aux améliorations algorithmiques proposées en Section \ref{sec:opti_scl}. De plus, les implémentations proposées présentent une flexibilité et une généricité bien plus grandes que celles proposées dans \cite{sarkis_increasing_2014,shen_low-latency_2016}. En effet, les représentations quantifiées, la possibilité de définir des patrons de poinçonnage et la possibilité d'utiliser les algorithmes adaptatifs n'étaient pas données. En utilisant la même cible matérielle (i7-2600), l'implémentation de l'algorithme PASSCL présente des débits proches de l'implémentation spécifique déroulée de \cite{sarkis_fast_2016}, tandis que le débit obtenu pour l'algorithme FASSCL est lui bien meilleur (jusqu'à 244 Mb/s pour $E_b/N_0=4.5dB$).
 
 \subsubsection{Performances sur différentes cibles matérielles}
-
-La description logicielle des décodeurs proposés est portable, grâce en particulier à l'utilisation du langage C++11 et de la librairie MIPP \cite{cassagne2018mipp} pour ce qui concerne les instructions SIMD. Ainsi, il est optimisé pour être exécuté sur des processeurs du marché de l'électronique embarquée, d'architecture ARM. Ces cibles sont avantageuses du point de vue de la consommation énergétique pour l'algorithme de décodage SC \cite{cassagne_energy_2016}. Des résultats d'exécution sur plusieurs cibles sont présentées dans le Tableau~\ref{tab:port}. Les métriques prises en compte sont le débit d'information ($\bm{\mathcal{T}_i}$), le nombre de cycle d'horloge nécessaire pour décoder une trame, et l'énergie dépensée par bit d'information décodé ($\bm{\mathcal{E}_b}$). Le Tableau~\ref{tab:port}, présente les résultats d'exécution sur un \coeur.
-
-Les deux premières cibles matérielles considérées sont deux processeurs à usage général pour station de travail, un Intel i7 4790 et un AMD Ryzen 2700X. Leur architecture est de type x86-64 et tous deux possèdent les instruction SIMD AVX2. Les fréquences affichées sont celles mesurées au moment de l'exécution du programme, tout comme la puissance nécessaire pour le calcul de ($\bm{\mathcal{E}_b}$). Le logiciel utilisé pour ces mesures est HWiNFO \cite{noauthor_hwinfo_nodate}. La puissance mesurée est celle du \coeur de processeur seulement, excluant la consommation d'énergie de la mémoire principale et de la mémoire cache de niveau 3.
-
-Ensuite, les résultats d'exécution des implémentations sur quatre versions différentes de processeurs ARM sont présentés. Deux cartes d'évaluation ont été utilisées pour cela. La carte Hikey960 embarque la puce Kirin960 de Hisilicon. Il s'agit d'une puce à 8 \coeurs, 4 Cortex A73 et 4 Cortex A53 qui correspondent à la microarchitecture ARMv8-A. La valeur de puissance consommée n'est pas mesurée, car aucun capteur ne permet de telle mesure sur cette carte. Les consommations annoncées par le constructeur sont considérées \cite{humrick_hisilicon_nodate}. La carte Odroid XU4 embarque la puce Samsung Exynos 5422 à 4 \coeurs Cortex A15 et 4 \coeurs Cortex A7 de microarchitecture ARMv7-A. La puissance considérée pour chacun des \coeurs est issue de \cite{holmgren_energy_nodate,benmoussa_performance_nodate}. Tous les \coeurs ARM possèdent le jeu d'instruction SIMD NEON.
-
-Tout d'abord, les processeurs de station de travail affichent de plus hauts débits que les processeurs ARM, de manière assez logique lorsque l'on considère la fréquence de fonctionnement. On observe également que malgré des fréquences de fonctionnement proches, le Cortex A73 présente un débit bien plus important que le Cortex A15, cela étant sans doute lié au changement de microarchitecture entre les deux générations. En effet, il y a une diminution d'environ 30\% du nombre de cycles nécessaires pour décoder une trame. Un écart du même ordre de grandeur est observé entre les Cortex A53 et A7, qui sont des \coeurs à faible consommation énergétique  .
-
-Du point de vue du nombre de cycles d'horloge nécessaire au décodage d'une trame, il est important d'observer que le Cortex A73 est compétitif par rapport aux processeurs de station de travail, le i7 et le Ryzen. En conséquence, puisque sa puissance est bien inférieure ($\approx 2 W$ en charge contre $\approx 15 W$), l'efficacité énergétique est elle 3 à 4 fois supérieures. Les Cortex A7 et A53 sont proches en termes d'efficacité énergétique tandis que le Cortex A15 est en retrait.
-
-
   \begin{table}[t]
     \centering
     \caption{Comparaison des débits des décodeurs proposés sur différentes cibles matérielles. Représentation en virgule fixe sur 8 bits , $E_b/N_0 = 4.5dB$, CRC GZip $c=32$.}
@@ -452,47 +457,61 @@ Du point de vue du nombre de cycles d'horloge nécessaire au décodage d'une tra
        & & & & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  & \textbf{dB}  \\
       \hline
       \hline
-      \multirow{3}{*}{\begin{minipage}{0.5in}\centering i7 4790\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 3592\end{minipage}} 
+      \multirow{3}{*}{\begin{minipage}{0.5in}\centering i7 4790\end{minipage}}     & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 3592\end{minipage}} 
         & CASCL &                     &  2.34  & 2.38   & 2.24   & 2645 & 2600 & 2763 & 6325 & 6218 & 6607 \\
-      & & FASCL &                     &  19.43 & 194.66 & 372.30 & 319  & 32   & 17   & 762  & 76   & 40   \\
       & & PASCL &                     &  5.80  & 33.88  & 207.96 & 1067 & 183  & 30   & 2552 & 437  & 71   \\
+      & & FASCL &                     &  19.43 & 194.66 & 372.30 & 319  & 32   & 17   & 762  & 76   & 40   \\
 
       \hline
       \multirow{3}{*}{\begin{minipage}{0.5in}\centering Ryzen 2700X\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 4230\end{minipage}} 
         & CASCL &                     &  2.68  & 2.72   & 2.56   & 2675 & 2635 & 2800 & 5149 & 5074 & 5391 \\
-      & & FASCL &                     &  20.93 & 209.37 & 406.15 & 342  & 34   & 18   & 659  & 66   & 34   \\
       & & PASCL &                     &  6.55  & 38.76  & 237.78 & 1094 & 185  & 30   & 2107 & 356  & 58   \\
+      & & FASCL &                     &  20.93 & 209.37 & 406.15 & 342  & 34   & 18   & 659  & 66   & 34   \\
 
       \hline
       \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A73\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 2360\end{minipage}} 
         & CASCL &                     &  1.23  & 1.28   & 1.20   & 3310 & 3175 & 3382 & 1475 & 1415 & 1507 \\
-      & & FASCL &                     &  10.64 & 83.58  & 137.37 & 382  & 49   & 30   & 170  & 22   & 13   \\
       & & PASCL &                     &  3.08  & 18.90  & 100.75 & 1319 & 215  & 40   & 588  & 96   & 18   \\
+      & & FASCL &                     &  10.64 & 83.58  & 137.37 & 382  & 49   & 30   & 170  & 22   & 13   \\
 
       \hline
       \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A15\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 2000\end{minipage}} 
         & CASCL &                     &  0.74  & 0.74   & 0.70   & 4639 & 4639 & 4923 & 3365 & 3365 & 3571 \\
-      & & FASCL &                     &  6.23  & 52.77  & 88.31  & 553  & 65   & 39   & 401  & 47   & 28   \\
       & & PASCL &                     &  1.81  & 11.06  & 61.86  & 1899 & 312  & 56   & 1378 & 226  & 40   \\
+      & & FASCL &                     &  6.23  & 52.77  & 88.31  & 553  & 65   & 39   & 401  & 47   & 28   \\
 
       \hline
       \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A53\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 1840\end{minipage}} 
         & CASCL &                     &  0.48  & 0.48   & 0.45   & 6560 & 6560 & 7064 & 1353 & 1353 & 1457 \\
-      & & FASCL &                     &  4.45  & 39.70  & 68.32  & 712  & 80   & 46   & 147  & 16   & 10   \\
       & & PASCL &                     &  1.17  & 7.32   & 42.77  & 2701 & 433  & 74   & 557  & 89   & 15   \\
+      & & FASCL &                     &  4.45  & 39.70  & 68.32  & 712  & 80   & 46   & 147  & 16   & 10   \\
 
       \hline
       \multirow{3}{*}{\begin{minipage}{0.5in}\centering Cortex A7\end{minipage}} & \multirow{3}{*}{\begin{minipage}{0.5in}\centering 1400\end{minipage}} 
         & CASCL &                     &  0.28  & 0.29   & 0.27   & 8615 & 8318 & 8934 & 1071 & 1034 & 1111 \\
-      & & FASCL &                     &  2.41  & 19.40  & 30.93  & 1001 & 124  & 78   & 124  & 15   & 10   \\
       & & PASCL &                     &  0.71  & 4.26   & 21.89  & 3397 & 566  & 110  & 423  & 70   & 14   \\
+      & & FASCL &                     &  2.41  & 19.40  & 30.93  & 1001 & 124  & 78   & 124  & 15   & 10   \\
 
     \end{tabular}
     }}
   \end{table}
 
+La description logicielle des décodeurs proposés est portable, grâce en particulier à l'utilisation du langage C++11 et de la librairie MIPP \cite{cassagne2018mipp} pour ce qui concerne les instructions SIMD. Ainsi, en plus d'être efficace comme nous l'avons déjà vu sur des architectures de processeurs de type x86, le décodeur bénéficie également d'optimisations pour l'exécution sur des processeurs du marché de l'électronique embarquée, d'architecture ARM. Des résultats d'exécution sur plusieurs cibles sont présentées dans le Tableau~\ref{tab:port}. Les métriques prises en compte sont le débit d'information ($\bm{\mathcal{T}_i}$), le nombre de cycles d'horloge nécessaire pour décoder une trame, et l'énergie dépensée par bit d'information décodé ($\bm{\mathcal{E}_b}$). Le Tableau~\ref{tab:port}, présente les résultats d'exécution sur un \coeur.
+
+Les deux premières cibles matérielles considérées sont deux processeurs à usage général pour station de travail, un Intel i7 4790 et un AMD Ryzen 2700X. Leur architecture est de type x86-64 et tous deux possèdent les instructions SIMD AVX2. Les fréquences affichées sont celles mesurées au moment de l'exécution du programme, tout comme la puissance nécessaire pour le calcul de ($\bm{\mathcal{E}_b}$). Le logiciel utilisé pour ces mesures est HWiNFO \cite{noauthor_hwinfo_nodate}. La puissance mesurée est celle du \coeur de processeur seulement, excluant la consommation d'énergie de la mémoire principale et de la mémoire cache de niveau 3.
+
+Ensuite, les résultats d'exécution des implémentations sur quatre versions différentes de processeurs ARM sont présentés. Les architectures ARM sont avantageuses du point de vue de la consommation énergétique pour l'algorithme de décodage SC \cite{cassagne_energy_2016}. Nous effectuons ici des mesures afin de vérifier que c'est aussi le cas pour l'algorithme SCL. Deux cartes d'évaluation ont été utilisées pour cela. La carte Hikey960 embarque la puce Kirin960 de Hisilicon. Il s'agit d'une puce à 8 \coeurs, 4 Cortex A73 et 4 Cortex A53 qui correspondent à la microarchitecture ARMv8-A. La valeur de puissance consommée n'est pas mesurée, car aucun capteur ne permet de telle mesure sur cette carte. Nous utilisons donc les valeurs de consommation données par le constructeur \cite{humrick_hisilicon_nodate}. La carte Odroid XU4 embarque la puce Samsung Exynos 5422 à 4 \coeurs Cortex A15 et 4 \coeurs Cortex A7 de microarchitecture ARMv7-A. La puissance considérée pour chacun des \coeurs est issue de \cite{holmgren_energy_nodate,benmoussa_performance_nodate}. Tous les \coeurs ARM possèdent le jeu d'instruction SIMD NEON.
+
+Grâce à une fréquence de fonctionnement plus élevée, les processeurs de station de travail affichent de plus hauts débits que les processeurs ARM. On observe également que malgré des fréquences de fonctionnement proches, le Cortex A73 présente un débit bien plus important que le Cortex A15, cela étant sans doute lié au changement de microarchitecture entre les deux générations. En effet, il y a une diminution d'environ 30\% du nombre de cycles nécessaires pour décoder une trame. Un écart du même ordre de grandeur est observé entre les Cortex A53 et A7, qui sont des \coeurs à faible consommation énergétique.
+
+Du point de vue du nombre de cycles d'horloge nécessaires au décodage d'une trame, il est important d'observer que le Cortex A73 est compétitif par rapport aux processeurs de station de travail, le i7 et le Ryzen. En conséquence, puisque sa puissance est bien inférieure ($\approx 2 W$ en charge contre $\approx 15 W$), l'efficacité énergétique est elle 3 à 4 fois supérieures. Les Cortex A7 et A53 sont proches en termes d'efficacité énergétique tandis que le Cortex A15 est en retrait.
+
+
+
 \section{Conclusion}
 
-L'infrastructure Cloud-RAN et plus généralement l'attrait grandissant pour le domaine des radios logicielles (SDR : Software Defined Radio) motivent l'étude et le développement de descriptions logicielles de décodeurs canal comme celles décrites dans cette partie. Voici résumées les différentes contributions originales proposées. i) Au contraire des décodeurs logiciels précédents, ceux-ci sont les premiers à permettre une représentation en virgule fixe sur une nombre réduit de bits des LLRs. ii) Deux méthodes différentes de gestion des sommes partielles sont présentées et leurs avantages et inconvénients sont étudiées. iii) Une méthode d'extraction des bits d'information, nécessaire avant les vérifications de CRC dans les différents algorithmes, est présentée. Elle permet d'augmenter significativement le débit des décodeurs. iv) Un algorithme de tri \cite{schreier_tournament_1932} très adapté aux algorithmes considérés est utilisée pour la première fois. v) Contrairement aux précédentes implémentations à haut débit et faible latence proposées dans les travaux précédents, les décodeurs proposés supportent l'algorithme FASCL. vi) Un type d'élagage était présenté dans des travaux précédents comme dégradant fortement les performances de décodage. Le paramétrage fin de l'élagage dans les décodeurs proposés a permis de montrer que ce fait est discutable suivant le code polaire considéré. vii) Enfin, les implémentations sur architecture ARM des algorithmes SCL sont les premières de la littérature.
+L'infrastructure Cloud-RAN et plus généralement l'attrait grandissant pour le domaine des radios logicielles (SDR : Software Defined Radio) motivent l'étude et le développement de descriptions logicielles de décodeurs canal comme celles décrites dans cette partie.
+
+Voici résumées les différentes contributions originales proposées dans ce chapitre. i) Au contraire des implémentations des algorithmes à liste logicielles précédentes, celles-ci sont les premières à permettre une représentation en virgule fixe sur une nombre réduit de bits des LLRs. ii) Deux méthodes différentes de gestion des sommes partielles sont présentées et leurs avantages et inconvénients sont étudiées. iii) Une méthode d'extraction des bits d'information, nécessaire avant les vérifications de CRC dans les différents algorithmes, est présentée. Elle permet d'augmenter significativement le débit des décodeurs. iv) Un algorithme de tri \cite{schreier_tournament_1932} très adapté aux algorithmes considérés est utilisée pour la première fois. v) Contrairement aux précédentes implémentations à haut débit et faible latence proposées dans les travaux précédents, les décodeurs proposés supportent l'algorithme FASCL. vi) Un type d'élagage était présenté dans des travaux précédents comme dégradant fortement les performances de décodage. Le paramétrage fin de l'élagage dans les décodeurs proposés a permis de montrer que ce fait est discutable suivant le code polaire considéré. vii) Enfin, les implémentations sur architecture ARM des algorithmes SCL sont les premières de la littérature.
 
 Dans la suite du manuscrit vont être présentées des architectures programmables permettant l'implémentation efficace d'algorithmes de décodage de codes polaires. Le but de ces architectures est de conserver  la souplesse et la flexibilité apportée par une description logicielle des algorithmes de décodage, tout en améliorant le débit, la latence, et surtout l'efficacité énergétique des décodeurs.
