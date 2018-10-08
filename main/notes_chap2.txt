@@ -1,2 +1,6 @@
 - Il faut citer explicitement aff3ct dans le texte. (2.2 ?)
-- sont rares dans la littérature, : CAD A QUANTIFIER A CITER
+- Algorithme de tri, partie à revoir
+- vérifier section vs sous-section
+- pas de majuscule à code Polaire
+- remonter figure 2.12
+- ajouter multicoeurs

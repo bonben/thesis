@@ -44,6 +44,7 @@
 \usetikzlibrary{shapes,arrows}
 \usetikzlibrary{calc} 
 
+\usepackage{enumitem}   
 \usepackage{array}
 \usepackage{longtable} %pour la liste des notations
 
@@ -221,6 +222,14 @@
 \newcommand{\mb}[1]{\mathbold{#1}}
 
 \usepackage{listingsutf8}
+
+\usepackage{graphicx,calc}
+\newlength\myheight
+\newlength\mydepth
+\settototalheight\myheight{Xygp}
+\settodepth\mydepth{Xygp}
+\setlength\fboxsep{0pt}
+
 
 \lstset{
      literate=%
