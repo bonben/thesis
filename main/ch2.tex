@@ -319,7 +319,13 @@ Cependant, ces implémentations doivent être compétitives par comparaison avec
 Cette section \ref{sec:opti_scl} présente trois contributions originales. La première porte sur l'utilisation nouvelle d'un algorithme de tri des métriques et des LLRs. La seconde concerne l'accélération du contrôle de redondance cyclique. Enfin, la gestion des sommes partielles est l'objet d'une contribution propre.
 
 \subsection{Algorithme de tri}
-Des algorithmes de tri partiel sont appliquées durant de plusieurs étapes lors de l'exécution de l'algorithme SCL. Ainsi, les $L$ métriques de chemin les plus faibles doivent être identifiées pour sélectionner les candidats lors des étapes de duplication (étapes (i+1) et (i+3) de la Figure~\ref{fig:scl}). De plus, les 2 LLRs ayant les valeurs absolues les plus faibles doivent être identifiés lors du traitement des \noeuds \texttt{R1}. Enfin, les 4 LLRs les plus faibles doivent être retenus lors du traitement d'un \noeud \texttt{SPC}. \`A cause d'un manque de détails dans la description de l'implémentation du tri dans \cite{sarkis_fast_2016}, sa reproduction est difficile. Différentes méthodes de tri ont donc été explorées.
+Des algorithmes de tri partiel sont appliquées durant de plusieurs étapes lors de l'exécution de l'algorithme SCL. Ainsi, les $L$ métriques de chemin les plus faibles doivent être identifiées pour sélectionner les candidats lors des étapes de duplication (étapes (i+1) et (i+3) de la Figure~\ref{fig:scl}). De plus, les 2 LLRs ayant les valeurs absolues les plus faibles doivent être identifiés lors du traitement des \noeuds \texttt{R1}. Enfin, les 4 LLRs les plus faibles doivent être retenus lors du traitement d'un \noeud \texttt{SPC}. 
+
+
+Dans \cite{sarkis_fast_2016}, la méthode de tri des LLRs dans les \noeuds \texttt{REP} et \texttt{SPC} n'est pas précisée.
+Schreier \cite{schreier_tournament_1932} donne un méthode pour identifier les deux plus petits (ou les deux plus grands) éléments d'un ensemble. Cette technique est également détaillée dans \cite{knuth_art_1973}. 
+Il a été prouvé que cette méthode est la méthode optimale en termes de nombre de comparaisons deux-à-deux à effectuer.
+Ce nombre est égal à $N+\log_2(N)-2$
 
 \begin{figure}[t]
 \centering
@@ -335,15 +341,30 @@ Des algorithmes de tri partiel sont appliquées durant de plusieurs étapes lors
 \caption{Méthode de Schreier}
 \label{fig:schreier_sort}
 \end{figure}
+Elle nécessite deux étapes complémentaires, présentées en Figure~\ref{fig:schreier_sort}. La première étape est l'identification du plus petit élément par la traversée d'un arbre binaire. Durant la seconde étape, cet élément est éliminé, et la branche sur laquelle il se trouvait est rejouée. Le second élément le plus petit est ainsi identifié.
 
-Schreier \cite{schreier_tournament_1932} donne la méthode optimale en termes de nombre de comparaisons nécessaire pour identifier les deux plus petits (ou les deux plus grands) éléments d'un ensemble. Cette technique est également détaillée dans \cite{knuth_art_1973}. Elle nécessite deux étapes complémentaires, présentées en Figure~\ref{fig:schreier_sort}. La première étape est l'identification du plus petit élément par la traversée d'un arbre binaire. Durant la seconde étape, cet élément est éliminé, et la branche sur laquelle il se trouvait est rejouée. Le second élément le plus petit est ainsi identifié.
 
-Cette méthode s'est avérée être la plus rapide expérimentalement parmi toutes celles qui ont été testées : \textit{Batcher's merge exchange}, tri par bulle, tri \textit{quick-sort}, tri par tas implémenté dans la librairie standard. Elle l'était également dans les cas testés pour les \noeuds de type \texttt{SPC}. Une comparaison montre que la méthode de Schreier est également pertinente pour le tri des métriques. En effet, l'utilisation d'autres algorithmes de tri n'apporte pas de gain significatif.
+Cette méthode a été testée expérimentalement et ses performances ont été comparées à d'autres algorithmes potentiels : \textit{Batcher's merge exchange}, tri par bulle, tri \textit{quick-sort}, tri par tas implémenté dans la librairie standard. Les mesures ont été réalisées sur un processeur Intel i7 4790HQ, pour différents rendements, tailles de codes et profondeur de liste. La méthode de Schreier s'est révélé dans tous les cas le plus rapide. Elle l'était également dans les cas testés pour les \noeuds de type \texttt{SPC}. En effet, l'utilisation d'autres algorithmes de tri n'apporte pas de gain significatif.
 
+Le tri des métriques dans \cite{sarkis_fast_2016} est effectué à l'aide d'un réseau de tri partiels (PSN : Partial Sorting Network) décrit dans []. Les unités de calcul SIMD sont utilisées pour accélérer l'exécution de ce tri. 
 Dans un souci de simplicité de la description logicielle, le choix a donc été fait de n'utiliser que la méthode de Schreier pour réaliser les différents tris nécessaires pour l'exécution de l'algorithme SCL.
-
+Dans cette étude, nous n'avons pas implémenté les PSN pour le tri des métriques. En effet, pour que ce réseau de tri soit générique vis à vis de $L$ ainsi que de l'élagage de l'arbre, une méthode devrait être conçue afin de créer un PSN pour n'importe quelle profondeur de liste $L$, et pour chaque type de \noeud différent. Nous pensons que l'utilisation de PSNs pourrait augmenter le débit de nos décodeurs. Toutefois, ce travail n'a pas encore été réalisé, et nous le réservons pour de futurs travaux.
+Par défaut, la méthode de Schreier est également utilisée pour le tri des métriques. Les mêmes algorithmes alternatifs ont été testés mais aucune amélioration significative n'a permis d'amélioration du débit.
 
 \subsection{Accélération du contrôle de redondance cyclique}
+
+Par profilage de l'exécution d'un décodeur SCL adaptatif, il est possible d'observer que beaucoup de cycles d'exécution sont alloués aux vérifications de CRC.
+En effet, durant chaque décodage (y compris le premier décodage SC), il est nécessaire de réaliser une vérification du CRC.
+De plus, la complexité calculatoire d'une vérification de CRC est en $O(N)$ tandis que celle du reste de l'algorithme SCL est en $O(N\log N)$.
+En conséquence, pour les valeurs de N considérées ($N<8192$), le temps nécessaire à la vérifications du CRC n'est pas négligeable vis à vis de celui nécessaire pour le décodage de code polaire proprement dit.
+
+C'est pourquoi des méthodes d'implémentation efficaces doivent être utilisées afin de réduire le temps de vérification du CRC.
+Pour ce faire, nous proposons que les bits soient empaquetés pour être traités 32 par 32.
+\`A l'initialisation, les sommes partielles sont chacune stockées sur un entier.
+Pour vérifier le CRC, 32 sommes partielles sont lues puis stockées dans un seul entier de 32 bits.
+Une table de conversion est utilisée pour stocker des séquences calculées à l'avance du CRC.
+La lecture de ces séquences permet de réduire la complexité calculatoire globale.
+
 \begin{figure}[t]
   \centering
   \subfloat[Extraction séquentielle]{
@@ -357,18 +378,6 @@ Dans un souci de simplicité de la description logicielle, le choix a donc été
   \caption{Extraction des bits d'information avant vérification du CRC}
   \label{fig:extract}
 \end{figure}
-
-Par profilage de l'exécution d'un décodeur SCL adaptatif, il est possible d'observer que beaucoup de cycles d'exécution sont alloués aux vérifications de CRC.
-En effet, durant chaque décodage (y compris le premier décodage SC), il est nécessaire de réaliser une vérification du CRC.
-De plus, la complexité calculatoire d'une vérification de CRC est en $O(N)$ tandis que celle du reste de l'algorithme SCL est en $O(N\log N)$.
-En conséquence, pour les valeurs de N considérées ($N<8192$), le temps nécessaire à la vérifications du CRC n'est pas négligeable vis à vis de celui nécessaire pour le décodage de code polaire proprement dit.
-
-C'est pourquoi des méthodes d'implémentation efficaces doivent être utilisées afin de réduire le temps de vérification du CRC.
-Pour ce faire, nous proposons que les bits soient empaquetés pour être traités 32 par 32.
-\`A l'initialisation, les sommes partielles sont chacune stockées sur un entier.
-Pour vérifier le CRC, 32 sommes partielles sont lues puis stockées dans un seul entier de 32 bits.
-Une table de conversion est utilisée pour stocker des séquences calculées à l'avance du CRC.
-La lecture de ces séquences permet de réduire la complexité calculatoire globale.
 
 Après chaque décodage SC ou SCL au sein des décodeurs adaptatifs, des mots de code candidats $\mathbold{\hat{u}}$ de $N$ bits sont produits.
 Toutefois, le CRC est calculé sur les $K$ bits d'information de $\mathbold{\hat{b}}$ parmi les $N$ bits du mot de code.
