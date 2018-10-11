@@ -1,6 +1,6 @@
 %!TEX root = ../my_thesis.tex
 \chapter{Décodeurs polaires logiciels à Liste} % (fold)
-
+\label{chap:soft_scl}
 % Intro chapitre
 
 \vspace*{\fill}
@@ -47,7 +47,7 @@ Les deux principales techniques d'implémentation logicielle permettant d'attein
 \subsection{Vectorisation}
 
 
-Les processeurs à usage général (GPPs : General Purpose Processors) actuels sont équipés d'unités de calcul vectoriel SIMD (Single Instruction Mutiple Data). Les architectures de processeurs x86-64 définissent par exemple des jeux d'instructions SIMD nommés SSE et AVX. Ces jeux d'instructions contiennent des opérations de chargement et de sauvegarde. Ces opérations permettent d'accéder aux données en mémoire et de les déplacer dans le fichier de registres. Ils intègrent également des opérations de calcul, comme les additions, soustraction ou multiplication.
+Les processeurs à usage général (GPPs : General Purpose Processors) actuels sont équipés d'unités de calcul vectoriel SIMD (Single Instruction Mutiple Data). Les architectures de processeurs x86-64 définissent par exemple des jeux d'instructions SIMD nommés SSE (Streaming SIMD Extension) et AVX (Advanced Vector Extensions). Ces jeux d'instructions contiennent des opérations de chargement et de sauvegarde. Ces opérations permettent d'accéder aux données en mémoire et de les déplacer dans le fichier de registres. Ils intègrent également des opérations de calcul, comme les additions, soustraction ou multiplication.
 \begin{figure}[htp]
 \lstset{language=C++,
         basicstyle=\footnotesize\ttfamily,
