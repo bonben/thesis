@@ -14,7 +14,7 @@ Toutefois, les processeurs à usage général incluent de nombreuses unités mat
 
 Ces observations poussent à envisager la conception d'un processeur programmable qui exclurait les unités matérielles inutiles des processeurs à usage général, tout en intégrant des unités de calculs spécialisées dans la réalisation efficace des fonctions élémentaires de décodage de codes polaires. Ce type de processeurs entre dans la catégorie des processeurs à jeu d'instructions spécifique à l'application (ASIP: Application Specific Instruction-set Processor).
 
-Les Chapitres \ref{chap:tensilica} et \ref{chap:tta} de ce manuscrit présentent deux architectures de processeurs ASIP spécialisées dans le décodage de code polaire. Ces deux architectures ont été conçues selon des méthodologies de conception différentes. Dans la Section \ref{sec:asips}, le concept d'ASIP est introduit, et la méthodologie utilisée pour la première architecture est décrite. Dans la Section \ref{tensilica_design}, la conception de l'ASIP est détaillée. Enfin les résultats d'implémentation et les performances de l'architecture en termes de débit, latence, complexité et consommation énergétiques sont présentés et discutés dans la Section \ref{sec:tensilica_res}.
+Les Chapitres \ref{chap:tensilica} et \ref{chap:tta} de ce manuscrit présentent deux architectures de processeurs ASIP spécialisées dans le décodage de code polaire. Ces deux architectures ont été conçues selon des méthodologies de conception différentes. Dans la section \ref{sec:asips}, le concept d'ASIP est introduit, et la méthodologie utilisée pour la première architecture est décrite. Dans la section \ref{tensilica_design}, la conception de l'ASIP est détaillée. Enfin les résultats d'implémentation et les performances de l'architecture en termes de débit, latence, complexité et consommation énergétiques sont présentés et discutés dans la section \ref{sec:tensilica_res}.
 
 
 \section{Les processeurs à jeu d'instructions spécifique à l'application}
@@ -78,13 +78,13 @@ Les méthodologies de conception des ASIP peuvent être divisées en deux famill
 \end{figure}
 
 
-La deuxième famille de méthodologies représentée dans la Figure \ref{fig:methodo_tensilica} correspond à l'approche utilisée par les outils Tensilica, utilisés pour concevoir l'ASIP proposé dans ce chapitre. Une architecture de base, peu complexe en terme d'aire occupée et à faible consommation constitue la brique de base du processeur. Dans le cas des outils Tensilica, l'architecture de base est un processeur RISC doté d'un pipeline de 5 étages tels que présenté dans la Section \ref{subsec:risc}. Afin de spécialiser le processeur, deux axes de de conception sont disponibles. Premièrement, le pipeline de base, dont les principales unités matérielles ont été désignées dans la figure \ref{fig:risc} sont paramétrable. Leurs caractéristiques (profondeur et largeur de la file de registre, intergace avec les mémoires...) sont modifiables. Des fonctions peuvent être ajoutées ou enlevées, comme il est montré en Figure \ref{fig:methodo_tensilica} : unité de traitement des points flottants (FPU : Floating Point Unit) unité d'accélération des multiplications (MUL) ou des divisions (DIV)... Le deuxième axe est la possibilité d'étendre le jeu d'instructions. Grâce à un langage de description matériel propre à Tensilica (TIE : Tensilica Instruction Extension) \cite{tie2017reference}. Il est possible dans notre cas d'un processeur spécialisé dans le décodage de codes polaires d'ajouter des unités matérielles accélérant les fonctions élémentaires $f$, $g$, $h$.
+La deuxième famille de méthodologies représentée dans la Figure \ref{fig:methodo_tensilica} correspond à l'approche utilisée par les outils Tensilica, utilisés pour concevoir l'ASIP proposé dans ce chapitre. Une architecture de base, peu complexe en terme d'aire occupée et à faible consommation constitue la brique de base du processeur. Dans le cas des outils Tensilica, l'architecture de base est un processeur RISC doté d'un pipeline de 5 étages tels que présenté dans la sous-section \ref{subsec:risc}. Afin de spécialiser le processeur, deux axes de de conception sont disponibles. Premièrement, le pipeline de base, dont les principales unités matérielles ont été désignées dans la figure \ref{fig:risc} sont paramétrable. Leurs caractéristiques (profondeur et largeur de la file de registre, intergace avec les mémoires...) sont modifiables. Des fonctions peuvent être ajoutées ou enlevées, comme il est montré en Figure \ref{fig:methodo_tensilica} : unité de traitement des points flottants (FPU : Floating Point Unit) unité d'accélération des multiplications (MUL) ou des divisions (DIV)... Le deuxième axe est la possibilité d'étendre le jeu d'instructions. Grâce à un langage de description matériel propre à Tensilica (TIE : Tensilica Instruction Extension) \cite{tie2017reference}. Il est possible dans notre cas d'un processeur spécialisé dans le décodage de codes polaires d'ajouter des unités matérielles accélérant les fonctions élémentaires $f$, $g$, $h$.
 
 Un des objectifs de la conception de processeurs par les méthodologies des conceptions que nous venons de présenter est de réduire de temps de mise sur le marché des systèmes conçus. Pour cela, des étapes clés pour la conception des processeurs sont automatisées. En effet, les suites logicielles de conception d'ASIPs permettent la génération automatique du compilateur, du simulateur, d'un outil de profilage et d'un outil de débogage. 
 
 La génération du compilateur est critique. En effet, l'effort à déployer pour créer un compilateur associé à un processeur spécifique est considérable. En revanche, les compilateurs associés aux outils de conception d'ASIPs sont \og reciblables \fg. Ils sont capables de s'adapter à des modifications de l'architecture du processeurs. Un bon compilateur saura s'adapter aux changements de structure du processeurs et proposer des optimisations spécifiques à la structure. Il doit également être capable de s'adapter au nombre de registres, et de les utiliser efficacement. Nous verrons dans le cas de notre processeur spécialisé dans le décodage de codes polaires que l'augmentation du nombre de registres à usage général augmentera le débit de décodage. Le compilateur doit également être capable de gérer des modifications du pipeline et de permettre du parallélisme d'instructions.
 
-Le simulateur et le profileur générés permettent la validation fonctionnelle de l'architecture et du programme associé. Le nombre de cycles nécessaires à l'exécution du programme est obtenue grâce au simulateur. Le profileur donne des informations importantes sur la durée de l'exécution de sous-parties du programme afin de cibler les section les plus consommatrices de temps. Ces métriques déterminent les modifications futures à apporter pour créer un nouveau modèle du processeur. L'outil de conceptions d'ASIP générera alors de nouveaux compilateur, simulateur et profileur pour extraire les nouvelles métriques. Des itérations successives de ce flot permettent d'améliorer progressivement les performances de l'architecture et du programme considérés. Ce processus serait difficilement réalisable sans une telle suite d'outils automatisés.
+Le simulateur et le profileur générés permettent la validation fonctionnelle de l'architecture et du programme associé. Le nombre de cycles nécessaires à l'exécution du programme est obtenue grâce au simulateur. Le profileur donne des informations importantes sur la durée de l'exécution de sous-parties du programme afin de cibler les sections les plus consommatrices de temps. Ces métriques déterminent les modifications futures à apporter pour créer un nouveau modèle du processeur. L'outil de conceptions d'ASIP générera alors de nouveaux compilateur, simulateur et profileur pour extraire les nouvelles métriques. Des itérations successives de ce flot permettent d'améliorer progressivement les performances de l'architecture et du programme considérés. Ce processus serait difficilement réalisable sans une telle suite d'outils automatisés.
 
 Une fois l'architecture du processeur déterminée, le modèle matériel du processeur est généré. Ce modèle matériel peut être synthétisé et implémenté sur différentes cibles, ASIC ou FPGA. Il est alors possible d'extraire les métriques d'implémentations : fréquence de fonctionnement, surface occupée, puissance consommée. De nouveau, des itérations sont possibles afin d'améliorer progressivement les performances.
 Pour le processeur Tensilica conçu dans le cadre de cette étude, la génération du modèle matériel n'a pas été possible par défaut de licence suffisante de l'outil de conception d'ASIPs. Seules des estimations de fréquences, de surface et de puissance sont produites par l'outil. Cette absence de modèle matériel a été une des raisons pour lesquelles nous avons cherché à utiliser par la suite d'autres méthodologies de conception telles que celle décrite dans le Chapitre \ref{chap:tta}.
@@ -102,10 +102,8 @@ La philosophie de conception de l'ASIP proposé est de réaliser l'ensemble des 
 \label{fig:flix}
 \end{figure}
 
-\subsubsection{Parallélisme d'instructions}
-
-
 La fonctionnalité FLIX de Tensilica correspond à la possibilité d'ajouter des ALUs supplémentaires au pipeline principal. Cela permet au processeur d'exécuter plusieurs instructions en parallèle. Il est possible de configurer les instructions réalisées par chaque pipeline. Notre choix s'est porté sur une configuration nommée FLIX3 prédéfinie par l'outil de conception. Ainsi, trois instructions faisant partie du jeu d'instruction de base peuvent être appliquées sur trois données de 32 bits simultanément. Ce parallélisme d'instructions permet de réaliser plus rapidement les fonctions de contrôle et de calcul d'adresse. La fonctionnalité FLIX est représentée en Figure \ref{fig:flix}.
+La profondeur du fichier de registre a été augmentée de 32 à 64 données de 32 bits. En effet cela permet de tirer meilleure partie de l'augmentation du parallélisme d'instructions.
 
 \subsubsection{Quantification des données}
 Il est démontré dans \cite{sarkis_fast_2014} que des LLRs représentés sur 6 bits permettent d'égaler les performances de décodage d'implémentations en virgule flottante. Cependant, il est plus simple dans une implémentation logicielle de représenter ces données sur 8 bits puisque les langages de programmation définisse de tels types de données. Comme montré dans \cite{leroux_hardware_2011}, à un niveau $d$ de l'arbre de décodage doivent être stockés $2^{n-d}$ LLRs. La taille de la mémoire permettant de stocker les LLRs est donc de $2^{n+1}-1$ octets.
@@ -116,13 +114,14 @@ Les sommes partielles sont des valeurs binaires. Cependant, encore une fois, la 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{main/ch3_fig/curves/memory/tikz/memory}
-\caption{Nombre d'échecs d'accès à la mémoire cache en fonction de la taille de la mémoire.}
+\caption{Nombre d'échecs d'accès à la mémoire cache en fonction de la taille de la mémoire pour le décodage SC d'un code polaire de taille $N=1024$.}
 \label{fig:tensilica_mem}
 \end{figure}
 
 Le choix a été fait d'augmenter au maximum le parallélisme des instructions élémentaires nécessaires au décodage de codes polaires. La taille maximum des registres du processeur XTensa, qui est donc la taille utilisée dans l'ASIP proposé, est de 512 bits. Afin de pouvoir charger et sauvegarder des données depuis et vers la mémoire cache en un seul cycle d'horloge, la largeur d'une ligne de mémoire cache est également de 512 bits. La taille de ces mémoires ainsi que leur associativité est également configurable. Des expérimentations ont été réalisées afin de sélectionner ces valeurs. Dans tous les cas testés, un associativité à 4 voies pour les mémoires d'instructions et de données est permet les meilleures performances.
 
-En ce qui concerne la taille de la cache, bien que le plus petit nombre d'échec d'accès à la mémoire cache soit atteint pour la taille de cache la plus grande (128 kilooctets), une mémoire d'instruction de 8 kilooctets ainsi qu'une mémoire de données de 8 kilooctets sont suffisantes pour atteindre un nombre d'échecs de cache seulement 10 \% plus grand que la valeur optimale. Les mesures réalisées sont reportées dans la Figure \ref{fig:tensilica_mem}
+Le scenario envisagé pour la conception du processeur est celui des canaux de contrôle du standard 5G tel que défini dans \cite{3gpp_ts_2017}. La taille plus grand code polaire à décoder est $N=1024$. Les mémoires du processeur ont donc été dimensionnées en conséquence.
+Bien que le plus petit nombre d'échec d'accès à la mémoire cache soit atteint pour la taille de cache la plus grande (128 kilooctets), une mémoire d'instruction de 8 kilooctets ainsi qu'une mémoire de données de 8 kilooctets sont suffisantes pour atteindre un nombre d'échecs de cache seulement 10 \% plus grand que la valeur optimale. Les mesures réalisées sont reportées dans la Figure \ref{fig:tensilica_mem}
 
 \subsection{Ressources calculatoires utilisées dans les implémentations matérielles de l'état-de-l'art.}
 \label{subsec:hard_sc}
@@ -156,7 +155,11 @@ Dans l'architecture \og ligne \fg, $\frac{N}{2}$ PEs sont donc partagées pour l
 Dans \cite{leroux_semi-parallel_2013} il est proposé de réduire le nombre de PEs grâce à l'introduction d'une architecture semi-parallèle, de manière similaires à des implémentations précédentes de décodeurs LDPC \cite{1049697}. Dans le décodeur \og ligne \fg, les $\frac{N}{2}$ ne sont toutes utilisées simultanément que deux fois par mot de code décodé. Cela signifie que le taux d'utilisation des PEs est très faible. Il est donc possible de réduire le nombre de PEs sans impacter significativement le débit.
 Cette réduction modifie légèrement l'algorithme. En effet les \noeuds nécessitant un nombre d'exécutions de fonctions polaires supérieures à $P$ nécessiteront plus d'un cycle d'horloge à décoder. Le rapport du nombre de PEs d'une architecture semi-parallèle sur le nombre de PEs d'une architecture \og ligne \fg est $N/2P$. Par exemple, pour $N=1024$ et $P=64$, le nombre de PEs est réduit d'un facteur $16$, tandis que le débit est réduit de $2\%$. Pour $N=2^{20}$ et $P=64$, le nombre de PEs est réduit d'un facteur $8192$, et le débit est réduit de moins de $10\%$. L'architecture semi-parallèle s'avère donc très pertinente.
 
-L'architecture proposée dans \cite{sarkis_fast_2014} reprend le principe de l'architecture semi-parallèle. Cependant, les PEs sont modifiés pour intégrer des unités matérielles de traitement des \noeuds spécialisés \texttt{R1}, \texttt{SPC} et \texttt{REP}. Les PEs contiennent également une unité particulière \texttt{REP-SPC} permettant d’accélérer le traitement de deux \noeuds \texttt{REP} et \texttt{SPC} voisins. Ce motif particulier avait été repéré comme apparaissant régulièrement dans le cas traité. 
+L'architecture proposée dans \cite{sarkis_fast_2014} reprend le principe de l'architecture semi-parallèle. Cependant, les PEs sont modifiés pour intégrer des unités matérielles de traitement des \noeuds spécialisés \texttt{R1}, \texttt{SPC} et \texttt{REP}. Les PEs contiennent également une unité particulière \texttt{REP-SPC} permettant d’accélérer le traitement de deux \noeuds \texttt{REP} et \texttt{SPC} voisins. Ce motif particulier avait été repéré comme apparaissant régulièrement dans le cas traité. Les unités \texttt{REP-SPC} ne sont pas utilisées dans le processeur proposé car ils n'apportent pas de gain significatif pour les tailles de codes considérées ($N<1024$). 
+
+Le dernier type de calcul nécessaire dans l'algorithme de décodage SC est la propagation des sommes partielles (fonction $h$). Dans les implémentations dédiées, les sommes partielles sont sockées dans des registres. Un réseau de portes \textit{ou-exclusif} routées sur ces registres permettent leurs mise à jours instantanées à chaque traitement d'une feuille de l'arbre de décodage. Ce réseau ne fait pas partie des PEs. Dans l'ASIP proposé, les sommes partielles sont stockées dans la mémoire de données, comme les LLRs, afin de les rendre accessibles par le processeur comme toute autre variable. La fonction $h$ fait donc partie des instructions spécialisées conçues pour étendre le jeu d'instructions de l'ASIP proposé.
+
+
 
 % Les latences et le nombre de PEs nécessaire pour chaque architecture sont présentées dans le tableau \ref{tab:archis_sc}.
 
@@ -187,10 +190,9 @@ L'architecture proposée dans \cite{sarkis_fast_2014} reprend le principe de l'a
 \label{fig:full_tensilica}
 \end{figure}
 
-Deux types d'instructions spécialisées ont été conçues et ajoutées au processeur proposé comme montré dans \ref{fig:full_tensilica}. Les premières sont les instructions \textit{multi-registres} et les secondes les instructions \textit{simple-registres}. Leur niveau parallélisme est fixé ($P=64$). Un fichier de registre vectoriel permet de stocker des données de 512 bits. Les instructions \textit{multi-registres} lisent et écrivent dans ce fichier de registre vectoriel.
+Les instructions spécialisées réalisent des fonctions équivalentes à celles des PEs des architectures matérielles qui ont été présentées dans la sous-section \ref{subsec:hard_sc}. Les fonctions réalisées dans les PEs des architectures que nous venons de présentées sont implémentées dans les instructions spécialisées du processeur proposé : $f$, $g$, \texttt{R1}, \texttt{R0}, \texttt{REP} et \texttt{SPC}. Tout comme dans l'architecture semi-parallèle, le niveau parallélisme $P$ de ces instructions est fixé.
 
-Les instructions spécialisées réalisent des fonctions équivalentes à celles des PEs des architectures matérielles qui ont été présentées dans la sous-section \ref{subsec:hard_sc}.
-Les fonctions réalisées dans les PEs des architectures que nous venons de présentées sont implémentées dans les instructions spécialisées du processeur proposé : $f$, $g$, \texttt{R1}, \texttt{R0}, \texttt{REP} et \texttt{SPC}. Tout comme dans l'architecture semi-parallèle, le niveau parallélisme $P$ de ces instructions est fixé.
+Deux types d'instructions spécialisées ont été conçues et ajoutées au processeur proposé comme montré dans \ref{fig:full_tensilica}. Les premières sont les instructions \textit{multi-registres} et les secondes les instructions \textit{simple-registre}. Leur niveau parallélisme est fixé ($P=64$). Un fichier de registre vectoriel permet de stocker des données de 512 bits. Les instructions \textit{multi-registres} lisent et écrivent dans ce fichier de registre vectoriel.
 
 Ces instructions spécialisées sont donc décrites à l'aide du langage TIE de Tensilica.
 L'implémentation de la fonction $f$ est représentée dans la Figure~\ref{fig:f_tie}. Les deux entrées sont les LLRs notés $L_a$ et $L_b$ et la sortie est notée $f(L_a,L_b)$. Ces deux entrées et la sortie correspondent à des registres du fichier de registre vectoriel. Pour rendre claire l'illustration, le niveau parallélisme dans la Figure~\ref{fig:f_tie} a été réduit à $P=4$. Souvent, pour réduire le chemin critique, les LLRs sont représentés en \og signe-amplitude \fg : un bit est utilisé pour le signe, et le reste pour la valeur absolue, toujours positive. Dans notre implémentation, les valeurs négatives sont représentées en complément à deux, car il s'agit du mode de représentation utilisé dans les processeurs XTensa.
@@ -206,19 +208,19 @@ La fonction $h$ n'est pas représentée, il s'agit simplement d'un ou-exclusif e
   \includegraphics[scale=0.45]{main/ch3_fig/g_tie}
   \label{fig:g_tie}
   }
-  \\
+  \\\quad\quad\quad\quad\quad\quad
   \subfloat[Fonction \texttt{REP}]{
-  \includegraphics[scale=0.75]{main/ch3_fig/rep_tie}
+  \includegraphics[scale=0.45]{main/ch3_fig/rep_tie}
   \label{fig:rep_tie}
-  } \quad
+  } \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
   \subfloat[Fonction \texttt{SPC}]{
-  \includegraphics[scale=0.75]{main/ch3_fig/spc_tie}
+  \includegraphics[scale=0.45]{main/ch3_fig/spc_tie}
   \label{fig:spc_tie}
   }
   \caption{Implémentations matérielles des instructions spécialisées.}
 \end{figure}
 
-Comme présenté dans la Section~\ref{subsec:pruning}, le traitement d'un \noeud de répétition consiste en l'addition de tous les LLRs d'entrée pour former la variable notée \og \texttt{accum} \fg dans la Figure~\ref{fig:rep_tie}. Puis de la détection du signe de cette variable, qui détermine le vecteur $s$ en sortie. Un arbre binaire est parcouru afin de réaliser l'addition nécessaire. Pour éviter tout débordement, la taille du registre de stockage de la variable \texttt{accum} est de 32 bits.
+Comme présenté dans la sous-section~\ref{subsec:pruning}, le traitement d'un \noeud de répétition consiste en l'addition de tous les LLRs d'entrée pour former la variable notée \og \texttt{accum} \fg dans la Figure~\ref{fig:rep_tie}. Puis de la détection du signe de cette variable, qui détermine le vecteur $s$ en sortie. Un arbre binaire est parcouru afin de réaliser l'addition nécessaire. Pour éviter tout débordement, la taille du registre de stockage de la variable \texttt{accum} est de 32 bits.
 
 L'unité matérielle de traitement des \noeuds \texttt{SPC} est représentée dans la Figure~\ref{fig:spc_tie}
 
@@ -226,21 +228,39 @@ L'unité matérielle de traitement des \noeuds \texttt{SPC} est représentée da
 
 Dans les implémentations logicielles classiques, la séquence d'opérations nécessaire à l'exécution des fonctions élémentaires polaires est la suivante : i) chargement depuis la mémoire cache vers les registres des variables d'entrée (LLRs et / ou sommes partielles), ii) calcul du résultat de la fonction élémentaire, en une ou plusieurs étapes, dont la sortie est stockée dans un registre, iii) sauvegarde de cette variable de sortie dans la mémoire cache du processeur.
 
-\`A l'inverse, dans les implémentations matérielles présentées dans la sous-section \ref{subsec:hard_sc}, le chemin de données part de la sortie de la mémoire, passe par les fonctions combinatoires réalisant les fonctions polaires élémentaires, et finit à l'entrée de la mémoire. Ce chemin de données est parcouru en un seul coup d'horloge. La méthode présentée dans cette section, nommée \textit{simple-registre}, est conçue dans le but de reproduire le fonctionnement des implémentations matérielles de code polaire dans notre processeur.
-
-
-La méthode \textit{simple-registre} est appliquée sur les sous-arbres de décodage dont le \noeud racine a une taille inférieure à 512 bits.
-Lorsque le programme a généré les LLRs de la racine de ce sous-arbre, ceux-ci sont stockés dans un registre dédié.
-Ce registre est noté $\mathbold{L}$ dans la Figure~\ref{fig:simple-registre} qui illustre la méthode.
-Le décodage du sous-arbre se fait ensuite intégralement dans les registres, sans passer par la mémoire cache.
-Cette méthode reproduit donc comme voulu le fonctionnement des implémentations matérielles de l'algorithme SC : l'exécution d'une fonction élémentaires quelconque, comprenant la lecture et l'écriture de la donnée, peut se faire en un coup d'horloge seulement.
+\`A l'inverse, dans les implémentations matérielles présentées dans la sous-section \ref{subsec:hard_sc}, le chemin de données part de la sortie de la mémoire, passe par les fonctions combinatoires réalisant les fonctions polaires élémentaires, et finit à l'entrée de la mémoire. Ce chemin de données est parcouru en un seul coup d'horloge. La méthode présentée dans cette sous-section, nommée \textit{simple-registre}, est conçue dans le but de reproduire le fonctionnement des implémentations matérielles de code polaire dans notre processeur.
 
 \begin{figure}[t]
-\centering
-\includegraphics[width=0.7\textwidth]{main/ch3_fig/in_register}
-\caption{Instructions \textit{simple-registre}}
-\label{fig:simple-registre}
+  \centering
+  \subfloat[Unité matérielle \textit{simple-registre}.]{
+  \includegraphics[scale=0.3]{main/ch3_fig/in_register_unit}
+  \label{fig:in_register_unit}
+  }\quad\quad\quad
+  \subfloat[Un sous-arbre décodé grâce aux instructions \textit{simple-registre}]{
+  \includegraphics[scale=0.3]{main/ch3_fig/in_register_tree}
+  \label{fig:in_register_tree}
+  }
+  \caption{Instructions \textit{simple-registre}.}
+  \label{fig:simple-registre}
 \end{figure}
+
+La méthode \textit{simple-registre} est appliquée sur les sous-arbres de décodage dont le \noeud racine contient 64 LLRs. La Figure \ref{fig:in_register_tree} illustre un tel sous-arbre.
+Ces 64 LLRs sont notés $\mathbold{L_{in}}$.
+Lorsque le programme a généré les LLRs de la racine de ce sous-arbre, ceux-ci sont stockés dans un registre dédié.
+Ce registre est noté $\mathbold{L}$ dans la Figure~\ref{in_register_tree} qui représente l'unité matérielle qui réalise les instructions \textit{simple-registre}.
+Le décodage du sous-arbre se fait ensuite intégralement dans les registres, sans passer par la mémoire cache.
+Les sommes partielles notées $\mathbold{s{out}}$ constituent la sortie de l'unité matérielle.
+Cette méthode reproduit le fonctionnement des implémentations matérielles de l'algorithme SC : l'exécution d'une fonction élémentaire quelconque, comprenant la lecture et l'écriture de la donnée depuis le registre, est effectuée en un seul cycle d'horloge.
+
+% \begin{figure}[htp]
+% \centering
+% \includegraphics[width=0.7\textwidth]{main/ch3_fig/in_register}
+% \caption{Instructions \textit{simple-registre}}
+% \label{fig:simple-registre}
+% \end{figure}
+
+
+
 
 Elle résout également un problème récurrent des implémentations logicielles utilisant du parallélisme : l'alignement des données. En effet, pour pouvoir appliquer une fonction vectorielle des données de deux registres vectoriels, il est nécessaire de les aligner, ce qui nécessite d'effectuer des opérations supplémentaires. Dans l'implémentation \textit{simple-registre}, l'alignement est prévu en amont et implémenté dans l'unité matérielle. Aucune instruction supplémentaire n'est nécessaire. 
 
@@ -278,9 +298,7 @@ inline void f_64(signed char* la,
 \label{fig:f_code}
 \end{figure}
 
-Lors du développement, il est apparu qu'il était difficile de réduire le temps passé à réaliser les opérations liées au parcours de l'arbre et aux différents tests. L'utilisation de l'option FLIX3 a permis de réduire ce temps, mais pas suffisamment. La technique de déroulage présentée en Section~\ref{subsec:unroll} permet de réduire ce temps. Dérouler le code signifie sacrifier en flexibilité. En effet, il faut générer une version différente du code pour un ensemble donné de paramètres.
-
-Une alternative est utilisée dans l'implémentation proposée. Tout d'abord, toutes les fonctions élémentaires pour le décodage de code polaires possèdent le même prototype de fonctions dans la description logicielle. Le type de fonction à appliquer ($f$, $g$, $h$, \texttt{R0}, \texttt{R1}, \texttt{SPC}, \texttt{REP}) est passé en paramètre de la fonction, accompagné des adresses auxquelles accéder aux données à lire et écrire. De cette manière, il est possible de créer, un tableau contenant les pointeurs des fonctions à appeler. L'algorithme permettant de déterminer la séquence de fonctions à exécuter prend comme entrée le tableau de bits gelés correspondant au code polaire traité.
+Lors du développement, il est apparu qu'il était difficile de réduire le temps passé à réaliser les opérations liées au parcours de l'arbre et aux différents tests. L'utilisation de l'option FLIX3 a permis de réduire ce temps, mais pas suffisamment. La technique de déroulage présentée en sous-section~\ref{subsec:unroll} permet de réduire ce temps. Dérouler le code signifie sacrifier en flexibilité. En effet, il faut générer une version différente du code pour un ensemble donné de paramètres.
 
 
 \begin{figure}[htp]
@@ -335,18 +353,7 @@ virtual void decode()
 \caption{Description logicielle du pseudo-déroulage.}
 \label{fig:tensilica_code}
 \end{figure}
-
-
-
-%   cycles  debit Area (gates)
-% Base                                    7.30E+06    3.38E+06    116.00E+03
-% instructions spécialisées f & g         2.64E+06    9.34E+06    144.00E+03
-% instructions spécialisées REP R0 SPC R1 534.00E+03  46.17E+06   161.00E+03
-% FLIX                                    296.00E+03  83.29E+06   222.00E+03
-% In-register                             192.00E+03  128.41E+06  524.00E+03
-% Unrolling                               151.00E+03  163.28E+06  524.00E+03
-
-
+Une alternative est utilisée dans l'implémentation proposée. Tout d'abord, toutes les fonctions élémentaires pour le décodage de code polaires possèdent le même prototype de fonctions dans la description logicielle. Le type de fonction à appliquer ($f$, $g$, $h$, \texttt{R0}, \texttt{R1}, \texttt{SPC}, \texttt{REP}) est passé en paramètre de la fonction, accompagné des adresses auxquelles accéder aux données à lire et écrire. De cette manière, il est possible de créer, un tableau contenant les pointeurs des fonctions à appeler. L'algorithme permettant de déterminer la séquence de fonctions à exécuter prend comme entrée le tableau de bits gelés correspondant au code polaire traité.
 
 
 
@@ -393,9 +400,8 @@ La puissance consommée estimée pour l'ASIP complet est de 111 mW, et l'aire oc
 
 \subsection{Comparaison avec un processeur ARM}
 
-
 Le logiciel AFF3CT développé par l'équipe CSN du laboratoire IMS de Bordeaux est utilisé pour exécuter une implémentation optimisée de l'algorithme SC sur un processeur ARM Cortex A57. La méthode de parallélisation \textit{intra-trame} est utilisée, et les LLRs sont représentés sur 8 bits avec virgule fixe. La taille des données gérées par les instructions NEON est de 128 bits, donc le parallélisme est égal à 16. Les résultats ici reportés ont été fournis par les auteurs de \cite{cassagne_energy_2016}. Dans ces résultats, la consommation de la mémoire RAM n'est pas prise en compte.
-La Figure~\ref{fig:cycle_count} montre le nombre moyens de coups d'horloges nécessaire à chaque processeur pour décoder une trame. Le processeur proposé réduit significativement grâce à l'utilisation d'unités matérielles de calcul spécialisées. La courbe tracée représente le rapport entre les nombres de cycle d'horloge de chaque processeur. Ce rapport est d'autant plus grand que $N$ est faible. Ceci est dû au fait que lorsque $N$ est faible, ce sont les instructions \textit{en registre} qui sont le plus utilisées. Or ces instructions sont les plus efficaces.
+La Figure~\ref{fig:cycle_count} montre le nombre moyens de coups d'horloges nécessaire à chaque processeur pour décoder une trame. Le processeur proposé réduit significativement grâce à l'utilisation d'unités matérielles de calcul spécialisées. La courbe tracée représente le rapport entre les nombres de cycle d'horloge de chaque processeur. Ce rapport est d'autant plus grand que $N$ est faible. Ceci est dû au fait que lorsque $N$ est faible, ce sont les instructions \textit{simple-registre} qui sont le plus utilisées. Or ces instructions sont les plus efficaces.
 Cependant, ce nombre réduit de coups d'horloge est contrebalancé par une fréquence réduite comme montré dans le Tableau~\ref{tab:asip}. Néanmoins, même dans le scénario le plus pessimiste, avec une fréquence de 400 MHz, le débit atteint par le processeur proposé est similaire à celui obtenu avec le processeur ARM. Qui plus est, l'énergie dépensée par bit décodé est 10 fois inférieur pour l'ASIP.
 \begin{figure}[htp]
 \centering

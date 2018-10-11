@@ -42,7 +42,7 @@ Les estimations en sortie du démodulateur sont données sous la forme de rappor
 \subsection{Les codes polaires}
 Les codes polaires \cite{arikan_channel_2009} sont des codes en blocs linéaires \cite{morelos-zaragoza_art_2006}. Soient les ensembles $\mathbb{B}^n = \{0,1\}^n$, et une matrice $G \in \mathbb{B}^K \times \mathbb{B}^N$, l'encodage d'un code en blocs linéaire est une application linéaire injective de $\mathbb{B}^K$ vers $\mathbb{B}^N$ qui à un élément $\mathbold{b} \in \mathbb{B}^K$ associe un élément $\mathbold{x} \in \mathbb{B}^N$ tel que $x=\mathbold{b}G$. Les codes polaires peuvent ainsi être défini comme un ensemble de codes en blocs linéaires ayant une matrice génératrice avec une forme particulière.
 
-La matrice génératrice d'un code polaire est elle-même le produit de deux matrices $E \in (\mathbb{B}^K \times \mathbb{B}^N)$ et $F^{\otimes n}\in (\mathbb{B}^N)^2$ tel que $G=EF^{\otimes n}$. La multiplication par la matrice $E$ correspond à l'introduction de "bits gelés", dont la valeur est $0$, à la séquence d'information $\mb{b}$. Le résultat de l'opération $\mathbold{u} = E\mathbold{b}$ est constitué de $K$ bits $b_i \in \mathbold{b}$ et de $N-K$ bits gelés. Les positions respectives des bits d'informations et des bits gelés sont liées au phénomène de polarisation décrit dans la section suivante. Ces positions déterminent largement le pouvoir de correction du code.
+La matrice génératrice d'un code polaire est elle-même le produit de deux matrices $E \in (\mathbb{B}^K \times \mathbb{B}^N)$ et $F^{\otimes n}\in (\mathbb{B}^N)^2$ tel que $G=EF^{\otimes n}$. La multiplication par la matrice $E$ correspond à l'introduction de "bits gelés", dont la valeur est $0$, à la séquence d'information $\mb{b}$. Le résultat de l'opération $\mathbold{u} = E\mathbold{b}$ est constitué de $K$ bits $b_i \in \mathbold{b}$ et de $N-K$ bits gelés. Les positions respectives des bits d'informations et des bits gelés sont liées au phénomène de polarisation décrit dans la sous-section suivante. Ces positions déterminent largement le pouvoir de correction du code.
 
 La matrice $F^{\otimes n}$, où $N=2^n$, est la n-ième puissance de Kronecker du noyau $F=\left[\begin{smallmatrix} 1 & 0 \\ 1 & 1\end{smallmatrix}\right]$. $F^{\otimes n}$ peut être définie récursivement : $F^{\otimes 1} = F$ et $\forall {n \geq 1}\text{ , }{F^{\otimes n + 1}=\left[\begin{smallmatrix} F^{\otimes n} & 0_n \\ F^{\otimes n} & F^{\otimes n}\end{smallmatrix}\right]}$ avec $0_n \in \mathbb{B}^N$ une matrice nulle. La représentation sous forme de \textit{factor graph}, dans la figure \ref{fig:encodage}, est une représentation graphique du processus d'encodage de codes polaires où les symboles $\oplus$ correspondent à des opération \textit{OU-exclusif}. 
 
@@ -285,14 +285,14 @@ Enfin, les algorithmes BP et SCAN sont des algorithmes itératifs. En effet, le 
 Par ailleurs, l'intérêt des algorithmes de décodage à sortie souples est qu'ils peuvent être utilisés dans un processus itératif si le code polaire est concaténé avec un autre code \cite{balatsoukas-stimming_polar_2017} ou bien dans le cadre d'une modulation codée \cite{dai_polar_2016}.
 
 \subsection{Les performances de décodage des différents algorithmes}
-Le modèle du canal composite utilisé est celui décrit dans la Section \ref{subsec:canal}. La méthode d'approximation gaussienne est utilisée pour déterminer les positions des bits gelés. 
-Dans la présente section sont présentées plusieurs courbes de performances. 
+Le modèle du canal composite utilisé est celui décrit dans la sous-section \ref{subsec:canal}. La méthode d'approximation gaussienne est utilisée pour déterminer les positions des bits gelés. 
+Dans la sous-section courante sont présentées plusieurs courbes de performances. 
 Elles permettent de comparer entre eux les algorithmes décrits précédemment.
 Ces courbes montrent également l'impact des paramètres, communs à tous les algorithmes, ou spécifique à chacun, sur les performances de décodage.
 Ces paramètres et leurs effets sont importants car ce sont les leviers utilisés dans les standards de communication afin de s'adapter aux contraintes systèmes.
 Les axes des différentes courbes sont toujours les mêmes.
-En abscisse se trouve le rapport signal à bruit noté $E_b/N_0$ décrit en Section \ref{subsec:canal}.
-Sur l'axe des ordonnées se trouve soit le taux d'erreur binaire (BER : Bit Error Rate) dont l'expression est donnée en Section \ref{subsec:contexte}, soit le taux d'erreur trame (FER : Frame Error Rate). Le FER est égal au rapport du nombre de trames erronées sur le nombre total de trames émises, sachant qu'une trame est considérée erronée si elle contient au moins un bit erroné. Sauf indication contraire, toutes les simulations ont été réalisées en utilisant le logiciel AFF3CT\footnote{AFF3CT est un logiciel libre permettant la simulation efficace de codes correcteurs d'erreurs : https://aff3ct.github.io/} développé par l'équipe CSN du laboratoire IMS.
+En abscisse se trouve le rapport signal à bruit noté $E_b/N_0$ décrit en sous-section \ref{subsec:canal}.
+Sur l'axe des ordonnées se trouve soit le taux d'erreur binaire (BER : Bit Error Rate) dont l'expression est donnée en sous-section \ref{subsec:contexte}, soit le taux d'erreur trame (FER : Frame Error Rate). Le FER est égal au rapport du nombre de trames erronées sur le nombre total de trames émises, sachant qu'une trame est considérée erronée si elle contient au moins un bit erroné. Sauf indication contraire, toutes les simulations ont été réalisées en utilisant le logiciel AFF3CT\footnote{AFF3CT est un logiciel libre permettant la simulation efficace de codes correcteurs d'erreurs : https://aff3ct.github.io/} développé par l'équipe CSN du laboratoire IMS.
   
 \subsubsection{Impact de la taille du mot de code et du rendement}
 
@@ -365,10 +365,6 @@ L'impact de la taille du CRC sur les performances de décodage des algorithmes a
 \end{figure}
 \subsubsection{Performances de décodages des algorithmes SCAN et SCF}
 Les Figures \ref{fig:scf} et \ref{fig:bp_scan} présentent les performances de décodages de ces deux algorithmes pour un code polaire (1024,512). Les courbes de performances pour l'algorithme SCF sont issues de \cite{afisiadis_low-complexity_2014} tandis que les courbes de performances de l'algorithme BP sont issues de \cite{pamuk_fpga_2011}. Les performances du SCF s'améliorent lorsque T augmente mais restent inférieures aux performances de l'algorithme SCL avec $L=4$. Le même ordre de grandeur est observé pour un algorithme SCAN à 4 itérations. Il est notable de remarquer que les performances du SCAN avec 4 itérations sont bien meilleures que celles de l'algorithme BP pour 50 itérations. Ceci s'explique par le fait qu'à l'inverse du décodage SCAN, le séquencement du décodage BP ne tire aucun bénéfice du phénomène de polarisation car chaque bit est estimé en parallèle.
-
-
-
-
 
 \section{L'élagage de l'arbre de décodage}
 
