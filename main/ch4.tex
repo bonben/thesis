@@ -12,6 +12,10 @@
 
 
 \section{Transport Triggered Architectures}
+
+
+\subsection{Principes}
+
 Au cours de ce manuscrit, du point de vue de l'architecture des processeurs, deux types de parallélisme ont été abordés.
 Le premier est le parallélisme de données.
 Pour exploiter ce parallélisme, les jeux d'instructions de certains processeurs incluent des instructions vectorielles SIMD.
@@ -32,16 +36,18 @@ Au contraire, dans les architectures dites \og à très long mot d'instruction \
 L'architecture du processeur proposé dans ce chapitre fait partie de la famille des architectures déclenchées par le transport (TTA : Transport Triggered Architecture). Les TTAs sont des architectures modulaires particulières proches des architectures VLIW. La principale différences entre les architectures TTA et les architectures VLIW 
 
 
-
-\subsection{Principes}
-
-
-\begin{figure}
+\begin{figure}[htp]
 \centering
 \includegraphics[width=\textwidth]{main/ch4_fig/archi_tta}
 \caption{Un exemple d'architecture de processeur TTA. }
 \end{figure}
+
 \subsection{Environnement TCE}
+\begin{figure}[htp]
+\centering
+\includegraphics[width=\textwidth]{main/ch4_fig/tce}
+\caption{Le flot de conception TCE.}
+\end{figure}
 
 \section{Transport Triggered Polar Decoders}
 
