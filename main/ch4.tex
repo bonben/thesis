@@ -97,21 +97,82 @@ Le modèle matériel du processeur, décrit dans un langage de description maté
 
 
 \section{Transport Triggered Polar Decoders}
+Deux architectures de processeurs spécialisés dans le décodage de codes polaires ont été conçues et seront présentées dans cette section. La première est spécialisée dans le décodage SC, elle est nommée \TTSC. La seconde supporte le décodage efficace de l'algorithme SC et de l'algorithme SCAN, elle est nommée \TTSCAN
 
-\subsection{Architecture du décodeur \texttt{TT-SC}}
+\subsection{Architecture du décodeur \TTSC}
 
 \begin{figure*}[t]
 	\centering
 	\includegraphics[width=\textwidth]{main/ch4_fig/archi_sc}
-	\caption{Architecture du \texttt{TT-SC}.}
+	\caption{Architecture \TTSC.}
 	\label{fig:prode}
 \end{figure*}
 
-La première architecture proposée est nommée \texttt{TT-SC} (Transport Triggered SC decoder). 
+L'architecture \TTSC est divisée en trois parties principales. La Base TTA contient les unités fonctionnelles de base permettant de réaliser les fonctions d'un processeur généraliste. Elle est constituée d'une unité de chargement et de sauvegarde (LSU : Loading and Storing Unit), d'une ALU et d'un fichier de registres. Elle contient également l'unité de contrôle global (GCU : Global Control Unit) qui est destinée à la lecture et au décodage des instructions. La seconde partie est constituée des LSU vectorielles. Elles se chargent du chargement et de la sauvegarde des données vers et depuis les mémoires contenant les LLRs et les sommes partielles.
+La troisième partie contient les unités de calcul (PU : Processing Unit), dont le but est de réaliser les fonctions élémentaires polaires.
 
-\subsection{Unités fonctionnelles du décodeur \texttt{TT-SC}}
+Les algorithmes de décodages de codes polaires sont très intensifs du point de vus des accès à la mémoire. Les architectures matérielles dédiées de la littératures utilisent en majorité deux mémoires séparées pour accéder aux LLRs et deux autres pour les sommes partielles. Pour l'opération $f$, il est par exemple nécessaire d'effectuer deux lectures en mémoire ainsi qu'une écriture. Ces nombres sont à multiplier par le parallélisme, soit $P=64$. Les mêmes lectures et écritures sont nécessaires pour la fonction $g$, auquelles il faut ajouter la lecture de 64 sommes partielles. Dans l'architecture \TTSC, nous avons choisi d'utiliser une mémoire double port pour stocker les LLRs. Cela permet d'augmenter la bande passante, tout en conservant un seul espace de mémoire pour l'ensemble des LLRs. A chaque port est associé une LSU.
+
+Les trois unités de calcul polaires sont l'unité de calcul de sommes partielles (PS PU), l'unité de calcul des LLRs (LLR PU) et l'unité \og SC déroulé \fg. La PS PU réalise les calculs des fonctions \texttt{R0}, \texttt{R1} et \texttt{h}. La LLR PU réalise les calculs des fonctions $f$ et $g$. L'unité \og SC déroulé \fg permet le décodage multicycle de sous-arbres. Elle sera détaillée par la suite. 
+
+Le nombre d'unités fonctionnelles utilisées dans une architecture TTA est un choix important du concepteur.
+Il s'agit d'un compromis.
+Tout d'abord, une unité fonctionnelle ne peut activer qu'une opération à la fois.
+Augmenter le nombre de FUs est donc nécessaire pour bénéficier du parallélisme d'instructions
+Cela permet également d'augmenter la modularité de l'architecture du point de vue du concepteur.
+\`A fonctionnalité égale, utiliser un grand nombre de FUs implique que chaque FU est plus simple, car elle doit réaliser moins d'opérations. Les modèles matériels sont donc plus simples à décrire, à modifier et à faire évoluer. Il est également plus probable de pouvoir réutiliser une FU simple dans de futures architectures.
+
+En revanche le nombre de ports augmente avec le nombre de FUs, ainsi que le nombre de connexions nécessaires sur le réseau d'interconnexion.
+Au niveau de l'implémentation, la densité du réseau d'interconnexion devient rapidement un problème. 
+La congestion peut provoquer une augmentation du chemin critique et de la fréquence. 
+Au cours du développement de l'architecture \TTSC, il a été nécessaire de fusionner des FUs afin de réduire la congestion et d'augmenter la fréquence d'horloge, au prix d'une réduction de la modularité et d'une augmentation de la complexité des FUs. La PS PU est par exemple la fusion de trois FUs de versions antérieures de l'architecture.
+
+Le réseau d'interconnexion possède deux bus de 512 bits pour le transport des LLRs, un bus de 64 bits pour le transport des sommes partielles, et deux bus de 32 bits pour le transports des données génériques et des adresses.
+Dans la section suivantes, certaines des FUs sont détaillées.
+
+\subsection{Unités fonctionnelles du décodeur \texttt{TT-SC}.}
+Nous allons détailler ici la fonction et l'implémentation matérielles de certaines des FUs. Toutes ne seront pas détaillées. Certaines (GCU, ALU, LSU, RF) sont liées au fonctionnement du base du TTA et à ce titre ne sont pas pertinentes ici. D'autres (LLR PU, PS PU) sont très similaires aux instructions spécialisées de l'architecture Tensilica du chapitre \ref{chap:tensilica}, décrites dans la sous-section \ref
+{subsec:multi_reg}.
+
+Les unités fonctionnelles originales spécifiques à cette architectures sont les unités de chargement et de sauvegarde vectorielles d'une part, et l'unité \og SC déroulé \fg d'autre part.
+
+\subsubsection{Unités de chargement et de sauvegarde.}
+
+\begin{figure*}[t]
+	\centering
+	\includegraphics[width=\textwidth]{main/ch4_fig/unaligned}
+	\caption{Chargements et sauvegardes non alignés.}
+	\label{fig:unaligned}
+\end{figure*}
+
+
+Les unités de chargement et de calcul vectoriels permettent d'accéder aux mémoires contenant les LLRs et les sommes partielles. Dans l'architecture proposée, la taille de code maximum supportée est $N_{max}=1024$, qui correspond à la taille maximum définie dans le standard 5G \cite{3gpp_ts_2017}. Cette valeur peut être facilement ajustée en augmentant la taille des mémoires. Dans l'algorithme SC, $N_{max}$ bits sont nécessaires pour stocker les sommes partielles. Puisqu'il est nécessaire d'accéder à $P=64$ sommes partielles en parallèle, une mémoire de 16 x 64-bits est suffisante. Cependant, à cause d'une section d'adresse réservée automatiquement par TCE, une taille supérieure de mémoire a due être sélectionnée : 32x64-bits. Pour des raisons similaires, les LLRs sont stockés dans une mémoire de 64x512-bits.
+
+Comme précisé auparavant, l'accès à la mémoire est un enjeu capital dans les architectures de décodage de codes polaires. Les modèles architecturaux et matériels de LSU proposés par défaut dans les bases de données de TCE ont une latence de 3 cycles d'horloge, ce qui est trop élevé. Dans un premier temps, cette latence a été réduite à un coup d'horloge par la suppression de registres. Cette suppression n'a pas causé d'augmentation du chemin critique.
+
+La deuxième amélioration apportée à ces LSU est l'ajout d'unités matérielles et d'opérations d'alignement. En effet, pour effectuer parallèlement le traitement de certaines portions de l'arbre de décodage pour lequel le parallélisme est inférieur à $P$, il est nécessaire de lire et d'écrire sur des données non alignées. Les données non alignées sont des données dont l'adresse n'est pas un multiple de 512, dans le cas des LLRs, ou de 64, dans le cas des sommes partielles. De plus les mots en mémoire sont des mots de 512 bits. Dans les portions de l'arbre à parallélisme inférieur à $P$, il est nécessaire d'écrire des sous-mots de taille inférieure à 512 bits (jusqu'à 64 bits). D'une part, il est nécessaire que les mémoires gèrent ces écritures de sous-mots. D'autre part, les LSUs doivent être capables d'effectuer le contrôle de ces mémoires. Le processus de chargement et de sauvegarde de données non alignées est illustré dans la Figure \ref{fig:unaligned}.
+
+\subsubsection{Décodage d'un sous arbre déroulé multi-cycles.}
+
+\begin{figure*}[t]
+	\centering
+	\includegraphics[width=\textwidth]{main/ch4_fig/unrolled_multicycle}
+	\caption{Unité matérielle de décodage d'un sous arbre déroulé multi-cycles.}
+	\label{fig:unrolled_multicycle}
+\end{figure*}
+
+Dans \cite{gal_scalable_2016} est proposé une architecture matérielle de codes polaires à plusieurs phases. Les différentes phases correspondent à différents ensembles de niveaux de l'arbre de décodage. Trois différentes techniques sont appliqués pour les niveaux supérieurs, les niveaux inférieurs et les niveaux inférieurs. La phase qui nous intéresse ici est la phase de décodage des niveaux inférieurs. Considérons les sous-arbre dont le \noeud racine contient 8 LLRs. Ce sous-arbre est de taille réduite. Aussi, il est possible de le dérouler complètement. Il est montré que ce déroulage permet de réduire le nombre de cycles nécessaires. En effet, la durée de cette séquence de décodage avec une architecture semi-parallèle classique serait de 14 cycles. En déroulant l'arbre de décodage et en découpant le chemin combinatoire à l'aide de registres, la latence obtenue est de six cycles. Cette technique s'inspire de la technique \cite{giard_unrolled_2015} à la différence qu'ici, le décodeur déroulé n'est pas pipeliné et le but des registres est simplement de découper le chemin critique. Comme il n'y a pas de pipelinage, il est donc possible de supprimer les registres et de définir le chemin de données allant du début à la fin du sous-arbre de décodage comme un chemin multi-cycles.
+
+En effet, il est possible de définir des chemins de données multi-cycles dans les processeurs conçus à l'aide de TCE. Dans TCE, par défaut, la latence d'une opération effectuée dans une FU est d'un cycle d'horloge : lorsqu'à un front d'horloge, une donnée est présentée au port de déclenchement, les résultats de l'opération sont disponibles aux ports de sortie au front d'horloge suivant. Dans l'outil \textbf{prode}, qui permet de définir l'architecture, il est toutefois possible d'assigner une latence supérieure à une ou plusieurs opérations d'une FU. Si une latence supérieure est spécifiée, alors les données de sortie ne seront disponibles qu'après le nombre spécifié de coups d'horloge. Le compilateur a connaissance de cette latence spécifiée dans le fichier \textit{.adf}. Il est ainsi en charge de régler les problèmes de disponibilités des données. Du côté du logiciel tiers de synthèse, il est alors possible de spécifier que les chemins de données de l'opération en question sont multicycles. La contrainte de temps ceux-ci est allongée de plusieurs cycle d'horloge. Ainsi, les registres sont supprimés, et la complexité matérielle de l'unité est réduite. Potentiellement, cette technique pourrait réduire le nombre de cycles nécessaires au décodage du sous-arbre par rapport à la version contenant les registres. Toutefois, dans notre implémentation, le nombre de cycles n'a pas été réduit par rapport à l'implémentation de \cite{gal_scalable_2016}. Une des raisons possibles est que dans notre décodeur, comme dans l'ASIP d'architecture Tensilica, les nombres entiers signés sont représentés en complément à deux. La représentation signe-magnitude utilisée dans \cite{gal_scalable_2016} permet de simplifier le traitement de la fonction $f$.
+
+L'unité fonctionnelle \og SC déroulé \fg correspond donc à un sous-arbre de décodage SC déroulé et multi-cycles. Ce sous-arbre est représenté dans la Figure \ref{fig:unrolled_multicycle}. Il est important de noter que les bits gelés sont donnés en entrée du sous-arbre. Ceci lui permet d'être générique vis-à-vis du rendement et de la construction du code.
+
+
+
 \subsection{Description logicielle}
 \subsection{Implémentation de l'algorithme SCAN}
+Afin d'illustrer la modularité et l'évolutivité des processeurs d'architecture TTA conçus à l'aide de TCE, nous avons développé une nouvelle architecture nommée \TTSCAN. Elle permet le support de l'algorithme SCAN en plus de l'algorithme SC. La Figure \ref{fig:tt_scan} représente cette nouvelle architecture.
+
 
 \section{Un flot de conception complet}
 
