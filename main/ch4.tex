@@ -97,9 +97,9 @@ Le modèle matériel du processeur, décrit dans un langage de description maté
 
 
 \section{Transport Triggered Polar Decoders}
-Deux architectures de processeurs spécialisés dans le décodage de codes polaires ont été conçues et seront présentées dans cette section. La première est spécialisée dans le décodage SC, elle est nommée \TTSC. La seconde supporte le décodage efficace de l'algorithme SC et de l'algorithme SCAN, elle est nommée \TTSCAN
+Deux architectures de processeurs spécialisés dans le décodage de codes polaires ont été conçues et seront présentées dans cette section. La première est spécialisée dans le décodage SC, elle est nommée \TTSC. La seconde supporte le décodage efficace de l'algorithme SC et de l'algorithme SCAN, elle est nommée \TTSCAN.
 
-\subsection{Architecture du décodeur \TTSC}
+\subsection{Architecture du décodeur \TTSC.}
 
 \begin{figure*}[t]
 	\centering
@@ -108,7 +108,7 @@ Deux architectures de processeurs spécialisés dans le décodage de codes polai
 	\label{fig:prode}
 \end{figure*}
 
-L'architecture \TTSC est divisée en trois parties principales. La Base TTA contient les unités fonctionnelles de base permettant de réaliser les fonctions d'un processeur généraliste. Elle est constituée d'une unité de chargement et de sauvegarde (LSU : Loading and Storing Unit), d'une ALU et d'un fichier de registres. Elle contient également l'unité de contrôle global (GCU : Global Control Unit) qui est destinée à la lecture et au décodage des instructions. La seconde partie est constituée des LSU vectorielles. Elles se chargent du chargement et de la sauvegarde des données vers et depuis les mémoires contenant les LLRs et les sommes partielles.
+L'architecture \TTSC~est divisée en trois parties principales. La Base TTA contient les unités fonctionnelles de base permettant de réaliser les fonctions d'un processeur généraliste. Elle est constituée d'une unité de chargement et de sauvegarde (LSU : Loading and Storing Unit), d'une ALU et d'un fichier de registres. Elle contient également l'unité de contrôle global (GCU : Global Control Unit) qui est destinée à la lecture et au décodage des instructions. La seconde partie est constituée des LSU vectorielles. Elles se chargent du chargement et de la sauvegarde des données vers et depuis les mémoires contenant les LLRs et les sommes partielles.
 La troisième partie contient les unités de calcul (PU : Processing Unit), dont le but est de réaliser les fonctions élémentaires polaires.
 
 Les algorithmes de décodages de codes polaires sont très intensifs du point de vus des accès à la mémoire. Les architectures matérielles dédiées de la littératures utilisent en majorité deux mémoires séparées pour accéder aux LLRs et deux autres pour les sommes partielles. Pour l'opération $f$, il est par exemple nécessaire d'effectuer deux lectures en mémoire ainsi qu'une écriture. Ces nombres sont à multiplier par le parallélisme, soit $P=64$. Les mêmes lectures et écritures sont nécessaires pour la fonction $g$, auquelles il faut ajouter la lecture de 64 sommes partielles. Dans l'architecture \TTSC, nous avons choisi d'utiliser une mémoire double port pour stocker les LLRs. Cela permet d'augmenter la bande passante, tout en conservant un seul espace de mémoire pour l'ensemble des LLRs. A chaque port est associé une LSU.
@@ -180,24 +180,214 @@ Pour cela, la librairie proposée dans \cite{cassagne_efficient_2015} a été ut
 	\centering
 	\includegraphics[width=\textwidth]{main/ch4_fig/archi_scan}
 	\caption{Architecture \TTSCAN.}
-	\label{fig:prode}
+	\label{fig:tt_scan}
 \end{figure*}
 
-
 Afin d'illustrer la modularité et l'évolutivité des processeurs d'architecture TTA conçus à l'aide de TCE, nous avons développé une nouvelle architecture nommée \TTSCAN. Elle permet le support de l'algorithme SCAN en plus de l'algorithme SC. La Figure \ref{fig:tt_scan} représente cette nouvelle architecture.
+Comme détaillé dans la sous-section \ref{subsec:soft_algo}, dans l'algorithme SCAN, les sommes partielles sont remplacées par des LLRs. Ces LLRs sont notés BLLRs (Backward LLRs). La première unité fonctionnelle ajoutée à l'architecture \TTSC~pour obtenir l'architecture \TTSCAN~est l'unité de chargement et de sauvegardes des BLLRs. Une mémoire de stockage des ces BLLRs est également ajoutée. La seconde unité fonctionnelle ajoutée est une unité \og SCAN déroulé \fg. 
 
+De plus, l'unité de calcul des fonctions polaire LLR PU a été adaptée. Les fonctions élémentaires nécessaires au décodage de l'algorithme SCAN sont : 
+\begin{eqnarray}
+  \begin{array}{l c l}
+    f_{bp}(L_a,L_b,L_c) & = & f(L_a, L_b  + L_c) \\
+    g_{bp}(L_a,L_b,L_c) & = & f(L_a, L_c) + L_b
+  \end{array}
+  \label{eq:bp}
+\end{eqnarray}
 
-\section{Un flot de conception complet}
+Il est possible d'adapter l'unité fonctionnelle LLR PU utilisée dans l'architecture \TTSC~pour qu'elle puisse supporter ces nouvelles fonctions polaires. L'unité matérielle adaptée est illustrée dans la Figure~\ref{fig:scan_unit}.
 
-\subsection{Génération des vecteurs de tests}
-\subsection{Cycles de conception}
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=1.5]{main/ch4_fig/scan_unit}
+\caption{The LLR Processing Unit supporting SC and SCAN decoding.}
+\label{fig:scan_unit}
+\end{figure}
+
 
 \section{Expérimentations et mesures}
+Le but de cette section est de présenter les mesures et les expérimentations réalisées pour évaluer les deux architectures proposées, \TTSC~et \TTSCAN. Les comparaisons avec les décodeurs de la littérature sont difficiles, puisque beaucoup de paramètres changent tels que la technologie d'ASIC, l'alimentation, les algorithmes supportés par les différentes architectures, la stratégie d'élagage, le format de représentation des LLRs, la construction du code polaire. Ces précautions prises, nous montrons que les architectures TTAs proposées sont un compromis entre les architectures de processeur à usage général et les architectures matérielles dédiées. Nous montrons également que ces architectures permettent une amélioration significative du débit et une réduction de la consommation énergétique par rapport à l'architecture Tensilica proposée dans le chapitre \ref{chap:tensilica}.
 
 \subsection{TT-SC}
+% tab:sw_tta
+% tab:fpga_tta
+% tab:asic_tta
+
+
+L'architecture \TTSC~a été synthétisée avec la librarie de cellules standard ST 28nm FD-SOI, avec les paramètres 0.9V, 125$^{\circ}$C . Les mémoires sont des blocs de SRAM de la même technologie. Le Tableau \ref{tab:sw_tta} présente les performances de débit, latence et consommation de l'architecture \TTSC~exécutant l'algorithme SC et les compare avec les performances obtenues sur des processeurs à usage général d'architectures x86 et ARM, ainsi qu'avec celles obtenues sur le processeur d'architecture Tensilica proposé dans le Chapitre~\ref{chap:tensilica}.
+
+
+\begin{table}
+  \centering
+  \caption{Comparaison de l'architecture \TTSC~avec des processeurs à usage général et l'ASIP Tensilica proposé dans le Chapitre \ref{chap:tensilica}}
+  \label{tab:sw_tta}
+%\scriptsize
+  \begin{tabular}{ccccc}
+    \toprule
+
+    Architecture & $N$ & \begin{tabular}{c}Latency\\{[$\mu$s]}\end{tabular} & \begin{tabular}{c}Throughput\\{[Mb/s]}\end{tabular} & \begin{tabular}{c}$E_b$\\{[nJ/bit]}\end{tabular} \\
+
+    \cmidrule(lr){1-1}
+    \cmidrule(lr){2-2}
+    \cmidrule(lr){3-5}
+
+    \multirow{2}{*}{\bf i7-3.3GHz}              & $1024$   & $2.0$  & $257$ & $41$ \\
+    
+                                                & $512$    & $1.2$  & $210$ & $49$ \\
+    
+    \multirow{2}{*}{\bf (GPP)}                  & $256$    & $0.7$  & $179$ & $59$ \\
+    
+                                                & $128$    & $0.4$  & $143$ & $73$ \\
+    
+    \midrule    \multirow{2}{*}{\bf A57-1.1GHz} & $1024$   & $10.7$ & $48$  & $17$ \\
+
+                                                & $512$    & $5.3$  & $48$  & $17$ \\
+
+     \multirow{2}{*}{\bf (GPP)}                 & $256$    & $2.8$  & $46$  & $17$ \\
+
+                                                & $128$    & $1.6$  & $41$  & $20$ \\
+
+    \midrule
+
+    \multirow{2}{*}{\bf LX7-835MHz}             & $1024$   & $7.2$  & $71$  & $1.6$ \\
+
+                                                & $512$    & $3.9$  & $66$  & $1.7$ \\
+
+     \multirow{2}{*}{\bf (ASIP)}                & $256$    & $1.9$  & $65$  & $1.7$ \\
+
+                                                & $128$    & $1.0$  & $62$  & $1.8$ \\
+
+    \midrule
+
+    \multirow{2}{*}{\bf TT-SC-800MHz}            & $1024$  & $1.4$   & $352$ & $0.14$   \\ % 1512 cycles
+
+                                                & $512$    & $0.8$  & $313$ & $0.15$   \\ % 803 cycles
+
+     \multirow{2}{*}{\bf (ASIP)}                & $256$    & $0.4$  & $304$ & $0.16$   \\ % 413 cycles
+
+                                                & $128$    & $0.2$  & $284$ & $0.17$   \\ % 224 cycles
+
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Pour les deux processeurs à usage général, le code source utilisé est généré à l'aide de la librairie \cite{cassagne_efficient_2015}. Les simulations sont effectuées grâce à la suite logicielle AFF3CT \cite{aff3ct_aff3ct:_2016}. Le processeur Intel i7-4712HQ présente un débit élevé mais une importante consommation énergétique. Le débit mesuré sur le processeur ARM A57 est moins élevé, mais la consommation énergétique est plus faible que celle obtenue sur le processeur Intel. Comme nous l'avons vu dans le chapitre précédent, le débit obtenu sur le processeur spécialisé Tensilica eest comparable à celui obtenu sur l'architecture ARM, alors que la consommation énergétique est beaucoup plus faible, avec environ un ordre de grandeur de différence. L'architecture \TTSC~permet d'atteindre un débit plus élevé que les trois autres architectures, tout en réduisant d'un ordre de grandeur la consommation énergétique en comparaison du processeur Tensilica. Par exemple, avec un code polaire (1024,512), le débit obtenu par le processeur \TTSC~est de 352 Mb/s, ce qui est supérieur de 37 \% au débit obtenu avec le processeur Intel i7-4712HQ, alors que la consommation énergétique est beaucoup plus faible, avec deux ordres de grandeur de différence.
+
+\begin{table}[t]
+  %\renewcommand{\arraystretch}{0.5} 
+  %\tabcolsep=6pt
+  \centering
+  \caption{FPGA implementations of dedicated SC decoders for a (1024,512) polar code}
+  \label{tab:fpga_tta}
+  \begin{tabular}{rcccc}
+   \toprule
+
+     & \TTSC  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis_fast_2014}} \\
+	\cmidrule(lr){2-2}
+	\cmidrule(lr){3-3}
+	\cmidrule(lr){4-5}
+
+    \textbf{Target}         &  Artix-7  & Stratix IV & Stratix IV & Virtex 6 \\
+    \textbf{Clock cycles}   &  1161     & 222        & 165        & 165      \\
+    \textbf{IT}/P (Mb/s)    &  44       & 238        & 319        & 217      \\
+    \textbf{Freq} (MHz)     &  100      & 103        & 103        & 70       \\
+    \textbf{LUTS}           &  14744    & 23020      &  24821     & 22115    \\
+    \textbf{FFs}            &  7354     & 1024       &  5823      & 7941     \\
+    \textbf{RAM} (Kb)       &  141      & 43         &  36        & 36       \\
+    \textbf{Pruning}        &  R0 \& R1 & Full       & Full       & Full     \\
+    \bottomrule
+  \end{tabular}  
+\end{table}
+
+Les performances de l'architectures \TTSC~se rapprochent des performances des architectures matérielles dédiées de l'état de l'art. Le Tableau \ref{tab:fpga_tta} présente les performances de plusieurs implémentations de l'algorithme SC sur des cibles FPGA. Les deux références \cite{sarkis_fast_2014,giard_638_2015}sont des implémentations de la version élaguée de l'algorithme (FAST SC). L'élagage est complet, c'est-à-dire que tous les \noeuds spécialisés sont utilisés, en particulier les \noeuds \texttt{REP} et \texttt{SPC}, contrairement à l'architecture \TTSC~dans laquelle seuls les \noeuds \texttt{R1} et \texttt{R0} sont considérés. Le nombre de cycles d'horloge nécessaire au décodage d'un mot de code est 5 fois plus faible pour les architectures dédiées que pour l'architecture \TTSC. Trois facteurs principaux expliquent cette différence. Premièrement, comme il vient d'être expliqué, l'élagage est plus complet dans les architectures dédiées. Cet aspect pourrait être corrigé dans des versions améliorées de l'architecture \TTSC. Deuxièmement, dans l'architecture \TTSC, le chemin lecture en mémoire - opération élémentaire polaire - écriture en mémoire prend trois cycles d'horloge. Dans les architectures dédiées, ces trois opérations sont réalisées en un coup d'horloge. Le compilateur utilise le parallélisme d'instructions pour mitiger cette différence, mais ceci n'est pas toujours possible durant le déroulement de l'algorithme. Troisièmement, comme indiqué dans la sous-section \ref{subsec:hard_sc}, la propagation des sommes partielles ne nécessite aucun cycle d'horloge pour se réaliser dans les architectures matérielles. Dans l'architecture \TTSC, la propagation des sommes partielles représente environ 20\% du temps nécessaire au décodage d'une trame
+L'architecture \TTSC~est une architecture programmable. 
+
+
+Le nombre de LUTs utilisées par l'architecture \TTSC est inférieur à celui des architectures dédiées. Il est pourtant un processeur programmable complet, avec une ALU généraliste. La présence de cette ALU généraliste et d'une LSU associée permettant de travailler sur des données 32 bits permet à l'architecture TTA de pouvoir potentiellement réaliser n'importe quel algorithme décrit en langage de haut niveau. Si ce nombre réduit de LUTs est un fait notable, la versatilité de l'architecture \TTSC~a néanmoins un coût. Tout d'abord, le nombre de bascules flip-flop utilisées est supérieur. Beaucoup de registres sont en effet nécessaires dans les architectures TTA, dans chaque unité fonctionnelle. De plus, les instructions utilisées par le processeur \TTSC~sont très longues : une instruction est stockée sur 198 bits. L'empreinte mémoire de la mémoire d'instructions est donc considérable. Cet élément apparaît dans le tableau en ce qui concerne la quantité de mémoire RAM utilisée.
+
+
+
+\begin{table}[t]
+	\begin{centering}
+	\caption{ASIC implementations of dedicated SC decoders for a (1024,512) polar code}
+	\label{tab:asic_tta}
+			\begin{tabular}{rcccc}
+				\toprule
+				\parnoteclear
+				& \TTSC  & \cite{giard_polarbear:_2017} & \cite{mishra_successive_2012} & \cite{mishra_successive_2012}\parnote{{\footnotesize Scaling factors from 180nm to 28nm of \cite{mishra_successive_2012} are taken from \cite{giard_polarbear:_2017}.}}
+				\\
+				\cmidrule(lr){2-2}
+				\cmidrule(lr){3-3}
+				\cmidrule(lr){4-5}
+				
+				\textbf{Target}         &  28nm      & 28nm   & 180nm & 28nm  \\
+				\textbf{Clock cycles}   &  1161      & 1833      & 1568  & 1568  \\
+				\textbf{IT/P} [Mb/s]    &  352       & 94        & 49    & 436   \\
+				\textbf{Freq} [MHz]     &  800       & 336       & 150   & 1335  \\
+				\textbf{Power} [mW]     &  48       & 18        & 67    & 5     \\
+				$\mathbf{E_b}$ [nJ/bit] &  0.14      & 0.19     & 1.4  & 0.011 \\
+				\textbf{Area} [mm$^2$]  &  0.16      & 0.44      & 1.71  & 0.04  \\
+				\textbf{Pruning }       &  R0 \& R1  & First R0  & None  & None  \\
+				
+				\bottomrule
+			\end{tabular}
+			\parnotes
+	\end{centering}
+\end{table}
+
+Cependant, les instructions utilisées pour le décodage SC seulement forment un ensemble très restreint. Il est possible de réduire la taille des instructions à onze bits seulements. Un décodeur d'instructions permet de convertir les instructions de onze bits en instructions complètes de 198 bits. Fonctionnellement, l'architecture \TTSC modifiée devient alors équivalente à celle des architectures dédiées et perd sa versatilité. Cette architecture modifiée a été synthétisée dans la technologie ST précédemment présentée, et les résultats sont présentés dans le Tableau \ref{tab:asic_tta}. Ils sont comparés avec des résultats de décodeurs ASIC précédents. La comparaison est toutefois difficile compte tenu du la diversité des paramètres d'implémentations. En effet, le décodeur SC proposé dans \cite{giard_polarbear:_2017} constitue la base d'un décodeur SCL. Sa puissance et sa surface pourraient donc être réduites si seulement l'algorithme SC était supporté. De plus, une stratégie simpliste d'élagage est utilisée. Ceci explique le débit plus faible que celui obtenu avec l'architecture \TTSC. Le décodeur SC implémenté dans \cite{mishra_successive_2012} utilise une technologie ASIC différente et aucun élagage n'est utilisé. Aussi, l'objet du Tableau \ref{tab:asic_tta} est simplément de montrer que l'architecutre \TTSC~présente une complexité matérielle et un consommation énergétique raisonnable lorsqu'elle est comparée à des implémentations similaires. Elle permet d'atteindre plusieurs centaines de Mb/s tout en conservant la flexibilité d'un processeur programmable.
+
+
 \subsection{TT-SCAN}
+
+Les résultats de l'expérimentation de l'architecture \TTSCAN~sont présentés dans le Tableau \ref{tab:scan_tta}. La seule implémentation sur FPGA de la littérature est proposée dans \cite{berhault_hardware_2015}. L'architecture \TTSCAN~ est très proche de celle-ci en termes de nombre de cycles d'horloge, de fréquence et de débit. Elle est toutefois plus complexe, comme cela apparaît au niveau du nombre de LUTs et de portes flip-flop utilisées. Cette complexité est due au fait que l'arbre de décodage est élagué, ainsi qu'au niveau de parallélisme qui vaut $P=16$ dans \cite{berhault_hardware_2015}, contre $P=64$ dans le \TTSCAN.
+
+Une implémentation ASIC de l'algorithme SCAN est proposée dans \cite{lin_reduced_2015}. Comme l'architecture \TTSCAN, l'arbre de décodage est élagué. Dans cette implémentation, le parallélisme est cette fois $P=64$. On voit que le rapport du nombre de cycles est d'environ 4, ce qui se rapproche de la différence observée entre l'architecture \TTSC et les architectures dédiées au décodage de l'algorithme SC.
+
+\begin{table}[t]
+  %\renewcommand{\arraystretch}{0.5} 
+  %\tabcolsep=6pt
+  \centering
+  \caption{FPGA implementations of dedicated SC decoders for a (1024,512) polar code}
+  \label{tab:scan_tta}
+  \begin{tabular}{rccc}
+   \toprule
+     & \TTSCAN  & \cite{berhault_hardware_2015} & \cite{lin_reduced_2015} \\
+	\cmidrule(lr){2-2}
+	\cmidrule(lr){3-3}
+	\cmidrule(lr){4-4}
+
+    \textbf{Target}         &  Artix-7  & Stratix IV & ASIC 90nm \\
+    \textbf{Clock cycles}   &  10755    & 10304      & 2441      \\
+    \textbf{IT/P} (Mb/s)    &  4.5      & 4.4        & 217       \\
+    \textbf{Freq} (MHz)     &  93       & 90         & 571       \\
+    \textbf{LUTS}           &  17856    & 3517       & -         \\
+    \textbf{FFs}            &  7818     & 1024       & -         \\
+    \textbf{RAM} (Kb)       &  2124     & 209        & -         \\
+    \textbf{Pruning}        &  R0 \& R1 & No         & R0 \& R1  \\
+    \bottomrule
+  \end{tabular}  
+\end{table}
+
+
+% \section{Un flot de conception complet}
+
+% \subsection{Génération des vecteurs de tests}
+% \subsection{Cycles de conception}
 
 
 \section*{Conclusion}
+
+Dans ce chapitre, deux architectures de processeurs spécialisées dans le décodage des algorithmes de décodage de codes polaires SC et SCAN sont présentées. Le modèle architectural TTA y est décrit ainsi que la suite logicielle TCE qui propose un flot de conception complet. TCE permet la génération du modèle matériel du processeur, ainsi que la compilation de programmes décrits dans des langages de haut niveau (C / C++). Cette suite logicielle logicielle est utilisée afin de concevoir les deux architectures. Plusieurs contributions originales se dégagent de ce développement.
+
+\begin{enumerate}[label=(\roman*)]
+  \item La première architecture de processeur de type TTA spécialisée dans le décodage de codes polaires est proposée.
+  \item Une unité matérielle de décodeur SC déroulé et multi-cycles est proposée pour décoder des parties de l'arbre de décodage.
+  \item Son équivalent est proposé pour l'algorithme de décodage SCAN.
+  \item Une unité de calcul supportant les fonctions élémentaires des deux algorithmes SC et SCAN est proposée. Une grande partie des ressources matérielles nécessaires sont mutualisées. Ainsi, la différence de complexité entre une unité matérielle dédiée à l'algorthme SC seul et celle supportant les deux versions est minime.
+  \item L'ASIP ainsi conçu présente des débits supérieurs à ceux obtenus sur des architectures de processeurs à usage général, et la consommation énergétique est réduite de deux ordres de grandeur.
+\end{enumerate}
+
+L'algorithme SCL permet d'atteindre de meilleures performances que les algorithmes SC et SCAN. Il sera sans doute utilisé dans le cadre du standard 5G. Aussi, de futurs travaux se concentreront sur la conception d'une architecture TTA supportant l'algorithme SCL. De plus, la suite logicielle TCE facilite la conception d'architectures multiprocesseurs et la description logicielle de programmes adaptés. La conception d'architectures de décodeurs multiprocesseurs est un autre axe de recherche envisageable.
 
 

@@ -231,6 +231,14 @@
 \settodepth\mydepth{Xygp}
 \setlength\fboxsep{0pt}
 
+\usepackage[]{parnotes}
+\makeatletter
+\def\parnoteclear{%
+    \gdef\PN@text{}%
+    \parnotereset
+}
+\makeatother
+
 \def\TTSC{\texttt{TT-SC}}
 \def\TTSCAN{\texttt{TT-SCAN}}
 
