@@ -50,9 +50,9 @@ Dans l'exemple, trois transports sont effectués sur les trois bus de gauche, ta
 Augmenter le nombre d'unités fonctionnelles d'une architecture VLIW est problématique car il est nécessaire d'augmenter le nombre de ports d'écritures et de lecture des fichiers de registres afin de que les unités fonctionnelles puissent y accéder simultanément. Ceci a pour conséquence une augmentation de la complexité des fichiers de registre et une possible augmentation du chemin critique.
 La modularité des architectures TTA résoud ce problème.
 
-En effet, le réseau d'interconnexion et les chemins de données disponibles sont connus du programmeur et du compilateur. On parle de \og chemin de données exposé \fg (\textit{exposed datapath}). Comme le programmeur définit la séquence des transports, et non la séquence des opérations à exécuter, il n'est pas nécessaire de dimensionner les ports des fichiers de registre par rapport au pire cas du nombre d'unités fonctionnelles pouvant accéder simultanément à un fichier de registres. Le programmeur ne peut qu'affecter des transports de données à des bus libres.
+En effet, le réseau d'interconnexion et les chemins de données disponibles sont connus du programmeur et du compilateur. On parle de \og chemin de données exposé \fg (\textit{exposed datapath}). Comme le programmeur définit la séquence des transports, et non la séquence des opérations à exécuter, il n'est pas nécessaire de dimensionner les ports des fichiers de registre par rapport au pire cas du nombre d'unités fonctionnelles pouvant accéder simultanément à une file de registres. Le programmeur ne peut qu'affecter des transports de données à des bus libres.
 
-De plus, dans les architectures VLIW, les mécanismes de dérivation des registres (\textit{register bypass}) sont implémentés matériellement. Dans les architectures TTA, ils sont décrits par le programmeur logiciellement. Cela permet de réduire encore davantage l'engorgement des registres et donc la nécessité de ports supplémentaires sur chaque fichier de registres.
+De plus, dans les architectures VLIW, les mécanismes de dérivation des registres (\textit{register bypass}) sont implémentés matériellement. Dans les architectures TTA, ils sont décrits par le programmeur logiciellement. Cela permet de réduire encore davantage l'engorgement des registres et donc la nécessité de ports supplémentaires sur chaque file de registres.
 
 Ce sont ces différents avantages qui ont guidé notre choix dans la sélection des architectures TTA pour la conception d'architectures programmables de décodage de codes polaires. Elles résolvent en effet le problème identifié en conclusion du chapitre \ref{chap:tensilica} du nombre d'échanges nécessaires entre les mémoires, les fichiers de registres et les unités fonctionnelles. La modularité des architectures TTA nous permet de définir finement un réseau d'interconnexion permettant des communications directes entre les mémoires et les unités fonctionnelles, mais également entre les unités fonctionnelles elle-même.
 
@@ -65,7 +65,7 @@ Une autre raison de ce choix est l'existence d'une suite logicielle libre nommé
 
 L'environnement TCE (TTA-based Co-design Environment) est une suite d'outils logiciels permettant la description d'architectures TTA, la compilation de programmes exécutables sur ces architectures, et la génération de modèles matériels synthétisables et implémentables \cite{jaaskelainen_hw/sw_2017}. Une version améliorée de l'outil, nommée TCEMC (TCE MultiCore), permet le support d'opérations SIMD \cite{tcemc_2011}. Elle est utilisée pour concevoir les décodeurs polaires proposés. La Figure \ref{fig:tce} présente l'ensemble des outils proposés, les fichiers intermédiaires produits et utilisés et le flot de conception.
 
-Le premier outil utilisé est l'éditeur de modèle architectural (\textbf{prode}). Il s'agit d'une interface graphique. Il permet de définir une architecture TTA telle que celle illustrée dans la figure \ref{fig:tta_example}. Le fichier \textit{.adf} contient le nombre de bus et la largeur de chaque bus, la liste des sockets et de leurs connexions avec les bus de transport et les ports des unités fonctionnelles. Il contient aussi la liste des unités fonctionnelles.
+Le premier outil utilisé est l'éditeur de modèle architectural (\textbf{prode}). Il s'agit d'une interface graphique. Il permet de définir une architecture TTA telle que celle illustrée dans la Figure \ref{fig:tta_example}. Le fichier \textit{.adf} contient le nombre de bus et la largeur de chaque bus, la liste des sockets et de leurs connexions avec les bus de transport et les ports des unités fonctionnelles. Il contient aussi la liste des unités fonctionnelles.
 
 Il contient également les opérations que chaque unité fonctionnelle est capable de réaliser. Chaque opération est décrite par son interface, contenue dans un fichier \textit{.opp} et son comportement, défini par un fichier \textit{.c} ou \textit{.cpp}. L'éditeur de la base de données des opérations (\textbf{osed}) permet d'explorer et d'éditer les différentes opérations. Il permet également de compiler les modèles comportementaux. L'exécutable (\textit{.opb}) permet d'effectuer des simulations de l'opération, soit de manière individuelle, soit au sein du simulateur du programme complet. L'outil \textit{prode} associe les unités fonctionnelles avec les opérations dans le fichier \textit{.adf}.
 
@@ -108,7 +108,7 @@ Deux architectures de processeurs spécialisés dans le décodage de codes polai
 	\label{fig:prode}
 \end{figure*}
 
-L'architecture \TTSC~est divisée en trois parties principales. La Base TTA contient les unités fonctionnelles de base permettant de réaliser les fonctions d'un processeur généraliste. Elle est constituée d'une unité de chargement et de sauvegarde (LSU : Loading and Storing Unit), d'une ALU et d'un fichier de registres. Elle contient également l'unité de contrôle global (GCU : Global Control Unit) qui est destinée à la lecture et au décodage des instructions. La seconde partie est constituée des LSU vectorielles. Elles se chargent du chargement et de la sauvegarde des données vers et depuis les mémoires contenant les LLRs et les sommes partielles.
+L'architecture \TTSC~est divisée en trois parties principales. La Base TTA contient les unités fonctionnelles de base permettant de réaliser les fonctions d'un processeur généraliste. Elle est constituée d'une unité de chargement et de sauvegarde (LSU : Loading and Storing Unit), d'une ALU et d'une file de registres. Elle contient également l'unité de contrôle global (GCU : Global Control Unit) qui est destinée à la lecture et au décodage des instructions. La seconde partie est constituée des LSU vectorielles. Elles se chargent du chargement et de la sauvegarde des données vers et depuis les mémoires contenant les LLRs et les sommes partielles.
 La troisième partie contient les unités de calcul (PU : Processing Unit), dont le but est de réaliser les fonctions élémentaires polaires.
 
 Les algorithmes de décodages de codes polaires sont très intensifs du point de vus des accès à la mémoire. Les architectures matérielles dédiées de la littératures utilisent en majorité deux mémoires séparées pour accéder aux LLRs et deux autres pour les sommes partielles. Pour l'opération $f$, il est par exemple nécessaire d'effectuer deux lectures en mémoire ainsi qu'une écriture. Ces nombres sont à multiplier par le parallélisme, soit $P=64$. Les mêmes lectures et écritures sont nécessaires pour la fonction $g$, auquelles il faut ajouter la lecture de 64 sommes partielles. Dans l'architecture \TTSC, nous avons choisi d'utiliser une mémoire double port pour stocker les LLRs. Cela permet d'augmenter la bande passante, tout en conservant un seul espace de mémoire pour l'ensemble des LLRs. A chaque port est associé une LSU.
@@ -131,7 +131,7 @@ Le réseau d'interconnexion possède deux bus de 512 bits pour le transport des 
 Dans la section suivantes, certaines des FUs sont détaillées.
 
 \subsection{Unités fonctionnelles du décodeur \texttt{TT-SC}.}
-Nous allons détailler ici la fonction et l'implémentation matérielles de certaines des FUs. Toutes ne seront pas détaillées. Certaines (GCU, ALU, LSU, RF) sont liées au fonctionnement du base du TTA et à ce titre ne sont pas pertinentes ici. D'autres (LLR PU, PS PU) sont très similaires aux instructions spécialisées de l'architecture Tensilica du chapitre \ref{chap:tensilica}, décrites dans la sous-section \ref
+Nous allons détailler ici la fonction et l'implémentation matérielles de certaines des FUs. Toutes ne seront pas détaillées. Certaines (GCU, ALU, LSU, RF) sont liées au fonctionnement du base du TTA et à ce titre ne sont pas pertinentes ici. D'autres (LLR PU, PS PU) sont très similaires aux instructions spécialisées de l'architecture de processeur XTensa du chapitre \ref{chap:tensilica}, décrites dans la sous-section \ref
 {subsec:multi_reg}.
 
 Les unités fonctionnelles originales spécifiques à cette architectures sont les unités de chargement et de sauvegarde vectorielles d'une part, et l'unité \og SC déroulé \fg d'autre part.
@@ -142,7 +142,7 @@ Les unités fonctionnelles originales spécifiques à cette architectures sont l
 
 Les unités de chargement et de calcul vectoriels permettent d'accéder aux mémoires contenant les LLRs et les sommes partielles. Dans l'architecture proposée, la taille de code maximum supportée est $N_{max}=1024$, qui correspond à la taille maximum définie dans le standard 5G \cite{3gpp_ts_2017}. Cette valeur peut être facilement ajustée en augmentant la taille des mémoires. Dans l'algorithme SC, $N_{max}$ bits sont nécessaires pour stocker les sommes partielles. Puisqu'il est nécessaire d'accéder à $P=64$ sommes partielles en parallèle, une mémoire de 16 x 64-bits est suffisante. Cependant, à cause d'une section d'adresse réservée automatiquement par TCE, une taille supérieure de mémoire a due être sélectionnée : 32x64-bits. Pour des raisons similaires, les LLRs sont stockés dans une mémoire de 64x512-bits.
 
-Comme précisé auparavant, l'accès à la mémoire est un enjeu capital dans les architectures de décodage de codes polaires. Les modèles architecturaux et matériels de LSU proposés par défaut dans les bases de données de TCE ont une latence de 3 cycles d'horloge, ce qui est trop élevé. Dans un premier temps, cette latence a été réduite à un coup d'horloge par la suppression de registres. Cette suppression n'a pas causé d'augmentation du chemin critique.
+Comme précisé auparavant, l'accès à la mémoire est un enjeu capital dans les architectures de décodage de codes polaires. Les modèles architecturaux et matériels de LSU proposés par défaut dans les bases de données de TCE ont une latence de 3 cycles d'horloge, ce qui est trop élevé. Dans un premier temps, cette latence a été réduite à un cycle d'horloge par la suppression de registres. Cette suppression n'a pas causé d'augmentation du chemin critique.
 \begin{figure*}[htp]
 	\centering
 	\includegraphics[width=\textwidth]{main/ch4_fig/unaligned}
@@ -163,7 +163,7 @@ Dans \cite{gal_scalable_2016} est proposé une architecture matérielle de codes
 	\label{fig:unrolled_multicycle}
 \end{figure*}
 
-En effet, il est possible de définir des chemins de données multi-cycles dans les processeurs conçus à l'aide de TCE. Dans TCE, par défaut, la latence d'une opération effectuée dans une FU est d'un cycle d'horloge : lorsqu'à un front d'horloge, une donnée est présentée au port de déclenchement, les résultats de l'opération sont disponibles aux ports de sortie au front d'horloge suivant. Dans l'outil \textbf{prode}, qui permet de définir l'architecture, il est toutefois possible d'assigner une latence supérieure à une ou plusieurs opérations d'une FU. Si une latence supérieure est spécifiée, alors les données de sortie ne seront disponibles qu'après le nombre spécifié de coups d'horloge. Le compilateur a connaissance de cette latence spécifiée dans le fichier \textit{.adf}. Il est ainsi en charge de régler les problèmes de disponibilités des données. Du côté du logiciel tiers de synthèse, il est alors possible de spécifier que les chemins de données de l'opération en question sont multicycles. La contrainte de temps ceux-ci est allongée de plusieurs cycle d'horloge. Ainsi, les registres sont supprimés, et la complexité matérielle de l'unité est réduite. Potentiellement, cette technique pourrait réduire le nombre de cycles nécessaires au décodage du sous-arbre par rapport à la version contenant les registres. Toutefois, dans notre implémentation, le nombre de cycles n'a pas été réduit par rapport à l'implémentation de \cite{gal_scalable_2016}. Une des raisons possibles est que dans notre décodeur, comme dans l'ASIP d'architecture Tensilica, les nombres entiers signés sont représentés en complément à deux. La représentation signe-magnitude utilisée dans \cite{gal_scalable_2016} permet de simplifier le traitement de la fonction $f$.
+En effet, il est possible de définir des chemins de données multi-cycles dans les processeurs conçus à l'aide de TCE. Dans TCE, par défaut, la latence d'une opération effectuée dans une FU est d'un cycle d'horloge : lorsqu'à un front d'horloge, une donnée est présentée au port de déclenchement, les résultats de l'opération sont disponibles aux ports de sortie au front d'horloge suivant. Dans l'outil \textbf{prode}, qui permet de définir l'architecture, il est toutefois possible d'assigner une latence supérieure à une ou plusieurs opérations d'une FU. Si une latence supérieure est spécifiée, alors les données de sortie ne seront disponibles qu'après le nombre spécifié de cycles d'horloge. Le compilateur a connaissance de cette latence spécifiée dans le fichier \textit{.adf}. Il est ainsi en charge de régler les problèmes de disponibilités des données. Du côté du logiciel tiers de synthèse, il est alors possible de spécifier que les chemins de données de l'opération en question sont multicycles. La contrainte de temps ceux-ci est allongée de plusieurs cycle d'horloge. Ainsi, les registres sont supprimés, et la complexité matérielle de l'unité est réduite. Potentiellement, cette technique pourrait réduire le nombre de cycles nécessaires au décodage du sous-arbre par rapport à la version contenant les registres. Toutefois, dans notre implémentation, le nombre de cycles n'a pas été réduit par rapport à l'implémentation de \cite{gal_scalable_2016}. Une des raisons possibles est que dans notre décodeur, tout comme dans le processeur XTensa proposé dans le chapitre précédent, les nombres entiers signés sont représentés en complément à deux. La représentation signe-magnitude utilisée dans \cite{gal_scalable_2016} permet de simplifier le traitement de la fonction $f$.
 
 L'unité fonctionnelle \og SC déroulé \fg correspond donc à un sous-arbre de décodage SC déroulé et multi-cycles. Ce sous-arbre est représenté dans la Figure \ref{fig:unrolled_multicycle}. Il est important de noter que les bits gelés sont donnés en entrée du sous-arbre. Ceci lui permet d'être générique vis-à-vis du rendement et de la construction du code.
 
@@ -174,14 +174,41 @@ Nous avons décidé d'utiliser une description logicielle déroulée. La notion 
 Pour cela, la librairie proposée dans \cite{cassagne_efficient_2015} a été utilisée. Le but de cette librairie est de générer des codes sources déroulés (en langage C++). Les cibles architecturales visées sont x86 et ARM. Cette librairie a donc été améliorée afin de supporter les architectures TTA. Ainsi, il est possible de générer le code source déroulé et élagué de n'importe quel code polaire, quelle que soit sa construction. L'élagage de l'arbre est également configurable. De manière équivalente aux décodeurs logiciels à liste proposés dans le chapitre \ref{chap:soft_scl}, l'élagage de l'arbre est ajustable, en fonction du type de \noeuds utilisés ou de la taille des \noeuds activés.
 
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{main/ch4_fig/ilp_1}
+\caption{Extrait de code source et de code assembleur.}
+\label{fig:ilp_1}
+\end{figure}
+
+
+La Figure \ref{fig:ilp_1} donne un extrait du code source. Il s'agit du traitement des premiers \noeuds de l'arbre. Des données sont chargées depuis la mémoire (\texttt{\_TCE\_LDOFF}), la fonction $f$ est appliquée (\texttt{\_TCE\_POLAR\_F8X64}), puis le résultat est stocké dans la mémoire (\texttt{\_TCE\_STOFF}). Le désassembleur de TCE nous permet de voir le code assembleur correspondant au programme généré par le compilateur. Il apparaît clairement que grâce à la génération du code source déroulé, le compilateur exploite efficacement les possibilité de parallélisme d'instructions offertes par les architectures TTA. Dans ce cours extrait, la moyenne du nombre d'unités fonctionnelles déclenchée par cycle d'horloge est de 2. Les bus 0 et 3 sont utilisés à 100\%, les bus 1 et 4 sont utilisés à 60\% et le bus 2 n'est pas utilisé, puisqu'à ce stade de l'algorithme de décodage, aucune opération n'est nécessaire sur les sommes partielles. Durant le décodage d'un mot de code (1024,512), les bus sont occupés à 45\% et le nombre moyen d'unités fonctionnelles actives par cycle d'horloges est de $1.4$. En analysant finement le code source, il y a deux sections principales durant lesquelles les bus et unités fonctionnelles sont peu occupées. La première correspond aux sections où les unités \og SC déroulé \fg multicycles sont activées. 
+\begin{figure}[htp]
+\centering
+\includegraphics[width=\textwidth]{main/ch4_fig/ilp_2}
+\caption{Illustration du parallélisme d'instructions.}
+\label{fig:ilp_2}
+\end{figure}
+La seconde correspond à la propagation des sommes partielles dans l'arbre. En effet, un seul bus est disponible pour les sommes partielles. De plus, une seule LSU est allouée au stockage et au chargement des sommes partielles. Des améliorations de l'architectures seraient donc possibles afin d'augmenter le taux d'utilisation des bus et des unités fonctionnelles et réduire ainsi le nombre de cycle d'horloges nécessaires au décodage d'un mot de trame.
+
+La Figure \ref{fig:ilp_2} illustre comment ce programme est traité par le processeur TTA. Les transports de données y sont représentés au cours des cinq cycles d'instructions.
+
+
+
 \subsection{Implémentation de l'algorithme SCAN}
 
-\begin{figure*}[t]
+\begin{figure}[htp]
 	\centering
 	\includegraphics[width=\textwidth]{main/ch4_fig/archi_scan}
 	\caption{Architecture \TTSCAN.}
 	\label{fig:tt_scan}
-\end{figure*}
+\end{figure}
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=1.5]{main/ch4_fig/scan_unit}
+\caption{L'unité \og LLR PU \fg réalisant les fonctions élémentaires SC et SCAN.}
+\label{fig:scan_unit}
+\end{figure}
 
 Afin d'illustrer la modularité et l'évolutivité des processeurs d'architecture TTA conçus à l'aide de TCE, nous avons développé une nouvelle architecture nommée \TTSCAN. Elle permet le support de l'algorithme SCAN en plus de l'algorithme SC. La Figure \ref{fig:tt_scan} représente cette nouvelle architecture.
 Comme détaillé dans la sous-section \ref{subsec:soft_algo}, dans l'algorithme SCAN, les sommes partielles sont remplacées par des LLRs. Ces LLRs sont notés BLLRs (Backward LLRs). La première unité fonctionnelle ajoutée à l'architecture \TTSC~pour obtenir l'architecture \TTSCAN~est l'unité de chargement et de sauvegardes des BLLRs. Une mémoire de stockage des ces BLLRs est également ajoutée. La seconde unité fonctionnelle ajoutée est une unité \og SCAN déroulé \fg. 
@@ -195,18 +222,13 @@ De plus, l'unité de calcul des fonctions polaire LLR PU a été adaptée. Les f
   \label{eq:bp}
 \end{eqnarray}
 
-Il est possible d'adapter l'unité fonctionnelle LLR PU utilisée dans l'architecture \TTSC~pour qu'elle puisse supporter ces nouvelles fonctions polaires. L'unité matérielle adaptée est illustrée dans la Figure~\ref{fig:scan_unit}.
 
-\begin{figure}[htp]
-\centering
-\includegraphics[scale=1.5]{main/ch4_fig/scan_unit}
-\caption{The LLR Processing Unit supporting SC and SCAN decoding.}
-\label{fig:scan_unit}
-\end{figure}
+Il est possible d'adapter l'unité fonctionnelle LLR PU utilisée dans l'architecture \TTSC~pour qu'elle puisse supporter ces nouvelles fonctions polaires. L'unité matérielle adaptée est illustrée dans la Figure~\ref{fig:scan_unit}. Seuls des multiplexeurs supplémentaires sont nécessaire pour réaliser cette adaptation. Après synthèse pour une cible FPGA, le nombre de cellules logiques nécessaires pour réaliser l'unité fonctionnelle \og SC+SCAN \fg est de 133 tandis que 83 cellules logiques étaient nécessaires pour l'unité fonctionnelle \og SC \fg, soit une augmentation de 60 \%.
+
 
 
 \section{Expérimentations et mesures}
-Le but de cette section est de présenter les mesures et les expérimentations réalisées pour évaluer les deux architectures proposées, \TTSC~et \TTSCAN. Les comparaisons avec les décodeurs de la littérature sont difficiles, puisque beaucoup de paramètres changent tels que la technologie d'ASIC, l'alimentation, les algorithmes supportés par les différentes architectures, la stratégie d'élagage, le format de représentation des LLRs, la construction du code polaire. Ces précautions prises, nous montrons que les architectures TTAs proposées sont un compromis entre les architectures de processeur à usage général et les architectures matérielles dédiées. Nous montrons également que ces architectures permettent une amélioration significative du débit et une réduction de la consommation énergétique par rapport à l'architecture Tensilica proposée dans le chapitre \ref{chap:tensilica}.
+Le but de cette section est de présenter les mesures et les expérimentations réalisées pour évaluer les deux architectures proposées, \TTSC~et \TTSCAN. Les comparaisons avec les décodeurs de la littérature sont difficiles, puisque beaucoup de paramètres changent tels que la technologie d'ASIC, l'alimentation, les algorithmes supportés par les différentes architectures, la stratégie d'élagage, le format de représentation des LLRs, la construction du code polaire. Ces précautions prises, nous montrons que les architectures TTAs proposées sont un compromis entre les architectures de processeur à usage général et les architectures matérielles dédiées. Nous montrons également que ces architectures permettent une amélioration significative du débit et une réduction de la consommation énergétique par rapport au processeur XTensa proposée dans le chapitre \ref{chap:tensilica}.
 
 \subsection{TT-SC}
 % tab:sw_tta
@@ -214,12 +236,12 @@ Le but de cette section est de présenter les mesures et les expérimentations r
 % tab:asic_tta
 
 
-L'architecture \TTSC~a été synthétisée avec la librarie de cellules standard ST 28nm FD-SOI, avec les paramètres 0.9V, 125$^{\circ}$C . Les mémoires sont des blocs de SRAM de la même technologie. Le Tableau \ref{tab:sw_tta} présente les performances de débit, latence et consommation de l'architecture \TTSC~exécutant l'algorithme SC et les compare avec les performances obtenues sur des processeurs à usage général d'architectures x86 et ARM, ainsi qu'avec celles obtenues sur le processeur d'architecture Tensilica proposé dans le Chapitre~\ref{chap:tensilica}.
+L'architecture \TTSC~a été synthétisée avec la librairie de cellules standard ST 28nm FD-SOI, avec les paramètres 0.9V, 125$^{\circ}$C . Les mémoires sont des blocs de SRAM de la même technologie. Le Tableau \ref{tab:sw_tta} présente les performances de débit, latence et consommation de l'architecture \TTSC~exécutant l'algorithme SC et les compare avec les performances obtenues sur des processeurs à usage général d'architectures x86 et ARM, ainsi qu'avec celles obtenues sur le processeur XTensa proposé dans le Chapitre~\ref{chap:tensilica}.
 
 
 \begin{table}
   \centering
-  \caption{Comparaison de l'architecture \TTSC~avec des processeurs à usage général et l'ASIP Tensilica proposé dans le Chapitre \ref{chap:tensilica}}
+  \caption{Comparaison de l'architecture \TTSC~avec des processeurs à usage général et l'ASIP XTensa proposé dans le Chapitre \ref{chap:tensilica}}
   \label{tab:sw_tta}
 %\scriptsize
   \begin{tabular}{ccccc}
@@ -271,7 +293,7 @@ L'architecture \TTSC~a été synthétisée avec la librarie de cellules standard
   \end{tabular}
 \end{table}
 
-Pour les deux processeurs à usage général, le code source utilisé est généré à l'aide de la librairie \cite{cassagne_efficient_2015}. Les simulations sont effectuées grâce à la suite logicielle AFF3CT \cite{aff3ct_aff3ct:_2016}. Le processeur Intel i7-4712HQ présente un débit élevé mais une importante consommation énergétique. Le débit mesuré sur le processeur ARM A57 est moins élevé, mais la consommation énergétique est plus faible que celle obtenue sur le processeur Intel. Comme nous l'avons vu dans le chapitre précédent, le débit obtenu sur le processeur spécialisé Tensilica eest comparable à celui obtenu sur l'architecture ARM, alors que la consommation énergétique est beaucoup plus faible, avec environ un ordre de grandeur de différence. L'architecture \TTSC~permet d'atteindre un débit plus élevé que les trois autres architectures, tout en réduisant d'un ordre de grandeur la consommation énergétique en comparaison du processeur Tensilica. Par exemple, avec un code polaire (1024,512), le débit obtenu par le processeur \TTSC~est de 352 Mb/s, ce qui est supérieur de 37 \% au débit obtenu avec le processeur Intel i7-4712HQ, alors que la consommation énergétique est beaucoup plus faible, avec deux ordres de grandeur de différence.
+Pour les deux processeurs à usage général, le code source utilisé est généré à l'aide de la librairie \cite{cassagne_efficient_2015}. Les simulations sont effectuées grâce à la suite logicielle AFF3CT \cite{aff3ct_aff3ct:_2016}. Le processeur Intel i7-4712HQ présente un débit élevé mais une importante consommation énergétique. Le débit mesuré sur le processeur ARM A57 est moins élevé, mais la consommation énergétique est plus faible que celle obtenue sur le processeur Intel. Comme nous l'avons vu dans le chapitre précédent, le débit obtenu sur le processeur spécialisé XTensa est comparable à celui obtenu sur l'architecture ARM, alors que la consommation énergétique est beaucoup plus faible, avec environ un ordre de grandeur de différence. L'architecture \TTSC~permet d'atteindre un débit plus élevé que les trois autres architectures, tout en réduisant d'un ordre de grandeur la consommation énergétique en comparaison du processeur XTensa. Par exemple, avec un code polaire (1024,512), le débit obtenu par le processeur \TTSC~est de 352 Mb/s, ce qui est supérieur de 37 \% au débit obtenu avec le processeur Intel i7-4712HQ, alors que la consommation énergétique est beaucoup plus faible, avec deux ordres de grandeur de différence.
 
 \begin{table}[t]
   %\renewcommand{\arraystretch}{0.5} 
@@ -299,7 +321,7 @@ Pour les deux processeurs à usage général, le code source utilisé est géné
   \end{tabular}  
 \end{table}
 
-Les performances de l'architectures \TTSC~se rapprochent des performances des architectures matérielles dédiées de l'état de l'art. Le Tableau \ref{tab:fpga_tta} présente les performances de plusieurs implémentations de l'algorithme SC sur des cibles FPGA. Les deux références \cite{sarkis_fast_2014,giard_638_2015}sont des implémentations de la version élaguée de l'algorithme (FAST SC). L'élagage est complet, c'est-à-dire que tous les \noeuds spécialisés sont utilisés, en particulier les \noeuds \texttt{REP} et \texttt{SPC}, contrairement à l'architecture \TTSC~dans laquelle seuls les \noeuds \texttt{R1} et \texttt{R0} sont considérés. Le nombre de cycles d'horloge nécessaire au décodage d'un mot de code est 5 fois plus faible pour les architectures dédiées que pour l'architecture \TTSC. Trois facteurs principaux expliquent cette différence. Premièrement, comme il vient d'être expliqué, l'élagage est plus complet dans les architectures dédiées. Cet aspect pourrait être corrigé dans des versions améliorées de l'architecture \TTSC. Deuxièmement, dans l'architecture \TTSC, le chemin lecture en mémoire - opération élémentaire polaire - écriture en mémoire prend trois cycles d'horloge. Dans les architectures dédiées, ces trois opérations sont réalisées en un coup d'horloge. Le compilateur utilise le parallélisme d'instructions pour mitiger cette différence, mais ceci n'est pas toujours possible durant le déroulement de l'algorithme. Troisièmement, comme indiqué dans la sous-section \ref{subsec:hard_sc}, la propagation des sommes partielles ne nécessite aucun cycle d'horloge pour se réaliser dans les architectures matérielles. Dans l'architecture \TTSC, la propagation des sommes partielles représente environ 20\% du temps nécessaire au décodage d'une trame
+Les performances de l'architectures \TTSC~se rapprochent des performances des architectures matérielles dédiées de l'état de l'art. Le Tableau \ref{tab:fpga_tta} présente les performances de plusieurs implémentations de l'algorithme SC sur des cibles FPGA. Les deux références \cite{sarkis_fast_2014,giard_638_2015}sont des implémentations de la version élaguée de l'algorithme (FAST SC). L'élagage est complet, c'est-à-dire que tous les \noeuds spécialisés sont utilisés, en particulier les \noeuds \texttt{REP} et \texttt{SPC}, contrairement à l'architecture \TTSC~dans laquelle seuls les \noeuds \texttt{R1} et \texttt{R0} sont considérés. Le nombre de cycles d'horloge nécessaire au décodage d'un mot de code est 5 fois plus faible pour les architectures dédiées que pour l'architecture \TTSC. Trois facteurs principaux expliquent cette différence. Premièrement, comme il vient d'être expliqué, l'élagage est plus complet dans les architectures dédiées. Cet aspect pourrait être corrigé dans des versions améliorées de l'architecture \TTSC. Deuxièmement, dans l'architecture \TTSC, le chemin lecture en mémoire - opération élémentaire polaire - écriture en mémoire prend trois cycles d'horloge. Dans les architectures dédiées, ces trois opérations sont réalisées en un cycle d'horloge. Le compilateur utilise le parallélisme d'instructions pour mitiger cette différence, mais ceci n'est pas toujours possible durant le déroulement de l'algorithme. Troisièmement, comme indiqué dans la sous-section \ref{subsec:hard_sc}, la propagation des sommes partielles ne nécessite aucun cycle d'horloge pour se réaliser dans les architectures matérielles. Dans l'architecture \TTSC, la propagation des sommes partielles représente environ 20\% du temps nécessaire au décodage d'une trame
 L'architecture \TTSC~est une architecture programmable. 
 
 
@@ -384,7 +406,7 @@ Dans ce chapitre, deux architectures de processeurs spécialisées dans le déco
   \item La première architecture de processeur de type TTA spécialisée dans le décodage de codes polaires est proposée.
   \item Une unité matérielle de décodeur SC déroulé et multi-cycles est proposée pour décoder des parties de l'arbre de décodage.
   \item Son équivalent est proposé pour l'algorithme de décodage SCAN.
-  \item Une unité de calcul supportant les fonctions élémentaires des deux algorithmes SC et SCAN est proposée. Une grande partie des ressources matérielles nécessaires sont mutualisées. Ainsi, la différence de complexité entre une unité matérielle dédiée à l'algorthme SC seul et celle supportant les deux versions est minime.
+  \item Une unité de calcul supportant les fonctions élémentaires des deux algorithmes SC et SCAN est proposée. Une grande partie des ressources matérielles nécessaires sont mutualisées. Ainsi, la différence de complexité entre une unité matérielle dédiée à l'algorithme SC seul et celle supportant les deux versions est minime.
   \item L'ASIP ainsi conçu présente des débits supérieurs à ceux obtenus sur des architectures de processeurs à usage général, et la consommation énergétique est réduite de deux ordres de grandeur.
 \end{enumerate}
 

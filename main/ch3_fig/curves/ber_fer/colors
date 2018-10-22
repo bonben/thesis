@@ -18,6 +18,7 @@
 \definecolor{Accent-6}{RGB}{240,2,127}
 \definecolor{Accent-7}{RGB}{191,91,23}
 \definecolor{Accent-8}{RGB}{102,102,102}
+
 \definecolor{Spectral-1}{RGB}{158,1,66}
 \definecolor{Spectral-2}{RGB}{213,62,79}
 \definecolor{Spectral-3}{RGB}{244,109,67}
@@ -29,6 +30,7 @@
 \definecolor{Spectral-9}{RGB}{102,194,165}
 \definecolor{Spectral-10}{RGB}{50,136,189}
 \definecolor{Spectral-11}{RGB}{94,79,162}
+
 \definecolor{Set1-1}{RGB}{228,26,28}
 \definecolor{Set1-2}{RGB}{55,126,184}
 \definecolor{Set1-3}{RGB}{77,175,74}
@@ -38,6 +40,7 @@
 \definecolor{Set1-7}{RGB}{166,86,40}
 \definecolor{Set1-8}{RGB}{247,129,191}
 \definecolor{Set1-9}{RGB}{153,153,153}
+
 \definecolor{Set2-1}{RGB}{102,194,165}
 \definecolor{Set2-2}{RGB}{252,141,98}
 \definecolor{Set2-3}{RGB}{141,160,203}
