@@ -1,0 +1,2 @@
+- section, chapitre et sous-section : minuscules
+- Figure : majuscules

@@ -11,9 +11,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="537.27039mm"
-   height="630.78613mm"
-   viewBox="0 0 1903.7139 2235.069"
+   width="427.46194mm"
+   height="353.85727mm"
+   viewBox="0 0 1514.6289 1253.825"
    id="svg5876"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -553,8 +553,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.22627417"
-     inkscape:cx="2167.5846"
-     inkscape:cy="1330.4607"
+     inkscape:cx="124.68108"
+     inkscape:cy="1301.7458"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -563,9 +563,9 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:window-width="1920"
-     inkscape:window-height="1034"
-     inkscape:window-x="1920"
-     inkscape:window-y="0"
+     inkscape:window-height="1007"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:snap-nodes="true"
      inkscape:snap-intersection-paths="true"
@@ -589,7 +589,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(35872.852,-32456.982)">
+     transform="translate(33578.681,-32636.718)">
     <rect
        style="fill:#e2a886;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect12922"
@@ -1832,7 +1832,7 @@
            x="35448.57"
            y="35101.961"
            style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text Medium'" /></flowRegion><flowPara
-         id="flowPara4393"></flowPara></flowRoot>    <flowRoot
+         id="flowPara4393" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4395"
        style="font-style:normal;font-weight:normal;font-size:12.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -1843,7 +1843,7 @@
            height="44.285713"
            x="35451.43"
            y="35080.531" /></flowRegion><flowPara
-         id="flowPara4401"></flowPara></flowRoot>    <flowRoot
+         id="flowPara4401" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4403"
        style="font-style:normal;font-weight:normal;font-size:12.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -6860,7 +6860,7 @@
          sodipodi:role="line"
          id="tspan11050"
          x="-33423.387"
-         y="33484.664"></tspan></text>
+         y="33484.664" /></text>
     <g
        id="g14415"
        transform="translate(6.099375e-4,1.0177013e-5)">
