@@ -4,3 +4,4 @@
 - Juste après figure 3.9 : Rien à dire de plus sur SPC ?
 - reprendre les phrases avec pipeline
 - architecture de référence
+- "Ce réseau ne fait pas partie des PEs." A compléter

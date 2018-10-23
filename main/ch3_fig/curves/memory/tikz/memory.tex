@@ -16,7 +16,8 @@
   \begin{tikzpicture}
     \begin{semilogxaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
                          width=0.5\linewidth, height=0.55\linewidth,
-                         xlabel=Data cache size (KB), ylabel=\# of data cache misses,  grid=both, grid style={gray!30},
+                         xlabel=Taille de la cache de donn\'{e}es (KB),ylabel style={align=center}, 
+ ylabel={\# d'\'{e}chec d'acc\`{e}s à la cache \\ de donn\'{e}es},  grid=both, grid style={gray!30},
                          xmin = 1, xmax=140,
                          tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
                          ]
@@ -31,7 +32,8 @@
     \begin{tikzpicture}
     \begin{semilogxaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
                          width=0.5\linewidth, height=0.55\linewidth,
-                         xlabel=Instruction cache size (KB), ylabel=\# of instruction cache misses,  grid=both, grid style={gray!30},
+                         ylabel style={align=center}, 
+                         xlabel=Taille de la cache d'instructions (KB), ylabel=\# d'\'{e}chec d'acc\`{e}s à la cache \\ d'instructions,  grid=both, grid style={gray!30},
                          xmin = 1, xmax=140,
                          tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
                          ]

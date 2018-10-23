@@ -118,7 +118,7 @@ Les sommes partielles sont des valeurs binaires. Cependant, encore une fois, la 
 \label{fig:tensilica_mem}
 \end{figure}
 
-Nous avons fait le choix d'augmenter au maximum le parallélisme des instructions élémentaires nécessaires au décodage de codes polaires. La taille maximum des registres du processeur XTensa, qui est donc la taille utilisée dans l'ASIP proposé, est de 512 bits. Afin de pouvoir charger et sauvegarder des données depuis et vers la mémoire cache en un seul cycle d'horloge, la largeur choisie pour une ligne de mémoire cache est également de 512 bits. La taille de ces mémoires ainsi que leur associativité est également configurable. Des expérimentations ont été réalisées afin de sélectionner ces valeurs. Dans tous les cas testés, un associativité à 4 voies pour les mémoires d'instructions et de données permet de meilleures performances.
+Nous avons fait le choix d'augmenter au maximum le parallélisme des instructions élémentaires nécessaires au décodage de codes polaires. La taille maximum des registres du processeur XTensa, qui est donc la taille utilisée dans l'ASIP proposé, est de 512 bits. Afin de pouvoir charger et sauvegarder des données depuis et vers la mémoire cache en un seul cycle d'horloge, la largeur choisie pour une ligne de mémoire cache est également de 512 bits. La taille de ces mémoires ainsi que leur associativité est également configurable. Des expérimentations ont été réalisées afin de sélectionner les valeurs. Il en résulte qu'une associativité à 4 voies pour les mémoires d'instructions et de données permet d'atteindre de meilleures performances.
 
 Le scenario envisagé pour la conception du processeur est celui des canaux de contrôle du standard 5G tel que défini dans \cite{3gpp_ts_2017}. La taille du plus grand code polaire à décoder est $N=1024$. Les mémoires du processeur ont donc été dimensionnées en conséquence.
 Bien que le plus petit nombre d'échec d'accès à la mémoire cache soit atteint pour la taille de cache la plus grande (128 Ko), une mémoire d'instruction de 8 Ko ainsi qu'une mémoire de données de 8 Ko sont suffisantes pour atteindre un nombre d'échecs de cache seulement 10 \% plus grand que la valeur optimale. Les mesures réalisées sont reportées dans la Figure \ref{fig:tensilica_mem}
@@ -134,30 +134,30 @@ Bien que le plus petit nombre d'échec d'accès à la mémoire cache soit attein
 \end{figure}
 
 
-Les instructions spécialisées choisies pour étendre le jeu d'instructions de l'ASIP s'inspirent des unités de traitement développées dans la littérature pour les circuits dédiés au décodage de codes polaires SC. Dans \cite{leroux_hardware_2011} plusieurs architectures furent proposées. La première architecture proposée est l'architecture \og papillon \fg. Lors du décodage, la fonction $f$ doit être appliqué $N/2$ fois à chaque niveau de l'arbre, et la fonction $g$ également. Au total, il est nécessaire d'appliquer $\frac{N}{2} \log N$ fois les fonctions $f$ et $g$. 
+Les instructions spécialisées choisies pour étendre le jeu d'instructions de l'ASIP s'inspirent des unités de traitement développées dans la littérature pour les circuits dédiés au décodage de codes polaires SC. Dans \cite{leroux_hardware_2011} plusieurs architectures furent proposées. La première architecture est l'architecture dite \og papillon \fg. Lors du décodage, les fonctions $f$ et $g$ doivent être appliquées $N/2$ fois à chaque niveau de l'arbre. Au total, il est nécessaire d'appliquer $\frac{N}{2} \log N$ fois les fonctions $f$ et $g$ lors du décodage d'un mot de code. 
 
-Pour cela, des unités matérielles élémentaires (PE : Processing Elements) sont utilisées.
-Un PE permet de réaliser un calcul de $f$ et un calcul de $g$. Un tel élément est représenté dans la Figure \ref{fig:pe}.
-Dans l'architecture \og papillon \fg, un PE est associé à chaque application des fonctions $f$ et $g$.
+Pour cela, des unités matérielles élémentaires (PE : Processing Elements) ont été définies.
+Un PE permet de réaliser un calcul de $f$ ou un calcul de $g$. Un tel élément est représenté dans la Figure \ref{fig:pe}.
+Dans l'architecture dite \og papillon \fg, un PE est associé à chaque application des fonctions $f$ et $g$.
 Il y a donc au total $\frac{N}{2} \log N$ PEs.
 L'application de l'ensemble des fonctions $f$ ou des fonctions $g$ d'un \noeud de l'arbre est alors effectué en un cycle d'exécution.
 
-Cependant, cette architecture est sous-optimale en termes de complexité.
+Cependant, cette architecture est sous-optimale en termes de complexité matérielle.
 L'ordonnancement de l'algorithme de décodage SC possède les propriétés suivantes :
 \begin{itemize}
-  \item Le nombre maximum de fonctions polaires élémentaires réalisées simultanément sur un \noeud est $\frac{N}{2}$,
+  \item Le nombre maximum de fonctions polaires élémentaires pouvant être réalisées simultanément sur un \noeud est $\frac{N}{2}$,
   \item deux \noeuds successifs ne peuvent pas être traités simultanément.
 \end{itemize}
-En conséquence, les ressources de calculs alloués au traitement d'un \noeud de l'arbre peuvent être utilisé pour le traitements des \noeuds suivants.
-Le niveau de parallélisme le plus élevé est $\frac{N}{2}$, donc $\frac{N}{2}$ PEs suffisent pour décoder l'ensemble de l'arbre sans modifier la latence de décodage.
-Dans l'architecture \og ligne \fg, $\frac{N}{2}$ PEs sont donc partagées pour le traitement de tous les \noeuds de l'arbre. Sa latence est la même que celle de l'architecture \og papillon \fg.
+En conséquence, les ressources de calcul allouées au traitement d'un \noeud de l'arbre peuvent être utilisées pour le traitements des \noeuds suivants.
+Le niveau de parallélisme le plus élevé est $\frac{N}{2}$, donc $\frac{N}{2}$ PEs suffisent pour décoder l'ensemble de l'arbre sans impacter la latence de décodage.
+Dans le cas de l'architecture dite \og ligne \fg, $\frac{N}{2}$ PEs sont partagées pour le traitement de tous les \noeuds de l'arbre. Sa latence est la même que celle de l'architecture dite \og papillon \fg.
 
-Dans \cite{leroux_semi-parallel_2013} il est proposé de réduire le nombre de PEs grâce à l'introduction d'une architecture semi-parallèle, de manière similaires à des implémentations précédentes de décodeurs LDPC \cite{1049697}. Dans le décodeur \og ligne \fg, les N / 2 PEs ne sont tous utilisés simultanément que deux fois par mot de code décodé. Cela signifie que le taux d'utilisation des PEs est très faible. Il est donc possible de réduire le nombre de PEs sans impacter significativement le débit.
-Cette réduction modifie légèrement l'ordonnancement l'algorithme. En effet les \noeuds nécessitant un nombre d'exécutions de fonctions polaires supérieures à $P$ nécessiteront plus d'un cycle d'horloge à décoder. Le rapport du nombre de PEs d'une architecture semi-parallèle sur le nombre de PEs d'une architecture \og ligne \fg est $N/2P$. Par exemple, pour $N=1024$ et $P=64$, le nombre de PEs est réduit d'un facteur $16$, tandis que le débit est réduit de $2\%$. Pour $N=2^{20}$ et $P=64$, le nombre de PEs est réduit d'un facteur $8192$, et le débit est réduit de moins de $10\%$. L'architecture semi-parallèle s'avère donc très pertinente.
+Dans \cite{leroux_semi-parallel_2013} il est proposé de réduire le nombre de PEs grâce à l'introduction d'une architecture semi-parallèle. Cette architecture s'inspire d'implémentations pour le décodage de codes LDPC \cite{1049697}. Dans un décodeur dit \og ligne \fg, les N / 2 PEs ne sont utilisés simultanément que deux fois durant le décodage d'un mot de code. Cela signifie que le taux d'utilisation des PEs est très faible. Il est donc possible de réduire le nombre de PEs sans impacter significativement le débit.
+Cette réduction modifie légèrement l'ordonnancement de l'algorithme de décodage. En effet, les \noeuds nécessitant un nombre d'exécutions de fonctions polaires supérieures à $P$ nécessiteront plus d'un cycle d'horloge à décoder. Le rapport du nombre de PEs d'une architecture semi-parallèle sur le nombre de PEs d'une architecture \og ligne \fg est alors $N/2P$. Par exemple, pour $N=1024$ et $P=64$, le nombre de PEs est réduit d'un facteur $16$, tandis que le débit est seulement réduit de $2\%$. Pour $N=2^{20}$ et $P=64$, le nombre de PEs est réduit d'un facteur $8192$, et le débit est réduit de moins de $10\%$. L'architecture semi-parallèle s'avère donc très pertinente.
 
-L'architecture proposée dans \cite{sarkis_fast_2014} reprend le principe de l'architecture semi-parallèle. Cependant, les PEs sont modifiés pour intégrer des unités matérielles de traitement des \noeuds spécialisés \texttt{R1}, \texttt{SPC} et \texttt{REP}. Les PEs contiennent également une unité particulière \texttt{REP-SPC} permettant d’accélérer le traitement de deux \noeuds \texttt{REP} et \texttt{SPC} voisins. Ce motif particulier apparaît régulièrement pour le code polaire (32768,29492) considéré. Les unités \texttt{REP-SPC} ne sont pas utilisées dans le processeur proposé car elles n'apportent pas de gain significatif pour les tailles de codes traitées par le processeur que nous proposons ($N<1024$). 
+L'architecture de décodage proposée dans \cite{sarkis_fast_2014} reprend le principe de l'architecture semi-parallèle. Cependant, les PEs sont modifiés pour intégrer des unités matérielles de traitement des \noeuds spécialisés \texttt{R1}, \texttt{SPC} et \texttt{REP}. Les PEs contiennent également une unité particulière \texttt{REP-SPC} permettant d’accélérer le traitement de deux \noeuds \texttt{REP} et \texttt{SPC} voisins. Ce motif particulier apparaît régulièrement pour le code polaire (32768,29492) considéré dans la publication. Les unités \texttt{REP-SPC} ne sont pas utilisées dans le processeur proposé car elles n'apportent pas de gain significatif pour les tailles de codes traitées dans le cadre du standard 5G, à savoir $N<1024$.
 
-Le dernier type de calcul nécessaire dans l'algorithme de décodage SC est le calcul des sommes partielles (fonction $h$). Dans les implémentations dédiées, les sommes partielles sont sockées dans des registres. Un réseau de portes \textit{ou-exclusif} routées sur ces registres permettent leurs mise à jours instantanées à chaque traitement d'une feuille de l'arbre de décodage. Ce réseau ne fait pas partie des PEs. Dans l'ASIP proposé, les sommes partielles sont stockées dans la mémoire de données, comme les LLRs, afin de les rendre accessibles par le processeur comme toute autre variable. La fonction $h$ fait donc partie des instructions spécialisées conçues pour étendre le jeu d'instructions de l'ASIP proposé.
+Le dernier type de calcul nécessaire dans l'algorithme de décodage SC est le calcul des sommes partielles (fonction $h$). Dans les implémentations dédiées, les sommes partielles sont sockées dans des registres. Un réseau de portes \textit{ou-exclusif} routées sur ces registres permettent leurs mise à jours instantanées à chaque traitement d'une feuille de l'arbre de décodage. Ce réseau ne fait pas partie des PEs. Dans l'ASIP proposé, les sommes partielles sont stockées dans la mémoire de données, comme les LLRs, afin de les rendre accessibles par le processeur comme toute autre variable. La fonction $h$ fait donc partie des instructions spécialisées conçues pour étendre le jeu d'instructions de l'ASIP.
 
 
 
@@ -192,12 +192,12 @@ Le dernier type de calcul nécessaire dans l'algorithme de décodage SC est le c
 \label{fig:full_tensilica}
 \end{figure}
 
-Les instructions spécialisées réalisent des fonctions équivalentes à celles des PEs des architectures matérielles qui ont été présentées dans la sous-section \ref{subsec:hard_sc}. Il s'agit des fonctions $f$, $g$, \texttt{R1}, \texttt{R0}, \texttt{REP} et \texttt{SPC}. Deux types d'instructions spécialisées ont été conçues et ajoutées au processeur proposé comme montré dans \ref{fig:full_tensilica}. Les premières sont les instructions \textit{multi-registres} et les secondes les instructions \textit{simple-registre}. \'A l'image des PEs de l'architecture semi-parallèle, leur niveau parallélisme est fixé ($P=64$). Une file de registres vectoriel permet de stocker des données de 512 bits. Les instructions \textit{multi-registres} lisent et écrivent dans cette file de registres vectoriel.
+Les instructions spécialisées réalisent des fonctions équivalentes à celles des PEs des architectures matérielles qui ont été présentées dans la sous-section \ref{subsec:hard_sc}. Il s'agit des fonctions $f$, $g$, \texttt{R1}, \texttt{R0}, \texttt{REP} et \texttt{SPC}. Deux types d'instructions spécialisées ont été conçus et ajoutés au processeur proposé comme montré dans \ref{fig:full_tensilica}. Les premières sont les instructions \textit{multi-registres} et les secondes les instructions \textit{simple-registre}. \'A l'image des PEs de l'architecture semi-parallèle, leur niveau de parallélisme est fixé ($P=64$). Une file de registres vectoriels permet de stocker des données sur 512 bits. Les instructions \textit{multi-registres} lisent et écrivent dans cette file de registres vectoriels.
 
-Ces instructions spécialisées sont décrites à l'aide du langage TIE des outils de Tensilica.
-L'implémentation de la fonction $f$ est représentée dans la Figure~\ref{fig:f_tie}. Les deux entrées sont les LLRs notés $L_a$ et $L_b$ et la sortie est notée $f(L_a,L_b)$. Ces deux entrées et la sortie correspondent à des registres de la file de registres vectoriels. Pour rendre claire l'illustration, le niveau de parallélisme dans la Figure~\ref{fig:f_tie} a été réduit à $P=4$. Dans la plupart des décodeurs polaires, pour réduire le chemin critique, les LLRs sont représentés au format \og signe-amplitude \fg : un bit est utilisé pour le signe, et le reste pour la valeur absolue, toujours positive. Dans notre implémentation, les valeurs négatives sont représentées en complément à deux, car il s'agit du mode de représentation utilisé dans les processeurs XTensa.
-La fonction $g$ est représentée dans la Figure~\ref{fig:g_tie}. Elle consiste en une addition simple avec une inversion de signe selon la valeur de la somme partielle $s_a$.
-La fonction $h$ n'est pas représentée, il s'agit simplement d'un \textit{ou-exclusif} entre les sommes partielles d'entrées. Les fonctions \texttt{R0} et \texttt{R1} sont également très simples, puisqu'il s'agit d'une mise à zéro dans le premier cas et d'un seuillage dans le deuxième. Le seuillage est une simple copie du bit de poids fort.
+Ces instructions spécialisées sont décrites à l'aide du langage TIE associé aux outils de Tensilica.
+L'implémentation de la fonction $f$ est représentée dans la Figure~\ref{fig:f_tie}. Les deux opérandes sont les LLRs notés $L_a$ et $L_b$ et la sortie est notée $f(L_a,L_b)$. Ces deux entrées et la sortie correspondent à des registres de la file de registres vectoriels. Afin de clarifier le schéma, le niveau de parallélisme dans la Figure~\ref{fig:f_tie} a été réduit à $P=4$. Dans la plupart des décodeurs polaires, pour réduire le chemin critique, les LLRs sont représentés au format \og signe-amplitude \fg : un bit est utilisé pour le signe, et le reste pour la valeur absolue. En revanche, dans notre implémentation, les données sont représentées en complément à deux, car il s'agit du mode de représentation utilisé dans les processeurs XTensa.
+L'architecture associée à la fonction $g$ est détaillée dans la Figure~\ref{fig:g_tie}. Cette fonction consiste en une addition simple avec une inversion de signe selon la valeur de la somme partielle $s_a$.
+La fonction $h$ n'est pas représentée, il s'agit d'un simple \textit{ou-exclusif} entre les sommes partielles d'entrées. Les fonctions \texttt{R0} et \texttt{R1} sont également simples. La première consiste en une mise à zéro des sorties. La seconde est un seuillage des variables d'entrée. Le seuillage est une simple copie du bit de poids fort.
 \begin{figure}[t]
   \centering
   \subfloat[Fonction $f$]{
@@ -220,15 +220,15 @@ La fonction $h$ n'est pas représentée, il s'agit simplement d'un \textit{ou-ex
   \caption{Implémentations matérielles des instructions spécialisées.}
 \end{figure}
 
-Comme présenté dans la sous-section~\ref{subsec:pruning}, le traitement d'un \noeud de répétition consiste en l'addition de tous les LLRs d'entrée pour former la variable notée \og \texttt{accum} \fg dans la Figure~\ref{fig:rep_tie}. Puis de la détection du signe de cette variable, qui détermine le vecteur $s$ en sortie. Un arbre binaire est parcouru afin de réaliser l'addition nécessaire. Pour éviter tout débordement, la taille du registre de stockage de la variable \texttt{accum} est de 32 bits.
+Comme expliqué dans la sous-section~\ref{subsec:pruning}, le traitement d'un \noeud de répétition consiste en l'addition de tous les LLRs d'entrée pour former la variable notée \og \texttt{accum} \fg dans la Figure~\ref{fig:rep_tie}. Puis, une détection du signe de cette variable est effectuée. Elle détermine le vecteur $s$ en sortie. Un arbre binaire est parcouru afin de réaliser l'addition nécessaire. Pour éviter tout débordement, la taille du registre de stockage de la variable \texttt{accum} est de 32 bits.
 
-L'unité matérielle de traitement des \noeuds \texttt{SPC} est représentée dans la Figure~\ref{fig:spc_tie}. Il s'agit de l'unité la plus complexe à cause du tri nécessaire des LLRs. Aussi, le parallélisme de cet unité est limité à 8 dans notre implémentation.
+L'unité matérielle de traitement des \noeuds \texttt{SPC} est représentée dans la Figure~\ref{fig:spc_tie}. Il s'agit de l'unité la plus complexe car elle comprend un tri des LLRs. Aussi, le parallélisme de cet unité est volontairement limité à 8 dans notre implémentation.
 
 \subsection{Instructions spécialisées \textit{simple-registre}}
 
-Dans les implémentations logicielles classiques, la séquence d'opérations nécessaire à l'exécution des fonctions élémentaires polaires est la suivante : i) chargement depuis la mémoire cache vers les registres des variables d'entrée (LLRs et / ou sommes partielles), ii) calcul du résultat de la fonction élémentaire, en une ou plusieurs étapes, dont la sortie est stockée dans un registre, iii) sauvegarde de cette variable de sortie dans la mémoire cache du processeur.
+Dans les implémentations logicielles, la séquence d'opérations nécessaire à l'exécution des fonctions élémentaires polaires est la suivante : i) chargement depuis la mémoire cache vers les registres des variables d'entrée (LLRs et / ou sommes partielles), ii) calcul du résultat de la fonction élémentaire, en une ou plusieurs étapes, dont la sortie est stockée dans un registre, iii) sauvegarde de cette variable de sortie dans la mémoire cache du processeur.
 
-\`A l'inverse, dans les implémentations matérielles présentées dans la sous-section \ref{subsec:hard_sc}, le chemin de données part de la sortie de la mémoire, passe par les fonctions combinatoires réalisant les fonctions polaires élémentaires, et finit à l'entrée de la mémoire. Ce chemin de données est parcouru en un seul cycle d'horloge. La méthode présentée dans cette sous-section, nommée \textit{simple-registre}, est conçue dans le but de reproduire le fonctionnement des implémentations matérielles de code polaire dans notre processeur.
+Par ailleurs, dans les implémentations matérielles présentées dans la sous-section \ref{subsec:hard_sc}, le chemin de données part de la sortie de la mémoire, passe par les fonctions combinatoires réalisant les fonctions polaires élémentaires et finit à l'entrée de la mémoire. Ce chemin de données est parcouru en un seul cycle d'horloge. La méthode présentée dans cette sous-section, nommée \textit{simple-registre}, est conçue dans le but de reproduire le fonctionnement des implémentations matérielles de décodeur de codes polaires dans notre architecture de processeur.
 
 \begin{figure}[t]
   \centering
@@ -247,10 +247,10 @@ Dans les implémentations logicielles classiques, la séquence d'opérations né
 La méthode \textit{simple-registre} est appliquée sur les sous-arbres de décodage dont le \noeud racine contient 64 LLRs. La Figure \ref{fig:in_register_tree} illustre un tel sous-arbre.
 Ces 64 LLRs sont notés $\mathbold{L_{in}}$.
 Lorsque le programme a généré les LLRs de la racine de ce sous-arbre, ceux-ci sont stockés dans un registre dédié.
-Ce registre est noté $\mathbold{L}$ dans la Figure~\ref{fig:in_register_tree} qui représente l'unité matérielle qui réalise les instructions \textit{simple-registre}.
+Ce registre est noté $\mathbold{L}$ dans la Figure~\ref{fig:in_register_unit} qui décrit l'unité matérielle sur laquelle s'exécutent les instructions \textit{simple-registre}.
 Le décodage du sous-arbre se fait ensuite intégralement à travers les registres, sans passer par la mémoire cache.
-Les sommes partielles notées $\mathbold{s{out}}$ constituent la sortie de l'unité matérielle.
-Cette méthode reproduit le fonctionnement des implémentations matérielles de l'algorithme SC : l'exécution d'une fonction élémentaire quelconque, comprenant la lecture et l'écriture de la donnée depuis le registre, est effectuée en un seul cycle d'horloge.
+Les sommes partielles notées $\mathbold{s_{out}}$ constituent la sortie de l'unité matérielle.
+Cette méthode reproduit le fonctionnement des implémentations matérielles de l'algorithme SC : l'exécution d'une fonction élémentaire quelconque, comprenant la lecture et l'écriture de la donnée depuis le registre, en un seul cycle d'horloge.
 
 % \begin{figure}[htp]
 % \centering
@@ -262,10 +262,10 @@ Cette méthode reproduit le fonctionnement des implémentations matérielles de 
 
 
 
-Elle résout également un problème récurrent des implémentations logicielles utilisant du parallélisme : l'alignement des données. En effet, pour pouvoir appliquer une fonction vectorielle des données de deux registres vectoriels, il est nécessaire de les aligner, ce qui nécessite d'effectuer des opérations supplémentaires. Dans l'implémentation \textit{simple-registre}, l'alignement est prévu en amont et implémenté dans l'unité matérielle. Aucune instruction supplémentaire n'est nécessaire. 
+Elle résout également un problème récurrent des implémentations logicielles utilisant du parallélisme : l'alignement des données. En effet, pour pouvoir appliquer une fonction vectorielle des données de deux registres vectoriels, il est nécessaire de les aligner. Cela implique des opérations supplémentaires. Dans l'implémentation \textit{simple-registre}, l'alignement est prévu en amont et implémenté dans l'unité matérielle. Aucune instruction supplémentaire n'est nécessaire. 
 
-\subsection{Description logicielle}
-L'ASIP ainsi proposé permet donc l'exécution efficace de l'algorithme de décodage de codes polaires SC. Le décodage est décrit de manière logicielle, en langage C augmenté des instructions spécialisées. Un extrait du code source est donné dans la Figure~\ref{fig:f_code}. Tout d'abord, les fichiers d'en-tête produits par les outils de conception définissent des types associés aux files de registres vectoriels (\texttt{VR512}). Afin de charger une donnée en mémoire cache vers ces registres vectoriels, il est nécessaire de créer des pointeurs vers ces variables de type (\texttt{VR512}). Les données sont ensuite chargées vers deux de ces registres vectoriels. La fonction spécialisée, ici la fonction \texttt{custom\_f\_64} est ensuite appliquée. Le résultat doit ensuite être stockée dans la mémoire cache.
+\subsection{Description logicielle de l'algorithme de décodage}
+L'ASIP ainsi proposé permet une l'exécution efficace de l'algorithme de décodage SC de codes polaires. Le décodage est décrit de manière logicielle, en langage C comprenant des instructions spécialisées. \`A titre d'information, un extrait du code source est donné dans la Figure~\ref{fig:f_code}. Tout d'abord, les fichiers d'en-tête produits par les outils de conception définissent les types associés aux files de registres vectoriels (\texttt{VR512}). Afin de charger une donnée en mémoire cache vers les registres vectoriels, il est nécessaire de créer des pointeurs vers ces variables de type (\texttt{VR512}). Les données sont ensuite chargées vers deux de ces registres vectoriels. La fonction spécialisée, ici la fonction \texttt{custom\_f\_64} est ensuite appliquée. Le résultat est stockée dans la mémoire cache.
 \begin{figure}[hb]
 \lstset{language=C++,
         basicstyle=\footnotesize\ttfamily,
@@ -297,8 +297,8 @@ inline void f_64(signed char* la,
 \caption{Description logicielle de l'exécution d'une instruction spécialisée.}
 \label{fig:f_code}
 \end{figure}
-
-Lors du développement, il est apparu qu'il était difficile de réduire le temps passé à réaliser les opérations liées au parcours de l'arbre et aux différents tests. L'utilisation de l'option FLIX3 a permis de réduire ce temps, mais pas suffisamment. La technique de déroulage présentée en sous-section~\ref{subsec:unroll} permet de réduire ce temps. Dérouler le code améliore la performance au prix d'une flexibilité réduite. Il faut en effet générer une version différente du code pour un ensemble donné de paramètres.
+______ LA A REFAIRE
+Lors du développement, il est apparu qu'il était difficile de réduire la durée des opérations liées au parcours de l'arbre et aux tests associés. L'utilisation de l'option FLIX3 a permis une première réduction de ce temps. La technique de déroulage présentée en sous-section~\ref{subsec:unroll} permet de réduire ce temps. Dérouler le code améliore la performance au prix d'une flexibilité réduite. Il faut en effet générer une version différente du code pour un ensemble donné de paramètres.
 
 
 \begin{figure}[htp]
