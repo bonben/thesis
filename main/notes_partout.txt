@@ -1,3 +1,10 @@
 - section, chapitre et sous-section : minuscules
 - Figure : majuscules
 - points ou pas points dans les titres
+
+- bien préciser que l'état de l'art est dilué dans les différents chapitre
+- Qualifier  introduction et conclusion de chaque chapitre
+
+
+Confirmer avec nathalie levesque pour le rendu
+Date de soutenance du 26 au 30

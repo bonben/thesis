@@ -1,7 +1,5 @@
 - ajouter des références vers des design tensilica
 - Figure 3.4 : mettre la largeur des bus ?
-- Figure 3.8 : attention à la confusion possible entre un additionneur et un OU Exclusif
-- Juste après figure 3.9 : Rien à dire de plus sur SPC ?
 - reprendre les phrases avec pipeline
 - architecture de référence
 - "Ce réseau ne fait pas partie des PEs." A compléter

@@ -1,1 +1,4 @@
 - Revoir conclusion
+- Préciser que le 2048,1723 est souvent utilisé dans la littérature.
+- graphe de factorisation
+- acronymes : pas de s en français
