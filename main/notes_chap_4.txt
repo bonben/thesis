@@ -1,6 +1,2 @@
 - décodage des instructions
 - chargement / sauvegarde des LLRs du canal
-- c'est pas limpide les flèches rouges
-- Fig 4.4 ça manque un peu de détail je pense
-- ça serait bien d'avoir un résumé de l'mepreinte mémoire des deux décodeurs
-- "le nombre de LUTs gnagna" il faut dire aussi qu'il n'y a pas le même élagage

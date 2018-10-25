@@ -5,3 +5,6 @@
 - reprendre les phrases avec pipeline
 - architecture de référence
 - "Ce réseau ne fait pas partie des PEs." A compléter
+- réorganiser 5G vs 32768 29...
+- Pour cette fréquence, laconsommation estiée ..... Alors commentaire ?
+- COMMENT CA "CODE ?" FIGURE 3.12

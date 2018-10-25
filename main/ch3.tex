@@ -265,8 +265,7 @@ Cette méthode reproduit le fonctionnement des implémentations matérielles de 
 Elle résout également un problème récurrent des implémentations logicielles utilisant du parallélisme : l'alignement des données. En effet, pour pouvoir appliquer une fonction vectorielle des données de deux registres vectoriels, il est nécessaire de les aligner. Cela implique des opérations supplémentaires. Dans l'implémentation \textit{simple-registre}, l'alignement est prévu en amont et implémenté dans l'unité matérielle. Aucune instruction supplémentaire n'est nécessaire. 
 
 \subsection{Description logicielle de l'algorithme de décodage}
-L'ASIP ainsi proposé permet une l'exécution efficace de l'algorithme de décodage SC de codes polaires. Le décodage est décrit de manière logicielle, en langage C comprenant des instructions spécialisées. \`A titre d'information, un extrait du code source est donné dans la Figure~\ref{fig:f_code}. Tout d'abord, les fichiers d'en-tête produits par les outils de conception définissent les types associés aux files de registres vectoriels (\texttt{VR512}). Afin de charger une donnée en mémoire cache vers les registres vectoriels, il est nécessaire de créer des pointeurs vers ces variables de type (\texttt{VR512}). Les données sont ensuite chargées vers deux de ces registres vectoriels. La fonction spécialisée, ici la fonction \texttt{custom\_f\_64} est ensuite appliquée. Le résultat est stockée dans la mémoire cache.
-\begin{figure}[hb]
+\begin{figure}[t]
 \lstset{language=C++,
         basicstyle=\footnotesize\ttfamily,
         keywordstyle=\bfseries\color{green!40!black},
@@ -297,10 +296,12 @@ inline void f_64(signed char* la,
 \caption{Description logicielle de l'exécution d'une instruction spécialisée.}
 \label{fig:f_code}
 \end{figure}
-% ________
-Lors du développement, il est apparu qu'il était difficile de réduire la durée des opérations liées au parcours de l'arbre et aux tests associés. L'utilisation de l'option FLIX3 a permis une première réduction de ce temps. La technique de déroulage présentée en sous-section~\ref{subsec:unroll} permet de réduire ce temps. Dérouler le code améliore la performance au prix d'une flexibilité réduite. Il faut en effet générer une version différente du code pour un ensemble donné de paramètres.
+L'ASIP ainsi proposé permet une l'exécution efficace de l'algorithme de décodage SC de codes polaires. Le décodage est décrit de manière logicielle, en langage C comprenant des instructions spécialisées. \`A titre d'information, un extrait du code source est donné dans la Figure~\ref{fig:f_code}. Tout d'abord, les fichiers d'en-tête produits par les outils de conception définissent les types associés aux files de registres vectoriels (\texttt{VR512}). Afin de charger une donnée en mémoire cache vers les registres vectoriels, il est nécessaire de créer des pointeurs vers ces variables de type (\texttt{VR512}). Les données sont ensuite chargées vers deux de ces registres vectoriels. La fonction spécialisée, ici la fonction \texttt{custom\_f\_64} est ensuite appliquée. Le résultat est stockée dans la mémoire cache.
+
+Lors du développement, il est apparu qu'il était difficile de réduire la durée des opérations liées au parcours de l'arbre et aux tests associés. L'utilisation de l'option FLIX3 a permis une première réduction de ce temps, bien qu'insuffisante. La technique de déroulage présentée en sous-section~\ref{subsec:unroll} permet une réduction plus significative. Dérouler le code améliore la performance au prix d'une réduction de la flexibilité. Il faut en effet générer une version différente du code pour un ensemble donné de paramètres.
 
 
+Dans l'implémentation logicielle proposée, une alternative au déroulage, nommée pseudo-déroulage, est privilégiée. Tout d'abord, toutes les fonctions élémentaires pour le décodage de codes polaires possèdent le même prototype de fonctions dans la description logicielle.
 \begin{figure}[htp]
 \lstset{language=C++,
         basicstyle=\footnotesize\ttfamily,
@@ -353,24 +354,25 @@ virtual void decode()
 \caption{Description logicielle du pseudo-déroulage.}
 \label{fig:tensilica_code}
 \end{figure}
-Dans l'implémentation logicielle proposée, une alternative au déroulage, nommée pseudo-déroulage, est utilisée. Tout d'abord, toutes les fonctions élémentaires pour le décodage de code polaires possèdent le même prototype de fonctions dans la description logicielle. Le type de fonction à appliquer ($f$, $g$, $h$, \texttt{R0}, \texttt{R1}, \texttt{SPC}, \texttt{REP}) est passé en paramètre de la fonction, accompagné des adresses auxquelles accéder aux données à lire et écrire. De cette manière, il est possible de créer, un tableau contenant les pointeurs des fonctions à appeler. L'algorithme permettant de déterminer la séquence de fonctions à exécuter prend comme entrée le tableau de bits gelés correspondant au code polaire traité.
 
-Comme ce tableau est généré par le processeur au moment de l'exécution, la généricité du décodeur est conservée. Les paramètres $N$ et $K$ ainsi que les indices de bits gelés sont données en entrée du programme et le processeur s'adapte automatiquement. Comme cela est détaillé dans la section suivante, ce pseudo-déroulage permet une réduction significatives du nombre de cycles d'horloges nécessaires au décodage d'un mot de code.
+Le type de fonction à appliquer ($f$, $g$, $h$, \texttt{R0}, \texttt{R1}, \texttt{SPC}, \texttt{REP}) est un paramètre de la fonction, accompagné des adresses auxquelles accéder aux données à lire et écrire. De cette manière, il est possible de créer, un tableau contenant les pointeurs des fonctions à appeler. L'algorithme permettant de déterminer la séquence de fonctions à exécuter prend comme entrée le tableau de bits gelés correspondant au code polaire.
+
+Comme ce tableau est généré par le processeur lors de l'exécution, la généricité du décodeur est donc conservée. Les paramètres $N$ et $K$ ainsi que les indices des bits gelés sont données en entrée du programme. Ainsi, le processeur s'adapte automatiquement. Comme cela est détaillé dans la section suivante, ce pseudo-déroulage permet une réduction significatives du nombre de cycles d'horloges nécessaires au décodage d'un mot de code.
 
 
 \section{Expérimentations et mesures}
 \label{sec:tensilica_res}
-
+Afin d'évaluer le processeur conçu, des expérimentations ont été réalisées. Le but est d'une part de quantifier le gain associé aux différentes améliorations du processeur, d'autre part de comparer les performances de débit, de latence et de consommation énergétique de l'architecture proposée avec celles obtenues sur d'autres architectures programmables.
 \subsection{Mesure du gain lié à la spécialisation du processeur.}
 
 Les codes polaires considérés ont été construits selon le document spécifiant les techniques de modulation et de codage pour le futur standard 5G \cite{3gpp_ts_2017-1}. 
-La version académique des outils de design de Tensilica ne permettent pas d'effectuer une synthèse logique du processeur ou d'accéder à sa description RTL. Seules des estimations de la fréquence, de la consommation et de la surface occupée sont données. Nous avons sélectionné la technologie HPM 28nm de TSMC pour ces estimations.
+La version académique des outils de conception de Tensilica ne permettent pas d'effectuer une synthèse logique du processeur ou d'accéder à sa description RTL. Seules des estimations de la fréquence, de la consommation et de la surface occupée sont disponibles. Nous avons sélectionné la technologie HPM 28nm de TSMC pour ces estimations.
 
-Le Tableau \ref{tab:evolution_tensilica} présente l'impact des améliorations principales effectuées sur le processeur de base. Un code polaire (32768,29492) est décodé. Il s'agit là du code utilisé durant le développement du processeur. Les mémoires de données et d'instructions sont dimensionnées pour ce code. La première implémentation logicielle de l'algorithme SC sur l'architecture de base du processeur XTensa LX7 nécessite 7.3 millions de cycles pour décoder un mot de code. Nous voyons que l'architecture spécialisée pour le décodage de codes polaires combinée à la technique de pseudo-déroulage de la description logicielle permet de réduire le nombre de cycles d'un facteur 50. Les instructions \textit{multi-registres} sont responsables d'une grande partie de cette réduction. Elles permettent à elles seules de diminuer d'un ordre de grandeur le nombre de cycles nécessaire au décodage d'un mot de code.
+Le Tableau \ref{tab:evolution_tensilica} présente l'impact des améliorations principales apportées au processeur de base. Un code polaire (32768,29492) est décodé. Il s'agit là du code utilisé durant le développement du processeur. Les mémoires de données et d'instructions sont dimensionnées pour ce code. La première implémentation logicielle de l'algorithme SC sur l'architecture de base du processeur XTensa LX7 nécessite 7.3 millions de cycles d'exécution pour décoder un mot de code. Quant à l'architecture spécialisée pour le décodage de codes polaires combinée à la technique de pseudo-déroulage de la description logicielle, elle permet de réduire le nombre de cycles d'exécution d'un facteur 50. Les instructions \textit{multi-registres} sont responsables d'une grande partie de cette réduction. Elles permettent à elles seules de diminuer d'un ordre de grandeur le nombre de cycles nécessaire au décodage d'un mot de code.
  \begin{table}[htp]
     \renewcommand{\arraystretch}{1.1}
     \centering
-    \caption{Impact de chaque amélioration de l'ASIP sur le nombre de cycles d'horloges nécessaires pour décoder une trame, le débit et la surface occupée. La taille des mémoires n'est pas prise en compte pour la surface occupée. Décodage d'un code polaire (32768,29492). Fréquence considérée : 835 MHz.}
+    \caption{Impact de chaque amélioration de l'ASIP sur le nombre de cycles d'horloges nécessaires pour décoder une trame, le débit et la surface occupée. La taille des mémoires n'est pas prise en compte pour la surface occupée. Fréquence considérée : 835 MHz.}
     \label{tab:evolution_tensilica}
     {\small\resizebox{\linewidth}{!}{
     \begin{tabular}{l | c  c  c }
@@ -397,12 +399,12 @@ Processeur de base                               &   $7.30\times10^6$  &   $3.4$
   \end{table}
 
 
-La puissance consommée estimée pour l'ASIP complet est de 111 mW, et la surface occupée est 0.475 mm\textsuperscript{2}. La fréquence estimée est 835 MHz. Cependant, les instructions spécialisées ne sont pas prises en compte pour l'estimation de la fréquence. En conséquence, un scénario plus réaliste où la fréquence de fonctionnement est 400 MHz est également présentée. Avec cette fréquence réduite, la consommation estimée devient 49 mW et la surface occupée 0.374 mm\textsuperscript{2}.
+La puissance consommée estimée pour la version complète de l'ASIP est de 111 mW, et la surface occupée est 0.475 mm\textsuperscript{2}. La fréquence estimée est 835 MHz. Cependant, les instructions spécialisées ne sont pas prises en compte pour l'estimation de la fréquence. En conséquence, un scénario plus réaliste où la fréquence de fonctionnement est 400 MHz est également présentée. Pour cette fréquence, la consommation estimée est 49 mW et la surface occupée 0.374 mm\textsuperscript{2}.
 
 \subsection{Comparaison avec un processeur ARM}
 
-Le logiciel AFF3CT développé par l'équipe CSN du laboratoire IMS de Bordeaux est utilisé pour exécuter une implémentation optimisée de l'algorithme SC sur un processeur ARM Cortex A57. La méthode de parallélisation \textit{intra-trame} est utilisée, et les LLRs sont représentés sur 8 bits avec virgule fixe. La taille des données gérées par les instructions NEON est de 128 bits, donc le parallélisme est égal à 16. Les résultats ici reportés ont été fournis par les auteurs de \cite{cassagne_energy_2016}. Dans ces résultats, la consommation de la mémoire RAM n'est pas prise en compte.
-La Figure~\ref{fig:cycle_count} montre le nombre moyens de cycles d'horloges nécessaire à chaque processeur pour décoder une trame. Le processeur proposé réduit significativement le nombre de cycles grâce à l'utilisation d'unités matérielles de calcul spécialisées. La courbe tracée représente le rapport entre les nombres de cycle d'horloge de chaque processeur. Ce rapport est d'autant plus grand que $N$ est faible. Ceci est dû au fait que lorsque $N$ est faible, ce sont les instructions \textit{simple-registre} qui sont le plus utilisées. Or ces instructions sont les plus efficaces.
+Le logiciel AFF3CT développé par l'équipe CSN du laboratoire IMS de Bordeaux est utilisé pour exécuter une implémentation optimisée de l'algorithme SC sur un processeur ARM Cortex A57. La méthode de parallélisation \textit{intra-trame} est utilisée, et les LLRs sont représentés sur 8 bits en virgule fixe. La taille des données gérées par les instructions NEON est de 128 bits. Cela signifie que le parallélisme est égal à 16. Les résultats ici reportés ont été fournis par les auteurs de \cite{cassagne_energy_2016}. Dans ces résultats, la consommation de la mémoire RAM n'est pas prise en compte.
+Le nombre moyens de cycles d'horloges nécessaire à chaque processeur pour décoder une trame est donné dans la Figure~\ref{fig:cycle_count}. Le processeur proposé permet une réduction significative du nombre de cycles grâce à l'utilisation d'unités matérielles de calcul spécialisées. La courbe tracée représente le rapport entre les nombres de cycle d'horloge de chaque processeur. Ce rapport est d'autant plus grand que $N$ est faible. Ceci est dû au fait que lorsque $N$ est faible, ce sont les instructions \textit{simple-registre} qui sont le plus utilisées. Or ces instructions sont les plus efficaces.
 Cependant, ce nombre réduit de cycles d'horloge est contrebalancé par une fréquence réduite comme montré dans le Tableau~\ref{tab:asip}. Néanmoins, même dans le scénario le plus pessimiste, avec une fréquence de 400 MHz, le débit atteint par le processeur proposé est similaire à celui obtenu avec le processeur ARM. Qui plus est, l'énergie dépensée par bit décodé est 10 fois inférieur pour l'ASIP.
 \begin{figure}[htp]
 \centering
@@ -413,12 +415,12 @@ Cependant, ce nombre réduit de cycles d'horloge est contrebalancé par une fré
 
 \subsection{Comparaison avec un processeur d'architecture x86}
 Les débits, latences et l'énergie consommée par bit du décodeur logiciel SC inclus dans le logiciel AFF3CT ont également été mesurés sur un processeur Intel i7-4712HQ.
-La puissance du \coeur est évaluée avec l'outil \texttt{powergadget} d'Intel. Seule la consommation du \coeur du processeur, excluant la consommation de la mémoire cache de niveau 3 et de la mémoire externe, est reportée. Cette fois-ci, le niveau de parallélisme est de 32 grâce à l'utilisation du jeu d'instructions AVX2. La fréquence du CPU mesurée durant l'exécution est de 3.3 GHz. Les résultats montrent que le débit et la latence des implémentations de décodeur SC sur les processeurs i7 sont bien meilleurs que ceux obtenus avec le processeur ASIP proposé ou avec le processeur ARM. Cependant, la consommation énergétique est moins bonne. Une implémentation \textit{inter-trame} permettrait d'augmenter cette efficacité énergétique, au prix d'une augmentation de la latence, comme démontré dans \cite{cassagne_energy_2016}.
+La puissance du \coeur est évaluée avec l'outil \texttt{powergadget} d'Intel. Seule la consommation du \coeur du processeur, excluant la consommation de la mémoire cache de niveau 3 et de la mémoire externe, est reportée. Cette fois-ci, le niveau de parallélisme est de 32. Ce niveau est atteint à l'aide du jeu d'instructions AVX2. La fréquence du CPU mesurée durant l'exécution est de 3.3 GHz. Les résultats récapitulés dans le Tableau \ref{tab:asip} montrent que le débit et la latence des implémentations de décodeur SC sur les processeurs i7 sont bien meilleurs que ceux obtenus avec le processeur ASIP proposé ou avec le processeur ARM. Cependant, la consommation énergétique est moins bonne. Une implémentation \textit{inter-trame} permettrait d'augmenter cette efficacité énergétique, au prix d'une augmentation de la latence, comme démontré dans \cite{cassagne_energy_2016}.
 
 
 \begin{table}[htp]
   \centering
-  \caption{Comparaison de la latence, du débit et de la consommation énergétique de décodeurs SC sur différentes cibles matérielles.}
+  \caption{Comparaison de la latence, du débit et de la consommation énergétique de décodeurs SC pour différents processeurs.}
   \label{tab:asip}
 %\scriptsize
   \begin{tabular}{ccccc}
@@ -459,9 +461,9 @@ La puissance du \coeur est évaluée avec l'outil \texttt{powergadget} d'Intel. 
 
 \section*{Conclusion}
 
-La première architecture de processeur ASIP spécialisée dans le décodage de codes polaires est présentée dans ce chapitre. Les outils logiciels de Tensilica permettent de spécialiser un processeur de type RISC. Après avoir détaillé la structure générales de ces microarchitectures RISC, nous expliquons comment elles peuvent être configurées et étendues par l'utilisation des outils logiciels de Tensilica. Les avantages et les enjeux liés à l'utilisation de tels outils de conception sont mis en avant.
+Une première architecture de processeur ASIP spécialisée dans le décodage de codes polaires est présentée dans ce chapitre. Les outils logiciels de Tensilica permettent de spécialiser un processeur de type RISC. Après avoir détaillé la structure générale de ces microarchitectures RISC, nous expliquons comment elles peuvent être configurées et étendues par l'utilisation des outils logiciels de Tensilica. Les avantages et les enjeux liés à l'utilisation de tels outils de conception sont mis en avant.
 
-Dans la seconde partie du chapitre, nous expliquons comment ces outils ont été mis en œuvre pour notre problématique : le décodage de codes polaires. Tout d'abord les paramètres de l'architecture RISC de base sont modifiés et adaptés. Entre autres, une fonctionnalité permettant le support d'un parallélisme d'instruction est activée, et la largeur du bus d'interface avec la mémoire de données est augmentée. Ensuite, des unités matérielles dédiées associées à des instructions spécialisées qui étendent le jeu d'instructions de base sont ajoutées. Enfin, une méthode de description logicielle nommée \og pseudo-déroulage \fg est proposé afin d'améliorer les performances de débit et de latence du processeur spécialisé conçu.
+Dans la deuxième partie du chapitre, nous expliquons comment ces outils ont été mis en œuvre pour notre problématique : le décodage de codes polaires. Tout d'abord les paramètres de l'architecture RISC de base sont modifiés et adaptés. Entre autres, une fonctionnalité permettant le support d'un parallélisme d'instruction est activée, et la largeur du bus d'interface avec la mémoire de données est augmentée. Ensuite, des unités matérielles dédiées associées à des instructions spécialisées qui étendent le jeu d'instructions de base sont ajoutées. Enfin, une méthode de description logicielle nommée \og pseudo-déroulage \fg est proposé afin d'améliorer les performances de débit et de latence du processeur spécialisé conçu.
 
 Dans une troisième partie, nous présentons et comparons le débit, la latence et la consommation du décodeur proposé avec les implémentations logicielles de codes polaires de l'état de l'art. Pour un code polaire (1024,512) décodé à l'aide de l'algorithme SC, le débit atteint est d'environ 70 Mb/s, dépassant les performances obtenues avec un processeur du marché de l'électronique embarquée. La consommation énergétique par rapport à ce même processeur est elle réduite d'un ordre de grandeur.
 
