@@ -1,2 +1,4 @@
 - décodage des instructions
 - chargement / sauvegarde des LLRs du canal
+- modèle matériel / description matérielle
+- Figure 4.3 entrourer en pointillés
