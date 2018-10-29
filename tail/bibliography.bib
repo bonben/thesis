@@ -1,20 +1,5 @@
 %!TEX root = ../my_thesis.tex
 
-@article{leonardon_fast_2017,
-	title = {Fast and {Flexible} {Software} {Polar} {List} {Decoders}},
-	url = {http://arxiv.org/abs/1710.08314},
-	abstract = {Flexibility is one mandatory aspect of channel coding in modern wireless communication systems. Among other things, the channel decoder has to support several code lengths and code rates. This need for flexibility applies to polar codes that are considered for control channels in the future 5G standard. This paper presents a new generic and flexible implementation of a software Successive Cancellation List (SCL) decoder. A large set of parameters can be fine-tuned dynamically without re-compiling the software source code: the code length, the code rate, the frozen bits set, the puncturing patterns, the cyclic redundancy check, the list size, the type of decoding algorithm, the tree-pruning strategy and the data quantization. This generic and flexible SCL decoder enables to explore tradeoffs between throughput, latency and decoding performance. Several optimizations are proposed to achieve a competitive decoding speed despite the constraints induced by the genericity and the flexibility. The resulting polar list decoder is about 4 times faster than a generic software decoder and only 2 times slower than a non-flexible unrolled decoder. Thanks to the flexibility of the decoder, the fully adaptive SCL algorithm can be easily implemented and achieves higher throughput than any other similar decoder in the literature (up to 425 Mb/s on a single processor core for N = 2048 and K = 1723 at 4.5 dB).},
-	urldate = {2018-04-12},
-	journal = {arXiv:1710.08314 [cs, math]},
-	author = {Léonardon, Mathieu and Cassagne, Adrien and Leroux, Camille and Jégo, Christophe and Hamelin, Louis-Philippe and Savaria, Yvon},
-	month = oct,
-	year = {2017},
-	note = {arXiv: 1710.08314},
-	keywords = {Computer Science - Information Theory},
-	annote = {Comment: 11 pages, 7 figures, submitted to Springer Journal of Signal Processing Systems},
-	file = {arXiv\:1710.08314 PDF:/home/bonben/Zotero/storage/WJJM8BS2/Léonardon et al. - 2017 - Fast and Flexible Software Polar List Decoders.pdf:application/pdf;arXiv.org Snapshot:/home/bonben/Zotero/storage/4PC8HZU7/1710.html:text/html}
-}
-
 %%%%%%%
 @article{shannon_mathematical_2001,
 	journal={Bell System Technical Journal},
@@ -23,18 +8,6 @@
 	author = {Shannon, Claude Elwood},
 }
 
-@inproceedings{ghaffari_improving_2017,
-	title = {Improving performance of {SCMA} {MPA} decoders using estimation of conditional probabilities},
-	doi = {10.1109/NEWCAS.2017.8010095},
-	abstract = {Sparse code multiple access (SCMA) is a new type of non-orthogonal modulation suggested for 5G systems offering lower bit-error rate and higher spectral efficiency. There are many challenges when designing high throughput SCMA message passing decoders to meet the standards expected from 5G networks. Particularly, the message passing algorithm (MPA) needs many exponential computations to calculate conditional probabilities in case of Gaussian noise channels. This paper describes a sub-optimal modeling of noise using polynomial probability distributions rather than a normal distribution to eliminate the exponential calculations for MPA detectors. Simulation results demonstrate that an estimated SCMA MPA reaches the desired bit-error rate performance with much lower computational/hardware complexity.},
-	booktitle = {2017 15th {IEEE} {International} {New} {Circuits} and {Systems} {Conference} ({NEWCAS})},
-	author = {Ghaffari, A. and Leonardon, M. and Savaria, Y. and Jego, C. and Leroux, C.},
-	month = jun,
-	year = {2017},
-	keywords = {5G, 5G mobile communication, 5G systems, Algorithm design and analysis, BER, bit-error rate, conditional probabilities, Decoding, error statistics, Estimation, Gaussian channels, Gaussian noise channels, iterative multi-user detection, Message passing, message passing algorithm, MPA Decoder, multi-access systems, nonorthogonal modulation, polynomial probability distributions, probability, Probability density function, SCMA MPA decoders, sparse code multiple access, Sparse Code Multiple Access (SCMA), Throughput, Uplink},
-	pages = {21--24},
-	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/LK4X7AE6/8010095.html:text/html}
-}
 
 @inproceedings{yang_reconfigurable_2018,
 	title = {Reconfigurable {Decoder} for {LDPC} and {Polar} {Codes}},
@@ -193,26 +166,6 @@
 	year = {2006},
 	pages = {1330--1335},
 	file = {ACM Full Text PDF:/home/bonben/Zotero/storage/E7YWU762/Muller et al. - 2006 - ASIP-based Multiprocessor SoC Design for Simple an.pdf:application/pdf;ACM Full Text PDF:/home/bonben/Zotero/storage/BBMNABJE/Muller et al. - 2006 - ASIP-based Multiprocessor SoC Design for Simple an.pdf:application/pdf}
-}
-
-@inproceedings{leonardon_custom_2018,
-	title = {Custom {Low} {Power} {Processor} for {Polar} {Decoding}},
-	doi = {10.1109/ISCAS.2018.8351739},
-	abstract = {Cloud Radio Access Network is foreseen as one of the key features of the future 5G mobile communication standard. In this context, all the baseband processing is intended to be performed on CPUs in order to keep a high level of flexibility. The challenge is then to propose efficient software implementations of baseband processing algorithms that guarantee a sufficient throughput, while limiting the energy consumption. In this paper, as an alternative to general purpose processors, we propose an implementation of an Application Specific Instruction set Processor customized for the Successive Cancellation decoding of polar codes. The resulting software decoder achieves throughputs similar to state-of-the-art ARM processor implementations, while reducing the energy consumption by a factor 10.},
-	booktitle = {2018 {IEEE} {International} {Symposium} on {Circuits} and {Systems} ({ISCAS})},
-	author = {Léonardon, M. and Leroux, C. and Binet, D. and Langlois, J. M. P. and Jégo, C. and Savaria, Y.},
-	month = may,
-	year = {2018},
-	keywords = {5G mobile communication, Decoding, Throughput, Hardware, Registers, Software, Energy consumption},
-	pages = {1--5},
-	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/VAW6WI5C/8351739.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/W7LNCRKD/8351739.html:text/html}
-}
-
-@inproceedings{leonardon_tta_2018,
-	title = {Transport {Triggered} {Polar} {Decoders}},
-	booktitle = {2018 {International} {Symposium} on {Turbo} {Codes} and {Iterative} {Information} {Processing} 2018 ({ISTC})},
-	author = {Léonardon, M. and Leroux, C. and Jääskeläinen, P. and Jégo, C. and Savaria, Y.},
-	year = {2018},
 }
 
 @article{wang_interleaved_2016,
@@ -968,11 +921,6 @@ Architecture paradigm.},
 	year = {2016}
 }
 
-@book{cassagne_aff3ct_2017,
-	title = {{AFF}3CT, an open source software dedicated to forward error correction simulations, http://aff3ct.github.io},
-	author = {Cassagne, A. and Léonardon, M. and Leroux, C. and Tajan, R. and Delbergue, G. and Petit, B. and Hartmann, O.},
-	year = {2017}
-}
 
 @article{leroux_semi-parallel_2013,
 	title = {A semi-parallel successive-cancellation decoder for polar codes},
@@ -1021,15 +969,6 @@ Architecture paradigm.},
 	year = {1997}
 }
 
-@inproceedings{cassagne_fast_2017,
-	title = {Fast simulation and prototyping with {AFF}3CT},
-	abstract = {This demonstration intends to present AFF3CT (A Fast Forward 3rror Correction Tool). The main objective of AFF3CT is to provide a portable, open source, fast and ﬂexible software to the channel coding community in such a way that researchers can spend more time on channel coding / algorithmic problems instead of software development issues. It is also intended to facilitate the process of hardware veriﬁcation and debug with the objective of fast prototyping.},
-	language = {en},
-	booktitle = {{SiPS}},
-	author = {Cassagne, Adrien and Leonardon, Mathieu and Hartmann, Olivier and Delbergue, Guillaume and Tonnellier, Thibaud and Tajan, Romain and Leroux, Camille and Jego, Christophe and Le Gal, Bertrand and Aumage, Olivier and Barthou, Denis},
-	year = {2017},
-	file = {Cassagne et al. - Fast simulation and prototyping with AFF3CT.pdf:/home/bonben/Zotero/storage/CE9DBY3A/Cassagne et al. - Fast simulation and prototyping with AFF3CT.pdf:application/pdf}
-}
 
 @article{jarvela_vector_nodate,
 	title = {Vector {Operation} {Support} for {Transport} {Triggered} {Architectures}},
@@ -1447,4 +1386,85 @@ year={1980},
   pages={348--357},
   year={2007},
   organization={ACM}
+}
+
+
+@article{leonardon_fast_2017,
+	title = {Fast and {Flexible} {Software} {Polar} {List} {Decoders}},
+	journal = {Journal of Signal Processing Systems (JSPS)},
+	author = {L\'eonardon, Mathieu and Cassagne, Adrien and Leroux, Camille and Jégo, Christophe and Hamelin, Louis-Philippe and Savaria, Yvon},
+	year = {2018},
+	keywords = {Computer Science - Information Theory},
+	note = {en cours de revue},
+}
+
+@inproceedings{ghaffari_improving_2017,
+	title = {Improving performance of {SCMA} {MPA} decoders using estimation of conditional probabilities},
+	doi = {10.1109/NEWCAS.2017.8010095},
+	booktitle = {2017 15th {IEEE} {International} {New} {Circuits} and {Systems} {Conference} ({NEWCAS})},
+	author = {Ghaffari, A. and L\'eonardon, M. and Savaria, Y. and Jego, C. and Leroux, C.},
+	month = jun,
+	year = {2017},
+	keywords = {5G, 5G mobile communication, 5G systems, Algorithm design and analysis, BER, bit-error rate, conditional probabilities, Decoding, error statistics, Estimation, Gaussian channels, Gaussian noise channels, iterative multi-user detection, Message passing, message passing algorithm, MPA Decoder, multi-access systems, nonorthogonal modulation, polynomial probability distributions, probability, Probability density function, SCMA MPA decoders, sparse code multiple access, Sparse Code Multiple Access (SCMA), Throughput, Uplink},
+	pages = {21--24},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/LK4X7AE6/8010095.html:text/html}
+}
+
+
+@inproceedings{leonardon_custom_2018,
+	title = {Custom {Low} {Power} {Processor} for {Polar} {Decoding}},
+	doi = {10.1109/ISCAS.2018.8351739},
+	booktitle = {2018 {IEEE} {International} {Symposium} on {Circuits} and {Systems} ({ISCAS})},
+	author = {L\'eonardon, M. and Leroux, C. and Binet, D. and Langlois, J. M. P. and Jégo, C. and Savaria, Y.},
+	month = may,
+	year = {2018},
+	keywords = {5G mobile communication, Decoding, Throughput, Hardware, Registers, Software, Energy consumption},
+	pages = {1--5},
+	file = {IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/VAW6WI5C/8351739.html:text/html;IEEE Xplore Abstract Record:/home/bonben/Zotero/storage/W7LNCRKD/8351739.html:text/html}
+}
+
+@inproceedings{leonardon_tta_2018,
+	title = {Transport {Triggered} {Polar} {Decoders}},
+	booktitle = {2018 {International} {Symposium} on {Turbo} {Codes} and {Iterative} {Information} {Processing} 2018 ({ISTC})},
+	author = {L\'eonardon, M. and Leroux, C. and Jääskeläinen, P. and Jégo, C. and Savaria, Y.},
+	year = {2018},
+}
+
+@Article{Ghaffari2018,
+  author   = {A. Ghaffari and M. L\'eonardon and A. Cassagne and C. Leroux and Y. Savaria},
+  title    = {Toward High Performance Implementation of {5G} {SCMA} Algorithms},
+  journal  = {IEEE Access},
+  year     = {2018},
+  note     = {Submitted 15-Jul-2018},
+  file     = {:pdf/Ghaffari2018 - Toward High Performance Implementation of 5G SCMA Algorithms.pdf:PDF},
+  keywords = {5G, SCMA, Maximum Likelihood (ML), Message Passing Algorithm (MPA), log-MPA, iterative multi-user detection, BER, Single Instruction Multiple Data (SIMD), Intel Advanced Vector Extensions (AVX), Streaming SIMD Extension (SSE), Knights Corner Instruction (KNCI), power efficiency, exponential estimations. },
+}
+
+@inproceedings{cassagne_fast_2017,
+	title = {Fast simulation and prototyping with {AFF}3CT},
+	abstract = {This demonstration intends to present AFF3CT (A Fast Forward 3rror Correction Tool). The main objective of AFF3CT is to provide a portable, open source, fast and ﬂexible software to the channel coding community in such a way that researchers can spend more time on channel coding / algorithmic problems instead of software development issues. It is also intended to facilitate the process of hardware veriﬁcation and debug with the objective of fast prototyping.},
+	language = {en},
+	booktitle = {{SiPS}},
+	author = {Cassagne, Adrien and L\'eonardon, Mathieu and Hartmann, Olivier and Delbergue, Guillaume and Tonnellier, Thibaud and Tajan, Romain and Leroux, Camille and Jego, Christophe and Le Gal, Bertrand and Aumage, Olivier and Barthou, Denis},
+	year = {2017},
+	file = {Cassagne et al. - Fast simulation and prototyping with AFF3CT.pdf:/home/bonben/Zotero/storage/CE9DBY3A/Cassagne et al. - Fast simulation and prototyping with AFF3CT.pdf:application/pdf}
+}
+
+@TechReport{cassagne_gdr_2017,
+  author      = {A. Cassagne and M. L\'eonardon and O. Hartmann and T. Tonnellier and G. Delbergue and V. Giraud and C. Leroux and R. Tajan and B. {Le Gal} and C. J\'ego and O. Aumage and D. Barthou},
+  title       = {{AFF3CT} : Un environnement de simulation pour le codage de canal},
+  institution = {GdR SoC2},
+  year        = {2017},
+  month       = jun,
+  abstract    = {Dans cet article nous présentons un environnement de simulation de Monte Carlo pour les systèmes de communications numériques. Nous nous focalisons en particulier sur les fonctions associées au codage de
+canal. Après avoir présenté les enjeux liés à la simulation, nous identifions trois problèmes inhérents à ce type de simulation. Puis nous présentons les principales caractéristiques de l’environnement AFF3CT.},
+  file        = {:pdf/Cassagne2017 - AFF3CT \: Un environnement de simulation pour le codage de canal [poster].pdf:PDF;:pdf/Cassagne2017 - AFF3CT \: Un environnement de simulation pour le codage de canal.pdf:PDF},
+  groups      = {Software Decoders, AFF3CT},
+}
+
+@TechReport{leonardon_cnes_2017,
+  author      = {M. L\'eonardon and C. Leroux and C. J\'ego},
+  title       = {Les codes polaires, algorithmes et décodeurs.},
+  institution = {CNES CCT TSI "Technologies pour la 5G - segment spatial},
+  year        = {2016},
 }

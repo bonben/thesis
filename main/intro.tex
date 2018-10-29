@@ -3,116 +3,73 @@
 \markboth{Introduction}{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
-\section*{Contexte et problématique}
+Le décodage de codes polaires sur des architectures programmable constitue le sujet de cette thèse. Deux axes principaux sont développés. Le premier est l'implémentation des algorithmes de décodage sur des architectures de processeurs existantes. Le deuxième est la conception d'architectures programmables spécialisées dans le décodage de codes polaires. En introduction, le contexte général des codes correcteurs d'erreurs est établi puis le sujet de recherche est présenté et motivé. La structure du manuscrit est ensuite détaillée avant une liste des contributions contenues dans ces travaux de thèse.
 
-\begin{itemize}
- 	\item les codes polaires : origine et regain avec 5G
- 	\item 5G -> canal changeant -> généricité
- 	\item Cloud-RAN
- 	\item Architectures programmables (quelques références sur implem logiciel et ASIP)
-\end{itemize}
+\section*{Contexte}
+La chaîne de communication la plus élémentaire est constituée d'une source, d'un canal de communication et d'un destinataire. Un message est émis par la source à travers le canal jusqu'au destinataire. \`A moins d'un canal idéal, des perturbations peuvent détériorer le message, et des erreurs peuvent se produire. Ces erreurs peuvent être corrigées à l'aide de codes correcteurs d'erreurs. Il s'agit, en aval de la source, d'ajouter de la redondance au message d'origine. Cette redondance est utilisée, en amont du destinataire, afin de corriger les erreurs potentielles.
+
+Les codes polaires sont une famille de codes correcteurs d'erreurs, inventés en 2008 par Erdal Ar{\i}kan. Leur sélection pour faire partie de la prochaine norme 5G atteste de leur efficacité et montre la nécessité de concevoir des systèmes performants pour en réaliser les deux étapes : l'encodage et le décodage. Jusqu'à présent, dans les systèmes de communications mobiles, le décodage des codes correcteurs d'erreurs est réalisé à l'aide d'architectures matérielles dédiées. Ces architectures sont très efficaces en termes de débit, de latence et de consommation énergétique. Cependant, une alternative est possible : la description logicielle des algorithmes de décodage et leur exécution sur des processeurs généralistes. Cette alternative offre plusieurs avantages. Elle permet une plus grande flexibilité du réseau, capable d'adapter l'effort de calcul à la demande, dans l'espace, c'est à dire entre les différents \noeuds du réseau, et à travers le temps. Elle permet également une meilleure évolutivité, puisqu'un même circuit peut être utilisé pour supporter des améliorations ou de nouvelles versions des algorithmes de décodage. Enfin, il est plus aisé de distribuer le calcul, pour s'approcher d'une infrastructure de type Cloud. Ces travaux ont pour but d'étudier et de proposer des solutions adéquates : le décodage de codes polaires sur des architectures programmables.
 
 \section*{Structure du manuscrit de thèse}
 
+les algorithmes de décodage à liste. Nous proposons une implémentation dont les caractéristiques principales sont la généricité et la flexibilité. La généricité, d'une part, permet aux décodeurs proposé de supporter une très grande variété de codes polaires, en termes de taille de mot de code, de construction et de concaténation avec des codes détecteurs d'erreurs. Ils peuvent donc s'adapter à un très grand nombre de cas de figure. \'Etant intégré au sein d'un logiciel libre, ces décodeurs sont publiés et disponibles pour la communauté. La flexibilité, d'autre part, apporte des compromis inédits entre les performances de décodage, le débit et la latence. Différentes optimisation leurs permettent également d'atteindre et de dépasser les débits de implémentations de l'état de l'art. Des résultats d'exécution sont également reportés pour des architectures ARM, constituant ainsi la première référence du genre dans la littérature.
+
+Un défaut de ces implémentations est toutefois l'énergie consommée. En effet les processeurs considérés sont très généraliste, et cela se paie par une très grande complexité matérielle et une consommation énergétique importante. La deuxième partie de nos travaux a pour but de proposer deux architectures programmables à faible consommation et haute performance pour le décodage de codes polaires. Deux méthodes distinctes sont utilisées pour concevoir et générer de telles architectures.
+
+Le troisième chapitre est consacré à la première méthode de conception. Elle consiste à spécialiser une architecture de processeur de base, en la configurant et en étendant son jeu d'instructions, par l'ajout d'unités matérielles dédiées. Ceci est réalisé à l'aide des outils de conception de Tensilica. Les processeurs ainsi conçus atteignent des débits comparables à ceux obtenus sur les processeurs d'architecture ARM, tout en réduisant la consommation énergétique d'un ordre de grandeur. Ils restent cependant très versatiles. Le compilateur et les outils de débogage, profilage et simulation s'adaptent et sont capables de gérer l'architecture modifiée et étendue.
+
+Le quatrième chapitre traite de la seconde méthode de conception qui a permis la proposition de nouvelles architectures de processeurs spécialisés. Cette méthode permet de définir la structure du processeur et le modèle matériel de chacune de ses unités fonctionnelles. Ainsi, l'architecture est très finement conçue, afin d'obtenir de très hauts débits et de faibles latences tout en réduisant fortement la complexité matérielle et donc la puissance dissipée. L'architecture fait partie de la famille des TTA (Transport Triggered Architecture). Une suite logicielle libre permet d'automatiser une grande partie du processus de conception. Le compilateurs et les autres outils de conception, comme précédemment, sont capables de s'adapter aux changements d'architecture. Les résultats d'implémentations montrent que les décodeurs proposés dépassent le débits des implémentations logicielles sur architecture x86, et réduisent la consommation énergétique de deux ordres de grandeur.
+
+\clearpage
 
 \section*{Contributions des travaux de thèse}
 Les différentes contributions originales de ces travaux de thèse sont : 
 \begin{enumerate}
-	\item 
+	\item La proposition d'implémentations logicielles des algorithmes de décodage de codes polaires à liste. Leur originalité en regard des autres implémentations de la littérature tient dans leur généricité et leur flexibilité. Au contraire des implémentations des algorithmes à liste logicielles précédentes, celles-ci sont les premières à permettre une représentation en virgule fixe sur une nombre réduit des données internes de l'algorithme. Des techniques complémentaires de stockage de ces données internes sont explorées et comparées. Une nouvelle méthode de tri est appliquée sur des portions de l'algorithme. Les débits obtenus dépassent les débits des implémentations logicielles de la littérature sur des architectures de processeurs x86. Les décodeurs sont également exécuté sur des processeurs d’architecture ARM et les résultats sont reportés, pour la première fois dans la littérature. Ceci est détaillé dans le deuxième chapitre.
+  	\item La proposition d'une architecture de processeur spécialisé dans le décodage de codes polaires. Il s'agit d'un processeur à jeu d'instructions spécifique à l'application (ASIP : Application Specific Instruction set Processor). Le programme exécuté sur ces processeurs est décrit logiciellement. Les débits obtenus sont comparables à ceux de l'architecture ARM. La consommation énergétique est réduite d'un ordre de grandeur. Ceci est présenté dans le troisième chapitre.
+  	\item Une nouvelle architecture d'ASIP est proposée. Elle fait partie de la famille des architectures déclenchées par le transport (TTA : Transport Triggered Architecture). Les débits  dépassent ceux obtenus sur les architectures de processeurs x86. La consommation énergétique est quant à elle réduite de deux ordres de grandeur. Ceci est détaillé dans le quatrième chapitre.
+
 \end{enumerate}
 
+
 Ces différentes contributions ont fait l'objet de publications scientifiques : \\
+
 \begin{itemize}
-	\item Communications nationales avec actes :
+		\item Communication nationale sans acte :
 	\begin{itemize}
-     	\item 
+		\item M. Léonardon, C. Leroux, and C. Jégo, “Les codes polaires, algorithmes et décodeurs.”
+		CNES CCT TSI Technologies pour la 5G - segment spatial, 2016.
+	\end{itemize}
+	\item Communication nationale avec acte :
+	\begin{itemize}
+     	\item A. Cassagne, M. Léonardon, O. Hartmann, T. Tonnellier, G. Delbergue, V. Giraud,
+			  C. Leroux, R. Tajan, B. Le Gal, C. Jégo, O. Aumage, and D. Barthou, “AFF3CT :
+			  Un environnement de simulation pour le codage de canal,” GdR SoC2, 2017.
+	\end{itemize}
+	\item Communication internationale sans acte :
+	\begin{itemize}
+		\item  A. Cassagne, M. Léonardon, O. Hartmann, G. Delbergue, T. Tonnellier, R. Tajan,
+			   C. Leroux, C. Jégo, B. Le Gal, O. Aumage, and D. Barthou, “Fast simulation and
+			   prototyping with AFF3CT,” in IEEE International Workshop on Signal Processing Systems (SiPS), 2017.
 	\end{itemize}
 	\item Communications internationales avec actes :
 	\begin{itemize}
-		\item 
+		\item M. Léonardon, C. Leroux, D. Binet, J. M. P. Langlois, C. Jégo, and Y. Savaria,
+		“Custom low power processor for polar decoding,” in IEEE International
+		Symposium on Circuits and Systems (ISCAS), 2018.
+		\item M. Léonardon, C. Leroux, P. Jääskeläinen, C. Jégo, and Y. Savaria, “Transport
+		triggered polar decoders,” in IEEE International Symposium on Turbo Codes and
+		Iterative Information Processing (ISTC), 2018.
+		\item A. Ghaffari, M. Léonardon, Y. Savaria, C. Jégo, and C. Leroux, “Improving performance of SCMA MPA decoders using estimation of conditional probabilities,” in IEEE 
+		International New Circuits and Systems Conference (NEWCAS), 2017.
 	\end{itemize}
-	\item Communication dans une revue internationale avec comité de lecture :
+	\item Communications dans des revues internationales avec comité de lecture :
 	\begin{itemize}
-		\item 
+		\item M. Léonardon, A. Cassagne, C. Leroux, C. Jégo, L.-P. Hamelin, and Y. Savaria, “Fast
+        and flexible software polar list decoders,” en cours de revue, Springer Journal of Signal Processing Systems
+        (JSPS), 2018.
+        \item A. Ghaffari, M. Léonardon, A. Cassagne, C. Leroux, and Y. Savaria, “Toward high
+        performance implementation of 5G SCMA algorithms,” soumis à IEEE Access, 2018.
 	\end{itemize}
 \end{itemize}
 
-
-% Les codes correcteurs d'erreurs sont une des solutions permettant d'améliorer la qualité des communications 
-% numériques. Leur principe est d'introduire de la redondance dans la séquence d'information binaire afin de corriger 
-% les erreurs de transmission durant la réception de l’information. Les turbo codes sont une des familles de codes 
-% correcteurs d'erreurs parmi les plus performantes. Ils sont donc employés dans différents standards de communications
-% numériques adressant des contextes applicatifs divers et variés. L'une des métriques de performance d'un code 
-% correcteur d'erreurs est sa capacité de correction en fonction de la qualité de transmission. La région du plancher 
-% d'erreur, inhérente à tout turbo décodage, est particulièrement limitante lors d'une nécessité de très faibles taux 
-% d'erreurs.
-
-% Lorsqu'un turbo code est choisi pour un standard de communications numérique, ses performances sont adaptées aux
-% contraintes applicatives correspondant au cas d'emploi de ce standard. Cependant, les besoins applicatifs peuvent 
-% évoluer au cours du temps et diverger de ceux originellement considérés. Ainsi, des exigences de plus faibles taux 
-% d'erreur à qualité de transmission égale peuvent être nécessaires. Deux solutions sont alors envisageables. La première
-% consiste à repenser le code correcteur d'erreur afin d'atteindre ces nouveaux besoins. Néanmoins, cette approche est 
-% particulièrement coûteuse. De fait, l'ensemble de l’infrastructure est rendue obsolète et un nouveau déploiement 
-% d'équipements, que ce soit pour la transmission ou la réception, devient nécessaire. Cette solution est par exemple 
-% difficilement envisageable pour un contexte de communications satellitaires.
-
-% Une autre solution consiste à modifier uniquement la partie réception. Dans ce cas, les modifications des performances 
-% se situent au niveau du turbo décodeur. Ces dernières années, la communauté scientifique a proposé différentes 
-% approches permettant d'améliorer les performances de décodage des turbo codes. Néanmoins, ces approches sont coûteuses
-% à mettre en œuvre. De fait, les implémentations matérielles de telles solutions sont rares. Les travaux conduits 
-% durant cette thèse répondent alors à la problématique de proposer de nouveaux algorithmes de décodage des
-% turbo codes permettant une amélioration de leurs performances dont leur implémentation matérielle peut être envisagée 
-% sans limitation majeure. Pour répondre à cette problématique, le manuscrit est organisé en quatre chapitre.
-
-% \section*{Structure du manuscrit}
-% Le premier chapitre expose les concepts utilisés pour ces travaux de thèse. Dans un premier temps, les notions 
-% essentielles des codes correcteurs d'erreurs sont abordées. Celles-ci sont constituées par le théorème du codage de 
-% canal, une présentation des différentes familles de codes correcteurs d'erreurs et enfin des métriques permettant la 
-% caractérisation des performances d'un code correcteur d'erreurs. Dans un second temps, les turbo codes sont détaillés.
-% À partir d'un point de vue historique, la construction des turbo codes est exposée. Ensuite, le décodage des turbo 
-% codes est détaillé. Ceci amène alors l'introduction de la problématique du plancher d'erreur. Les raisons de son 
-% apparition ainsi que les propositions de la littérature quant à sa réduction sont alors décrites.
-
-% Le deuxième chapitre est consacré à l'étude des oscillations de métriques impliquées dans le décodage itératif des 
-% turbo codes. Suite à une observation fine de celles-ci, un algorithme les exploitant est proposé. Celui-ci, inspiré 
-% d'une approche originellement développée pour les codes LDPC, permet d'améliorer les performances de décodage de turbo codes dans la 
-% zone de convergence. Cependant, ces améliorations ne sont pas rencontrées pour toutes les familles de turbo codes. 
-% Finalement, une tentative d'utilisation des oscillations est considérée dans un contexte de décodage répété d'une même 
-% trame.
-
-% Le troisième chapitre constitue la contribution majeure de ces travaux. Elle consiste en la présentation d'une méthode 
-% permettant de corriger les erreurs résiduelles rencontrées dans le plancher d'erreurs lors du décodage des turbo 
-% codes. À la faveur d'une prédiction analytique, les erreurs résiduelles sont caractérisées. Ceci permet alors la 
-% comparaison de différentes métriques permettant de les détecter. Une de ces métriques, grâce à son fort pouvoir 
-% d'identification, est alors au cœur de la proposition d'un algorithme de correction des erreurs résiduelles. 
-% Cet algorithme a pour propriété d'abaisser drastiquement le plancher d'erreurs de tous les turbo codes standardisés
-% considérés dans ce manuscrit. 
-
-% Le quatrième chapitre est dédié à la description d'une architecture matérielle adaptée à l'algorithme de correction 
-% des erreurs résiduelles. Cet algorithme, par son principe, peut être vu comme une extension d'un turbo décodeur. Dès 
-% lors les différents ordonnancements de turbo décodage sont présentés. Suite à cela, l'étude des différents paramètres 
-% de l'algorithme sur les performances de décodages est étudié. Ceci permet alors la proposition d'une architecture 
-% matérielle de référence adaptée à un ordonnancement particulier de turbo décodage. Le coût matériel de l'architecture 
-% est alors comparé à celle d'une architecture matérielle de turbo décodage basée sur cet ordonnancement. Finalement, des projections sont 
-% esquissées quant aux modifications requises à l'adaptation de cette architecture à d'autres ordonnancements de turbo 
-% décodage.
-
-% \section*{Contributions}
-% Les contributions originales de ces travaux de thèse sont les suivants : 
-% \begin{enumerate}
-% 	\item La proposition d'un algorithme de décodage permettant l'augmentation de la convergence de décodage de 
-% 	turbo codes dans certains contextes.
-% 	\item La proposition d'un algorithme de décodage basé sur le décodage successif d'une même trame permettant une 
-% 	réduction limitée du plancher d'erreurs.
-% 	\item La formalisation d'une prédiction de la distribution des erreurs résiduelles dans la zone du plancher 
-% 	d'erreurs des turbo codes.
-% 	\item La proposition d'un algorithme de décodage permettant une réduction drastique du plancher d'erreurs des 
-% 	turbo codes standardisés grâce à la correction des erreurs résiduelles.
-% 	\item La proposition d'une architecture matérielle adaptée à l'algorithme de correction des erreurs résiduelles.
-% \end{enumerate}
-% Ces différentes contributions ont fait l'objet de publications scientifiques listées en fin de ce manuscrit (cf. \hyperref[sec:mespublis]{Liste des Publications}).
-
-
-% Claude Berrou : \og Pour Shannon, "amour" et "haine" ne sont que deux mots de cinq lettres pris dans un alphabet qui en compte 26. 
-% Et les réponses aux questions "Dieu existe-t-il ?" ou "Va-t-il pleuvoir sur Brest aujourd'hui ?" apportent l'une comme l'autre 
-% un bit d'information \fg.
