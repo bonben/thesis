@@ -7,21 +7,33 @@
 
 \begin{longtable}{ p{.18\textwidth}  p{.82\textwidth} } 
 
-$C$						& 	Capacité du canal de transmission														\\
-$\mathbb{E}$            &   Espérance mathématique                                                                  \\
-$E_b$         	 		&	Énergie moyenne par bit d'information     												\\
-$\text{erfc}(\cdot)$    &	Fonction d'erreur complémentaire     													\\
-$\text{sgn}(\cdot)$    	&	Fonction signe																			\\
-$\mathbf{c}$			& 	Mot de code 																			\\
-$\mathbf{\hat{d}}$		&	Mot décidé																				\\
-$R$     	 			&	Rendement du code ($R=K/N$)       														\\
-$K$     	  			&	Taille du mot d'information non codé     												\\
-$N$     	 			& 	Taille du mot de code                													\\
-$L(\cdot)$				&	Valeur LLR 																				\\
-$\sigma$				&   Variance du bruit																		\\
+$\mathbold{x}$          & Mot de code                                             \\
+$K$                     & Nombre de bits d'informations                           \\
+$c$                     & Nombre de bits de CRC                                   \\
+$N$                     & Nombre de bits du mot de code                           \\
+$n$                     & Logarithme en base 2 de $N$                             \\
+$R$                     & Rendement du code                                       \\
+$\mathbold{L}$          & Séquence d'estimations                                  \\
+$\mathbold{b}$          & Séquence d'informations                                 \\
+$\mathbold{\hat{b}}$    & Séquence d'informations estimée après décodage          \\
+$\mathbold{\tilde{x}}$  & Séquence de symboles de la modulation BPSK              \\
+$E_b$                   & \'Energie moyenne par bit d'information                 \\
+$N_0$                   & Densité spectrale mono-latérale du bruit                \\
+$\mathbb{E}$            & Espérance mathématique                                  \\
+$P_r$                   & Probabilité de réception                                \\
+$L_i$                   & Valeur de LLR                                           \\
+$s_i$                   & Valeur de somme partielle                               \\
+$M^{\otimes n}$         & Puissance de Kronecker d'un matrice M                   \\
+$\text{sign}(.)$        & Signe d'une valeur                                      \\
+$\text{min}(.,.)$       & Minimum de deux valeurs                                 \\
+$\text{argmin}(.)$      & Indice de la valeur minimum d'un ensemble               \\
+$m_j^i$                 & Métrique du chemin d'indice j à l'étape i               \\
+$\mathcal{L}$           & Latence                                                 \\
+$\mathcal{T}$           & Débit                                                   \\
+$\mathcal{E}_b$         & \'Energie dépensée pour décoder un bit d'information    \\
+$P$                     & Degré de parallélisme d'une opération                   \\
+$Q$                     & Dimension de données en mémoire                         \\
 
-
-		
 \end{longtable}
 
 \end{center}
@@ -34,41 +46,76 @@ $\sigma$				&   Variance du bruit																		\\
 \begin{longtable}{ p{.18\textwidth}  p{.82\textwidth} } 
 
 5G        & 5th generation of cellular mobile communications       \\
+ADL       & Architecture Description Language                      \\
+ALU       & Arithmetical and Logical Unit                          \\
+AMC       & Adaptive Modulation and Coding                         \\
 ARM       & Advanced Risc Machine                                  \\
+ARQ       & Automatic Repeat reQuest                               \\
 ASIC      & Application Specific Integrated Circuit                \\
 ASIP      & Application Specific Instruction set Computer          \\
+AVX       & Advanced Vector Extensions                             \\
 AWGN      & Additive White Gaussian Noise                          \\
 BI-AWGNC  & Binary Input - AWGN Channel                            \\
-% BE      & Bit Error, nombre d'erreurs binaires                   \\
 BER       & Bit Error Rate                                         \\
+BLLR      & Backward LLR                                           \\
 BP        & Belief Propagation                                     \\
 BPSK      & Binary Phase-Shift Keying                              \\
 CASCL     & CRC-Aided Successive Cancellation List                 \\
+CPU       & Central Processing Unit                                \\
 CRC       & Cyclic Redundancy Check                                \\
-% FE      & Frame Error                                            \\
+DM        & Data Memory                                            \\
+EX        & Execution                                              \\
+IM        & Instruction Memory                                     \\
 FASCL     & Fully Adaptive Successive Cancellation List            \\
 FER       & Frame Error Rate                                       \\
+FF        & Flip Flop                                              \\
 FPGA      & Field Programmable Gate Array                          \\
+FPU       & Floating Point Unit                                    \\
+FU        & Functional Unit                                        \\
 FLIX      & Flexible Length Instruction Extensions                 \\
-% LDPC    & Low Density Parity Check Codes                         \\
+GNU       & GNU’s Not UNIX                                         \\
+GCU       & Global Control Unit                                    \\
+ID        & Instruction Decode                                     \\
+IF        & Instruction Fetch                                      \\
+HARQ      & Hybrid Automatic Repeat reQuest                        \\
+KNL       & Knights Landing                                        \\
+LDPC      & Low Density Parity Check Codes                         \\
 LLR       & Log Likelihood Ratio                                   \\
-LSU       & Load / Store Unit                                      \\
+LLVM      & Low Level Virtual Machine                              \\
+LSU       & Load and Store Unit                                    \\
+LUT       & LookUp Table                                           \\
+MAC       & Multiple and ACcumulate                                \\
 MIPP      & My Intrinsics Plus Plus library                        \\
+OS        & Operating System                                       \\
 PASCL     & Partially Adaptive Successive Cancellation List        \\
 PE        & Processing Element                                     \\
 PS        & Partial Sum                                            \\
+PSN       & Partial Sorting Network                                \\
 PU        & Processing Unit                                        \\
+RAM       & Random Access Memory                                   \\
 RISC      & Reduced Instruction Set Computer                       \\
+RTL       & Register-Transfer Level                                \\
 SC        & Successive Cancellation                                \\
 SCAN      & Soft CANcellation                                      \\
 SCF       & Successive Cancellation Flip                           \\
 SCL       & Successive Cancellation List                           \\
 SCS       & Successive Cancellation Stack                          \\
+SDR       & Software Defined Radio                                 \\
+SIMD      & Single Instruction Multiple Data                       \\
+SMT       & Simultaneous MultiThreading                            \\
 SNR       & Signal-to-Noise Ratio                                  \\
 SPC       & Single Parity Check                                    \\
+SSE       & Streaming SIMD Extensions                              \\
 REP       & REPetition                                             \\
-TCE       & TTA Co-design Environment                              \\
+RF        & Register File                                          \\
+TCE       & TTA-based Co-design Environment                        \\
+TCEMC     & TCE MultiCore                                          \\
+TIE       & Tensilica Instruction Extension                        \\
 TTA       & Transport Triggered Architecture                       \\
+TUT       & Tampere University of Technology                       \\
+VHDL      & VHSIC Hardware Description Language                    \\
+VLIW      & Very Long Instruction Word                             \\
+WB        & Write Back                                             \\
 \end{longtable}
 
 \end{center}

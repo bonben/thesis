@@ -435,28 +435,29 @@ L'algorithme FASCL permet d'atteindre les débits les plus élevés. Comme il es
         \cline{5-7}
         &                        &   & ($\mu s$)                          & \textbf{3.5 dB} & \textbf{4.0 dB} & \textbf{4.5 dB} \\
         \hline
-        % \hline
-        i7-4790K & CASCL  & \cite{shen_low-latency_2016}      & 1572                           & 1.10            & 1.10            & 1.10            \\
+        \parnoteclear
+        i7-4790K & CASCL \parnote{{\footnotesize Version non élaguée de l'algorithme CASCL.}\label{pn:note}}  & \cite{shen_low-latency_2016}      & 1572                           & 1.10            & 1.10            & 1.10            \\
         \hline
-        i7-2600  & CASCL  & \cite{sarkis_increasing_2014}     & 23000                          & 0.07            & 0.07            & 0.07            \\
-        i7-2600  & CASCL  & \cite{sarkis_fast_2016}           & 2294                           & 0.76            & 0.76            & 0.76            \\
-        i7-2600  & CASCL  & Ce travail                        & 4819                           & 0.37            & 0.37            & 0.37            \\
-        i5-6600K & CASCL  & Ce travail                        & 3635                           & 0.48            & 0.48            & 0.48            \\
+        i7-2600  & CASCL\textsuperscript{1} & \cite{sarkis_increasing_2014}     & 23000                          & 0.07            & 0.07            & 0.07            \\
+        i7-2600  & CASCL\textsuperscript{1} & \cite{sarkis_fast_2016}           & 2294                           & 0.76            & 0.76            & 0.76            \\
+        i7-2600  & CASCL\textsuperscript{1} & Ce travail                        & 4819                           & 0.37            & 0.37            & 0.37            \\
+        i5-6600K & CASCL\textsuperscript{1} & Ce travail                        & 3635                           & 0.48            & 0.48            & 0.48            \\
         \hline
-        i7-2600  & CASSCL & \cite{sarkis_increasing_2014}    & 3300                           & 0.52            & 0.52            & 0.52            \\
-        i7-2600  & CASSCL & \cite{sarkis_fast_2016}          & 433                            & 4.0             & 4.0             & 4.0             \\
-        i7-2600  & CASSCL & Ce travail                       & 770                            & 2.3             & 2.3             & 2.3             \\
-        i5-6600K & CASSCL & Ce travail                       & 577                            & 3.0             & 3.0             & 3.0             \\
+        i7-2600  & CASCL & \cite{sarkis_increasing_2014}    & 3300                           & 0.52            & 0.52            & 0.52            \\
+        i7-2600  & CASCL & \cite{sarkis_fast_2016}          & 433                            & 4.0             & 4.0             & 4.0             \\
+        i7-2600  & CASCL & Ce travail                       & 770                            & 2.3             & 2.3             & 2.3             \\
+        i5-6600K & CASCL & Ce travail                       & 577                            & 3.0             & 3.0             & 3.0             \\
         \hline
-        i7-2600  & PASSCL & \cite{sarkis_increasing_2014}    & $\approx$ 3300                 & 0.9             & 4.90            & 54.0            \\
-        i7-2600  & PASSCL & \cite{sarkis_fast_2016}          & $\approx$ 433                  & 8.6             & 33.0            & 196.0           \\
-        i7-2600  & PASSCL & Ce travail                       & 847                            & 5.5             & 31.1            & 168.4           \\
-        i5-6600K & PASSCL & Ce travail                       & 635                            & 7.6             & 42.1            & 237.6           \\
+        i7-2600  & PASCL & \cite{sarkis_increasing_2014}    & $\approx$ 3300                 & 0.9             & 4.90            & 54.0            \\
+        i7-2600  & PASCL & \cite{sarkis_fast_2016}          & $\approx$ 433                  & 8.6             & 33.0            & 196.0           \\
+        i7-2600  & PASCL & Ce travail                       & 847                            & 5.5             & 31.1            & 168.4           \\
+        i5-6600K & PASCL & Ce travail                       & 635                            & 7.6             & 42.1            & 237.6           \\
         \hline
-        i7-2600  & FASSCL & Ce travail                       & 1602                           & 19.4            & 149.0           & 244.3           \\
-        i5-6600K & FASSCL & Ce travail                       & 1201                           & 26.1            & 207.8           & 345.5           \\
+        i7-2600  & FASCL & Ce travail                       & 1602                           & 19.4            & 149.0           & 244.3           \\
+        i5-6600K & FASCL & Ce travail                       & 1201                           & 26.1            & 207.8           & 345.5           \\
       \end{tabular}
       }}
+      \parnotes
     \end{table}
 
 \subsection{Comparaison avec l'état de l'art}
