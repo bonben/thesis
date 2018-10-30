@@ -3,3 +3,4 @@
 - remonter figure 2.12
 - ajouter multicoeurs
 - ajouter une description de l'algorithme déroulé avec élagage
+- Infonuagique ?
