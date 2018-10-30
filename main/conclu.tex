@@ -13,28 +13,28 @@ Dans le quatrième chapitre, une architecture de processeur de type TTA est con�
 
 Dans le Tableau \ref{tab:synthesis}, les caractéristiques des différentes architectures de décodage considérées dans ce manuscrit sont présentées. Tout d'abord, les processeurs d'architecture x86-64 et ARM sont disponibles sur le marché. Au contraire, les ASIP sont des architectures spécialisées pour lequel des frais doivent être engagées afin d'en réaliser l'implantation sur cible ASIC. Cependant, les deux ASIP sont plus efficaces énergétiquement. L'architecture \texttt{TT-SC} est la plus performante du point de vue du débit et de l'efficacité énergétique. Néanmoins, il s'agit aussi de l'architecture la moins généraliste. Un des symptômes de ce manque de flexibilité et l'absence de système d'exploitation ciblant les architectures TTA, tandis que les processeurs XTensa bénéficient d'un système d'exploitation fondé sur le noyau Linux. En effet, les processeurs XTensa sont basés sur des architectures RISC qui sont des architectures de processeurs classiques. En ce sens, sa flexibilité se rapprochent de celles des architectures x86-64 et ARM.
 L'ensemble des quatre architectures de processeurs offre des compromis marqués entre flexibilité, performance et efficacité énergétique.
-  \begin{table}[htp]
-    \centering
-    \caption{Existence, disponibilité d'un système d'exploitation, débits et consommation énergétiques des processeurs pour les différentes architectures considérées. Les intervalles de débit et de consommation énergétique concernent le décodage de mots de codes polaires dont les tailles varient de $N=128$ à $N=1024$ et dont le rendement est $R=1/2$}
-    \label{tab:synthesis}
-    {\small\resizebox{\linewidth}{!}{
-     \begin{tabular}{r|cccc}
-      \multirow{1}{*}{\textbf{Architecture}}  & \textbf{Processeur}  & \textbf{Système}        & $\bm{\mathcal{T}_i}$  & $\bm{\mathcal{E}_b}$ \\
-                                              & \textbf{existant}    & \textbf{d'exploitation} & \textbf{Mb/s}         & \textbf{Mb/s}        \\
-	  \cmidrule(lr){1-1}
-	  \cmidrule(lr){2-2}
-	  \cmidrule(lr){3-3}
-	  \cmidrule(lr){4-4}
-	  \cmidrule(lr){5-5}
-      
-      x86-64 (Haswell)                        & \cmark              & \cmark                   & 120-260                 & 40-90              \\
-      ARMv8-A                                 & \cmark              & \cmark                   & 30-40                   & 10-30              \\
-      XTensa Polaire                          & \xmark              & \cmark                   & 30-70                   & 1-2                \\
-      \texttt{TT-SC}                          & \xmark              & \xmark                   & 250-350                 & 0.1-0.2          \\
-    \end{tabular}
-    }}
-  \end{table}
 
+\begin{table}[htp]
+\centering
+\caption{Existence, disponibilité d'un système d'exploitation, débits et consommation énergétiques des processeurs pour les différentes architectures considérées. Les intervalles de débit et de consommation énergétique concernent le décodage de mots de codes polaires dont les tailles varient de $N=128$ à $N=1024$ et dont le rendement est $R=1/2$}
+\label{tab:synthesis}
+{\small\resizebox{\linewidth}{!}{
+ \begin{tabular}{r|cccc}
+  \multirow{1}{*}{\textbf{Architecture}}  & \textbf{Processeur}  & \textbf{Système}        & $\bm{\mathcal{T}_i}$  & $\bm{\mathcal{E}_b}$ \\
+                                          & \textbf{existant}    & \textbf{d'exploitation} & \textbf{Mb/s}         & \textbf{Mb/s}        \\
+  \cmidrule(lr){1-1}
+  \cmidrule(lr){2-2}
+  \cmidrule(lr){3-3}
+  \cmidrule(lr){4-4}
+  \cmidrule(lr){5-5}
+  
+  x86-64 (Haswell)                        & \cmark              & \cmark                   & 120-260                 & 40-90              \\
+  ARMv8-A                                 & \cmark              & \cmark                   & 30-40                   & 10-30              \\
+  XTensa Polaire                          & \xmark              & \cmark                   & 30-70                   & 1-2                \\
+  \texttt{TT-SC}                          & \xmark              & \xmark                   & 250-350                 & 0.1-0.2            \\
+\end{tabular}
+}}
+\end{table}
 
 %\multirow{1}{*}{\textbf{Débit}} 
 \section*{Perspectives}
@@ -43,4 +43,4 @@ Le décodeur logiciel proposé dans le chapitre \ref{chap:soft_scl} fait partie 
 
 Parmi les architectures considérés dans ces travaux, celles permettant d'atteindre les meilleurs débits, latences et efficacités énergétiques sont les architectures TTA. Un axe de recherche envisagé est la conception d'une architecture TTA pour le décodage des algorithmes de codes polaires à liste. En effet, les performances de décodage sont bien plus élevées, au prix d'une plus grande complexité calculatoire. Plusieurs étapes seront nécessaires. Tout d'abord, nos travaux montrent que le temps alloué à la propagation des sommes partielles doit être réduit. Une solution pourrait être de s'inspirer de ce qui est réalisé dans les architectures matérielles dédiées. Ensuite l'architecture devra être étendue, afin de permettre le parcours de plusieurs arbres de décodage en parallèle, ainsi que la gestion des métriques de chemin. La flexibilité de l'architecture pourra alors être mise à profit afin de gérer un large panel de codes polaire saux caractéristiques variées, tels que ceux définis dans le standard 5G.
 
-Enfin, la suite logicielle TCE facilite la conception de plateformes multicœurs. Des travaux récents montrent les gains potentiels de ces architectures en termes de débit, pour des turbo codes ainsi que pour des codes LDPC \cite{}. Des problématiques de dimensionnement du nombre de cœurs, des interfaces et des mémoires doivent être relevées pour créer de tels systèmes.
+Enfin, la suite logicielle TCE facilite la conception de plateformes multicœurs. Des travaux récents montrent les gains potentiels de ces architectures en termes de débit pour des turbo codes \cite{}. Des problématiques de dimensionnement du nombre de cœurs, des interfaces et des mémoires doivent être relevées pour créer de tels systèmes.
