@@ -1,7 +1,11 @@
 %!TEX root = ../my_thesis.tex
-\chapter{Implémentation logicielle des algorithmes à Liste sur des processeurs à usage général} % (fold)
+\chapter{Décodeur logiciel de codes polaires à liste} % (fold)
 \label{chap:soft_scl}
-% Intro chapitre
+
+Le sujet de ce chapitre est la proposition d'un décodeur logiciel qui implémente les algorithmes de décodage à liste de codes polaires.
+La section \ref{sec:cellular} traite de l'intérêt potentiel de tels décodeurs logiciels dans les réseaux mobiles cellulaires. La section \ref{sec:art_scl} dresse un état de l'art des décodeurs logiciels de codes polaires de l'état de l'art.
+
+Les contributions originales de ces travaux sont présentées dans la section \ref{sec:gen_scl}, \ref{sec:opti_scl} et \ref{sec:exp_scl}. La section \ref{sec:gen_scl} définit les concepts de généricité et de flexibilité des décodeurs avant de montrer comment celles-ci sont mises en œuvre dans notre décodeur et constituent une rupture vis-à-vis de l'état de l'art. La section \ref{sec:opti_scl} présente trois optimisations originales qui permettent d'améliorer débit et latence de décodage. La section \ref{sec:exp_scl} présente les résultats d'expérimentation. La section \ref{sec:scl_contrib} dresse une liste détaillée des différentes contributions.
 
 \vspace*{\fill}
 \minitocTITI
@@ -9,7 +13,8 @@
 \newpage
 
 
-\section{Les implémentations logicielles de codes correcteurs d'erreurs}
+\section{Décodeurs logiciels pour les réseaux cellulaires}
+\label{sec:cellular}
 
 Le principe des réseaux mobiles cellulaires est de diviser le territoire en zones appelées cellules. \`A chaque cellule sont associés une station de base et un certain nombre de canaux de fréquence pour communiquer avec les terminaux mobiles. Chaque station de base est reliée aux différents réseaux gérant les appels vocaux et les messages textuels ainsi qu'à l'Internet. Au fil de l'évolution des normes, la structure des réseaux mobiles cellulaires évolue, afin d'augmenter les performances de débit et de latence ainsi que le nombre de terminaux connectés. L'objectif est de faire face à la croissance exponentielle du nombre de terminaux.
 
@@ -177,6 +182,8 @@ Les résultats d'implémentation logicielle au niveau des débits et latences de
 
 \section{Généricité et flexibilité d'un décodeur de codes polaires}
 \label{sec:gen_scl}
+
+Dans la section précédente, un état de l'art des implémentations logicielles de codes polaires a été dressé. Nous allons maintenant détailler les travaux réalisés pour parvenir au décodeur logiciel proposé. En premier lieu, l'originalité de ce décodeur est d'être \textit{générique} et \textit{flexible}.
 
 \subsection{Définitions}
 Les termes de généricité et de flexibilité pouvant donner lieu à diverses interprétations, nous proposons d'en donner une définition pour éviter toute ambiguïté.
@@ -347,7 +354,7 @@ Cette méthode a été testée expérimentalement et ses performances ont été 
 
 Le tri des métriques dans \cite{sarkis_fast_2016} est effectué à l'aide d'un réseau de tri partiels (PSN : Partial Sorting Network) décrit dans \cite{furtak2007using}. Les unités de calcul SIMD sont utilisées pour accélérer l'exécution de ce tri. 
 Dans un souci de simplicité de la description logicielle, le choix a donc été fait de n'utiliser que la méthode de Schreier pour réaliser les différents tris nécessaires pour l'exécution de l'algorithme SCL.
-Dans cette étude, nous n'avons pas implémenté les PSN pour le tri des métriques. En effet, pour que ce réseau de tri soit générique vis à vis de $L$ ainsi que de l'élagage de l'arbre, une méthode devrait être conçue afin de créer un PSN pour n'importe quelle profondeur de liste $L$, et pour chaque type de \noeud différent. Nous pensons que l'utilisation de PSNs pourrait augmenter le débit de nos décodeurs. Toutefois, ce travail n'a pas encore été réalisé, et nous le réservons pour de futurs travaux.
+Dans cette étude, nous n'avons pas implémenté les PSN pour le tri des métriques. En effet, pour que ce réseau de tri soit générique vis à vis de $L$ ainsi que de l'élagage de l'arbre, une méthode devrait être conçue afin de créer un PSN pour n'importe quelle profondeur de liste $L$, et pour chaque type de \noeud différent. Nous pensons que l'utilisation de PSNs pourrait augmenter le débit de nos décodeurs.
 Par défaut, la méthode de Schreier est également utilisée pour le tri des métriques. Les mêmes algorithmes alternatifs ont été testés mais aucune amélioration significative n'a permis d'amélioration du débit.
 
 \subsection{Accélération du contrôle de redondance cyclique}
@@ -423,7 +430,7 @@ Trois optimisations originales permettant d'augmenter le débit et de réduire l
 Les débits et les latences des implémentations proposées sont détaillées dans cette section. Tous les résultats proposés ont été obtenus grâce à l'outil AFF3CT \cite{aff3ct_aff3ct:_2016}. Le code source de ce logiciel est ouvert et disponible en ligne. Ainsi, tous les résultats sont facilement reproductibles. La cible matérielle est un CPU Intel i5-6600K d'architecture Skylake. Le jeu d'instruction SIMD AVX2 est exploité. Sa fréquence pour les résultats reportés est 3.9 GHz. La compilation a été effectuée sur un OS Linux avec le compilateur C++ de GNU (version 5.4.0). Les options de compilation qui ont été appliquées sont les suivantes : \texttt{-Ofast -march=native -funroll-loops}.
 
 \subsection{Algorithme complètement adaptatif}
-L'algorithme FASCL permet d'atteindre les débits les plus élevés. Comme il est montré dans le Tableau~\ref{tab:quantif}, l'implémentation de cet algorithme avec une représentation sur 8 bits des LLR et des sommes partielles permet d'atteindre un débit de 425 Mb/s pour un code polaire (2048,1723) et le CRC GZip de taille 32 bits lorsque $E_b/N_0=4.5dB$. Ce débit est pratiquement deux fois supérieur à celui obtenu avec l'algorithme PASCL. Le rapport signal à bruit pour lequel la différence entre PASCL et FASCL est la plus grande (380\%), est dans le domaine où le FER est compris entre $10^{-3}$ et $10^{-5}$. Il s'agit du domaine ciblé pour les communications sans fils comme le norme LTE ou le futur réseau 5G. Dans ces conditions, le débit de l'algorithme FASCL est d'approximativement 230Mb/s tandis que celui de PASCL est d'approximativement 40 Mb/s. Toutefois, rappelons que la latence dans le pire cas est plus élevée dans le cas de l'algorithme FASCL.
+L'algorithme FASCL permet d'atteindre les débits les plus élevés. Comme il est montré dans le Tableau~\ref{tab:quantif}, l'implémentation de cet algorithme avec une représentation sur 8 bits des LLR et des sommes partielles permet d'atteindre un débit de 425 Mb/s pour un code polaire (2048,1723) et le CRC GZip de taille 32 bits lorsque $E_b/N_0=4.5dB$. Ce débit est pratiquement deux fois supérieur à celui obtenu avec l'algorithme PASCL. Le rapport signal à bruit pour lequel la différence entre PASCL et FASCL est la plus grande (380\%), est dans le domaine où le FER est compris entre $10^{-3}$ et $10^{-5}$. Il s'agit du domaine ciblé pour les communications sans fils comme le norme LTE ou le futur réseau 5G. Dans ces conditions, le débit de l'algorithme FASCL est d'approximativement 230 Mb/s tandis que celui de PASCL est d'approximativement 40 Mb/s. Toutefois, rappelons que la latence dans le pire cas est plus élevée dans le cas de l'algorithme FASCL.
 
     \begin{table}[t]
       \centering
@@ -529,6 +536,7 @@ Du point de vue du nombre de cycles d'horloge nécessaires au décodage d'une tr
 
 
 \section{Résumé des contributions}
+\label{sec:scl_contrib}
 
 L'infrastructure Cloud-RAN et plus généralement l'attrait grandissant pour le domaine des radios logicielles (SDR : Software Defined Radio) motivent l'étude et le développement de descriptions logicielles de décodeurs canal comme celles décrites dans ce chapitre.
 

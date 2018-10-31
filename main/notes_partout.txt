@@ -1,6 +1,4 @@
-- section, chapitre et sous-section : minuscules
 - Figure : majuscules
-- points ou pas points dans les titres
 - Notation L liste et L LLR...
 
 - bien préciser que l'état de l'art est dilué dans les différents chapitre
@@ -8,6 +6,8 @@
 - comment dit on under review ?
 - est ce que je met les marques dans le glossaire (AMD, TSMC, HPM)
 - les outils de tensilica BOF
+- sous titre conclusion
+- revoir les titres
 Date de soutenance du 26 au 30
 
 incohérence résultats x86 chap 3 et 4

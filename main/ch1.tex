@@ -5,7 +5,7 @@
 
 Le but de ce premier chapitre est d'introduire le lecteurs au codage polaire, avec une emphase particulière sur les algorithmes de décodage.
 
-Dans la première section, le modèle de la chaîne de communications numériques utilisé tout au long du manuscrit est décrit, puis le principe et la construction des codes polaires sont détaillés.
+Dans la première section, le modèle de la chaîne de communications numériques utilisé tout au long du manuscrit est décrit, puis le principe et la construction des codes polaires sont détaillés. La deuxième section présente les principaux algorithmes de décodage de codes polaires. La troisième section porte sur une simplification algorithmique 
 
 
 
@@ -416,7 +416,7 @@ Tout comme les algorithmes SC et SCL, des élagages peuvent être appliqués à 
 % https://arxiv.org/pdf/1701.06458.pdf 4-5-6-7-8-9
 
 
-\subsection{Synthèse sur les différents algorithmes de décodage}
+\section{Synthèse des différents algorithmes de décodage}
  Dans ce chapitre ont été présentés les codes polaires, avec une emphase particulière sur les différents algorithmes de décodage. Le Tableau \ref{tab:algo} récapitule ces différents algorithmes, en donnant une indication approximative sur leurs performances en termes de correction d'erreur, débit et latence maximum.
   \begin{table}[htp]
     \centering
@@ -427,18 +427,20 @@ Tout comme les algorithmes SC et SCL, des élagages peuvent être appliqués à 
       \textbf{Algorithme}  & \textbf{Performances}  & \multirow{1}{*}{\textbf{Débit}} & \textbf{Latence max.}             & \textbf{Sorties} \\
       \textbf{de décodage} & \textbf{BER \& FER}   & ($\bm{\mathcal{T}}$)                 & ($\bm{\mathcal{L}_{worst}}$)  & \textbf{souples} \\
       \hline
-      SC        & faibles     & très élevé    & très faible      & non \\
-      SCF       & moyennes    & élevé    & faible      & non \\
-      SCL       & moyennes  & faible  & élevée       & non \\
-      CASCL    & élevées    & faible  & élevée       & non \\
-      PASCL    & élevées   & élevé    & élevée       & non \\
-      FASCL    & élevées   & élevé    & très élevée  & non \\
+      SC        & faibles     & très élevé    & très faible    & non \\
+      SCF       & moyennes    & élevé         & faible         & non \\
+      SCL       & moyennes    & faible        & élevée         & non \\
+      SCS       & élevées     & faible        & élevée         & non \\
+      CASCL     & élevées     & faible        & élevée         & non \\
+      PASCL     & élevées     & élevé         & élevée         & non \\
+      FASCL     & élevées     & élevé         & très élevée    & non \\
       \hline
-      BP        & faibles & élevé    & faible  & oui \\
-      SCAN      & faibles & élevé    & faible  & oui \\
+      BP        & faibles     & élevé         & faible         & oui \\
+      SCAN      & faibles     & élevé         & faible         & oui \\
     \end{tabular}
     }}
   \end{table}
 
 
-Dans les chapitres à venir, plusieurs implémentations de ces algorithmes vont être proposées. Le chapitre suivant porte sur une implémentation logicielle des algorithmes basés sur le SCL.
+
+Les meilleures performances de décodage sont atteintes par les algorithmes à liste utilisant un CRC concaténés (CASCL, PASCL, FASCL) ainsi que par l'algorithme SCS. Toutefois, la complexité de ces algorithmes a pour conséquence une latence élevée de leurs implémentations. L'algorithme SC est au contraire très peu complexe mais présente des performances de décodage plus faibles. Les algorithmes BP et SCAN sont des algorithmes à sortie souple. Leurs performances brutes sont faibles, mais ils peuvent être utilisés dans des schémas de codages concaténés avec échange d'information souple. Le chapitre suivant porte sur une implémentation logicielle des algorithmes à liste.

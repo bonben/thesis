@@ -4,3 +4,4 @@
 - ajouter multicoeurs
 - ajouter une description de l'algorithme déroulé avec élagage
 - Infonuagique ?
+- mettre les décodeurs logiciels au singulier
