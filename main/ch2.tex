@@ -1,5 +1,5 @@
 %!TEX root = ../my_thesis.tex
-\chapter{Implémentation logicielle des algorithmes à Liste sur des processeurs à usage général.} % (fold)
+\chapter{Implémentation logicielle des algorithmes à Liste sur des processeurs à usage général} % (fold)
 \label{chap:soft_scl}
 % Intro chapitre
 
@@ -19,21 +19,21 @@ Dans une structure de réseau de type Cloud-RAN (Cloud Radio Access Network), le
 
 \begin{figure}[ht]
   \centering
-  \subfloat[Stations de base traditionnelles]{
+  \subfloat[Stations de base traditionnelles.]{
   \includegraphics[scale=0.5]{main/ch2_fig/bs}
   \label{fig:bs}
   }
   \quad\quad
-  \subfloat[Séparation BB / RF]{
+  \subfloat[Séparation BB / RF.]{
   \includegraphics[scale=0.5]{main/ch2_fig/bs2}
   \label{fig:bbu}
   }
   \quad\quad
-  \subfloat[Cloud-RAN]{
+  \subfloat[Cloud-RAN.]{
   \includegraphics[scale=0.5]{main/ch2_fig/c-ran}
   \label{fig:c-ran}
   }
-  \caption{\'Evolution de l'architecture des stations de base}
+  \caption{\'Evolution de l'architecture des stations de base.}
   \label{fig:bs_evo}
 \end{figure}
 
@@ -132,7 +132,7 @@ Il est à noter que l'arbre de décodage que nous prenons en exemple, dans la Fi
 	      {\texttt{R1}($\mathcal{N}_{i,j}$)\;}
 	    }
       }
-      \caption{Non Déroulé}%
+      \caption{Non Déroulé.}%
     \end{algorithm}%
   \end{minipage}%
   \label{fig:alg_rolled}
@@ -158,7 +158,7 @@ Il est à noter que l'arbre de décodage que nous prenons en exemple, dans la Fi
 	  $h(\mathcal{N}_{1,1})$\;
 	  $h(\mathcal{N}_{0,0})$\;
 	  \mbox{}\\
-      \caption{Déroulé}%
+      \caption{Déroulé.}%
     \end{algorithm}%
   \end{minipage}%
   \label{fig:alg_unrolled}
@@ -191,7 +191,7 @@ Comme nous allons le détailler dans les sections suivantes, tous les paramètre
 
 \begin{figure}[t]
 \includegraphics[width=\textwidth]{main/ch2_fig/curves/code/tikz/code}
-\caption{Performances de décodage des algorithmes SC et CASCL pour des très grandes tailles de code, $R=1/2$, CRC $c=32$ (GZip)}
+\caption{Performances de décodage des algorithmes SC et CASCL pour des très grandes tailles de code, $R=1/2$, CRC $c=32$ (GZip).}
 \label{fig:large_scl}
 \end{figure}
 
@@ -224,7 +224,7 @@ Pour explorer l'impact de l'utilisation des types de \noeuds sur le débit, il a
 
 \begin{figure}[t]
 \includegraphics[width=\textwidth]{main/ch2_fig/curves/thr_spc/tikz/thr_spc_diff}
-\caption{Effets de l'utilisation des \noeuds \texttt{SPC4+} dans l'algorithme CASCL pour un FER de $10^{-5}$}
+\caption{Effets de l'utilisation des \noeuds \texttt{SPC4+} dans l'algorithme CASCL pour un FER de $10^{-5}$.}
 \label{fig:spc_impact}
 \end{figure}
 
@@ -265,7 +265,7 @@ La Figure \ref{fig:bfer_rep} montre que lorsque les \noeuds de répétition de t
   \begin{table}[b]
     \renewcommand{\arraystretch}{1.1}
     \centering
-    \caption{Comparaison de débits et latences des algorithmes SCL adaptatifs pour des représentations à virgule flottante (32 bits) et virgule fixe (16 et 8 bits). Code polaire ($2048$,$1723$), $L=32$, CRC $c=32$ (GZip)}
+    \caption{Comparaison de débits et latences des algorithmes SCL adaptatifs pour des représentations à virgule flottante (32 bits) et virgule fixe (16 et 8 bits). Code polaire ($2048$,$1723$), $L=32$, CRC $c=32$ (GZip).}
     \label{tab:quantif}
     {\small\resizebox{\linewidth}{!}{
     \begin{tabular}{r | c | c || c | c || c | c || c | c}
@@ -337,7 +337,7 @@ Ce nombre est égal à $N+\log_2(N)-2$
 \includegraphics[width=0.75\textwidth]{main/ch2_fig/sorting_b}
 \label{fig:sorting_b}
 }
-\caption{Méthode de Schreier}
+\caption{Méthode de Schreier.}
 \label{fig:schreier_sort}
 \end{figure}
 Elle nécessite deux étapes complémentaires, présentées en Figure~\ref{fig:schreier_sort}. La première étape est l'identification du plus petit élément par la traversée d'un arbre binaire. Durant la seconde étape, cet élément est éliminé, et la branche sur laquelle il se trouvait est rejouée. Le second élément le plus petit est ainsi identifié.
@@ -366,15 +366,15 @@ La lecture de ces séquences permet de réduire la complexité calculatoire glob
 
 \begin{figure}[t]
   \centering
-  \subfloat[Extraction séquentielle]{
+  \subfloat[Extraction séquentielle.]{
   \includegraphics[height=120pt]{main/ch2_fig/extract1}
   \label{fig:extract1}
   }\quad
-  \subfloat[Extraction parallèle]{
+  \subfloat[Extraction parallèle.]{
   \includegraphics[height=120pt]{main/ch2_fig/extract2}
   \label{fig:extract2}
   }
-  \caption{Extraction des bits d'information avant vérification du CRC}
+  \caption{Extraction des bits d'information avant vérification du CRC.}
   \label{fig:extract}
 \end{figure}
 
@@ -412,7 +412,7 @@ Lors des étapes de duplication et de sélection de l'algorithme SCL, étapes $(
 
 La méthode $SCL_{ptr}$ semble plus efficace puisqu'elle évite des copies inutiles. Cependant, nos expérimentations ont montré que les calculs qui sont nécessaires à la gestion des pointeurs pénalisent cette méthode pour des codes de petite et moyenne tailles. La Figure~\ref{fig:scl_mem} représente les débits des implémentations de l'algorithme SCL associés aux deux méthodes, pour différentes valeurs de $N$, un rendement constant, $R=1/2$ et une profondeur de liste $L=32$. Ces courbes montrent que la méthode $SCL_{cpy}$ permet d'atteindre des débits plus élevés pour $N<8192$. En revanche, la méthode $SCL_{ptr}$ est plus avantageuse pour des tailles de codes supérieures. La Figure~\ref{fig:scl_mem} montre également l'impact du format utilisé pour la représentation des LLR et des sommes partielles. Pour de très grandes valeurs de $N$, la représentation sur 8 bits est plus efficace, puisqu'elle occupe moins d'espace mémoire et que les échecs d'accès à la mémoire cache sont plus rares. 
 
-Trois optimisations originales permettant d'augmenter le débit et de réduire la latence des implémentations des algorithmes de décodage de codes polaire à liste sont détaillées dans la Section \ref{sec:opti_scl} : nouvel algorithme de tri, accélération du traitement du CRC, et nouvelle méthode de gestion des sommes partielles.
+Trois optimisations originales permettant d'augmenter le débit et de réduire la latence des implémentations des algorithmes de décodage de codes polaire à liste sont détaillées dans la section \ref{sec:opti_scl} : nouvel algorithme de tri, accélération du traitement du CRC, et nouvelle méthode de gestion des sommes partielles.
 
 
 
@@ -528,7 +528,7 @@ Du point de vue du nombre de cycles d'horloge nécessaires au décodage d'une tr
 
 
 
-\section{Conclusion}
+\section{Résumé des contributions}
 
 L'infrastructure Cloud-RAN et plus généralement l'attrait grandissant pour le domaine des radios logicielles (SDR : Software Defined Radio) motivent l'étude et le développement de descriptions logicielles de décodeurs canal comme celles décrites dans ce chapitre.
 

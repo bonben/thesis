@@ -1,5 +1,5 @@
 %!TEX root = ../my_thesis.tex
-\chapter{Conception d'un processeur par la définition complète de son architecture.} % (fold)
+\chapter{Conception d'un processeur par la définition complète de son architecture} % (fold)
 \label{chap:tta}
 
 \vspace*{\fill}
@@ -7,9 +7,7 @@
 \vspace*{\fill}
 \newpage
 
-
-\section*{Introduction}
-Dans le chapitre précédent, l'architecture d'un processeur RISC a été modifiée et son jeu d'instruction étendu afin d'obtenir un ASIP dédié au décodage des codes polaires. Dans ce chapitre, une approche différente est envisagée, dans laquelle le processeur de base n'est pas un processeur RISC mais un processeur de type TTA.
+Dans le chapitre précédent, l'architecture d'un processeur RISC a été modifiée et son jeu d'instructions étendu afin d'obtenir un ASIP dédié au décodage des codes polaires. Dans ce chapitre, une approche différente est envisagée, dans laquelle le processeur de base n'est pas un processeur RISC mais un processeur de type TTA.
 Les architectures de type TTA (Transport Triggered Architecture) se rapprochent des architectures à très long mot d'instructions (VLIW : Very Long Instruction Word) avec néanmoins une plus grande modularité. Il est ainsi possible de rajouter des unités fonctionnelles spécialisées et de définir précisément la manière dont celles-ci sont interconnectées. Le concepteur de l'architecture est amené à sélectionner chaque unité matérielle et à spécifier précisément leur modèle matériel. La structure et les performances de l'architecture obtenue se rapprochent de celles des architectures matérielles dédiées tout en conservant la programmabilité d'un processeur généraliste. En effet, les fonctionnalités d'un processeur généraliste sont conservées. De plus, les architectures TTA bénéficient d'un écosystème d'outils qui facilitent la conception et le développement de ce type de processeurs. Le programme devant s'exécuter sur l'architecture est décrit à l'aide d'un langage de programmation haut niveau  (C, C++, OpenCL). Des outils de profilage et de débogage sont disponibles et une grande partie du modèle matériel est généré automatiquement. Dans ce chapitre, nous proposons donc de spécialiser une architecture de type TTA pour le décodage de codes polaires.
 
 La section \ref{sec:tta_description} de ce chapitre présente la structure générale et les propriétés des processeurs TTA. Une des caractéristiques principales de ces architectures est leur haut degré de parallélisme. Les processeurs TTA se rapprochent des architectures VLIW. Celles-ci sont donc introduites afin de servir de point de comparaison. Un exemple d'architecture TTA est ensuite donné afin d'en illustrer son fonctionnement. La suite logicielle libre utilisée pour concevoir et spécialiser le processeur est nommée TCE. Ces outils permettent l'automatisation d'une grande partie de la conception des processeurs TTA. La seconde partie de la section illustre et décrit le flot de conception et le rôle des différents outils. La section \ref{sec:tta_design} détaille la conception de deux processeurs TTA spécialisés dans le décodage de codes polaires. La première architecture supporte l'algorithme SC et la seconde supporte à la fois les algorithme SC et SCAN. Les expérimentations et les mesures réalisées sont présentées dans la section \ref{sec:tta_res}.
@@ -22,8 +20,8 @@ La section \ref{sec:tta_description} de ce chapitre présente la structure gén�
 Dans une architecture de processeur, nous distinguons habituellement deux types de parallélisme.
 Le premier est le parallélisme de données.
 Pour exploiter ce parallélisme, les jeux d'instructions de certains processeurs incluent des instructions vectorielles SIMD.
-C'est le cas des architectures ARM ou x86 actuelles qui implémentent respectivement les jeux d'instructions NEON et AVX utilisés dans le Chapitre \ref{chap:soft_scl}.
-Les instructions spécialisées de l'ASIP proposé dans le Chapitre \ref{chap:tensilica} sont également des instructions SIMD.
+C'est le cas des architectures ARM ou x86 actuelles qui implémentent respectivement les jeux d'instructions NEON et AVX utilisés dans le chapitre \ref{chap:soft_scl}.
+Les instructions spécialisées de l'ASIP proposé dans le chapitre \ref{chap:tensilica} sont également des instructions SIMD.
 Ces instructions permettent d'appliquer parallèlement une même opération sur plusieurs données.
 
 Le second type de parallélisme est le parallélisme d'instructions. Contrairement au parallélisme de données, il s'agit d'exécuter des opérations différentes sur plusieurs données d'entrées. Par exemple, effectuer une somme de deux données et, en parallèle, effectuer une opération \textit{ou-exclusif} sur deux autres.
@@ -243,7 +241,7 @@ L'architecture \TTSC~a été synthétisée avec la bibliothèque de cellules sta
 
 \begin{table}
   \centering
-  \caption{Comparaison de l'architecture \TTSC~avec des processeurs à usage général et l'ASIP XTensa proposé dans le Chapitre \ref{chap:tensilica}}
+  \caption{Comparaison de l'architecture \TTSC~avec des processeurs à usage général et l'ASIP XTensa proposé dans le chapitre \ref{chap:tensilica}.}
   \label{tab:sw_tta}
 %\scriptsize
   \begin{tabular}{ccccc}
@@ -301,7 +299,7 @@ Pour les deux processeurs à usage général, le code source utilisé est géné
   %\renewcommand{\arraystretch}{0.5} 
   %\tabcolsep=6pt
   \centering
-  \caption{Implémentations sur cible FPGA de décodeurs SC pour un code polaire (1024,512)}
+  \caption{Implémentations sur cible FPGA de décodeurs SC pour un code polaire (1024,512).}
   \label{tab:fpga_tta}
   \begin{tabular}{rccccc}
    \toprule
@@ -334,7 +332,7 @@ Le nombre de LUTs utilisées par l'architecture \TTSC~est inférieur à celui de
 
 \begin{table}[t]
 	\begin{centering}
-  \caption{Implémentations sur cible ASIC de décodeurs SC pour un code polaire (1024,512)}
+  \caption{Implémentations sur cible ASIC de décodeurs SC pour un code polaire (1024,512).}
 	\label{tab:asic_tta}
 			\begin{tabular}{rcccc}
 				\toprule
@@ -373,7 +371,7 @@ Une implémentation ASIC de l'algorithme SCAN est proposée dans \cite{lin_reduc
   %\renewcommand{\arraystretch}{0.5} 
   %\tabcolsep=6pt
   \centering
-  \caption{Implémentations sur cible FPGA de décodeurs SCAN pour un code polaire (1024,512)}
+  \caption{Implémentations sur cible FPGA de décodeurs SCAN pour un code polaire (1024,512).}
   \label{tab:scan_tta}
   \begin{tabular}{rccc}
    \toprule
@@ -389,7 +387,7 @@ Une implémentation ASIC de l'algorithme SCAN est proposée dans \cite{lin_reduc
     \textbf{LUTS}             &  $\approx 20k$ (a confirmer)    & 3517       & -         \\
     \textbf{FFs}              &  $\approx 10k$ (a confirmer)    & 1024       & -         \\
     \textbf{RAM} (Kb)         &  1079         & 209        & -         \\
-    \textbf{\'Elagage'}          &  R0 \& R1 & No         & R0 \& R1  \\
+    \textbf{\'Elagage}          &  R0 \& R1 & Aucun         & R0 \& R1  \\
     \bottomrule
   \end{tabular}  
 \end{table}
@@ -400,7 +398,7 @@ Une implémentation ASIC de l'algorithme SCAN est proposée dans \cite{lin_reduc
 % \subsection{Cycles de conception}
 
 
-\section*{Conclusion}
+\section{Synthèse}
 
 
 Dans ce chapitre, deux architectures de processeurs spécialisées dans le décodage des algorithmes de décodage de codes polaires SC et SCAN sont successivement présentées. Pour ce faire, le modèle architectural TTA est décrit ainsi que la suite logicielle TCE qui propose un flot de conception complet. TCE permet la génération du modèle matériel du processeur, ainsi que la compilation de programmes décrits dans des langages de haut niveau (C / C++). Cette suite logicielle est utilisée afin de concevoir les deux architectures. Plusieurs contributions originales se dégagent de ce travail.

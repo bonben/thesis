@@ -6,8 +6,6 @@
 \minitocTITI
 \vspace*{\fill}
 
-% \subsection*{Introduction}
-
 \section{Le principe et la construction des codes polaires}
 
 \subsection{La chaîne de communications numériques}
@@ -17,7 +15,7 @@
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.8\textwidth]{main/ch1_fig/chaine_com}
-\caption{Modèle simplifié d'une chaîne de communications}
+\caption{Modèle simplifié d'une chaîne de communications.}
 \label{fig:chaine_com}
 \end{figure}
 Une chaîne de communications numériques telle que conceptualisée par Claude Shannon \cite{shannon_mathematical_2001} est représentée en Figure~\ref{fig:chaine_com}.
@@ -31,7 +29,7 @@ L'ajout d'un encodeur et d'un décodeur de canal dans la chaîne de transmission
 
 Un seul et unique modèle de canal composite sera considéré tout au long de ce manuscrit. Il est constitué d'une modulation à changement de phase binaire (BPSK) qui associe respectivement aux valeurs binaires d'entrée $x\in\{0,1\}$ les valeurs réelles $\tilde{x}\in\{-1,1\}$.
 
-Le canal composite considéré est basé sur un canal à bruit blanc additif gaussien à entrée binaire (BI-AWGNC : Binary Input - Additive White Gaussian Noise Channel) tel que défini dans \cite[Section~1.5.1.3]{ryan2009channel}. Ce modèle est classiquement utilisé pour caractériser les performances des codes correcteurs d'erreur. Il consiste en l'addition aux données de sortie du modulateur $\mathbold{\tilde{x}}$ d'une variable aléatoire à valeurs réelles ayant une distribution gaussienne centrée en $0$ et de densité spectrale $N_0$. Afin d'évaluer les performances de correction des codes correcteurs d'erreurs, les taux d'erreurs seront souvent rapportés à cette densité spectrale, ou plus précisément au \textbf{rapport signal à bruit} (SNR), noté $E_b/N_0$, où $E_b=\frac{\mathbb{E}(\hat{x}^2)}{R}$ est l'énergie moyenne par bit d'information.
+Le canal composite considéré est basé sur un canal à bruit blanc additif gaussien à entrée binaire (BI-AWGNC : Binary Input - Additive White Gaussian Noise Channel) tel que défini dans \cite[section~1.5.1.3]{ryan2009channel}. Ce modèle est classiquement utilisé pour caractériser les performances des codes correcteurs d'erreur. Il consiste en l'addition aux données de sortie du modulateur $\mathbold{\tilde{x}}$ d'une variable aléatoire à valeurs réelles ayant une distribution gaussienne centrée en $0$ et de densité spectrale $N_0$. Afin d'évaluer les performances de correction des codes correcteurs d'erreurs, les taux d'erreurs seront souvent rapportés à cette densité spectrale, ou plus précisément au \textbf{rapport signal à bruit} (SNR), noté $E_b/N_0$, où $E_b=\frac{\mathbb{E}(\hat{x}^2)}{R}$ est l'énergie moyenne par bit d'information.
 
 Les estimations en sortie du démodulateur sont données sous la forme de rapport de vraisemblance logarithmique (LLR : Logarithmical Likelihood Ratio). Leur signe détermine pour chaque donnée de sortie du canal $\tilde{y}_i \in \mathbold{\tilde{y}}$ la valeur binaire d'entrée $x_i \in \mathbold{x}$ la plus probable. La valeur absolue correspond au degré de fiabilité de l'information. Plus de détails sur le modèle de canal et la définition des LLR sont donnés en Annexe \ref{append:decoding_nodes}. L'expression mathématique de $L_i$ est la suivante : 
 \begin{equation*}
@@ -47,7 +45,7 @@ La matrice $F^{\otimes n}$, où $N=2^n$, est la n-ième puissance de Kronecker d
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.5\textwidth]{main/ch1_fig/Graph_N_rec}
-\caption{Représentation en graphe de factorisation de l'encodage de codes polaires}
+\caption{Représentation en graphe de factorisation de l'encodage de codes polaires.}
 \label{fig:encodage}
 \end{figure}
 
@@ -56,7 +54,7 @@ Le processus d'encodage peut également être modifié pour rendre le code syst�
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.7\textwidth]{main/ch1_fig/Graph_N_sys}
-\caption{Encodage systématique}
+\caption{Encodage systématique.}
 \label{fig:sys}
 \end{figure}
 
@@ -79,17 +77,17 @@ La valeur absolue informe sur la fiabilité de cette décision. Bien que l'algor
 \begin{figure}[t]
   % \renewcommand*\thesubfigure{\arabic{subfigure}} 
   \centering
-  \subfloat[][Channel LLR]
+  \subfloat[][Channel LLR.~~~~~~~~~~~~]
   {
-  \includegraphics[width=.26\textwidth]{main/ch1_fig/sc_graph_1}
+  \includegraphics[scale=1.3]{main/ch1_fig/sc_graph_1}
     \label{fig:sc_steps_1}
-  }\quad\quad
-  \subfloat[][Fonction $f$]{\includegraphics[width=.18\textwidth]{main/ch1_fig/sc_graph_2}}\quad\quad
-  \subfloat[][Fonction $\texttt{R0}$]{\includegraphics[width=.2\textwidth]{main/ch1_fig/sc_graph_3}}\\
-  \subfloat[][Fonction $g$]{\includegraphics[width=.18\textwidth]{main/ch1_fig/sc_graph_4}}\quad\quad
-  \subfloat[][Fonction $\texttt{R1}$]{\includegraphics[width=.2\textwidth]{main/ch1_fig/sc_graph_5}}\quad\quad
-  \subfloat[][Fonction $h$]{\includegraphics[width=.18\textwidth]{main/ch1_fig/sc_graph_6}}
-  \caption{Fonctions élémentaires et séquencement du décodage SC d'un noyau $N=2$}
+  }\hspace*{0.5cm}
+  \subfloat[][Fonction $f$.]{\includegraphics[scale=1.3]{main/ch1_fig/sc_graph_2}}\hspace*{0.5cm}
+  \subfloat[][Fonction $\texttt{R0}$.]{\includegraphics[scale=1.3]{main/ch1_fig/sc_graph_3}}\\
+  \subfloat[][Fonction $g$.]{\includegraphics[scale=1.3]{main/ch1_fig/sc_graph_4}}\hspace*{1.55cm}
+  \subfloat[][Fonction $\texttt{R1}$.]{\includegraphics[scale=1.3]{main/ch1_fig/sc_graph_5}}\hspace*{0.8cm}
+  \subfloat[][Fonction $h$.]{\includegraphics[scale=1.3]{main/ch1_fig/sc_graph_6}}
+  \caption{Fonctions élémentaires et séquencement du décodage SC d'un noyau $N=2$.}
   \label{fig:sc_steps}
 \end{figure}
 
@@ -130,7 +128,7 @@ Après le décodage de la somme partielle $s_{1,1}$, la fonction $h$ est appliqu
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.55\textwidth]{main/ch1_fig/sc}
-\caption{Arbre de décodage SC}
+\caption{Arbre de décodage SC.}
 \label{fig:sc}
 \end{figure}
 % mettre en évidence qu'on décode bit par bit, sera utile pour sc list
@@ -258,12 +256,12 @@ Deux algorithmes itératifs à sortie souple ont été proposés. Le premier est
 \begin{figure}[t]
   \renewcommand*\thesubfigure{\arabic{subfigure}} 
   \centering
-  \subfloat[][Initialisation]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_1}}\hspace{2.5cm}
-  \subfloat[][Fonction $f_{bp}$]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_2}}\\
+  \subfloat[][Initialisation.]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_1}}\hspace{2.5cm}
+  \subfloat[][Fonction $f_{bp}.$]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_2}}\\
   \hspace{0.5cm}
-  \subfloat[][Fonction $g_{bp}$]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_3}}\hspace{3.7cm}
-  \subfloat[][Fonction en retour]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_4}}
-  \caption{Fonctions élémentaires et séquencement du décodage SCAN du noyau $N=2$}
+  \subfloat[][Fonction $g_{bp}.$]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_3}}\hspace{3.7cm}
+  \subfloat[][Fonction en retour.]{\includegraphics[scale=1.2]{main/ch1_fig/scan_graph_4}}
+  \caption{Fonctions élémentaires et séquencement du décodage SCAN du noyau $N=2$.}
   \label{fig:SCANSchedule}
 \end{figure}
 La première différence entre ces deux algorithmes et ceux vues précédemment est qu'aucune décision dure n'est faite durant le décodage. L'information reste souple de bout en bout.
@@ -336,11 +334,11 @@ Cependant, sur la Figure~\ref{fig:scl_crc}, jusqu'à $E_b/N_0=4dB$, la version d
 En effet, il est montré dans la Figure \ref{fig:crc} que le nombre de bits d'information par trame est $K$ mais que le nombre de bits à l'entrée de l'encodeur polaire est $K+c$. Autrement dit, bien que le rendement total du code concaténé soit $R=\dfrac{K}{N}$, le rendement du code polaire seul est $R=\dfrac{K+c}{N}$. Lorsque $c$ augmente, le rendement du code polaire seul augmente également, et ses performances de décodage diminuent. Par ailleurs, il est important de noter que pour une taille de CRC donnée, le polynôme choisi influe également sur les performances comme étudié dans \cite{zhang_crc_2017}.
 \begin{figure}[t]
   \centering
-  \subfloat[Algorithmes non adaptatif]{
+  \subfloat[Algorithmes non adaptatif.]{
   \input{main/ch1_fig/curves/scl_crc/tikz/source.tex}
   \label{fig:scl_crc}
   }
-  \subfloat[Algorithmes adaptatifs]{
+  \subfloat[Algorithmes adaptatifs.]{
   \input{main/ch1_fig/curves/fast_ascl_crc/tikz/source.tex}
   \label{fig:ascl_crc}
   }
@@ -352,13 +350,13 @@ L'impact de la taille du CRC sur les performances de décodage des algorithmes a
 \begin{figure}[h]
   \centering
   \input{main/ch1_fig/curves/scf/tikz/source.tex}
-  \caption{Performances de l'algorithme SCF en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512), $c=16$}
+  \caption{Performances de l'algorithme SCF en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512), $c=16$.}
   \label{fig:scf}
 \end{figure}
 \begin{figure}[h]
   \centering
   \input{main/ch1_fig/curves/bp_scan/tikz/source.tex}
-  \caption{Performances des algorithmes itératifs à sortie souple en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512)}
+  \caption{Performances des algorithmes itératifs à sortie souple en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512).}
   \label{fig:bp_scan}
 \end{figure}
 \subsubsection{Performances de décodages des algorithmes SCAN et SCF}
@@ -410,11 +408,11 @@ Tout comme les algorithmes SC et SCL, des élagages peuvent être appliqués à 
 % https://arxiv.org/pdf/1701.06458.pdf 4-5-6-7-8-9
 
 
-\subsection*{Synthèse sur les différents algorithmes de décodage.}
+\subsection{Synthèse sur les différents algorithmes de décodage}
  Dans ce chapitre ont été présentés les codes polaires, avec une emphase particulière sur les différents algorithmes de décodage. Le Tableau \ref{tab:algo} récapitule ces différents algorithmes, en donnant une indication approximative sur leurs performances en termes de correction d'erreur, débit et latence maximum.
   \begin{table}[htp]
     \centering
-    \caption{Tendances des différents algorithmes concernant leurs pouvoirs de correction, débits et latences}
+    \caption{Tendances des différents algorithmes concernant leurs pouvoirs de correction, débits et latences.}
     \label{tab:algo}
     {\small\resizebox{\linewidth}{!}{
      \begin{tabular}{r|c|c|c|c}
