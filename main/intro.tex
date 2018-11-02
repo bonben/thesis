@@ -22,7 +22,7 @@ La description logicielle des algorithmes de décodage et leur exécution sur de
 
 Le premier chapitre a pour thème les codes polaires. Après une brève introduction portant sur la composition d'une chaîne de communications numériques, les codes polaires et le principe de polarisation sont présentés. Ensuite, les différents algorithmes de décodage de codes polaires sont détaillés. Enfin, les méthodes d'élagage de l'arbre, qui constituent des versions simplifiées des algorithmes de décodage, sont présentées.
 
-Un décodeur logiciel générique et flexible de codes polaires est proposé dans le chapitre \ref{chap:soft_scl}. Il implémente les algorithmes de décodage à liste. Les concepts de généricité et de flexibilité du décodeur sont définis. La \textit{généricité} du décodeur est sa capacité à supporter une très grande variété de codes polaires, en termes de taille de mot de code, de construction et de concaténation avec des codes détecteurs d'erreurs. Un décodeur générique peut donc s'adapter à un très grand nombre de schémas de codage. La \textit{flexibilité} d'un décodeur est définie comme sa capacité à configurer l'algorithme de décodage dans le but de proposer des compromis entre débit, latence et performance de décodage. La version de l'algorithme, la taille de liste, le format de représentation des données internes sont des exemples de telles configurations. Plusieurs améliorations algorithmiques et d'implémentation sont appliquées à ce décodeur \textit{générique} et \textit{flexible}. Ainsi, il approche, atteint voire dépasse les décodeurs logiciels de l'état de l'art, selon les algorithmes et les niveaux de bruit du canal considéré. Ce décodeur est intégré au sein d'un logiciel libre \cite{cassagne_gdr_2017}, le code source est donc disponible. Ceci permet son utilisation par l'ensemble de la communauté, ainsi que la reproduction de l'intégralité des résultats présentés dans ce deuxième chapitre.
+Un décodeur logiciel générique et flexible de codes polaires est proposé dans le chapitre \ref{chap:soft_scl}. Il implémente les algorithmes de décodage à liste. Les concepts de généricité et de flexibilité du décodeur sont définis. La \textit{généricité} du décodeur est sa capacité à supporter une très grande variété de codes polaires, en termes de taille de mot de code, de construction et de concaténation avec des codes détecteurs d'erreurs. Un décodeur générique peut donc s'adapter à un très grand nombre de schémas de codage. La \textit{flexibilité} d'un décodeur est définie comme sa capacité à configurer l'algorithme de décodage dans le but de proposer des compromis entre débit, latence et performance de décodage. La version de l'algorithme, la taille de liste, le format de représentation des données internes sont des exemples de telles configurations. Plusieurs améliorations algorithmiques et d'implémentation sont appliquées à ce décodeur \textit{générique} et \textit{flexible}. Ainsi, il approche, atteint voire dépasse les décodeurs logiciels de l'état de l'art, selon les algorithmes et les niveaux de bruit du canal considéré. Ce décodeur est intégré au sein de la suite logicielle libre AFF3CT \citemine{cassagne_gdr_2017}, le code source est donc disponible. Ceci permet son utilisation par l'ensemble de la communauté, ainsi que la reproduction de l'intégralité des résultats présentés dans ce deuxième chapitre.
 
 Un défaut de ce type de décodeurs logiciels est toutefois l'énergie consommée. En effet, les processeurs considérés sont généralistes. Cela implique une grande complexité matérielle et une forte consommation énergétique. La seconde partie de nos travaux a pour but de proposer deux architectures programmables à faible consommation et haute performance pour le décodage de codes polaires. Le but de ces travaux est de conserver des architectures flexibles, tout en améliorant l'efficacité énergétique. Les chapitres ~\ref{chap:tensilica} et~\ref{chap:tta} reposent sur deux méthodologies de conception différentes. Par conséquent, la structure des architectures résultantes ainsi que leurs performances sont radicalement différentes.
 
@@ -45,23 +45,21 @@ Ces différentes contributions ont été valorisées à travers de publications 
 \begin{itemize}
 		\item[$\bullet$] Conférences nationales :
 	\begin{itemize}
-		\item[$\bullet$] M. Léonardon, C. Leroux, and C. Jégo, “Les codes polaires, algorithmes et décodeurs.”
+		\item[$\bullet$] M. Léonardon, C. Leroux, and C. Jégo, “Les Codes polaires, Algorithmes et Décodeurs.”
 		CNES CCT TSI Technologies pour la 5G - segment spatial, 2016.
-     	\item[$\bullet$] A. Cassagne, M. Léonardon, O. Hartmann, T. Tonnellier, G. Delbergue, V. Giraud, C. Leroux, R. Tajan, B. Le Gal, C. Jégo, O. Aumage, and D. Barthou, “AFF3CT : Un environnement de simulation pour le codage de canal,” GdR SoC2, 2017.
+     	\item[$\bullet$] A. Cassagne, M. Léonardon, O. Hartmann, T. Tonnellier, G. Delbergue, V. Giraud, C. Leroux, R. Tajan, B. Le Gal, C. Jégo, O. Aumage, and D. Barthou, “AFF3CT : Un Environnement de Simulation pour le Codage de Canal,” GdR SoC2, 2017.
 	\end{itemize}
 	\item[$\bullet$] Conférences internationales :
 	\begin{itemize}
-		\item[$\bullet$]  A. Cassagne, M. Léonardon, O. Hartmann, G. Delbergue, T. Tonnellier, R. Tajan, C. Leroux, C. Jégo, B. Le Gal, O. Aumage, and D. Barthou, “Fast simulation and prototyping with AFF3CT,” in IEEE International Workshop on Signal Processing Systems (SiPS), 2017.
-		\item[$\bullet$] A. Ghaffari, M. Léonardon, Y. Savaria, C. Jégo, and C. Leroux, “Improving performance of SCMA MPA decoders using estimation of conditional probabilities,” in IEEE International New Circuits and Systems Conference (NEWCAS), 2017.
-		\item[$\bullet$] M. Léonardon, C. Leroux, D. Binet, J. M. P. Langlois, C. Jégo, and Y. Savaria, “Custom low power processor for polar decoding,” in IEEE International Symposium on Circuits and Systems (ISCAS), 2018.
-		\item[$\bullet$] M. Léonardon, C. Leroux, P. Jääskeläinen, C. Jégo, and Y. Savaria, “Transport triggered polar decoders,” in IEEE International Symposium on Turbo Codes and Iterative Information Processing (ISTC), 2018.
+		\item[$\bullet$]  A. Cassagne, M. Léonardon, O. Hartmann, G. Delbergue, T. Tonnellier, R. Tajan, C. Leroux, C. Jégo, B. Le Gal, O. Aumage, and D. Barthou, “Fast Simulation and Prototyping With AFF3CT,” in IEEE International Workshop on Signal Processing Systems (SiPS), 2017.
+		\item[$\bullet$] A. Ghaffari, M. Léonardon, Y. Savaria, C. Jégo, and C. Leroux, “Improving Performance of SCMA MPA Decoders Using Estimation of Conditional Probabilities,” in IEEE International New Circuits and Systems Conference (NEWCAS), 2017.
+		\item[$\bullet$] M. Léonardon, C. Leroux, D. Binet, J. M. P. Langlois, C. Jégo, and Y. Savaria, “Custom Low Power Processor for Polar Decoding,” in IEEE International Symposium on Circuits and Systems (ISCAS), 2018.
+		\item[$\bullet$] M. Léonardon, C. Leroux, P. Jääskeläinen, C. Jégo, and Y. Savaria, “Transport Triggered Polar Decoders,” in IEEE International Symposium on Turbo Codes and Iterative Information Processing (ISTC), 2018.
 	\end{itemize}
 	\item[$\bullet$] Revues internationales avec comité de lecture :
 	\begin{itemize}
-		\item[$\bullet$] M. Léonardon, A. Cassagne, C. Leroux, C. Jégo, L.-P. Hamelin, and Y. Savaria, “Fast
-        and flexible software polar list decoders,” version 2 révisée en cours de revue (août 2018), Springer Journal of Signal Processing Systems
-        (JSPS), 2018.
-        \item[$\bullet$] A. Ghaffari, M. Léonardon, A. Cassagne, C. Leroux, and Y. Savaria, “Toward high performance implementation of 5G SCMA algorithms,” soumis à IEEE Access, 2018.
+		\item[$\bullet$] M. Léonardon, A. Cassagne, C. Leroux, C. Jégo, L.-P. Hamelin, and Y. Savaria, “Fast and Flexible Software Polar List Decoders,” Journal of Signal Processing Systems (JSPS), 2018, version 2 révisée en cours de revue (août 2018).
+        \item[$\bullet$] A. Ghaffari, M. Léonardon, A. Cassagne, C. Leroux, and Y. Savaria, “Toward High Performance Implementation of 5G SCMA Algorithms,” soumis à IEEE Access, 2018.
 	\end{itemize}
 \end{itemize}
 

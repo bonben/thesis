@@ -45,6 +45,8 @@
 \usetikzlibrary{shapes,arrows}
 \usetikzlibrary{calc} 
 
+
+
 \usepackage{enumitem}   
 \usepackage{array}
 \usepackage{longtable} %pour la liste des notations
@@ -242,6 +244,11 @@
     \gdef\PN@text{}%
     \parnotereset
 }
+\makeatother
+
+
+\makeatletter
+\renewcommand\p@subfigure{\thefigure.}
 \makeatother
 
 \def\TTSC{\texttt{TT-SC}}
