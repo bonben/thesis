@@ -2,20 +2,22 @@
 \chapter{Conception d'un processeur par la définition de son architecture} % (fold)
 \label{chap:tta}
 
+Une nouvelle méthodologie est employée afin de définir une architecture de processeur efficace pour le décodage de codes polaires. Elle fait partie de la famille des architectures TTA.
+
+La section \ref{sec:tta_description} de ce chapitre présente la structure générale et les propriétés des processeurs TTA. Une des caractéristiques principales de ces architectures est leur haut degré de parallélisme. Les processeurs TTA se rapprochent des architectures VLIW. Celles-ci sont donc introduites afin de servir de point de comparaison. Un exemple d'architecture TTA est ensuite donné afin d'en illustrer son fonctionnement. La suite logicielle libre utilisée pour concevoir le processeur est nommée TCE. Ces outils permettent l'automatisation d'une grande partie de la conception des processeurs TTA. La seconde partie de la section illustre et décrit le flot de conception et le rôle des différents outils. La section \ref{sec:tta_design} détaille la conception de deux processeurs TTA à haute performance pour le décodage de codes polaires. La première architecture supporte l'algorithme SC et la seconde supporte à la fois les algorithmes SC et SCAN. Les expérimentations et les mesures réalisées sont présentées dans la section \ref{sec:tta_res}.
+
 \vspace*{\fill}
 \minitocTITI
 \vspace*{\fill}
 \newpage
 
-Dans le chapitre précédent, l'architecture d'un processeur RISC a été modifiée et son jeu d'instructions étendu afin d'obtenir un ASIP dédié au décodage des codes polaires. Dans ce chapitre, une approche différente est envisagée, dans laquelle le processeur de base n'est pas un processeur RISC mais un processeur de type TTA.
-Les architectures de type TTA (Transport Triggered Architecture) se rapprochent des architectures à très long mot d'instructions (VLIW : Very Long Instruction Word) avec néanmoins une plus grande modularité. Il est ainsi possible de rajouter des unités fonctionnelles spécialisées et de définir précisément la manière dont celles-ci sont interconnectées. Le concepteur de l'architecture est amené à sélectionner chaque unité matérielle et à spécifier précisément leur modèle matériel. La structure et les performances de l'architecture obtenue se rapprochent de celles des architectures matérielles dédiées tout en conservant la programmabilité d'un processeur généraliste. En effet, les fonctionnalités d'un processeur généraliste sont conservées. De plus, les architectures TTA bénéficient d'un écosystème d'outils qui facilitent la conception et le développement de ce type de processeurs. Le programme devant s'exécuter sur l'architecture est décrit à l'aide d'un langage de programmation haut niveau  (C, C++, OpenCL). Des outils de profilage et de débogage sont disponibles et une grande partie du modèle matériel est généré automatiquement. Dans ce chapitre, nous proposons donc de spécialiser une architecture de type TTA pour le décodage de codes polaires.
-
-La section \ref{sec:tta_description} de ce chapitre présente la structure générale et les propriétés des processeurs TTA. Une des caractéristiques principales de ces architectures est leur haut degré de parallélisme. Les processeurs TTA se rapprochent des architectures VLIW. Celles-ci sont donc introduites afin de servir de point de comparaison. Un exemple d'architecture TTA est ensuite donné afin d'en illustrer son fonctionnement. La suite logicielle libre utilisée pour concevoir et spécialiser le processeur est nommée TCE. Ces outils permettent l'automatisation d'une grande partie de la conception des processeurs TTA. La seconde partie de la section illustre et décrit le flot de conception et le rôle des différents outils. La section \ref{sec:tta_design} détaille la conception de deux processeurs TTA spécialisés dans le décodage de codes polaires. La première architecture supporte l'algorithme SC et la seconde supporte à la fois les algorithmes SC et SCAN. Les expérimentations et les mesures réalisées sont présentées dans la section \ref{sec:tta_res}.
-
 \section{Transport Triggered Architectures}
 \label{sec:tta_description}
 
 \subsection{Principes et caractéristiques des processeurs TTA}
+
+Dans le chapitre précédent, l'architecture d'un processeur RISC a été modifiée et son jeu d'instructions étendu afin d'obtenir un ASIP dédié au décodage des codes polaires. Dans ce chapitre, une approche différente est envisagée, qui consiste à définir un processeur de type TTA (Transport Triggered Architecture).
+Les architectures de type TTA se rapprochent des architectures à très long mot d'instructions (VLIW : Very Long Instruction Word) avec néanmoins une plus grande modularité. Il est ainsi possible de rajouter des unités fonctionnelles personnalisées et de définir précisément la manière dont celles-ci sont interconnectées. Le concepteur de l'architecture est amené à sélectionner chaque unité matérielle et à spécifier précisément leur modèle matériel. La structure et les performances de l'architecture obtenue se rapprochent de celles des architectures matérielles dédiées tout en conservant la programmabilité d'un processeur généraliste. En effet, les fonctionnalités d'un processeur généraliste sont conservées. De plus, les architectures TTA bénéficient d'un écosystème d'outils qui facilitent la conception et le développement de ce type de processeurs. Le programme devant s'exécuter sur l'architecture est décrit à l'aide d'un langage de programmation haut niveau  (C, C++, OpenCL). Des outils de profilage et de débogage sont disponibles et une grande partie du modèle matériel est généré automatiquement. Dans ce chapitre, nous proposons donc une architecture de type TTA pour le décodage de codes polaires.
 
 Dans une architecture de processeur, nous distinguons habituellement deux types de parallélisme.
 Le premier est le parallélisme de données.
@@ -236,7 +238,7 @@ Le but de cette section est de présenter les mesures et les expérimentations r
 \subsection{Architecture \texttt{TT-SC}.}
 \label{sec:tta_res}
 
-L'architecture \TTSC~a été synthétisée avec la bibliothèque de cellules standard ST 28nm FD-SOI, avec les paramètres 0.9V, 125$^{\circ}$C . Les mémoires sont des blocs de SRAM de la même technologie. Le Tableau \ref{tab:sw_tta} présente les performances de débit, latence et consommation de l'architecture \TTSC~exécutant l'algorithme SC. Une comparaison est faite avec les performances obtenues sur des processeurs à usage général d'architectures x86 et ARM, ainsi qu'avec celles obtenues sur le processeur XTensa du chapitre~\ref{chap:tensilica}.
+L'architecture \TTSC~a été synthétisée avec la bibliothèque de cellules standard ST 28nm FD-SOI, avec les paramètres 0.9V, 125$^{\circ}$C~\cite{st_fdsoi_2015}. Les mémoires sont des blocs de SRAM de la même technologie. Le Tableau \ref{tab:sw_tta} présente les performances de débit, latence et consommation de l'architecture \TTSC~exécutant l'algorithme SC. Une comparaison est faite avec les performances obtenues sur des processeurs à usage général d'architectures x86 et ARM, ainsi qu'avec celles obtenues sur le processeur XTensa du chapitre~\ref{chap:tensilica}.
 
 
 \begin{table}
@@ -401,7 +403,7 @@ Une implémentation ASIC de l'algorithme SCAN est proposée dans \cite{lin_reduc
 \section{Synthèse}
 
 
-Dans ce chapitre, deux architectures de processeurs spécialisées pour le décodage des codes polaires SC et SCAN sont successivement présentées. Pour ce faire, le modèle architectural TTA est décrit ainsi que la suite logicielle TCE qui propose un flot de conception complet. TCE permet la génération du modèle matériel du processeur, ainsi que la compilation de programmes décrits dans des langages de haut niveau (C / C++). Cette suite logicielle est utilisée afin de concevoir les deux architectures. Plusieurs contributions originales se dégagent de ce travail.
+Dans ce chapitre, deux architectures de processeurs à haute performance pour le décodage des codes polaires SC et SCAN sont successivement présentées. Pour ce faire, le modèle architectural TTA est décrit ainsi que la suite logicielle TCE qui propose un flot de conception complet. TCE permet la génération du modèle matériel du processeur, ainsi que la compilation de programmes décrits dans des langages de haut niveau (C / C++). Cette suite logicielle est utilisée afin de concevoir les deux architectures. Plusieurs contributions originales se dégagent de ce travail.
 
 \begin{enumerate}[label=(\roman*)]
   \item La première architecture de processeur de type TTA spécialisée dans le décodage de codes polaires est proposée.
