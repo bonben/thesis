@@ -238,6 +238,12 @@
 \settodepth\mydepth{Xygp}
 \setlength\fboxsep{0pt}
 
+\usepackage{etoolbox}
+\makeatletter
+\pretocmd{\chapter}{\addtocontents{toc}{\protect\addvspace{-5\p@}}}{}{}
+% \pretocmd{\section}{\addtocontents{toc}{\protect\addvspace{5\p@}}}{}{}
+\makeatother
+
 \usepackage[]{parnotes}
 \makeatletter
 \def\parnoteclear{%
