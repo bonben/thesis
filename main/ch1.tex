@@ -310,11 +310,17 @@ La Figure~\ref{fig:sc_n} présente les performances de décodage de l'algorithme
 \label{fig:sc_n}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[t]
   \centering
 \input{main/ch1_fig/curves/sc_R/tikz/source.tex}
 \caption{Performances de décodage de l'algorithme SC pour différentes valeurs de $R$ ($N=2048$).}
 \label{fig:sc_r}
+\end{figure}
+\begin{figure}[htp]
+  \centering
+  \input{main/ch1_fig/curves/scl_L/tikz/source.tex}
+  \caption{Performances de décodage des algorithmes SC, SCL et CASCL pour un code polaire (2048,1723). Un CRC de taille $c=16$ est utilisé pour l'algorithme CASCL.}
+  \label{fig:scl_l}
 \end{figure}
 \clearpage
 Les codes correcteurs d'erreurs reposent la notion de redondance, quantifiée par le rendement du code. Plus le rendement est faible, plus la redondance est élevée.
@@ -323,12 +329,6 @@ Une seule exception apparaît, pour le rendement $R=1/8$, rendement le plus faib
 
 \subsubsection{Impact des paramètres de l'algorithme SCL}
 
-\begin{figure}[t]
-  \centering
-  \input{main/ch1_fig/curves/scl_L/tikz/source.tex}
-  \caption{Performances de décodage des algorithmes SC, SCL et CASCL pour un code polaire (2048,1723). Un CRC de taille $c=16$ est utilisé pour l'algorithme CASCL.}
-  \label{fig:scl_l}
-\end{figure}
 La Figure~\ref{fig:scl_l} présente les performances de l'algorithme SCL. Le code considéré est un code dont la taille du mot de code est 2048 et le nombre de bits d'information est 1723. La notation employée pour désigner un tel code est : (2048,1273). Comme précisé auparavant, l'algorithme SCL permet d'améliorer les performances de décodage des codes polaires par rapport à l'algorithme SC.
 Plusieurs choses sont à observer. Tout d'abord, l'augmentation de la taille de la liste permet dans tous les cas une meilleure correction d'erreurs. Ensuite, l'utilisation de la concaténation du CRC par l'algorithme CASCL augmente très fortement les performances de décodage. Par exemple lorsque $\mathrm{L}=32$, à un FER de 10\textsuperscript{-5}, il y a une différence de 1 dB entre les algorithmes SCL et CASCL.
 
@@ -353,21 +353,23 @@ En effet, il est montré dans la Figure~\ref{fig:crc} que le nombre de bits d'in
 
 L'impact de la taille du CRC sur les performances de décodage des algorithmes adaptatifs est encore plus important. Celles-ci sont représentées pour un code polaire (2048,1723) et différentes tailles de CRC. En utilisant un CRC de taille $c=8$ ou $c=16$ on observe des dégradations importantes des performances entre les algorithmes adaptatifs d'une part et l'algorithme SCL de base d'autre part. La différence entre PASCL et FASCL est en outre négligeable. Ce phénomène s'explique par le fait qu'à des FER très faibles, il devient davantage probable d'obtenir des faux positifs lors du test de CRC durant premier décodage SC dans le cadre des algorithmes adaptatifs. Toutefois, pour un CRC de taille $c=32$, il n'y a aucune différence de performances pour le code polaire étudié entre les algorithmes CASCL, PASCL et FASCL.
 
-\begin{figure}[h]
+\subsubsection{Performances de décodages des algorithmes SCAN et SCF}
+Les Figures~\ref{fig:scf} et~\ref{fig:bp_scan} présentent les performances de décodages de ces deux algorithmes pour un code polaire (1024,512). Les courbes de performances pour l'algorithme SCF sont issues de~\cite{afisiadis_low-complexity_2014} tandis que les courbes de performances de l'algorithme BP sont issues de~\cite{pamuk_fpga_2011}. Les performances du SCF s'améliorent lorsque $T$ augmente mais restent inférieures aux performances de l'algorithme SCL avec $\mathrm{L}=4$. Le même ordre de grandeur est observé pour un algorithme SCAN à 4 itérations. Il est notable de remarquer que les performances du SCAN avec 4 itérations sont bien meilleures que celles de l'algorithme BP pour 50 itérations. En effet, à l'inverse du décodage SCAN, le séquencement du décodage BP ne tire aucun bénéfice du phénomène de polarisation car chaque bit est estimé en parallèle.
+\clearpage
+\begin{figure}[t]
   \centering
   \input{main/ch1_fig/curves/scf/tikz/source.tex}
   \caption{Performances de l'algorithme SCF en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512), $c=16$.}
   \label{fig:scf}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[htp]
   \centering
   \input{main/ch1_fig/curves/bp_scan/tikz/source.tex}
   \caption{Performances des algorithmes itératifs à sortie souple en comparaison avec les algorithmes SC et SCL pour un code polaire (1024,512).}
   \label{fig:bp_scan}
 \end{figure}
-\subsubsection{Performances de décodages des algorithmes SCAN et SCF}
-Les Figures~\ref{fig:scf} et~\ref{fig:bp_scan} présentent les performances de décodages de ces deux algorithmes pour un code polaire (1024,512). Les courbes de performances pour l'algorithme SCF sont issues de~\cite{afisiadis_low-complexity_2014} tandis que les courbes de performances de l'algorithme BP sont issues de~\cite{pamuk_fpga_2011}. Les performances du SCF s'améliorent lorsque $T$ augmente mais restent inférieures aux performances de l'algorithme SCL avec $\mathrm{L}=4$. Le même ordre de grandeur est observé pour un algorithme SCAN à 4 itérations. Il est notable de remarquer que les performances du SCAN avec 4 itérations sont bien meilleures que celles de l'algorithme BP pour 50 itérations. Ceci s'explique par le fait qu'à l'inverse du décodage SCAN, le séquencement du décodage BP ne tire aucun bénéfice du phénomène de polarisation car chaque bit est estimé en parallèle.
 
+\clearpage
 \section{L'élagage de l'arbre de décodage}
 
 % Figure sous-arbre
