@@ -1,17 +1,31 @@
 %!TEX root = ../my_thesis.tex
-\chapter{Décodeur logiciel de codes polaires à liste} % (fold)
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
+\chapter{Décodeur logiciel de codes polaires à liste}
 \label{chap:soft_scl}
+}
+{
+\Chapter{D\'ECODEUR LOGICIEL DE CODES POLAIRES \`A LISTE}
+\label{chap:soft_scl}
+}
+
+
 
 Le sujet de ce chapitre est la proposition d'un décodeur logiciel qui implémente les algorithmes de décodage à liste de codes polaires.
 La section~\ref{sec:cellular} traite de l'intérêt potentiel de tels décodeurs logiciels dans les réseaux mobiles cellulaires. La section~\ref{sec:art_scl} dresse un état de l'art des décodeurs logiciels de codes polaires de l'état de l'art.
 
 Les contributions originales de ces travaux sont présentées dans les sections~\ref{sec:gen_scl},~\ref{sec:opti_scl} et~\ref{sec:exp_scl}. La section~\ref{sec:gen_scl} définit les concepts de généricité et de flexibilité des décodeurs avant de montrer comment celles-ci sont mises en œuvre dans notre décodeur et constituent une rupture vis-à-vis de l'état de l'art. La section~\ref{sec:opti_scl} présente trois optimisations originales qui permettent d'améliorer débit et latence de décodage. La section~\ref{sec:exp_scl} présente les résultats d'expérimentation. La section~\ref{sec:scl_contrib} dresse une liste détaillée des différentes contributions.
 
-\vspace*{\fill}
-\minitocTITI
-\vspace*{\fill}
-\newpage
 
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
+  \vspace*{\fill}
+  \minitocTITI
+  \vspace*{\fill}
+  \newpage
+}
+{
+}
 
 \section{Décodeurs logiciels pour les réseaux cellulaires}
 \label{sec:cellular}
@@ -269,7 +283,7 @@ La Figure~\ref{fig:bfer_rep} montre que lorsque les \noeuds de répétition de t
 \caption{Impact de l'utilisation des \noeuds de répétition sur des implémentations quantifiées.}
 \label{fig:bfer_rep}
 \end{figure}
-  \begin{table}[b]
+  \begin{table}[hb]
     \renewcommand{\arraystretch}{1.1}
     \centering
     \caption{Comparaison de débits et latences des algorithmes SCL adaptatifs pour des représentations à virgule flottante (32 bits) et virgule fixe (16 et 8 bits). Code polaire ($2048$,$1723$), $\mathrm{L}=32$, CRC $c=32$ (GZip).}
@@ -432,7 +446,7 @@ Les débits et les latences des implémentations proposées sont détaillées da
 \subsection{Algorithme complètement adaptatif}
 L'algorithme FASCL permet d'atteindre les débits les plus élevés. Comme il est montré dans le Tableau~\ref{tab:quantif}, l'implémentation de cet algorithme avec une représentation sur 8 bits des LLR et des sommes partielles permet d'atteindre un débit de 425 Mb/s pour un code polaire (2048,1723) et le CRC GZip de taille 32 bits lorsque $E_b/N_0=4.5dB$. Ce débit est pratiquement deux fois supérieur à celui obtenu avec l'algorithme PASCL. Le rapport signal à bruit pour lequel la différence entre PASCL et FASCL est la plus grande (380\%), est dans le domaine où le FER est compris entre $10^{-3}$ et $10^{-5}$. Il s'agit du domaine ciblé pour les communications sans fils comme le norme LTE ou le futur réseau 5G. Dans ces conditions, le débit de l'algorithme FASCL est d'approximativement 230 Mb/s tandis que celui de PASCL est d'approximativement 40 Mb/s. Toutefois, rappelons que la latence dans le pire cas est plus élevée dans le cas de l'algorithme FASCL.
 
-    \begin{table}[t]
+    \begin{table}[ht]
       \centering
       \caption{Comparaison des débits et des latences des décodeurs proposés avec ceux de l'état de l'art. Représentation des LLR et sommes partielles sur 32 bits. Code polaire (2048,1723), $\mathrm{L}=32$, CRC GZip $c=32$.}
       \label{tab:res}
@@ -472,7 +486,7 @@ L'algorithme FASCL permet d'atteindre les débits les plus élevés. Comme il es
 Les débits et les latences des décodeurs proposés sont listés et comparés avec ceux de certains décodeurs de l'état de l'art dans le tableau~\ref{tab:res}. Pour tous les décodeurs, les \noeuds SPC4+ ne sont pas utilisés afin de ne pas impacter les performances de décodage. La latence donnée dans le Tableau~\ref{tab:res} est la latence \og pire cas \fg et le débit est le débit d'information moyen. La première version, CASCL, est l'implémentation de l'algorithme CASCL sans aucun élagage tandis que les versions notées CASSCL, FASSCL et PASSCL utilisent l'élagage de l'arbre. Le débit du décodeur CASSCL proposé (2.3 Mb/s) est seulement divisé par deux par comparaison avec l'implémentation spécifique déroulée de l'algorithme CASSCL décrite en~\cite{sarkis_fast_2016} (4.0 Mb/s). Elle est approximativement 4 fois plus rapide que l'implémentation générique proposée en~\cite{sarkis_increasing_2014} (0.52 Mb/s) et 2 fois plus rapide que celle proposée en~\cite{shen_low-latency_2016}. Ce résultat est obtenu grâce aux améliorations algorithmiques proposées dans la section~\ref{sec:opti_scl}. De plus, les implémentations proposées présentent une flexibilité et une généricité bien plus grandes que celles proposées dans~\cite{sarkis_increasing_2014,shen_low-latency_2016}. En effet, les représentations quantifiées, la possibilité de définir des patrons de poinçonnage et la possibilité d'utiliser les algorithmes adaptatifs n'étaient pas offertes. En utilisant la même cible matérielle (i7-2600), l'implémentation de l'algorithme PASSCL présente des débits proches de l'implémentation spécifique déroulée de~\cite{sarkis_fast_2016}. Enfin, le débit obtenu pour l'algorithme FASSCL est lui bien meilleur (jusqu'à 244 Mb/s pour $E_b/N_0=4.5dB$).
 
 \subsubsection{Performances sur différentes cibles matérielles}
-  \begin{table}[t]
+  \begin{table}[ht]
     \centering
     \caption{Comparaison des débits, du nombre de cycles d'horloge nécessaires pour décoder une trame, et de l'énergie dépensée par bit décodé, pour des décodeurs proposés sur différentes cibles matérielles. Représentation en virgule fixe sur 8 bits , $E_b/N_0 = 4.5dB$, CRC GZip $c=32$.}
     \label{tab:port}

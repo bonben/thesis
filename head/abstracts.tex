@@ -1,7 +1,21 @@
 %!TEX root = ../my_thesis.tex
 %\cleardoublepage
+
+
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
 \chapter*{Résumé}
 \addcontentsline{toc}{chapter}{Résumés}
+}
+{
+\chapter*{RÉSUMÉ}\thispagestyle{headings}
+\addcontentsline{toc}{compteur}{RÉSUMÉ}
+}
+
+
+
+
+
 %\markboth{Résumé}{Résumé}
 % put your text here
 \vskip1em
@@ -18,7 +32,16 @@ La troisième contribution de ces travaux est également une architecture de pro
 \vskip0.5cm
 \emph{Mots clefs :} Codes polaires, Décodeur Logiciel, ASIP, Annulation Successive, Annulation Successive à Liste
 \cleardoublepage
+
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
 \chapter*{Abstract}
+}
+{
+\chapter*{ABSTRACT}\thispagestyle{headings}
+\addcontentsline{toc}{compteur}{ABSTRACT}
+}
+
 \vskip1em
 
 Polar codes are a recently invented class of error-correcting codes that are of interest to both researchers and industry, as evidenced by their selection for the coding of control channels in the next generation of cellular mobile communications (5G). One of the challenges of future mobile networks is the virtualization of digital signal processing, including channel encoding and decoding algorithms. In order to improve network flexibility, these algorithms must be written in software and deployed on programmable architectures. Such a network infrastructure allow dynamic balancing of the computational effort across the network, as well as inter-cell cooperation. These techniques are designed to reduce energy consumption, increase throughput and reduce communication latency. The work presented in this manuscript focuses on the software implementation of polar codes decoding algorithms and the design of programmable architectures specialized in their execution.

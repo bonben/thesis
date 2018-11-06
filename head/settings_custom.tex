@@ -213,8 +213,14 @@
 \SetAlFnt{\small}
 \usepackage{multibib}
 \usepackage{bibentry}
-\newcites{mine}{Publications}
-
+\newcites{mine}{PUBLICATIONS}
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
+    \newcites{mine}{Publications}
+}
+{
+    \newcites{mine}{PUBLICATIONS}
+}
 \DecimalMathComma
 
 \newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
@@ -252,13 +258,13 @@
 }
 \makeatother
 
-
-\makeatletter
-\renewcommand\p@subfigure{\thefigure.}
-\makeatother
-
+\usepackage{booktabs}
 \def\TTSC{\texttt{TT-SC}}
 \def\TTSCAN{\texttt{TT-SCAN}}
+\def\noeud{nœud\xspace}
+\def\coeur{cœur\xspace}
+\def\noeuds{nœuds\xspace}
+\def\coeurs{cœurs\xspace}
 
 \lstset{
      literate=%

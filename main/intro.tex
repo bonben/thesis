@@ -1,7 +1,15 @@
 %!TEX root = ../my_thesis.tex
+
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
 \chapter*{Introduction}
 \markboth{Introduction}{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
+}
+{
+\Chapter{INTRODUCTION}\label{sec:Introduction}  % 10-12 lignes pour introduire le 
+}
+
 
 Le décodage de codes polaires sur des architectures dites programmables constitue le sujet de cette thèse. Deux axes principaux sont développés. Le premier est l'implémentation d'algorithmes de décodage sur des architectures de processeurs généralistes. Le second est la conception d'architectures programmables spécialisées pour une classe d'applications, à savoir le décodage de codes polaires. Dans cette introduction, le contexte des codes correcteurs d'erreurs et de leurs architectures est établi puis le sujet de recherche est présenté et motivé. La structure du manuscrit est ensuite détaillée en récapitulant les différentes contributions contenues dans ces travaux de thèse.
 
