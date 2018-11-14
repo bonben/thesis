@@ -3,7 +3,7 @@
 \chapter{Conception d'un processeur par la spécialisation de son architecture} % (fold)
 \label{chap:tensilica}
 
-Les chapitres~\ref{chap:tensilica} et~\ref{chap:tta} de ce manuscrit présentent deux architectures de processeurs ASIP spécialisées dans le décodage de code polaire. Ces deux architectures ont été conçues selon des méthodologies de conception différentes. La première méthodologie développée dans ce chapitre correspond à la spécialisation d'un processeur de base. Dans la section~\ref{sec:asips}, le concept d'ASIP est introduit et la méthodologie utilisée pour la première architecture est décrite. Dans la section~\ref{sec:tensilica_design}, la conception de l'ASIP est détaillée. Enfin les résultats d'implémentation et les performances de l'architecture en termes de débit, latence, complexité matérielle et consommation énergétiques sont présentés et discutés dans la section~\ref{sec:tensilica_res}.
+Les chapitres~\ref{chap:tensilica} et~\ref{chap:tta} de ce manuscrit présentent deux architectures de processeurs ASIP spécialisées dans le décodage de code polaire. Ces deux architectures ont été conçues selon des méthodologies de conception différentes. La première méthodologie développée dans ce chapitre correspond à la spécialisation d'un processeur de base. Dans la section~\ref{sec:asips}, le concept d'ASIP est introduit et la méthodologie utilisée pour la première architecture est décrite. Dans la section~\ref{sec:tensilica_design}, la conception de l'ASIP est détaillée. Enfin les résultats d'implémentation et les performances de l'architecture en termes de débit, latence, complexité matérielle et consommation énergétiques sont présentés et discutés dans la section~\ref{sec:tensilica_res}. La section \ref{sec:tensilica_conclu} dresse une synthèse des résultats obtenus et pointe les limites de ce modèle de conception.
 
 \vspace*{\fill}
 \minitocTITI
@@ -443,7 +443,7 @@ La puissance du \coeur est évaluée avec l'outil HWiNFO~\cite{noauthor_hwinfo_n
 \end{table}
 
 \section{Synthèse et limites du modèle architectural}
-
+\label{sec:tensilica_conclu}
 Une première architecture de processeur ASIP spécialisée dans le décodage de codes polaires est présentée dans ce chapitre. Les outils logiciels de Tensilica permettent de spécialiser un processeur de type RISC. Après avoir détaillé la structure générale de ces microarchitectures RISC, nous expliquons comment elles peuvent être configurées et étendues par l'utilisation des outils logiciels de Tensilica. Les avantages et les enjeux liés à l'utilisation de tels outils de conception sont mis en avant.
 
 Dans la deuxième partie du chapitre, nous expliquons comment ces outils ont été mis en œuvre pour notre problématique : le décodage de codes polaires. Tout d'abord les paramètres de l'architecture RISC de base sont modifiés et adaptés. Entre autres, une fonctionnalité permettant le support d'un parallélisme d'instruction est activée. La largeur du bus d'interface avec la mémoire de données est augmentée. Ensuite, des unités matérielles dédiées associées à des instructions spécialisées qui étendent le jeu d'instructions de base sont ajoutées. Enfin, une méthode de description logicielle nommée \og pseudo-déroulage \fg est proposée afin d'améliorer les performances de débit et de latence du processeur spécialisé conçu.
