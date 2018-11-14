@@ -1,7 +1,16 @@
 %!TEX root = ../my_thesis.tex
+
+
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
 \chapter*{Conclusions et perspectives}
 \markboth{Conclusions et perspectives}{Conclusions et perspectives}
 \addcontentsline{toc}{chapter}{Conclusions et perspectives}
+}
+{
+\Chapter{CONCLUSION}\label{sec:Conclusion}
+}
+
 
 \section*{Résumé et comparaison des différentes approches}
 

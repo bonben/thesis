@@ -1,14 +1,30 @@
 %!TEX root = ../my_thesis.tex
 
+
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
 \chapter{Conception d'un processeur par la spécialisation de son architecture} % (fold)
 \label{chap:tensilica}
+}
+{
+\chapter{CONCEPTION D'UN PROCESSEUR PAR LA SPECIALISATION DE SON ARCHITECTURE}
+\label{chap:tensilica}
+}
+
 
 Les chapitres~\ref{chap:tensilica} et~\ref{chap:tta} de ce manuscrit présentent deux architectures de processeurs ASIP spécialisées dans le décodage de code polaire. Ces deux architectures ont été conçues selon des méthodologies de conception différentes. La première méthodologie développée dans ce chapitre correspond à la spécialisation d'un processeur de base. Dans la section~\ref{sec:asips}, le concept d'ASIP est introduit et la méthodologie utilisée pour la première architecture est décrite. Dans la section~\ref{sec:tensilica_design}, la conception de l'ASIP est détaillée. Enfin les résultats d'implémentation et les performances de l'architecture en termes de débit, latence, complexité matérielle et consommation énergétiques sont présentés et discutés dans la section~\ref{sec:tensilica_res}. La section \ref{sec:tensilica_conclu} dresse une synthèse des résultats obtenus et pointe les limites de ce modèle de conception.
 
+
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
 \vspace*{\fill}
 \minitocTITI
 \vspace*{\fill}
 \newpage
+}
+{
+}
+
 
 \section{Les processeurs à jeu d'instructions spécifique à l'application}
 \label{sec:asips}

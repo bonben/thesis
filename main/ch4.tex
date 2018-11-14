@@ -1,15 +1,28 @@
 %!TEX root = ../my_thesis.tex
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
 \chapter{Conception d'un processeur par la description de son architecture} % (fold)
 \label{chap:tta}
+}
+{
+\chapter{CONCEPTION D'UN PROCESSEUR PAR LA DESCRIPTION DE SON ARCHITECTURE} % (fold)
+\label{chap:tta}
+}
+
 
 Une nouvelle méthodologie est employée afin de décrire une architecture de processeur efficace pour le décodage de codes polaires. Elle fait partie de la famille des architectures TTA.
 
 La section~\ref{sec:tta_description} de ce chapitre présente la structure générale et les propriétés des processeurs TTA. Une des caractéristiques principales de ces architectures est leur haut degré de parallélisme. Les processeurs TTA se rapprochent des architectures VLIW. Celles-ci sont donc introduites afin de servir de point de comparaison. Un exemple d'architecture TTA est ensuite donné afin d'en illustrer son fonctionnement. La suite logicielle libre utilisée pour concevoir le processeur est nommée TCE. Ces outils permettent l'automatisation d'une grande partie de la conception des processeurs TTA. La seconde partie de la section illustre et décrit le flot de conception et le rôle des différents outils. La section~\ref{sec:tta_design} détaille la conception de deux processeurs TTA à haute performance pour le décodage de codes polaires. La première architecture supporte l'algorithme SC et la seconde supporte à la fois les algorithmes SC et SCAN. Les expérimentations et les mesures réalisées sur ces deux architectures sont présentées dans la section~\ref{sec:tta_res}.
 
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
 \vspace*{\fill}
 \minitocTITI
 \vspace*{\fill}
 \newpage
+}
+{
+}
 
 \section{Transport Triggered Architectures}
 \label{sec:tta_description}

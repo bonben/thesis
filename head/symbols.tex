@@ -1,7 +1,30 @@
 %!TEX root = ../my_thesis.tex
+
+
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
 \chapter*{Liste des notations}
 \markboth{Liste des notations}{Liste des notations}
 \addcontentsline{toc}{chapter}{Liste des notations}
+}
+{
+% Liste des sigles et abbréviations / List of acronyms and abbreviations
+\ifthenelse{\equal{\Langue}{english}}{
+	\newcommand\abbrevname{LIST OF SYMBOLS AND ACRONYMS}
+}{
+	\newcommand\abbrevname{LISTE DES SIGLES ET ABRÉVIATIONS}
+}
+\chapter*{\abbrevname}
+\addcontentsline{toc}{compteur}{\abbrevname}
+\pagestyle{pagenumber}
+
+}
+
+
+
+
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
 % put your text here
 \begin{center}
 
@@ -37,9 +60,18 @@ $Q$                     & Dimension de données en mémoire                     
 \end{longtable}
 
 \end{center}
+
+
 \chapter*{Liste des acronymes}
 \markboth{Liste des acronymes}{Liste des acronymes}
 \addcontentsline{toc}{chapter}{Liste des acronymes}
+
+}
+{
+
+}
+
+
 % put your text here
 \begin{center}
 
