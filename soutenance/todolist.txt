@@ -1,0 +1,7 @@
+s7 : message software efficace en latence et debit; la différence est surtout au niveau de la conso
+s9 bis: introduire TTA de maniere générale
+s10 : mettre le triple bus avant
+s10: faire apparaitre fleches en parallel
+s15 : angliche
+s16: faire juste une fonction f
+s6 : ajouter l'élagage

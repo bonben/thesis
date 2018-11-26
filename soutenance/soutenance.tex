@@ -1,0 +1,1016 @@
+\documentclass[t,compress,mathserif,12pt,xcolor=dvipsnames]{beamer}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\usepackage{etex}
+\reserveinserts{28}
+\definecolor{bleuUni}{RGB}{0, 157, 224}
+\definecolor{marronUni}{RGB}{68, 58, 49}
+\usecolortheme[named=bleuUni]{structure}
+\usepackage[bars]{beamerthemetree} % Beamer theme v 2.2
+\usepackage{multimedia}
+\usepackage[utf8]{inputenc}
+%\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{kmath,kerkis}
+\usepackage{xmpmulti}
+%\usepackage{mathpazo}
+%\usepackage[bitstream-charter]{mathdesign}
+%\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage{tikz}
+\usetikzlibrary{patterns, shapes, arrows}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{eulervm}
+
+\lstset{
+  language=C++,
+  basicstyle=\tiny\ttfamily,
+  numbers=left,
+  numberstyle=\tiny\ttfamily,
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  escapeinside={(*@}{@*)},
+  identifierstyle=\ttfamily,
+  keywordstyle=\color[rgb]{0,0,1},
+  commentstyle=\color[rgb]{0.133,0.545,0.133},
+  stringstyle=\color[rgb]{0.627,0.126,0.941},
+  moredelim=[is][\underbar]{**}{**},
+}
+
+\lstdefinestyle{mycpp}
+{
+    language = C++,
+    % numbers=left,
+    % numbersep=0.3em,
+    escapeinside={(*@}{@*)},
+    tabsize=2,
+    % basicstyle=\tiny\ttfamily,
+    morekeywords = {constexpr,int8_t,int16_t,int32_t, size_t},
+    % commentstyle=\color{comment-color},
+}
+
+\usepackage[backend=biber, style=ieee]{biblatex}
+\addbibresource{bibli.bib}
+\renewcommand\mkbibacro[1]{{\footnotesize\MakeUppercase{#1}}}
+
+\mode<presentation>
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+ \oldmacro\hfill%
+\insertframenumber\,/\,\inserttotalframenumber}
+\setbeamertemplate{footline}[frame number]
+\setbeamersize{text margin left=10pt,text margin right=10pt}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamertemplate{frametitle}{ \nointerlineskip \begin{beamercolorbox}[wd=\paperwidth,ht=2.2ex,dp=0.5ex,left]{frametitle} \hspace*{3.1ex}\strut\bfseries\color{bleuUni!15!white}\insertframetitle\strut\par \end{beamercolorbox}}
+
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+
+
+\makeatletter
+\def\beamer@andinst{\\[0.1em]}
+\makeatother
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%\setbeamercovered{higly dynamic}
+\usetheme{Ilmenau} % Beamer theme v 3.0
+%\useoutertheme[subsection=true]{smoothbars}%Beamer Outer Theme-circles on top
+\setbeamercolor{section in head/foot}{bg=marronUni}
+
+\useinnertheme{circles} %rectangle bullet points instead of circle ones
+\usepackage{beamerthemebars}
+\setbeamercolor{navigation symbols dimmed}{fg=red!80!black}
+\setbeamercolor{navigation symbols}{fg=red!80!black}
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\title{\textbf{Décodage de codes polaires sur des architectures programmables}}
+%\subtitle{algorithms et arhitecture}\hspace{10.7cm}
+\author[Mathieu Léonardon\hspace{7.51cm}{mathieu.leonardon@ims-bordeaux.fr}]    {Mathieu Léonardon}
+\titlegraphic{\includegraphics[height=1cm]{logos/ims.png} \hfil %
+              \includegraphics[height=1cm]{logos/inp.PNG} \hfil %
+              \includegraphics[height=1cm]{logos/ub.png}  \hfil %
+              \includegraphics[height=1cm]{logos/poly.eps}}
+\date{13 Décembre 2018}
+%\pgfdeclareimage[height=.8cm]{logo_ISCAS}{index.png}
+%\logo{\pgfuseimage{logo_ISCAS}\hspace{\dimexpr\paperwidth-3.55cm}\vspace{-8pt}}
+
+\definecolor{dgreen}{rgb}{0.,0.6,0.}
+\definecolor{milano}{rgb}{0.458824, 0.050980, 0.058824}
+\definecolor{bahama}{rgb}{0.066667, 0.298039, 0.443137}
+\definecolor{blupres}{RGB}{0, 157, 224}
+\definecolor{redpres}{RGB}{204, 0, 0}
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+\newcommand{\RED} [1]{\textcolor{red}{\textbf{#1}}}
+\newcommand{\ORANGE} [1]{\textcolor{orange}{\textbf{#1}}}
+\newcommand{\GREEN} [1]{\textcolor{dgreen}{\textbf{#1}}}
+\newcommand{\BLUE} [1]{\textcolor{blue}{\textbf{#1}}}
+
+\newcommand{\MILANO} [1]{\textcolor{milano}{#1}}
+\newcommand{\BAHAMA} [1]{\textcolor{bahama}{#1}}
+
+\usepackage{textpos}
+%\usepackage{stmaryrd}
+\usepackage{amsbsy}
+\usepackage{makecell}
+%\usepackage{fourier-orns}
+% \usepackage{tikz}
+% \usetikzlibrary{patterns, shapes, arrows, shapes.multipart}
+
+\usepackage{etoolbox}
+\AtBeginSection[]
+{
+	\ifnumcomp{\value{section}}{=}{1}{}{
+\begin{frame}[c]{Plan}
+\centering
+\tableofcontents[
+  currentsection,
+  currentsubsection,
+]
+\end{frame}
+}
+}
+\AtBeginSubsection[]
+{
+	\begin{frame}[c]{ToC}
+\tableofcontents[
+currentsection,
+sectionstyle=show/show,
+subsectionstyle=show/shaded/hide
+]
+	\end{frame}
+}
+
+
+% \defbeamertemplate*{title page}{customized}[1][]
+% {
+%   \usebeamerfont{title}\inserttitle\par
+%   \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par
+%   \bigskip
+%   \usebeamerfont{author}\insertauthor\par
+%   \usebeamerfont{institute}\insertinstitute\par
+%   \usebeamerfont{date}\insertdate\par
+%   \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
+% }
+
+\bibliography{bibli}
+
+\begin{document}
+
+\begin{frame}[c]
+\titlepage
+\end{frame}
+
+\begin{frame}[c]
+	\tableofcontents[
+	subsectionstyle=hide,
+	]
+\end{frame}
+
+
+
+
+\section[Introduction]{Introduction}
+\subsection{Les codes correcteurs d'erreurs}
+\subsection{Les codes polaires}
+
+\begin{frame}[c]{Chaîne de communication}
+	\begin{itemize}
+		\item Famille récente de codes correcteurs d'erreurs \cite{arikan2009channel}
+		\vspace*{0.5cm}
+		\item Sélectionnés pour les canaux de contrôle du standard 5G\cite{TS38212}
+		\vspace*{0.5cm}
+		\item Nombreux algorithmes de décodages
+		\vspace*{0.5cm}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}[c]{Algorithmes de décodage}
+  \begin{table}[t]
+    \centering
+    {\small\resizebox{0.8\linewidth}{!}{
+     \begin{tabular}{r|c|c|c} 
+      \textbf{Algorithme}  & \textbf{Performances}  & \multirow{2}{*}{\textbf{Débit}} & \textbf{Latence}  \\
+      \textbf{de décodage} & \textbf{BER \& FER}    &                                 & \textbf{Maximum}  \\
+      \hline
+      SC           & \RED{faibles}                  & \GREEN{haut}                    & \GREEN{faible}    \\
+      SCL          & \ORANGE{moyennes}              & \RED{bas}                       & \ORANGE{moyenne}  \\
+      CA-SCL       & \GREEN{importantes}            & \RED{bas}                       & \ORANGE{moyenne}  \\
+      Adaptive-SCL & \GREEN{importantes}            & \GREEN{haut}                    & \RED{forte}       \\
+      SC Stack     & \GREEN{very importantes}       & \ORANGE{moyen}                  & \RED{forte}       \\
+    \end{tabular}
+    }}
+  \end{table}
+	\vspace{0.5cm}
+\end{frame}
+
+
+\section[Décodeur logiciel à liste]{Décodage à liste sur processeurs génériques}
+\section{Conception d'architectures programmables}
+
+
+
+
+
+
+
+
+
+\begin{frame}[c]{Algorithmes de décodage}
+  \begin{table}[t]
+    \centering
+    {\small\resizebox{0.8\linewidth}{!}{
+     \begin{tabular}{r|c|c|c} 
+      \textbf{Algorithme}  & \textbf{Performances}  & \multirow{2}{*}{\textbf{Débit}} & \textbf{Latence}  \\
+      \textbf{de décodage} & \textbf{BER \& FER}    &                                 & \textbf{Maximum}  \\
+      \hline
+      SC           & \RED{faibles}                  & \GREEN{haut}                    & \GREEN{faible}    \\
+      SCL          & \ORANGE{moyennes}              & \RED{bas}                       & \ORANGE{moyenne}  \\
+      CA-SCL       & \GREEN{importantes}            & \RED{bas}                       & \ORANGE{moyenne}  \\
+      Adaptive-SCL & \GREEN{importantes}            & \GREEN{haut}                    & \RED{forte}       \\
+      SC Stack     & \GREEN{very importantes}       & \ORANGE{moyen}                  & \RED{forte}       \\
+    \end{tabular}
+    }}
+  \end{table}
+	\vspace{0.5cm}
+	\centering
+  Tous ces algorithmes sont basés sur l'algorithme SC
+  \vspace{0.7cm}
+
+  L'architecture proposée se concentre sur l'algorithme SC
+\end{frame}
+
+\centering
+\begin{frame}[c]{L'algorithme de décodage SC}
+	\begin{itemize}
+		\item<1-> Traversée d'un arbre binaire
+		\item<2-> Parallélisme interne
+		\item<3-> Dépendant du niveau dans l'arbre
+	\end{itemize}
+	\vspace*{0.5cm}
+	\multiinclude[<+>][start=1,format=pdf,graphics={width=.8\textwidth}]{./fig/SC_decoding}
+\end{frame}
+
+
+\begin{frame}[c]{Des implémentations materielles et logicielles efficaces}
+
+	\begin{minipage}[c][0cm][t]{\textwidth}
+	\centering
+	\only<1>{Implémentations matérielles dédiées}
+	\only<2>{Implémentations logicielles sur des processeurs génériques}
+	\only<3>{Tailles de codes et rendements variés}
+	\only<4>{Latence en faveur des architectures dédiées}
+	\only<5>{Débits compétitifs des décodeurs logiciels}
+	\only<6>{Principal défaut des décodeurs logiciels : la consommation énergétique}
+	\only<7>{\GREEN{Comment conserver la flexibilité des décodeurs logiciels en se rapprochant des performances des architectures dédiées ?}}
+	\end{minipage}		
+
+	\vspace{1cm}
+	% \only<+>{
+	% \begin{tabular}{ccccccc}
+	% \vspace{0.55cm}
+	% & & & & & & \\
+	% & & & & & & \\
+	% & & & & & & \\
+	% & & & & & & \\
+	% & & & & & & \\
+	% & & & & & & \\
+	% & & & & & & \\
+	% & & & & & & \\
+	% % Work           & Platform   &  N                     & R                    & Lat. ($\mu s$)& Thr.(Mb/s) & $E_b$ (nJ/bit)  \\\hline
+	% % \cite{6804939} & Stratix IV &  32768                 & 0.9                  & 26.4          & 1200       & -               \\
+	% % \cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 5.46          & 94         & 0.095           \\
+	% % \cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & 436        & 0.006           \\\hline
+	% % \cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & 31            & 886        & 73              \\
+	% % \cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & 337           & 1400       & 34              \\
+	% % \cite{7760327} & Cortex A57 &  32768                 & 0.83                 & 374           & 73         & 27              \\
+	% % \cite{Giard15} & Tesla K20c &  4096                  & 0.90                 & 9400          & 1043       & 216             \\
+	% \end{tabular}
+	% }
+	\only<+>{
+	\begin{tabular}{c|c|c|c|c|c|c}
+	Ref.           & \textbf{Circuit} &  N                     & R                    & Lat. ($\mu s$)& Débit(Mb/s) & $E_b$ (nJ/bit)  \\\hline
+	\cite{6804939} & \textbf{Stratix IV} &  32768                 & 0.9                  & 26.4          & 1200       & -               \\
+	\cite{7105452} & \textbf{Stratix IV} &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 2.4           & 237000     & -               \\
+	\cite{8017407} & \textbf{ASIC 28nm } &  1024                  & 0.5                  & 5.46          & 94         & 0.095           \\
+	\cite{8017407} & \textbf{ASIC 28nm } &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & 436        & 0.006           \\\hline
+	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & 31            & 886        & 73                       \\
+	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & 337           & 1400       & 34                       \\
+	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & 374           & 73         & 27                       \\
+	\cite{Giard15} & Tesla K20c &  4096                  & 0.90                 & 9400          & 1043       & 216                      \\
+	\end{tabular}
+	\footnotetext[1]{\tiny Fixed N \& R}
+	}
+	\only<+>{
+	\begin{tabular}{c|c|c|c|c|c|c}
+	Ref.           & \textbf{Circuit  } &  N                     & R                    & Lat. ($\mu s$)& Débit(Mb/s) & $E_b$ (nJ/bit)  \\\hline
+	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & 26.4          & 1200       & -                        \\
+	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 2.4           & 237000     & -                        \\
+	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 5.46          & 94         & 0.095                    \\
+	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & 436        & 0.006                    \\\hline
+	\cite{Giard15} & \textbf{i7-4770S  } &  32768                 & 0.84                 & 31            & 886        & 73              \\
+	\cite{6960078} & \textbf{i7-4960HQ } &  32768                 & 0.83                 & 337           & 1400       & 34              \\
+	\cite{7760327} & \textbf{Cortex A57} &  32768                 & 0.83                 & 374           & 73         & 27              \\
+	\cite{Giard15} & \textbf{Tesla K20c} &  4096                  & 0.90                 & 9400          & 1043       & 216             \\
+	\end{tabular}
+	\footnotetext[1]{\tiny Fixed N \& R}
+	}
+	\only<+>{
+	\begin{tabular}{c|c|c|c|c|c|c}
+	Ref.           & Circuit   &  \textbf{N                  }   & \textbf{R                  }  & Lat. ($\mu s$)& Débit(Mb/s) & $E_b$ (nJ/bit)  \\\hline
+	\cite{6804939} & Stratix IV &  \textbf{32768              }   & \textbf{0.9                }  & 26.4          & 1200       & -               \\
+	\cite{7105452} & Stratix IV &  \textbf{1024\footnotemark[1]}  & \textbf{0.5\footnotemark[1]}  & 2.4           & 237000     & -               \\
+	\cite{8017407} & ASIC 28nm  &  \textbf{1024               }   & \textbf{0.5                }  & 5.46          & 94         & 0.095           \\
+	\cite{8017407} & ASIC 28nm  &  \textbf{1024\footnotemark[1]}  & \textbf{0.5\footnotemark[1]}  & 1.17          & 436        & 0.006           \\\hline
+	\cite{Giard15} & i7-4770S   &  \textbf{32768              }   & \textbf{0.84               }  & 31            & 886        & 73              \\
+	\cite{6960078} & i7-4960HQ  &  \textbf{32768              }   & \textbf{0.83               }  & 337           & 1400       & 34              \\
+	\cite{7760327} & Cortex A57 &  \textbf{32768              }   & \textbf{0.83               }  & 374           & 73         & 27              \\
+	\cite{Giard15} & Tesla K20c &  \textbf{4096               }   & \textbf{0.90               }  & 9400          & 1043       & 216             \\
+	\end{tabular}
+	\footnotetext[1]{\tiny Fixed N \& R}
+	}
+		\only<+>{
+	\begin{tabular}{c|c|c|c|c|c|c}
+	Ref.           & Circuit   &  N                     & R                    & \textbf{Lat.} ($\mathbold{\mu s}$)& Débit(Mb/s) & $E_b$ (nJ/bit)    \\\hline
+	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & \GREEN{26.4}                   & 1200       & -         \\
+	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & \GREEN{2.4}                    & 237000     & -               \\
+	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & \GREEN{5.46}                   & 94         & 0.095     \\
+	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & \GREEN{1.17}                   & 436        & 0.006     \\\hline
+	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & \GREEN{31  }                   & 886        & 73        \\
+	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & \ORANGE{337}                   & 1400       & 34        \\
+	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & \ORANGE{374}                   & 73         & 27        \\
+	\cite{Giard15} & Tesla K20c &  4096                  & 0.90                 & \RED{9400}                     & 1043       & 216       \\
+	\end{tabular}
+	\footnotetext[1]{\tiny Fixed N \& R}
+	}
+	\only<+>{
+	\begin{tabular}{c|c|c|c|c|c|c}
+	Ref.           & Circuit   &  N                     & R                    & Lat. ($\mu s$)& \textbf{Débit(Mb/s)} & $E_b$ (nJ/bit)    \\\hline
+	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & 26.4          & \GREEN{1200}       & -                  \\
+	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 2.4           & \BLUE{237000}      & -                  \\
+	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 5.46          & \ORANGE{94}        & 0.095              \\
+	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & \GREEN{436}        & 0.006              \\\hline
+	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & 31            & \GREEN{886}        & 73                 \\
+	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & 337           & \GREEN{1400}       & 34                 \\
+	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & 374           & \ORANGE{73}        & 27                 \\
+	\cite{Giard15} & Tesla K20c &  4096                  & 0.90                 & 9400          & \GREEN{1043}       & 216                \\
+	\end{tabular}
+	\footnotetext[1]{\tiny Fixed N \& R}
+	}
+	\only<+>{
+	\begin{tabular}{c|c|c|c|c|c|c}
+	Ref.           & Circuit   &  N                     & R                    & Lat. ($\mu s$)& Débit(Mb/s) & $\mathbf{E_b}$ \textbf{(nJ/bit)}  \\\hline
+	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & 26.4          & 1200       & \textbf{-}                        \\
+	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 2.4           & 237000     & \textbf{-}                        \\
+	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 5.46          & 94         & \GREEN{0.095}                     \\
+	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & 436        & \GREEN{0.006}                     \\\hline
+	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & 31            & 886        & \ORANGE{73}                       \\
+	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & 337           & 1400       & \ORANGE{34}                       \\
+	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & 374           & 73         & \ORANGE{27}                       \\
+	\cite{Giard15} & Tesla K20c &  4096                  & 0.90                 & 9400          & 1043       & \RED{216}                         \\
+	\end{tabular}
+	\footnotetext[1]{\tiny Fixed N \& R}
+	}
+
+	\only<+>{
+	\vspace{0.5cm}
+	\begin{tabular}{c|c|c|c|c|c|c}
+	Ref.           & Circuit   &  N                     & R                    & Lat. ($\mu s$)& Débit(Mb/s) & $E_b$ (nJ/bit)  \\\hline
+	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & 26.4          & 1200       & -                        \\
+	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 2.4           & 237000     & -                        \\
+	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 5.46          & 94         & 0.095                     \\
+	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & 436        & 0.006                     \\\hline
+	& \GREEN{?} & \GREEN{?} & \GREEN{?} & \GREEN{?} & \GREEN{?} & \GREEN{?} \\\hline
+	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & 31            & 886        & 73                       \\
+	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & 337           & 1400       & 34                       \\
+	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & 374           & 73         & 27                       \\
+	\cite{Giard15} & Tesla K20c &  4096                  & 0.90                 & 9400          & 1043       & 216                         \\
+	\end{tabular}
+	}
+
+\end{frame}
+
+
+% \begin{frame}[c]{Goal of this research}
+% 	To propose a polar decoder architecture that
+% 	\vspace*{1.5cm}
+% 	\begin{itemize}
+% 		\item<+-> Maintains the genericity of software programmable processors
+% 		\item<+-> Increases the throughput
+% 		\item<+-> Decreases the energy consumption
+% 		\item<+-> May be easily improved to support various algorithms (SCAN, SCF...)
+% 	\end{itemize}
+% \end{frame}
+
+
+
+
+\begin{frame}[c]{Transport Triggered Architectures}
+	\begin{itemize}
+		\item Modèle de processeur
+		\vspace{0.5cm}
+		\item Similaire aux architectures VLIW
+		\vspace{0.5cm}
+		\item Parallélisme de données
+		\vspace{0.5cm}
+		\item Parallélisme d'instructions
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[c]{Structure d'un processeur TTA}
+	\multiinclude[<+>][start=1,format=pdf,graphics={width=.8\textwidth}]{./fig/anim_tta_base}
+\end{frame}
+
+\begin{frame}[c]{Niveau de parallélisme}
+	Two main polar functions : $f$ and $g$
+	\vspace{1cm}
+
+	\includegraphics[width=0.7\textwidth]{fig/f_g_dimensions_scalar}
+\end{frame}
+
+\begin{frame}[c]{Niveau de parallélisme}
+	Two main polar functions : $f$ and $g$
+	\vspace{1cm}
+
+	\includegraphics[width=0.7\textwidth]{fig/f_g_dimensions_vector}
+\end{frame}
+
+\begin{frame}[c]{Conception du processeur}
+	\begin{columns}[T] % align columns
+		\begin{column}{.48\textwidth}
+			\vspace{-0.5cm}
+			\multiinclude[<+>][start=1,format=pdf,graphics={width=1.4\textwidth}]{./fig/archi_sc_construction}
+		\end{column}
+		\begin{column}{.07\textwidth}
+		\end{column}
+		\begin{column}{.41\textwidth}
+			\begin{itemize}
+				\item<1-> Mémoires vectorielles
+				\vspace{0.2cm}
+				\item<2-> 2 bus de 512 bits
+				\vspace{0.2cm}
+				\item<2-> 1 bus de 64 bits
+				\vspace{0.2cm}
+				\item<3-> Unité de chargement et sauvegarde vectorielles
+				\vspace{0.2cm}
+				\item<4-> Unité de calcul polaire
+			\end{itemize}
+		\end{column}
+	\end{columns} % align columns
+\end{frame}
+
+\begin{frame}[c]{Compilation}
+	\includegraphics[width=\textwidth]{fig/compilation}
+\end{frame}
+
+\begin{frame}[c]{Parallélisme d'instruction}
+	\multiinclude[<+>][start=1,format=pdf,graphics={width=.8\textwidth}]{./fig/ilp}
+\end{frame}
+
+
+
+
+
+\begin{frame}[c]{Comparaison avec des décodeurs logiciels}
+	\begin{columns}[T] % align columns
+	\begin{column}{.48\textwidth}
+		\begin{itemize}
+			\item<+-> Architecture proposée
+			\item<+-> Processeurs Intel x86 (i7-4712HQ) et ARM (Cortex A57)
+			\begin{itemize}
+				\item<+-> Boîte à outils logicielle \textbf{AFF3CT}
+				\item<+-> SIMD (Neon \& AVX2)
+			\end{itemize}
+			\item<+-> ASIP de type Tensilica
+			\item<+-> Débit meximum atteint par le processeur proposé
+			\item<+-> Consommation énergétique réduite d'un à deux ordres de grandeur
+		\end{itemize}
+	\end{column}
+
+	\begin{column}{.48\textwidth}
+	\only<1>{
+		\begin{table}
+			\centering
+			{
+			\small\resizebox{\linewidth}{!}{
+			\begin{tabular}{c|c|c|c|c}
+				\toprule
+
+				Architecture & $N$ & \begin{tabular}{c}Latence\\{[$\mu$s]}\end{tabular} & \begin{tabular}{c}Débit\\{[Mb/s]}\end{tabular} & \begin{tabular}{c}$E_b$\\{[nJ/bit]}\end{tabular} \\
+
+				\cmidrule(lr){1-1}
+				\cmidrule(lr){2-2}
+				\cmidrule(lr){3-5}
+
+				\multirow{2}{*}{\bf \BLUE{TTPD-800MHz}}            & $1024$   & $1.4$  & $352$ & $0.14$ \\ % 1512 cycles
+				                                            & $512$    & $0.8$  & $313$ & $0.15$ \\ % 803 cycles
+				\multirow{2}{*}{\bf \BLUE{(ASIP)}}                 & $256$    & $0.4$  & $304$ & $0.16$ \\ % 413 cycles
+				                                            & $128$    & $0.2$  & $284$ & $0.17$ \\ % 224 cycles
+				\midrule
+				\multirow{2}{*}{\bf i7-3.3GHz}              & $1024$   & $2.0$  & $257$ & $41$   \\
+				                                            & $512$    & $1.2$  & $210$ & $49$   \\
+				\multirow{2}{*}{\bf (GPP)}                  & $256$    & $0.7$  & $179$ & $59$   \\
+				                                            & $128$    & $0.4$  & $143$ & $73$   \\
+				\midrule    
+				\multirow{2}{*}{\bf A57-1.1GHz}             & $1024$   & $10.7$ & $48$  & $17$   \\
+				                                            & $512$    & $5.3$  & $48$  & $17$   \\
+				\multirow{2}{*}{\bf (GPP)}                  & $256$    & $2.8$  & $46$  & $17$   \\
+				                                            & $128$    & $1.6$  & $41$  & $20$   \\
+				\midrule
+				\multirow{2}{*}{\bf LX7-835MHz}             & $1024$   & $7.2$  & $71$  & $1.6$  \\
+				                                            & $512$    & $3.9$  & $66$  & $1.7$  \\
+				\multirow{2}{*}{\bf (ASIP)}                 & $256$    & $1.9$  & $65$  & $1.7$  \\
+				                                            & $128$    & $1.0$  & $62$  & $1.8$  \\
+				\bottomrule
+			\end{tabular}
+			}}
+		\end{table}
+	}
+		
+		\only<2-4>{
+		\begin{table}
+			\centering
+			{
+			\small\resizebox{\linewidth}{!}{
+			\begin{tabular}{c|c|c|c|c}
+				\toprule
+
+				Architecture & $N$ & \begin{tabular}{c}Latence\\{[$\mu$s]}\end{tabular} & \begin{tabular}{c}Débit\\{[Mb/s]}\end{tabular} & \begin{tabular}{c}$E_b$\\{[nJ/bit]}\end{tabular} \\
+
+				\cmidrule(lr){1-1}
+				\cmidrule(lr){2-2}
+				\cmidrule(lr){3-5}
+
+
+				\multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & $352$ & $0.14$ \\ % 1512 cycles
+				                                            & $512$    & $0.8$  & $313$ & $0.15$ \\ % 803 cycles
+				\multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & $304$ & $0.16$ \\ % 413 cycles
+				                                            & $128$    & $0.2$  & $284$ & $0.17$ \\ % 224 cycles
+				\midrule
+				\multirow{2}{*}{\bf \BLUE{i7-3.3GHz}}       & $1024$   & $2.0$  & $257$ & $41$   \\
+				                                            & $512$    & $1.2$  & $210$ & $49$   \\
+				\multirow{2}{*}{\bf \BLUE{(GPP)}}           & $256$    & $0.7$  & $179$ & $59$   \\
+				                                            & $128$    & $0.4$  & $143$ & $73$   \\
+				\midrule    
+				\multirow{2}{*}{\bf \BLUE{A57-1.1GHz}}      & $1024$   & $10.7$ & $48$  & $17$   \\
+				                                            & $512$    & $5.3$  & $48$  & $17$   \\
+				\multirow{2}{*}{\bf \BLUE{(GPP)}}           & $256$    & $2.8$  & $46$  & $17$   \\
+				                                            & $128$    & $1.6$  & $41$  & $20$   \\
+				\midrule
+				\multirow{2}{*}{\bf LX7-835MHz}             & $1024$   & $7.2$  & $71$  & $1.6$  \\
+				                                            & $512$    & $3.9$  & $66$  & $1.7$  \\
+				\multirow{2}{*}{\bf (ASIP)}                 & $256$    & $1.9$  & $65$  & $1.7$  \\
+				                                            & $128$    & $1.0$  & $62$  & $1.8$  \\
+				\bottomrule
+			\end{tabular}
+			}}
+		\end{table}
+		}
+
+	\only<5>{
+		\begin{table}
+			\centering
+			{
+			\small\resizebox{\linewidth}{!}{
+			\begin{tabular}{c|c|c|c|c}
+				\toprule
+
+				Architecture & $N$ & \begin{tabular}{c}Latence\\{[$\mu$s]}\end{tabular} & \begin{tabular}{c}Débit\\{[Mb/s]}\end{tabular} & \begin{tabular}{c}$E_b$\\{[nJ/bit]}\end{tabular} \\
+
+				\cmidrule(lr){1-1}
+				\cmidrule(lr){2-2}
+				\cmidrule(lr){3-5}
+
+
+				\multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & $352$ & $0.14$ \\ % 1512 cycles
+				                                            & $512$    & $0.8$  & $313$ & $0.15$ \\ % 803 cycles
+				\multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & $304$ & $0.16$ \\ % 413 cycles
+				                                            & $128$    & $0.2$  & $284$ & $0.17$ \\ % 224 cycles
+				\midrule
+				\multirow{2}{*}{\bf i7-3.3GHz}              & $1024$   & $2.0$  & $257$ & $41$   \\
+				                                            & $512$    & $1.2$  & $210$ & $49$   \\
+				\multirow{2}{*}{\bf (GPP)}                  & $256$    & $0.7$  & $179$ & $59$   \\
+				                                            & $128$    & $0.4$  & $143$ & $73$   \\
+				\midrule    
+				\multirow{2}{*}{\bf A57-1.1GHz}             & $1024$   & $10.7$ & $48$  & $17$   \\
+				                                            & $512$    & $5.3$  & $48$  & $17$   \\
+				\multirow{2}{*}{\bf (GPP)}                  & $256$    & $2.8$  & $46$  & $17$   \\
+				                                            & $128$    & $1.6$  & $41$  & $20$   \\
+				\midrule
+				\multirow{2}{*}{\bf \BLUE{LX7-835MHz}}      & $1024$   & $7.2$  & $71$  & $1.6$  \\
+				                                            & $512$    & $3.9$  & $66$  & $1.7$  \\
+				\multirow{2}{*}{\bf \BLUE{(ASIP)}}          & $256$    & $1.9$  & $65$  & $1.7$  \\
+				                                            & $128$    & $1.0$  & $62$  & $1.8$  \\
+
+				\bottomrule
+			\end{tabular}
+			}}
+		\end{table}
+		}
+		\only<6>{
+		\begin{table}
+			\centering
+			{
+			\small\resizebox{\linewidth}{!}{
+			\begin{tabular}{c|c|c|c|c}
+				\toprule
+
+				Architecture & $N$ & \begin{tabular}{c}Latence\\{[$\mu$s]}\end{tabular} & \begin{tabular}{c}Débit\\{[Mb/s]}\end{tabular} & \begin{tabular}{c}$E_b$\\{[nJ/bit]}\end{tabular} \\
+
+				\cmidrule(lr){1-1}
+				\cmidrule(lr){2-2}
+				\cmidrule(lr){3-5}
+
+
+				\multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & \GREEN{$\mathbf{352}$} & $0.14$ \\ % 1512 cycles
+				                                            & $512$    & $0.8$  & \GREEN{$\mathbf{313}$} & $0.15$ \\ % 803 cycles
+				\multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & \GREEN{$\mathbf{304}$} & $0.16$ \\ % 413 cycles
+				                                            & $128$    & $0.2$  & \GREEN{$\mathbf{284}$} & $0.17$ \\ % 224 cycles
+				\midrule
+				\multirow{2}{*}{\bf i7-3.3GHz}              & $1024$   & $2.0$  & \GREEN{$\mathbf{257}$} & $41$   \\
+				                                            & $512$    & $1.2$  & \GREEN{$\mathbf{210}$} & $49$   \\
+				\multirow{2}{*}{\bf (GPP)}                  & $256$    & $0.7$  & \GREEN{$\mathbf{179}$} & $59$   \\
+				                                            & $128$    & $0.4$  & \GREEN{$\mathbf{143}$} & $73$   \\
+				\midrule    
+				\multirow{2}{*}{\bf A57-1.1GHz}             & $1024$   & $10.7$ & \ORANGE{$\mathbf{48}$} & $17$   \\
+				                                            & $512$    & $5.3$  & \ORANGE{$\mathbf{48}$} & $17$   \\
+				\multirow{2}{*}{\bf (GPP)}                  & $256$    & $2.8$  & \ORANGE{$\mathbf{46}$} & $17$   \\
+				                                            & $128$    & $1.6$  & \ORANGE{$\mathbf{41}$} & $20$   \\
+				\midrule
+				\multirow{2}{*}{\bf LX7-835MHz}             & $1024$   & $7.2$  & \ORANGE{$\mathbf{71}$} & $1.6$  \\
+				                                            & $512$    & $3.9$  & \ORANGE{$\mathbf{66}$} & $1.7$  \\
+				\multirow{2}{*}{\bf (ASIP)}                 & $256$    & $1.9$  & \ORANGE{$\mathbf{65}$} & $1.7$  \\
+				                                            & $128$    & $1.0$  & \ORANGE{$\mathbf{62}$} & $1.8$  \\
+
+				\bottomrule
+			\end{tabular}
+			}}
+		\end{table}
+		}
+		\only<7>{
+		\begin{table}
+			\centering
+			{
+			\small\resizebox{\linewidth}{!}{
+			\begin{tabular}{c|c|c|c|c}
+				\toprule
+
+				Architecture & $N$ & \begin{tabular}{c}Latence\\{[$\mu$s]}\end{tabular} & \begin{tabular}{c}Débit\\{[Mb/s]}\end{tabular} & \begin{tabular}{c}$E_b$\\{[nJ/bit]}\end{tabular} \\
+
+				\cmidrule(lr){1-1}
+				\cmidrule(lr){2-2}
+				\cmidrule(lr){3-5}
+
+
+				\multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & $352$ & \GREEN{$\mathbf{0.14}$} \\ % 1512 cycles
+				                                            & $512$    & $0.8$  & $313$ & \GREEN{$\mathbf{0.15}$} \\ % 803 cycles
+				\multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & $304$ & \GREEN{$\mathbf{0.16}$} \\ % 413 cycles
+				                                            & $128$    & $0.2$  & $284$ & \GREEN{$\mathbf{0.17}$} \\ % 224 cycles
+				\midrule
+				\multirow{2}{*}{\bf i7-3.3GHz}              & $1024$   & $2.0$  & $257$ & \RED{$\mathbf{41}$}   \\
+				                                            & $512$    & $1.2$  & $210$ & \RED{$\mathbf{49}$}   \\
+				\multirow{2}{*}{\bf (GPP)}                  & $256$    & $0.7$  & $179$ & \RED{$\mathbf{59}$}   \\
+				                                            & $128$    & $0.4$  & $143$ & \RED{$\mathbf{73}$}   \\
+				\midrule    
+				\multirow{2}{*}{\bf A57-1.1GHz}             & $1024$   & $10.7$ & $48$  & \RED{$\mathbf{17}$}   \\
+				                                            & $512$    & $5.3$  & $48$  & \RED{$\mathbf{17}$}   \\
+				\multirow{2}{*}{\bf (GPP)}                  & $256$    & $2.8$  & $46$  & \RED{$\mathbf{17}$}   \\
+				                                            & $128$    & $1.6$  & $41$  & \RED{$\mathbf{20}$}   \\
+				\midrule
+				\multirow{2}{*}{\bf LX7-835MHz}             & $1024$   & $7.2$  & $71$  & \ORANGE{$\mathbf{1.6}$}  \\
+				                                            & $512$    & $3.9$  & $66$  & \ORANGE{$\mathbf{1.7}$}  \\
+				\multirow{2}{*}{\bf (ASIP)}                 & $256$    & $1.9$  & $65$  & \ORANGE{$\mathbf{1.7}$}  \\
+				                                            & $128$    & $1.0$  & $62$  & \ORANGE{$\mathbf{1.8}$}  \\
+
+				\bottomrule
+			\end{tabular}
+			}}
+		\end{table}
+		}
+	\end{column}
+	\end{columns}
+\end{frame}
+
+
+\begin{frame}[c]{Comparaison avec des architectures matérielles dédiées}
+		\begin{itemize}
+			\item<+-> Processeur proposé
+			\item<+-> Décodeur matériel dédié
+			\item<2-> Décodeur matériel dédié avec construction optimisée
+			\item<+-> Implémentations FPGA
+		\end{itemize}
+
+		\only<1>{
+			\begin{table}
+			\centering
+			{
+				\small\resizebox{0.8\linewidth}{!}{
+				\begin{tabular}{c|c|c|c|c}
+					                        & \BLUE{TTPD Proposé}  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+					\cmidrule(lr){2-2}
+					\cmidrule(lr){3-3}
+					\cmidrule(lr){4-5}
+
+					\textbf{FPGA}               &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
+					\textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
+					\textbf{\'Elagage}          &  R0 \& R1      & Complet               & Complet            & Complet              \\
+					\textbf{LUTS}               &  14744         & 23020                 & 24821              & 22115                \\
+					\textbf{RAM} (Kb)           &  141           & 43                    & 36                 & 36                   \\
+
+				\end{tabular}
+			}}
+			\end{table}
+		}
+
+		\only<2>{
+			\begin{table}
+			\centering
+			{
+				\small\resizebox{0.8\linewidth}{!}{
+				\begin{tabular}{c|c|c|c|c}
+					                        & TTPD Proposé  & \BLUE{\cite{giard_638_2015}} & \multicolumn{2}{c}{\BLUE{\cite{sarkis2014fast}}} \\
+					\cmidrule(lr){2-2}
+					\cmidrule(lr){3-3}
+					\cmidrule(lr){4-5}
+
+					\textbf{FPGA}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
+					\textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
+					\textbf{\'Elagage}        &  R0 \& R1      & Complet                  & Complet               & Complet                 \\
+					\textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
+					\textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
+
+				\end{tabular}
+			}}
+			\end{table}
+		}
+
+		\only<3>{
+			\begin{table}
+			\centering
+			{
+				\small\resizebox{0.8\linewidth}{!}{
+				\begin{tabular}{c|c|c|c|c}
+					                        & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+					\cmidrule(lr){2-2}
+					\cmidrule(lr){3-3}
+					\cmidrule(lr){4-5}
+
+					\textbf{FPGA}         &  \textbf{Artix 7}       & \textbf{Stratix IV}            & \textbf{Stratix IV }        & \textbf{Virtex 6}             \\
+					\textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
+					\textbf{\'Elagage}        &  R0 \& R1      & Complet                  & Complet               & Complet                 \\
+					\textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
+					\textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
+
+				\end{tabular}
+			}}
+			\end{table}
+		}
+\end{frame}
+
+\begin{frame}[c]{Comparaison avec des architectures matérielles dédiées}
+		\begin{itemize}
+			\item<+-> 5 à six fois plus de cycles
+			\item<+-> Différents niveaux d'élagage
+			\item<+-> Plus petit nombre de LUTs
+			\item<+-> Plus grosse empreinte mémoire
+		\end{itemize}
+
+		\only<1>{
+			\begin{table}
+			\centering
+			{
+				\small\resizebox{0.8\linewidth}{!}{
+				\begin{tabular}{c|c|c|c|c}
+					                        & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+					\cmidrule(lr){2-2}
+					\cmidrule(lr){3-3}
+					\cmidrule(lr){4-5}
+
+					\textbf{FPGA}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
+					\textbf{Cycles d'horloge}   &  \textbf{1161}  & \textbf{222}           & \textbf{165}        & \textbf{165}          \\
+					\textbf{\'Elagage}        &  R0 \& R1      & Complet                  & Complet               & Complet                 \\
+					\textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
+					\textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
+
+				\end{tabular}
+			}}
+			\end{table}
+		}
+		\only<2>{
+			\begin{table}
+			\centering
+			{
+				\small\resizebox{0.8\linewidth}{!}{
+				\begin{tabular}{c|c|c|c|c}
+					                        & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+					\cmidrule(lr){2-2}
+					\cmidrule(lr){3-3}
+					\cmidrule(lr){4-5}
+
+					\textbf{FPGA}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
+					\textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
+					\textbf{\'Elagage}        &  \textbf{R0 \& R1}      & \textbf{Complet}                  & \textbf{Complet}               & \textbf{Complet}                 \\
+					\textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
+					\textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
+
+				\end{tabular}
+			}}
+			\end{table}
+		}
+		\only<3>{
+			\begin{table}
+			\centering
+			{
+				\small\resizebox{0.8\linewidth}{!}{
+				\begin{tabular}{c|c|c|c|c}
+					                        & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+					\cmidrule(lr){2-2}
+					\cmidrule(lr){3-3}
+					\cmidrule(lr){4-5}
+
+					\textbf{FPGA}         &  Artix 7        & Stratix IV             & Stratix IV          & Virtex 6              \\
+					\textbf{Cycles d'horloge}   &  1161           & 222                    & 165                 & 165                   \\
+					\textbf{\'Elagage}        &  R0 \& R1       & Complet                   & Complet                & Complet                  \\
+					\textbf{LUTS}           &  \textbf{14744} & \textbf{23020}         & \textbf{24821}      & \textbf{22115}        \\
+					\textbf{RAM} (Kb)       &  141            & 43                     & 36                  & 36                    \\
+
+
+				\end{tabular}
+			}}
+			\end{table}
+		}
+		\only<4>{
+			\begin{table}
+			\centering
+			{
+				\small\resizebox{0.8\linewidth}{!}{
+				\begin{tabular}{c|c|c|c|c}
+					                        & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+					\cmidrule(lr){2-2}
+					\cmidrule(lr){3-3}
+					\cmidrule(lr){4-5}
+
+					\textbf{FPGA}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
+					\textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
+					\textbf{\'Elagage}        &  R0 \& R1      & Complet                  & Complet               & Complet                  \\
+					\textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
+					\textbf{RAM} (Kb)       &  \textbf{141}  & \textbf{43}           & \textbf{36}        & \textbf{36}          \\
+
+
+				\end{tabular}
+			}}
+			\end{table}
+		}
+\end{frame}
+
+\section{Conclusion et perspectives}
+
+
+\begin{frame}[c]{Conclusion}
+
+	\begin{itemize}
+		\item<+-> Premier décodeur polaire TTA
+		\vspace{0.3cm}
+		\item<+-> Meilleure efficacité énergétique que pour des processeurs embarqués
+		\vspace{0.3cm}
+		\item<+-> Architecture modulaire et adaptive (implémentation de l'algorithme SCAN)
+		\vspace{0.3cm}
+		\item<+-> Perspectives
+		\begin{itemize}
+			\item<+-> Algorithme SCL
+			\item<+-> Multicœur
+		\end{itemize}
+	\end{itemize}
+
+\end{frame}
+\end{document}
+
+
+
+% \begin{frame}[allowframebreaks]{References}
+% \printbibliography
+% \end{frame}
+
+% \begin{frame}[c]{Hardware Implementations Comparison}
+% 		\begin{table}
+
+
+% {\small\resizebox{\linewidth}{!}{
+% 	\begin{tabular}{c|c|c|c|c|c|c}
+% 	Ref.           & Platform    &  N                     & R                    & Lat. ($\mu s$)& Débit(Mb/s) & $E_b$ (nJ/bit)  \\\hline
+% 	Ce travail     & ASIP 835MHz &  1024                  & 0.5                  & 7.2           & 71         & 1.6             \\
+% 	Ce travail     & ASIP 400MHz &  1024                  & 0.5                  & 15            & 34         & 1.4             \\\hline
+% 	\cite{6804939} & Stratix IV  &  32768                 & 0.9                  & 26.4          & 1200       & -               \\
+% 	\cite{8017407} & ASIC 28nm   &  1024                  & 0.5                  & 5.46          & 94         & 0.095           \\
+% 	\cite{8017407} & ASIC 28nm   &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & 436        & 0.006           \\
+% 	\end{tabular}
+
+% }}
+% 		\end{table}
+% 	\footnotetext[1]{\tiny Fixed N \& R}
+% \end{frame}
+
+% \end{document}
+
+
+
+
+
+% \begin{table}
+%   \centering
+%   \caption{Comparison of programmable processors running the SC decoding algorithm for R=0.5 polar codes}
+%   \label{tab:sw}
+% %\scriptsize
+%   \begin{tabularx}{.45\textwidth}{ccYYY}
+%     \toprule
+
+%     Architecture & $N$ & \begin{tabular}{c}Latence\\{[$\mu$s]}\end{tabular} & \begin{tabular}{c}Débit\\{[Mb/s]}\end{tabular} & \begin{tabular}{c}$E_b$\\{[nJ/bit]}\end{tabular} \\
+
+%     \cmidrule(lr){1-1}
+%     \cmidrule(lr){2-2}
+%     \cmidrule(lr){3-5}
+
+%     \multirow{2}{*}{\bf i7-3.3GHz}              & $1024$   & $2.0$  & $257$ & $41$ \\
+    
+%                                                 & $512$    & $1.2$  & $210$ & $49$ \\
+    
+%     \multirow{2}{*}{\bf (GPP)}                  & $256$    & $0.7$  & $179$ & $59$ \\
+    
+%                                                 & $128$    & $0.4$  & $143$ & $73$ \\
+    
+%     \midrule    \multirow{2}{*}{\bf A57-1.1GHz} & $1024$   & $10.7$ & $48$  & $17$ \\
+
+%                                                 & $512$    & $5.3$  & $48$  & $17$ \\
+
+%      \multirow{2}{*}{\bf (GPP)}                 & $256$    & $2.8$  & $46$  & $17$ \\
+
+%                                                 & $128$    & $1.6$  & $41$  & $20$ \\
+
+%     \midrule
+
+%     \multirow{2}{*}{\bf LX7-835MHz}             & $1024$   & $7.2$  & $71$  & $1.6$ \\
+
+%                                                 & $512$    & $3.9$  & $66$  & $1.7$ \\
+
+%      \multirow{2}{*}{\bf (ASIP)}                & $256$    & $1.9$  & $65$  & $1.7$ \\
+
+%                                                 & $128$    & $1.0$  & $62$  & $1.8$ \\
+
+%     \midrule
+
+%     \multirow{2}{*}{\bf TTPD-800MHz}            & $1024$  & $1.4$   & $352$ & $0.14$   \\ % 1512 cycles
+
+%                                                 & $512$    & $0.8$  & $313$ & $0.15$   \\ % 803 cycles
+
+%      \multirow{2}{*}{\bf (ASIP)}                & $256$    & $0.4$  & $304$ & $0.16$   \\ % 413 cycles
+
+%                                                 & $128$    & $0.2$  & $284$ & $0.17$   \\ % 224 cycles
+
+%     \bottomrule
+%   \end{tabularx}
+% \end{table}
+
+
+% \begin{table}[ht]
+%   %\renewcommand{\arraystretch}{0.5} 
+%   %\tabcolsep=6pt
+%   \centering
+%   \caption{FPGA implementations of dedicated SC decoders for a (1024,512) polar code}
+%   \label{tab:fpga}
+%   \begin{tabularx}{\linewidth}{rcccc}
+%    \toprule
+
+%      & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+% 	\cmidrule(lr){2-2}
+% 	\cmidrule(lr){3-3}
+% 	\cmidrule(lr){4-5}
+
+%     \textbf{FPGA}         &  Artix 7  & Stratix IV & Stratix IV & Virtex 6 \\
+%     \textbf{Clock cycles}   &  1161     & 222        & 165        & 165      \\
+%     \textbf{IT/P} (Mb/s)    &  44       & 238        & 319        & 217      \\
+%     \textbf{Freq} (MHz)     &  100      & 103        & 103        & 70       \\
+%     \textbf{LUTS}           &  14744    & 23020      &  24821     & 22115    \\
+%     \textbf{FFs}            &  7354     & 1024       &  5823      & 7941     \\
+%     \textbf{RAM} (Kb)       &  141      & 43         &  36        & 36       \\
+%     \textbf{\'Elagage}        &  R0 \& R1 & Complet       & Complet       & Complet     \\
+%     \bottomrule
+%   \end{tabularx}  
+% \end{table}

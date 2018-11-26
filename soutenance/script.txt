@@ -1,0 +1,23 @@
+Transport Triggered Decoders.
+
+In the past, several hardware and software implementations on general purpose processors of the SC algorithms have been proposed.
+In this table, some of them are listed.
+One can notice that sw implementations are competitive, with high throughput and latencies, even if deeply pipelined architectures may achieve several hundreds of bits per second.
+The downside of software implementations is though the power consumption.
+
+In this work we explore the possibility to implement efficient decoders on TTA architectures.
+TTA architectures can be seen as a specific kind of VLIW architectures.
+It is composed of one global contol unit, accounting for fetching and decoding instructions, and some Functional units.
+The functional units can be ALU, LSU for example.
+Then, a certain number of buses are responsible of data transports.
+
+The orinigality of TTA architectures lies in the fact that the instructions itself contain the datapath : Source Port, Destination Port, and transport bus.
+On the contrary, in classical scalar or VLIW processor architectures, the operation to be performed is given, with source and destination registers.
+In TTA, the operation is a side effect of the transport. More iomportantly, the datapath is exposed to the programmer. It means that fine grain optimisation syuch as registers bypass can be specified by the user or by a clever compiler.
+
+Such a compiler is provided by the TCE suite. TCE suite also delivers develoment tools that allow the user to build functional units, along with their behavioral model (in C / C++) and hardware model (VHDL)
+It allows to build it's own TTA, bny providing the functional units and the caracteristics of the buses (number, widths, links).
+
+
+
+The main difference with classic VLIW architectures is the instructions used. 
