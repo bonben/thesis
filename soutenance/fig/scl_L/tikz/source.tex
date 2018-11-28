@@ -1,0 +1,39 @@
+\documentclass{standalone}
+
+\usepackage{amsmath}
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning, patterns}
+\pgfplotsset{
+/pgfplots/ybar legend/.style={
+/pgfplots/legend image code/.code={%
+\draw[##1,/tikz/.cd,bar width=0.1cm,yshift=-0.2em,bar shift=0.5*\pgfplotbarwidth]
+plot coordinates {(0.5*\pgfplotbarwidth,0.6em) (2.5*\pgfplotbarwidth,0.4em) (4.5*\pgfplotbarwidth,0.2em)};},
+}
+}
+\input{colors}
+
+\begin{document}
+
+\begin{tikzpicture}
+  \begin{semilogyaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
+                        width=0.9\linewidth, height=0.6\linewidth,    
+                       xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
+                       xmin=2.5, xmax=5.5, xtick={2.5,3,3.5,...,5.5},
+                       tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
+                       legend pos=south west, legend columns=1]
+    \addplot[mark=o       , Set1-1, semithick            , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SCL_1.txt};          \label{plot:line1}
+    % \addplot[mark=diamond , Set1-2, semithick, dashed    , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SCL_2.txt};          \label{plot:line2}
+    % \addplot[mark=star    , Set1-2, semithick, dashed    , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SCL_4.txt};          \label{plot:line3}
+    % \addplot[mark=square  , Set1-2, semithick, dashed    , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SCL_8.txt};          \label{plot:line4}
+    \addplot[mark=triangle, Set1-2, semithick, dashed    , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SCL_32.txt};         \label{plot:line5}
+    % \addplot[mark=star    , Set1-3, semithick, dashdotted, mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SCL_4_CRC_16.txt};  \label{plot:line6}
+    % \addplot[mark=square  , Set1-3, semithick, dashdotted, mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SCL_8_CRC_16.txt};  \label{plot:line7}
+    \addplot[mark=triangle, Set1-3, semithick, dashdotted, mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SCL_32_CRC_16.txt};  \label{plot:line8}
+    \legend{SC,SCL $L=32$,CASCL $L=32$}
+  \end{semilogyaxis}
+\end{tikzpicture}
+\end{document}

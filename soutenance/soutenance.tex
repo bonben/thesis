@@ -192,11 +192,37 @@ subsectionstyle=show/shaded/hide
 \subsection{Les codes polaires}
 
 \begin{frame}[c]{Chaîne de communication}
+	\begin{center}
 	\multiinclude[<+>][start=1,format=pdf,graphics={width=.8\textwidth}]{./fig/chaine_com}
+	\end{center}
+
+	\begin{itemize}
+		\item<1-> Message transmis au travers d'un canal de communication
+		\item<2-> Nécessité d'une modulation
+		\item<3-> Modèle simplifié
+		\item<4-> Correction d'erreurs par ajout de redondance
+		\item<5-> Le cas des codes polaires
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[c]{Codage polaire}
-	\multiinclude[<+>][start=1,format=pdf,graphics={width=.8\textwidth}]{./fig/focus_polar}
+	\begin{columns}[T] % align columns
+		\begin{column}{.65\textwidth}
+			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/focus_polar}
+		\end{column}
+		\begin{column}{.35\textwidth}
+		\begin{itemize}
+			\item<1-> Graphe de factorisation
+			\item<2-> Bits d'information
+			\item<3-> Bits gelés \footnotemark
+			\item<5-> Mot de code : $x_i$
+		\end{itemize}
+		\end{column}
+		\only<3->{
+		\footnotetext{Citation Gaussian Approximation}
+		}
+	\end{columns}
+
 \end{frame}
 
 \begin{frame}[c]{Algorithme de décodage SC}
@@ -204,11 +230,50 @@ subsectionstyle=show/shaded/hide
 \end{frame}
 
 \begin{frame}[c]{Algorithme de décodage SC}
-	\multiinclude[<+>][start=1,end=2,format=pdf,graphics={width=.8\textwidth}]{./fig/focus_decoder}
+	\begin{columns}[T] % align columns
+		\begin{column}{.65\textwidth}
+			\multiinclude[<+>][start=1,end=2,format=pdf,graphics={width=\textwidth}]{./fig/focus_decoder}
+		\end{column}
+		\begin{column}{.35\textwidth}
+		\begin{itemize}
+			\item<1-> $L$ : Log Likelihood Ratios (LLR)
+			\item<2-> Deux formats de données
+		\end{itemize}
+		\end{column}
+	\end{columns}
+
 \end{frame}
 
 \begin{frame}[c]{Algorithme de décodage SC}
-	\multiinclude[<+>][start=1,format=pdf,graphics={width=.35\textwidth}]{./fig/polar_functions}
+	\begin{columns}[T] % align columns
+		\begin{column}{.35\textwidth}
+			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/polar_functions}    
+		\end{column}
+
+		\begin{column}{.65\textwidth}
+		\only<1>{
+		$$f(L_a,L_b) = \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)$$
+		\vspace{1.1cm}
+
+		$$g(L_a,L_b,\hat{s}_a) = (1-2\hat{s}_a)L_a+L_b$$
+		}
+
+				\only<2>{
+				\vspace{0.5cm}
+		$$\texttt{R1}(L_a)  =  \left\{\begin{array}{l c l} 0 \text{ si } L_a \geq 0 \\ 1 \text{ si } L_a < 0 \end{array}\right.$$
+		\vspace{1.1cm}
+
+		$$h(\hat{s}_a,\hat{s}_b) = (\hat{s}_{a} \oplus \hat{s}_{b}, \hat{s}_{b})$$
+		}
+		\end{column}
+
+	\end{columns}
+
+	
+ %    g(L_a,L_b,\hat{s}_a)&=&(1-2\hat{s}_a)L_a+L_b\\
+ %    h(\hat{s}_a,\hat{s}_b)&=& (\hat{s}_{a} \oplus \hat{s}_{b}, \hat{s}_{b})\\
+ %    \texttt{R0}(L_a) &=& 0 \\
+ %    \texttt{R1}(L_a) &=&  \left\{\begin{array}{l c l} 0 \text{ si } L_a \geq 0 \\ 1 \text{ si } L_a < 0 \end{array}\right.
 \end{frame}
 
 \begin{frame}[c]{Algorithme de décodage SC}
@@ -224,9 +289,34 @@ subsectionstyle=show/shaded/hide
 \end{frame}
 
 \begin{frame}[c]{Algorithme de décodage SCL}
-	\multiinclude[<+>][start=1,format=pdf,graphics={width=.7\textwidth}]{./fig/scl_anim}
+	\begin{columns}[T] % align columns
+
+		\begin{column}{.7\textwidth}
+
+			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/scl_anim}
+
+		\end{column}
+
+		\begin{column}{.3\textwidth}
+			\begin{itemize}
+				\item<3-> Pas de décision dure
+				\item<4-> Duplication des chemins
+				\item<5-> Métrique de chemins
+				\item<6-> Tri des métrique \& élimination
+				\item<7-> Mot de code décodé
+			\end{itemize}
+		\end{column}
+
+	\end{columns}
 \end{frame}
 
+\begin{frame}[c]{Algorithme de décodage CASCL}
+			\includegraphics[width=\textwidth]{./fig/cascl}
+\end{frame}
+
+\begin{frame}[c]{Performances de décodage}
+			\includegraphics[width=\textwidth]{./fig/scl_L/tikz/source}
+\end{frame}
 
 \begin{frame}[c]{Algorithmes de décodage}
   \begin{table}[t]
@@ -240,7 +330,6 @@ subsectionstyle=show/shaded/hide
       SCL          & \ORANGE{moyennes}              & \RED{bas}                       & \ORANGE{moyenne}  \\
       CA-SCL       & \GREEN{importantes}            & \RED{bas}                       & \ORANGE{moyenne}  \\
       Adaptive-SCL & \GREEN{importantes}            & \GREEN{haut}                    & \RED{forte}       \\
-      SC Stack     & \GREEN{very importantes}       & \ORANGE{moyen}                  & \RED{forte}       \\
     \end{tabular}
     }}
   \end{table}
@@ -249,6 +338,17 @@ subsectionstyle=show/shaded/hide
 
 
 \section[Décodeur logiciel à liste]{Décodage à liste sur processeurs génériques}
+\subsection*{}
+
+\begin{frame}[c]{Décodeur logiciel}
+	\begin{itemize}
+		\item Algorithmes de décodage dans des langages de haut niveau
+		\item Cible : x86 et ARM
+		\item Exploitation des unités SIMD
+	\end{itemize}
+\end{frame}
+
+
 \section{Conception d'architectures programmables}
 
 
@@ -271,7 +371,6 @@ subsectionstyle=show/shaded/hide
       SCL          & \ORANGE{moyennes}              & \RED{bas}                       & \ORANGE{moyenne}  \\
       CA-SCL       & \GREEN{importantes}            & \RED{bas}                       & \ORANGE{moyenne}  \\
       Adaptive-SCL & \GREEN{importantes}            & \GREEN{haut}                    & \RED{forte}       \\
-      SC Stack     & \GREEN{very importantes}       & \ORANGE{moyen}                  & \RED{forte}       \\
     \end{tabular}
     }}
   \end{table}
