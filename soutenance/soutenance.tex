@@ -149,7 +149,7 @@
 }
 \AtBeginSubsection[]
 {
-	\begin{frame}[c]{ToC}
+	\begin{frame}[c]{}
 \tableofcontents[
 currentsection,
 sectionstyle=show/show,
@@ -189,7 +189,6 @@ subsectionstyle=show/shaded/hide
 
 \section[Introduction]{Introduction}
 \subsection{Les codes correcteurs d'erreurs}
-\subsection{Les codes polaires}
 
 \begin{frame}[c]{Chaîne de communication}
 	\begin{center}
@@ -204,6 +203,8 @@ subsectionstyle=show/shaded/hide
 		\item<5-> Le cas des codes polaires
 	\end{itemize}
 \end{frame}
+
+\subsection{Les codes polaires}
 
 \begin{frame}[c]{Codage polaire}
 	\begin{columns}[T] % align columns
@@ -224,6 +225,7 @@ subsectionstyle=show/shaded/hide
 	\end{columns}
 
 \end{frame}
+\subsection{Le décodage SC}
 
 \begin{frame}[c]{Algorithme de décodage SC}
 	\includegraphics[width=.8\textwidth]{fig/decoder_in_chain.pdf}
@@ -288,6 +290,8 @@ subsectionstyle=show/shaded/hide
 	\includegraphics[width=.5\textwidth]{fig/sc_tree_output.pdf}
 \end{frame}
 
+\subsection{Le décodage SC Liste}
+
 \begin{frame}[c]{Algorithme de décodage SCL}
 	\begin{columns}[T] % align columns
 
@@ -313,6 +317,11 @@ subsectionstyle=show/shaded/hide
 \begin{frame}[c]{Algorithme de décodage CASCL}
 			\includegraphics[width=\textwidth]{./fig/cascl}
 \end{frame}
+
+\begin{frame}[c]{\'Elagage de l'arbre}
+			\includegraphics[width=\textwidth]{./fig/pruning}
+\end{frame}
+
 
 \begin{frame}[c]{Performances de décodage}
 			\includegraphics[width=\textwidth]{./fig/scl_L/tikz/source}
@@ -340,6 +349,15 @@ subsectionstyle=show/shaded/hide
 \section[Décodeur logiciel à liste]{Décodage à liste sur processeurs génériques}
 \subsection*{}
 
+\begin{frame}[c]{Virtualisation}
+	\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/bs_evo}
+	\begin{itemize}
+		\item<1-> Architectures dédiées localisées pour le calcul bande de base
+		\item<2-> Architectures dédiées à distance pour le calcul bande de base
+		\item<3-> Cloud-RAN : décodeur logiciel
+	\end{itemize}
+\end{frame}
+
 \begin{frame}[c]{Décodeur logiciel}
 	\begin{itemize}
 		\item Algorithmes de décodage dans des langages de haut niveau
@@ -348,6 +366,133 @@ subsectionstyle=show/shaded/hide
 	\end{itemize}
 \end{frame}
 
+\begin{frame}[c]{Généricité et Flexibilité}
+	\begin{itemize}
+		\item Généricité
+		\begin{itemize}
+			\item N, K
+			\item Concaténation de CRC
+			\item Construction du code
+			\item Poinçonnage
+		\end{itemize}
+		\item Flexibilité
+		\begin{itemize}
+			\item Taille de la liste
+			\item Représentation en virgule fixe
+			\item Ajustement de l'élagage
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}[c]{Impact de l'élagage des nœuds SPC}
+	\centering
+	\includegraphics[width=0.7\textwidth]{./fig/thr_spc/tikz/thr_spc_diff}
+\end{frame}
+
+\begin{frame}[c]{Représentation en virgule fixe}
+  \begin{table}[hb]
+    \renewcommand{\arraystretch}{1.1}
+    \centering
+    {\small\resizebox{\linewidth}{!}{
+    \begin{tabular}{r | c | c || c | c || c | c || c | c}
+      \multirow{2}{*}{\textbf{Décodeur}} & \multirow{2}{*}{\textbf{Quantif.}} & \multirow{2}{*}{${\mathcal{L}_{PC}}$} & \multicolumn{2}{c ||}{\textbf{3.5 dB}} & \multicolumn{2}{c ||}{\textbf{4.0 dB}} & \multicolumn{2}{c}{\textbf{4.5 dB}} \\
+      \cline{4-9}
+      & & & ${\mathcal{L}_{moy}}$ & ${\mathcal{T}_i}$ & ${\mathcal{L}_{moy}}$ & ${\mathcal{T}_i}$ & ${\mathcal{L}_{moy}}$ & ${\mathcal{T}_i}$ \\
+      % \hline
+      \hline
+      \multirow{3}{*}{PA-SSCL} & 32-bit &  635 & 232.3 &   7.6 & 41.7 &  42.1 & 7.4 & 237.6 \\
+      %\cline{3-9}
+                               & 16-bit &  622 & 219.6 &   8.0 & 40.1 &  43.8 & 6.6 & 267.5 \\
+      %\cline{3-9}
+                               &  8-bit &  651 & 232.4 &   7.6 & 41.2 &  42.6 & 6.5 & 268.3 \\
+      \hline
+      \multirow{3}{*}{FA-SSCL} & 32-bit & 1201 &  67.2 &  26.1 &  8.5 & 207.8 & 5.1 & 345.5 \\
+      %\cline{3-9}
+                               & 16-bit & 1198 &  68.7 &  25.6 &  7.7 & 225.7 & 4.3 & 408.7 \\
+      %\cline{3-9}
+                               &  8-bit & 1259 &  71.8 &  24.4 &  7.7 & 227.3 & 4.1 & 425.9 \\
+    \end{tabular}
+    }}
+   \end{table}
+    \begin{itemize}
+    	\item Prototypage
+    	\item Augmentation du parallélisme
+    	\item Augmentation du débit
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[c]{Déroulage}
+\begin{itemize}
+	\item Déroulage : génération de code source
+	\item Désavantage : manque de flexibilité
+	\item Non utilisé dans notre implémentation
+	\item Techniques permettant d'augmenter le débit
+	\begin{itemize}
+		\item Nouvelle technique de tri
+		\item Gestion du stockage des sommes partielles
+		\item Extraction du CRC
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[c]{Déroulage}
+\begin{itemize}
+	\item Déroulage : génération de code source
+	\item Désavantage : manque de flexibilité
+	\item Non utilisé dans notre implémentation
+	\item Techniques permettant d'augmenter le débit
+	\begin{itemize}
+		\item Nouvelle technique de tri
+		\item Gestion du stockage des sommes partielles
+		\item \textbf{Extraction du CRC}
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[c]{Déroulage}
+	\centering
+	\multiinclude[<+>][start=1,format=pdf,graphics={width=.7\textwidth}]{./fig/extract}
+\end{frame}
+
+
+
+\begin{frame}
+    \begin{table}[ht]
+      \centering
+      {\small\resizebox{0.9\linewidth}{!}{
+      \begin{tabular}{r|l|c|c|c c c}
+        \multirow{2}{*}{\textbf{Cible}} & \multirow{2}{*}{\textbf{Algorithme}} & \multirow{2}{*}{\textbf{Version}}  & \multirow{1}{*}{\textbf{${\mathcal{L}_{PC}}$}} & \multicolumn{3}{c}{${\mathcal{T}_i}$ (Mb/s)} \\
+        \cline{5-7}
+        &                        &   & ($\mu s$)                          & \textbf{3.5 dB} & \textbf{4.0 dB} & \textbf{4.5 dB} \\
+        \hline
+        
+        i7-4790K & CASCL  &~\cite{shen_low-latency_2016}      & 1572                           & 1.10            & 1.10            & 1.10            \\
+        \hline
+        i7-2600  & CASCL\textsuperscript{1} &~\cite{sarkis_increasing_2014}     & 23000                          & 0.07            & 0.07            & 0.07            \\
+        i7-2600  & CASCL\textsuperscript{1} &~\cite{sarkis_fast_2016}           & 2294                           & 0.76            & 0.76            & 0.76            \\
+        i7-2600  & CASCL\textsuperscript{1} & Ce travail                        & 4819                           & 0.37            & 0.37            & 0.37            \\
+        i5-6600K & CASCL\textsuperscript{1} & Ce travail                        & 3635                           & 0.48            & 0.48            & 0.48            \\
+        \hline
+        i7-2600  & CASCL &~\cite{sarkis_increasing_2014}    & 3300                           & 0.52            & 0.52            & 0.52            \\
+        i7-2600  & CASCL &~\cite{sarkis_fast_2016}          & 433                            & 4.0             & 4.0             & 4.0             \\
+        i7-2600  & CASCL & Ce travail                       & 770                            & 2.3             & 2.3             & 2.3             \\
+        i5-6600K & CASCL & Ce travail                       & 577                            & 3.0             & 3.0             & 3.0             \\
+        \hline
+        i7-2600  & PASCL &~\cite{sarkis_increasing_2014}    & $\approx$ 3300                 & 0.9             & 4.90            & 54.0            \\
+        i7-2600  & PASCL &~\cite{sarkis_fast_2016}          & $\approx$ 433                  & 8.6             & 33.0            & 196.0           \\
+        i7-2600  & PASCL & Ce travail                       & 847                            & 5.5             & 31.1            & 168.4           \\
+        i5-6600K & PASCL & Ce travail                       & 635                            & 7.6             & 42.1            & 237.6           \\
+        \hline
+        i7-2600  & FASCL & Ce travail                       & 1602                           & 19.4            & 149.0           & 244.3           \\
+        i5-6600K & FASCL & Ce travail                       & 1201                           & 26.1            & 207.8           & 345.5           \\
+      \end{tabular}
+      }}
+ 
+  \end{table}
+\end{frame}
 
 \section{Conception d'architectures programmables}
 
@@ -383,15 +528,6 @@ subsectionstyle=show/shaded/hide
 \end{frame}
 
 \centering
-\begin{frame}[c]{L'algorithme de décodage SC}
-	\begin{itemize}
-		\item<1-> Traversée d'un arbre binaire
-		\item<2-> Parallélisme interne
-		\item<3-> Dépendant du niveau dans l'arbre
-	\end{itemize}
-	\vspace*{0.5cm}
-	\multiinclude[<+>][start=1,format=pdf,graphics={width=.8\textwidth}]{./fig/SC_decoding}
-\end{frame}
 
 
 \begin{frame}[c]{Des implémentations materielles et logicielles efficaces}
@@ -545,7 +681,19 @@ subsectionstyle=show/shaded/hide
 % \end{frame}
 
 
+\begin{frame}[c]{Deux modèles de conception d'ASIP}
+	\includegraphics[width=0.9\textwidth]{./fig/methodos}
+\end{frame}
 
+
+\begin{frame}[c]{Limites de l'approche Tensilica}
+	\begin{itemize}
+		\item Langage de description matérielle spécifique
+		\item Licence
+		\item Limitation de l'accès à la mémoire
+		\item Rigidité de l'architecture
+	\end{itemize}
+\end{frame}
 
 \begin{frame}[c]{Transport Triggered Architectures}
 	\begin{itemize}
@@ -1006,7 +1154,7 @@ subsectionstyle=show/shaded/hide
 \end{frame}
 
 \section{Conclusion et perspectives}
-
+\subsection*{}
 
 \begin{frame}[c]{Conclusion}
 

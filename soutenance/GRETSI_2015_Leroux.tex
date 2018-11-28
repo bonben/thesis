@@ -1,0 +1,522 @@
+% /solutions/conference-talks/conference-ornate-20min.fr.tex, 22/02/2006 De Sousa
+
+\documentclass{beamer}
+
+
+% Ce fichier est un exemple d'exposé
+
+% - pour des conférences,
+% - d'une durée approximative de 20 minutes,
+% - avec un style ornemental.
+
+\AtBeginSection[]{
+  \begin{frame}{Sommaire}
+  \small \tableofcontents[currentsection, hideothersubsections]
+  \end{frame} 
+}
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% Traduction de Philippe De Sousa <philippejjg@free.fr>
+%
+% En principe, ce fichier peut être redistribué et/ou modifié conformément
+% aux termes de la GNU Public License, version 2.
+%
+% Cependant, ce fichier est supposé comme étant un "exemple-type" qui peut être modifié
+% selon vos propres besoins. Pour cette raison, si vous utilisez ce fichier en tant qu'
+% "exemple-type" et non spécifiquement pour le distribuer en tant que partie d'un
+% package ou programme, je vous donne la permission exceptionnelle de copier librement et
+% de modifier ce fichier et même d'effacer ce message de copyright.
+
+
+\mode<presentation> {
+  \usetheme{Warsaw}
+  % ou autre ...
+
+  \setbeamercovered{transparent}
+  % ou autre chose (il est également possible de supprimer cette ligne)
+}
+
+
+\usepackage[french]{babel}
+% or autre comme par exemple \usepackage[english]{babel}
+
+\usepackage[latin1]{inputenc}
+% or autre
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or autre. Notez que le codage et la fonte doivent être assortis. Si T1
+% ne paraît pas très esthétique, essayer d'effacer la ligne contenant fontenc.
+
+\usepackage{fancyvrb}
+\usepackage{listings}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.4}
+%\usepackage{histogr}
+\usepackage{style/pgf-pie}
+
+\usepackage{color}
+\usepackage{array}
+\usepackage{colortbl}
+
+\useinnertheme[shadow=true]{rounded}
+\useoutertheme{infolines}
+\usecolortheme{beaver}
+\setbeamerfont{block title}{size={}}
+\setbeamercolor{titlelike}{parent=structure,bg=white}
+
+% \useoutertheme[options]{smoothbars}
+% \setbeamercolor{frametitle}{parent=palette primary}
+% \setbeamercolor{subsection in head/foot}{parent=palette secondary}
+% \setbeamercolor{section in head/foot}{parent=palette quaternary}
+
+\newcommand{\RED} [1]{\textcolor{red}{\textbf{#1}}}
+\newcommand{\ORANGE} [1]{\textcolor{orange}{\textbf{#1}}}
+\newcommand{\GREEN} [1]{\textcolor{green}{\textbf{#1}}}
+\newcommand{\BLUE} [1]{\textcolor{blue}{\textbf{#1}}}
+
+\title[A Scalable 3-Phase Polar Decoder] % (facultatif, à utiliser uniquement si le titre de l'article est trop long)
+{A Scalable 3-Phase Polar Decoder}
+
+%\subtitle {RT CNES, Décembre 2014}
+
+\author[Le Gal, Leroux, Jégo] % (facultatif, à utiliser seulement avec plusieurs auteurs)
+{Bertrand~Le Gal \and \underline{Camille~Leroux} \and Christophe~Jégo}
+% - Composez les noms dans l'ordre dans lequel ils apparaîtrons dans l'article
+% - Utilisez la commande \inst{?} uniquement si les auteurs ont des affiliations
+%   différentes.
+
+\institute[] % (facultatif mais généralement nécessaire)
+{
+  %
+  Laboratoire IMS\\
+  Bordeaux INP}
+% - Utilisez la commande \inst uniquement s'il y a plusieurs affectations
+% - Faîtes quelque chose de simple, personne ne s'intéresse à votre adresse
+
+\date[] % (facultatif, peut être une abréviation du nom de la conférence)
+{ISCAS 2016, Montréal}
+% - Utilisez à la fois le nom de la conférence et son abréviation.
+% - N'a pas réellement d'importance pour l'assistance qui sera présente lors de la conférence,
+%   mais en a surtout pour les personnes (y compris vous-même) qui liront les transparents en ligne.
+
+\subject{Réduction de la complexité mémoire pour le décodage à Annulation Successive des Codes Polaires}
+% Inséré uniquement dans la page d'information du fichier PDF. Peut être
+% supprimé.
+
+
+
+% Si vous avez un fichier nommé "université-logo-nomfichier.xxx", où xxx
+% est un format graphique accepté par latex ou pdflatex (comme par exemple .png),
+% alors vous pouvez insérer votre logo ainsi :
+
+% \pgfdeclareimage[height=0.5cm]{le-logo}{université-logo-nomfichier}
+% \logo{\pgfuseimage{le-logo}}
+
+
+
+% À supprimer si vous ne voulez pas que la table des matières apparaisse
+% au début de chaque sous-section :
+
+% Faire apparaître un sommaire avant chaque section
+\AtBeginSection[]{
+   \begin{frame}
+   \begin{center}{\Large Plan }\end{center}
+   %%% affiche en début de chaque section, les noms de sections et
+   %%% noms de sous-sections de la section en cours.
+   \tableofcontents[currentsection,hideothersubsections]
+   \end{frame} 
+}
+
+% Si vous souhaitez recouvrir vos transparents un à un,
+% utilisez la commande suivante (pour plus d'info, voir la page 74 du manuel
+% d'utilisation de Beamer (version 3.06) par Till Tantau) :
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Plan}
+  \tableofcontents
+  % Vous pouvez, si vous le souhaiter ajouter l'option [pausesections]
+\end{frame}
+
+
+% Structurer l'entretien est une tâche difficile et la structure suivante
+% pourrait ne pas convenir. Voici quelques règles à appliquer pour cet
+% exemple ci :
+
+% - Avoir exactement deux ou trois sections (autre que la table des matières).
+% - Tout au plus trois sous-sections par section
+% - Parlez approximativement entre 30 secondes et 2 minutes par transparent. Il
+%   devrait donc y avoir entre 15 et 30 transparents, tous ayant été commentés.
+
+% - Le public d'une conférence connaîtra probablement peu de chose sur le sujet
+%   que vous serez en train de traiter. Donc, *simplifiez* !
+% - Dans un exposé de 20 minutes, garder à l'esprit les idées principales est largement
+%   suffisant pour votre assistance. Laissez tomber certains détails, même s'ils vous
+%   semblent nécessaires.
+% - Si vous omettez un détail qui est vital pour une preuve/mise en oeuvre,
+%   dites le simplement une fois. Ce sera suffisant pour tout le monde.
+
+\section{Introduction}
+
+\begin{frame}{Les codes polaires ?}
+	\begin{itemize}[<+->]
+			\item Famille de \textbf{codes en blocs linéaires} $(N,K)$
+			\item Codes \textbf{récents} (Arikan 2008)
+			\item Codes \textbf{optimaux}: on peut montrer mathématiquement qu'ils atteignent asymptotiquement la capacité des canaux à entrée binaire symétrique sans mémoire
+			\item \textbf{Faible complexité} d'encodage et de décodage (\textbf{Algorithme SC}): $O(N \log N)$
+			\item \textbf{Structure régulière et récursive} : pas de structure aléatoire (entrelaceur, graph pseudo-aléatoire,...)
+			\item \RED{Il faut que $N$ soit très grand ($N>2^{20}$) pour qu'un code polaire puisse s'approcher effectivement de la capacité du canal.}
+			\item Beaucoup de travaux portent sur:
+				\begin{itemize}
+					\item l'amélioration des performances de décodage à taille finie
+					\item définition d'architectures de décodeurs SC
+				\end{itemize} 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Enjeux algorithmiques}
+
+Différentes options pour améliorer les performances de décodage à taille finie:
+	\begin{itemize}[<+->]
+		\item Concaténer avec un CRC + décodage liste $O(L N \log N) $
+		\item Faire un décodage itératif (peu efficace)
+		\item Concaténer avec d'autres codes (RS, LDPC, ...)
+		\item Changer le kernel du code
+		\item ...
+	\end{itemize}
+	\pause Les codes polaires font partie des codes pressentis pour les futurs standards de la téléphonie 5G \cite{huawei}.
+\end{frame}
+
+
+\begin{frame}{Etat de l'art: complexité matérielle des décodeurs SC}
+Un décodeur SC est composé d'\textbf{éléments de calculs} (PE) et d'\textbf{éléments de mémorisation} (ME) à la fois pour traiter des \textbf{LLRs} (codés sur $Q$ bits) mais aussi des \textbf{sommes partielles} (PS) codées sur un bit.
+\pause
+\begin{table}[]
+\centering
+\scriptsize
+\caption{Complexités matérielles des décodeurs SC}
+	\begin{tabular}{c|c|c|c|c}
+	           & Arikan \cite{arikan} & Line Decoder \cite{hw_archi} & Semi-parallel Dec. \cite{semi_parallel} & Scalable Dec. \cite{scalable}\\
+	           & 2008& 2011 & 2013 & 2013\\\hline
+	\#PE - LLR & \RED{$QN \log N$}  & \ORANGE{$QN$}          & \GREEN{$QP<<QN$}                & \GREEN{$QP<<QN$}           \\
+	\#ME - LLR & \RED{$QN \log N$}  & \ORANGE{$QN$}          & \ORANGE{$QN$}                   & \ORANGE{$QN$}              \\
+	\#PE - PS  & \RED{$N \log N$}  & \ORANGE{$N$}          & \ORANGE{$N$}                   & \GREEN{$P<<N$}                 \\
+	\#ME - PS  & \RED{$N \log N$}  & \ORANGE{$N$}          & \ORANGE{$N$}                   & \ORANGE{$N$}
+	\end{tabular}
+\end{table}
+\pause
+Le décodeur Scalable a été implémenté sur FPGA Stratix V pour un code polaire de taille $N=2^{20}$ et $P=64$: Le décodeur occupe \BLUE{2\% des ressources de calculs} et \RED{76\% des ressources mémoires} du FPGA.\\
+$\Rightarrow$ Il faut réduire l'emprunte mémoire des décodeurs SC !
+\end{frame}
+\section{Implémentation matérielle du décodage SC}
+
+\begin{frame}{Le décodage SC sous forme d'arbre binaire}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=9cm]{./fig/graph.pdf}
+	\end{figure}
+\pause
+\begin{itemize}[<+->]
+	\item Arbre binaire de profondeur $\log N$ parcouru récursivement
+	\item $f(a,b) = Sign(a).Sign(b) \min (|a|,|b|)$
+	\item $g(a,b,s)=(-1)^s a+b$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Séquencement et architecture d'un décodeur SC}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=7cm]{./fig/graph.pdf}
+\end{figure}
+\column{0.6\textwidth}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=7cm]{./fig/archi_fig_1.pdf}
+\end{figure}
+\end{columns}
+	\begin{itemize}[<+->]
+		\item $\phi_0$: chargement des $N$ LLRs par paquet de $P$ dans la mémoire
+		\item $\phi_1$: calcul de $N/2$ fonctions $f$
+		\item $\phi_2$: parcours récursif du sous-arbre de gauche
+		\item $\phi_3$: calcul de $N/2$ fonctions $g$
+		\item $\phi_4$: parcours récursif du sous-arbre de droite
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Décodeur SC de l'état de l'art - emprunte mémoire}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=6.5cm]{./fig//archi_fig_1.pdf}
+	\end{figure}
+
+{\small
+\begin{itemize}[<+->]
+	\item Mémoire du Canal ($M_C$): $N$ LLRs codés sur $Q_c$ bits
+	\item Mémoire Interne ($M_I$): $N$ LLRs codés sur $Q$ bits
+	\item Mémoire des sommes partielles ($M_S$): $N$ bits
+\end{itemize}}
+\pause
+{\small $\Rightarrow$ Emprunte mémoire de référence: $A_0=Q_cN+QN+N$\\
+Application Numérique: $Q_C=4$, $Q=6$: 54\% 36\% et 10\%}
+\end{frame}
+
+\section{Recalculer plutôt que mémoriser}
+
+\begin{frame}{Principe}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=9cm]{./fig/graph.pdf}
+	\end{figure}
+	\pause
+	\begin{itemize}[<+->]
+		\item Problème: \textit{Il est nécessaire de stocker les opérandes $a$ et $b$ pour le calcul de la fonction $g$ (phase $\phi_3$)}
+		\item Proposition: Stocker seulement la moitié des opérandes et reconstruire l'autre moitié à partir du résultat de la fonction $f(a,b)$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+	Constat sur la fonction $f(a,b)=Sign(a).Sign(b) \min (|a|,|b|)$:
+	\begin{itemize}
+		\item En connaissant $f(a,b)$ ainsi que l'argument qui a la valeur absolue la plus grande, il est possible de recontruire l'autre opérande.
+	\end{itemize}
+	\vspace{0.5cm}
+	\pause
+	Plutôt que de stocker les deux opérandes $a$ et $b$ (dans $M_C$) ainsi que le résultat $f(a,b)$ dans $M_I$, nous stockons :
+	\begin{itemize}[<+->]
+		\item le résultat de $f(a,b)$ dans $M_I$ (inchangé),
+		\item l'opérande qui a la valeur absolue maximale dans $M_C$
+		\item ainsi qu'un bit $\Gamma_i$ qui indique quel argument est stocké dans $M_C$
+	\end{itemize}
+	\pause
+	A partir de ces trois éléments il est possible de reconstruire les arguments $a$ et $b$ pour le calcul de $g(a,b,s)$ lors de $\phi_3$
+
+\end{frame}
+
+\begin{frame}{Modification des phases de calcul}
+\begin{itemize}[<+->]
+	\item $\phi_0$: on ne charge que la première moitié des LLRs ($N/2$)
+	\item $\phi_1$: plutot que de mémoriser l'autre moitié des LLRs du canal:
+		\begin{itemize}[<+->]
+			\item on calcule directement les fonctions $L_i=f(a,b)$ au fil de l'eau (stocké dans $M_I$),
+			\item on extrait l'opérande qui a la valeur absolue la plus grande
+		 $C_i=h(a,b)$ (stocké dans $M_C$),
+			 \item on calcule le bit $\Gamma_i$ (stocké dans $M_I$).
+		\end{itemize}
+	\item $\phi_2$: Idem décodage SC classique
+	\item $\phi_3$: on reconstruit $a$ et $b$ avant de calculer $g(s,a,b)$:
+			\begin{align}
+				a=k_a(C_i,L_i)=\left\{
+					\begin{array}{ll}
+						C_i & \textrm{si $\Gamma_i=1$}\\
+						sign(C_i).L_i & \textrm{sinon}
+					\end{array} \right.
+			\end{align}
+			\begin{align}
+				b=k_b(C_i,L_i)=\left\{
+					\begin{array}{ll}
+						C_i & \textrm{si $\Gamma_i=0$}\\
+						sign(C_i).L_i & \textrm{sinon}
+					\end{array} \right.
+			\end{align}
+	\item $\phi_4$: Idem décodage SC classique
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Réduction de l'emprunte mémoire}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=6cm]{./fig/archi_fig_2.pdf}
+	\end{figure}
+{\scriptsize 	\begin{itemize}[<+->]
+		\item Réduction de $N/2$ LLRs l'emprunte mémoire de $M_C$
+		\item Augmentation de $N/2$ bits l'emprunte mémoire de $M_I$ (bits $\Gamma_i$)
+		\item Emprunte mémoire de cette solution est donc : $A_1=N/2(Q_c+2Q+3)$
+		\item Réduction par rapport au décodeur SC classique :
+		$$
+		r_1=1-\frac{A_1}{A_0}=\frac{Q_c-1}{2(Q_c+Q+1)}
+		$$
+		\item Surcoût calculatoire : $P$ compare and select (fonction $h$)+ $2P$ (MUX $Q$bit+ 1XOR)
+	\end{itemize}}
+\end{frame}
+
+\section{Réduction de la dynamique des LLRs}
+
+\begin{frame}{Evolution de la dynamique dans l'arbre de décodage}
+\begin{columns}
+\column{0.4\textwidth}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=7cm]{./fig/graph.pdf}
+\end{figure}
+\column{0.6\textwidth}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=7cm]{./fig/archi_fig_1.pdf}
+\end{figure}
+\end{columns}
+{\scriptsize
+\begin{itemize}[<+->]
+ 	\item Etat de l'art: $Q_C$ bits pour $M_C$ et $Q$ bits pour $M_I$, avec $Q>Q_C$ et souvent $Q=Q_C+2$
+	\item Constat pour la fonction $f$: pas nécessaire d'accroitre la dynamique
+	\item Constat pour la fonction $g$: 1 bit supplémentaire par niveau
+	\item Nous proposons le format de quantification :$Q_C=x,Q=\{x,x+1,x+2,x+2,...\}$ 
+	\item Exemple $Q_C=4,Q=\{4,5,6,6...\}$
+\end{itemize}}
+\end{frame}
+
+\begin{frame}{Performance de décodage (1) $R=1/2$, $Q_C=6$ bits}
+\begin{figure}[t]
+	\tiny \centering
+	\begin{tikzpicture}
+		\begin{semilogyaxis}[
+			width=.7\linewidth,
+			ymax=1.0, xmin=1.0, xmax=3.5, xtick={1.0,1.5,...,3.5}, minor tick num=4,
+			xlabel=$Eb/N_0(dB)$,ylabel=$TET$,grid=both, tick align=outside, tickpos=left, legend columns=3, legend pos=north east]
+		\addplot [black, mark=o]  table{./BER_FER_perf/2k_r12/PC_SYS_2048_r_12_float.fer};
+		\addplot [black, mark=+]  table{./BER_FER_perf/2k_r12/PC_SC_2048_fixed_channel_62_dp_810.fer};
+		\addplot [black, mark=triangle]  table{./BER_FER_perf/2k_r12/PC_SC_2048_fixed_channel_62_dp_821.fer};
+
+		\addplot [blue, mark=o]  table{./BER_FER_perf/8k_r12/PC_SYS_8192_r_12_float.fer};
+		\addplot [blue, mark=+]  table{./BER_FER_perf/8k_r12/PC_SC_8192_fixed_channel_62_dp_810.fer};
+		\addplot [blue, mark=triangle]  table{./BER_FER_perf/8k_r12/PC_SC_8192_fixed_channel_62_dp_821.fer};
+
+		\addplot [red, mark=o]  table{./BER_FER_perf/64k_r12/PC_SYS_65536_r_12_float.fer};
+		\addplot [red, mark=+]  table{./BER_FER_perf/64k_r12/PC_SC_65536_fixed_channel_62_dp_810.fer};
+		\addplot [red, mark=triangle]  table{./BER_FER_perf/64k_r12/PC_SC_65536_fixed_channel_62_dp_821.fer};
+			\legend{
+				2k@float, 2k@Q=8, 2k@Q=\{6\,7\,8\},
+				8k@float, 8k@Q=8, 8k@Q=\{6\,7\,8\},
+				64k@float, 64k@Q=8, 64k@Q=\{6\,7\,8\}}
+		\end{semilogyaxis}
+	\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Performance de décodage (2) $R=1/2$, $Q_C=4$ bits}
+\begin{figure}[t]
+	\tiny \centering
+	\begin{tikzpicture}
+		\begin{semilogyaxis}[
+			width=.7\linewidth,
+			ymax=1.0, xmin=1.0, xmax=3.5, xtick={1.0,1.5,...,3.5}, minor tick num=4,
+			xlabel=$Eb/N_0(dB)$,ylabel=$TET$,grid=both, tick align=outside, tickpos=left, legend columns=2, legend pos=north east]]
+		\addplot [blue,  mark=o]  table{./BER_FER_perf/2k_r12/PC_SC_2048_fixed_channel_40_dp_610.fer};
+		\addplot [red,   mark=+]  table{./BER_FER_perf/2k_r12/PC_SC_2048_fixed_channel_40_dp_621.fer};
+		\addplot [blue,  mark=o]  table{./BER_FER_perf/8k_r12/PC_SC_8192_fixed_channel_40_dp_610.fer};
+		\addplot [red,   mark=+]  table{./BER_FER_perf/8k_r12/PC_SC_8192_fixed_channel_40_dp_621.fer};
+		\addplot [blue,  mark=o]  table{./BER_FER_perf/64k_r12/PC_SC_65536_fixed_channel_40_dp_610.fer};
+		\addplot [red,   mark=+]  table{./BER_FER_perf/64k_r12/PC_SC_65536_fixed_channel_40_dp_621.fer};
+			\legend{
+				2k@Q=6, 2k@Q=\{4\,5\,6\},
+				8k@Q=6, 8k@Q=\{4\,5\,6\},
+				64k@Q=6, 64k@Q=\{4\,5\,6\}}
+		\end{semilogyaxis}
+	\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Réduction de l'emprunte mémoire}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=6cm]{./fig/p3.pdf}
+\end{figure}
+\begin{itemize}[<+->]
+	\item Réduction de $2\times N/2$ bits l'emprunte mémoire de $M_I$ (niveau 1)
+	\item Réduction de $N/4$ bits l'emprunte mémoire de $M_I$ (niveau 2)
+	\item Emprunte mémoire de cette solution est donc : $A_2=N(Q_c+Q-1/4)$
+	\item Réduction par rapport au décodeur SC classique :
+	$$
+	r_2=1-\frac{A_2}{A_0}=\frac{5}{4(Q_C+Q+1)}
+	$$	
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Combinaison des deux approches}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=6cm]{./fig/p1.pdf}
+\end{figure}
+\begin{itemize}[<+->]
+	\item Emprunte mémoire de cette solution est donc : $A_{1,2}=N(Q_C/2+Q+1/4)$
+	\item Réduction par rapport au décodeur SC classique :
+	$$
+	r_{1,2}=1-\frac{A_{1,2}}{A_0}=\frac{2Q_C+3}{4(Q_C+Q+3)}=0.25
+	$$	
+\end{itemize}
+\end{frame}
+
+\section{Résultats numériques}
+
+\begin{frame}{Application numérique pour $Q_C-Q=2$}
+	\begin{figure}
+	\begin{tikzpicture}
+		\begin{axis}[grid=both, tick align=outside, tickpos=left,
+				width=.6\linewidth,
+				ymin=0, ymax=30, xlabel=$Q_C$,ylabel=réduction mémoire($\%$)]
+	    	\addplot coordinates
+		{(3,11.1111) (4,13.6364) (5,15.3846) (6,16.6667) (7,17.6471) (8,18.4211)};
+	    	\addplot coordinates
+		{(3,13.8889) (4,11.3636) (5,9.61539) (6,8.33333) (7,7.35294) (8,6.57895)};
+	    	\addplot coordinates
+		{(3,25) (4,25) (5,25) (6,25) (7,25) (8,25)};
+		\legend{$r_1$, $r_2$, $r_{1,2}$}
+	    	\end{axis}
+	\end{tikzpicture}
+	\end{figure}
+En combinant les deux méthodes:$r_{1,2}=25\%$
+\end{frame}
+
+\section{Conclusion}
+
+\begin{frame}{Conclusion}
+\begin{itemize}[<+->]
+	\item La grande régularité des codes polaires permet de concevoir des décodeurs extrêment efficaces du point de vue matériel
+	\item Nous proposons ici une piste pour réduire l'emprunte mémoire des décodeurs de 25\% en dégradant très peu les performances de décodage
+	\item Suite de ce travail: validation par une implémentation matérielle
+	\item Méthode applicable au list-decoding
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Bibliographie}
+\bibliographystyle{IEEEtran}
+
+\begin{thebibliography}{99}
+
+\bibitem{arikan}
+{\scriptsize Arikan, E., "Channel polarization: a method for constructing capacity-achieving Codes for Symmetric Binary-Input Memoryless Channels," IEEE Trans. on Inform. Theory, 2009
+
+\bibitem{hw_archi}
+Leroux, C.; Tal, I.; Vardy, A.; Gross, W.J., "Hardware architectures for successive cancellation decoding of polar codes," IEEE ICASSP, May 2011
+
+\bibitem{semi_parallel}
+Leroux, C.; Raymond, A.J.; Sarkis, G.; Gross, W.J., "A Semi-Parallel Successive-Cancellation Decoder for Polar Codes," IEEE Trans. on Signal Processing, Jan 2013
+
+\bibitem{gabi}
+Sarkis, G.; Giard, P.; Vardy, A.; Thibeault, C.; Gross, W.J., "Fast Polar Decoders: Algorithm and Implementation," IEEE JSAC, May 2014
+
+\bibitem{scalable}
+Raymond, A.J.; Gross, W.J., "Scalable successive-cancellation hardware decoder for polar codes," IEEE GlobalSIP, Dec. 2013
+
+\bibitem{asic}
+YouZhe Fan, Chi-Ying Tsui, "An Efficient Partial-Sum Network Architecture for Semi-Parallel Polar Codes Decoder Implementation," IEEE Trans. on Signal Processing, June 2014
+
+\bibitem{list}
+Tal, I.; Vardy, A., "List Decoding of Polar Codes," IEEE ISIT, July 2011.
+
+\bibitem{huawei}
+http://www.huawei.com/minisite/has2015/img/5g\_radio\_whitepaper.pdf}
+
+\end{thebibliography}
+\end{frame}
+\end{document}
