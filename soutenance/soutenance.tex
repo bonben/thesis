@@ -318,15 +318,19 @@ subsectionstyle=show/shaded/hide
 
 \begin{frame}[c]{Algorithme de décodage CASCL}
 			\includegraphics[width=\textwidth]{./fig/cascl}
+			\begin{itemize}
+				\item Distance faible des codes polaires
+				\item Améliorée par la concaténation du CRC
+				\item Utilisé pour discriminer les candidats
+			\end{itemize}
+\end{frame}
+
+\begin{frame}[c]{Performances de décodage}
+			\includegraphics[width=\textwidth]{./fig/scl_L/tikz/source}
 \end{frame}
 
 \begin{frame}[c]{\'Elagage de l'arbre}
 			\includegraphics[width=\textwidth]{./fig/pruning}
-\end{frame}
-
-
-\begin{frame}[c]{Performances de décodage}
-			\includegraphics[width=\textwidth]{./fig/scl_L/tikz/source}
 \end{frame}
 
 \begin{frame}[c]{Algorithmes de décodage}
@@ -339,15 +343,24 @@ subsectionstyle=show/shaded/hide
       \hline
       SC           & \RED{faibles}                  & \GREEN{haut}                    & \GREEN{faible}    \\
       SCL          & \ORANGE{moyennes}              & \RED{bas}                       & \ORANGE{moyenne}  \\
-      CA-SCL       & \GREEN{importantes}            & \RED{bas}                       & \ORANGE{moyenne}  \\
-      Adaptive-SCL & \GREEN{importantes}            & \GREEN{haut}                    & \RED{forte}       \\
+      CASCL       & \GREEN{élevées}            & \RED{bas}                       & \ORANGE{moyenne}  \\
+      Adaptive-SCL & \GREEN{élevées}            & \GREEN{haut}                    & \RED{forte}       \\
     \end{tabular}
     }}
   \end{table}
 	\vspace{0.5cm}
 \end{frame}
 
-
+\begin{frame}[c]{Résumé}
+	\begin{itemize}
+		\item Chaîne de communications
+		\item Role des codes correcteurs d'erreurs
+		\item Codes polaires
+		\item Algorithme de décodage SC
+		\item Algorithme de décodage SCL (et CASCL)
+		\item Compromis entre performances de décodage, débit et latence
+	\end{itemize}
+\end{frame}
 \section[Décodeur logiciel à liste]{Décodage à liste sur processeurs génériques}
 \subsection*{}
 
