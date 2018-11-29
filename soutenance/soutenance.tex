@@ -27,6 +27,11 @@
 \usepackage{pifont}% http://ctan.org/pkg/pifont
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
 \lstset{
   language=C++,
   basicstyle=\tiny\ttfamily,
@@ -202,7 +207,7 @@ subsectionstyle=show/shaded/hide
 		\item<1-> Message transmis au travers d'un canal de communication
 		\item<2-> Nécessité d'une modulation
 		\item<3-> Modèle simplifié
-		\item<4-> Correction d'erreurs par ajout de redondance ($K>N$)
+		\item<4-> Correction d'erreurs par ajout de redondance ($N>K$)
 		\item<5-> Le cas des codes polaires
 	\end{itemize}
 \end{frame}
@@ -232,10 +237,10 @@ subsectionstyle=show/shaded/hide
 		\end{column}
 		\begin{column}{.35\textwidth}
 		\begin{itemize}
-			\item<1-> Graphe de factorisation
-			\item<2-> Bits d'information
-			\item<3-> Bits gelés
-			\item<5-> Mot de code : $x_i$
+			\item<1-> Matrice d'encodage
+			\item<2-> Bits gelés
+			\item<3-> Mot de code : $x_i$
+			\item<4-> Graphe de factorisation
 		\end{itemize}
 		\end{column}
 
@@ -246,17 +251,22 @@ subsectionstyle=show/shaded/hide
 
 \begin{frame}[c]{Algorithme de décodage SC}
 	\includegraphics[width=.8\textwidth]{fig/decoder_in_chain.pdf}
+	\begin{itemize}
+		\item Estimations : LLR
+		\item Signe : valeur binaire la plus probable
+		\item Valeur absolue : fiabilité de l'information
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[c]{Algorithme de décodage SC}
 	\begin{columns}[T] % align columns
 		\begin{column}{.65\textwidth}
-			\multiinclude[<+>][start=1,end=2,format=pdf,graphics={width=\textwidth}]{./fig/focus_decoder}
+			\multiinclude[<+>][start=1,end=3,format=pdf,graphics={width=\textwidth}]{./fig/focus_decoder}
 		\end{column}
 		\begin{column}{.35\textwidth}
 		\begin{itemize}
 			\item<1-> $L$ : Log Likelihood Ratios (LLR)
-			\item<2-> Deux formats de données
+			\item<3-> $s$ : Sommes Partielles
 		\end{itemize}
 		\end{column}
 	\end{columns}
@@ -271,7 +281,7 @@ subsectionstyle=show/shaded/hide
 
 		\begin{column}{.65\textwidth}
 		\only<1>{
-		$$f(L_a,L_b) = \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)$$
+		$$f(L_a,L_b) \approx \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)$$
 		\vspace{1.1cm}
 
 		$$g(L_a,L_b,\hat{s}_a) = (1-2\hat{s}_a)L_a+L_b$$
@@ -391,8 +401,9 @@ subsectionstyle=show/shaded/hide
 
 \begin{frame}[c]{Décodeur logiciel}
 	\begin{itemize}
-		\item Algorithmes de décodage dans des langages de haut niveau
-		\item Cible : x86 et ARM
+		\item Cloud : Architecture x86-64
+		\item Langage de haut niveau
+		\item Meilleure efficacité énergétique : ARM
 		\item Exploitation des unités SIMD
 	\end{itemize}
 \end{frame}
@@ -419,27 +430,189 @@ subsectionstyle=show/shaded/hide
 
 
 \begin{frame}[c]{Généricité et Flexibilité}
-  \begin{table}[t]
     \centering
+  \only<+>
+  {
+  \begin{table}[t]
     {\small\resizebox{0.8\linewidth}{!}{
-     	\begin{tabular}{r|cccc} 
+     	\begin{tabular}{r|C{1cm}C{1cm}C{1cm}C{2cm}} 
      	 Décodeur     & \cite{shen_low-latency_2016} & \cite{sarkis_increasing_2014} & \cite{sarkis_fast_2016} & Ce travail  \\
      	\cmidrule(lr){1-1}
      	\cmidrule(lr){2-2}
      	\cmidrule(lr){3-3}
      	\cmidrule(lr){4-4}
      	\cmidrule(lr){5-5}
-     	 Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
      	 PASCL        & \xmark                       & \cmark                        & \cmark                  & \cmark \\
      	 FASCL        & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 Virgule fixe & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{Fixe}                         &  \multirow{2}{*}{Fixe}                           &  \multirow{2}{*}{Fixe}                     & Ajustable \\
      	 & &  &  & Dynamique \\
-     	 Poinçonnage & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+     	 Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+     	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
+     	 Code déroulé & NON                  & NON                   & OUI               & NON \\
+     	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
 
     	\end{tabular}
     }}
   \end{table}
+  }
+
+    \only<+>
+  {
+  \begin{table}[t]
+    {\small\resizebox{0.8\linewidth}{!}{
+     	\begin{tabular}{r|C{1cm}C{1cm}C{1cm}C{2cm}} 
+     	 Décodeur     & \cite{shen_low-latency_2016} & \cite{sarkis_increasing_2014} & \cite{sarkis_fast_2016} & Ce travail  \\
+     	\cmidrule(lr){1-1}
+     	\cmidrule(lr){2-2}
+     	\cmidrule(lr){3-3}
+     	\cmidrule(lr){4-4}
+     	\cmidrule(lr){5-5}
+     	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
+     	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 Virgule fixe & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+     	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{Fixe}                         &  \multirow{2}{*}{Fixe}                           &  \multirow{2}{*}{Fixe}                     & Ajustable \\
+     	 & &  &  & Dynamique \\
+     	 Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+     	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
+     	 Code déroulé & NON                  & NON                   & OUI               & NON \\
+     	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
+
+    	\end{tabular}
+    }}
+  \end{table}
+  }
+    \only<+>
+  {
+  \begin{table}[t]
+    {\small\resizebox{0.8\linewidth}{!}{
+     	\begin{tabular}{r|C{1cm}C{1cm}C{1cm}C{2cm}} 
+     	 Décodeur     & \cite{shen_low-latency_2016} & \cite{sarkis_increasing_2014} & \cite{sarkis_fast_2016} & Ce travail  \\
+     	\cmidrule(lr){1-1}
+     	\cmidrule(lr){2-2}
+     	\cmidrule(lr){3-3}
+     	\cmidrule(lr){4-4}
+     	\cmidrule(lr){5-5}
+     	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
+     	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{Fixe}                         &  \multirow{2}{*}{Fixe}                           &  \multirow{2}{*}{Fixe}                     & Ajustable \\
+     	 & &  &  & Dynamique \\
+     	 Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+     	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
+     	 Code déroulé & NON                  & NON                   & OUI               & NON \\
+     	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
+
+    	\end{tabular}
+    }}
+  \end{table}
+  }
+  
+      \only<+>
+  {
+  \begin{table}[t]
+    {\small\resizebox{0.8\linewidth}{!}{
+     	\begin{tabular}{r|C{1cm}C{1cm}C{1cm}C{2cm}} 
+     	 Décodeur     & \cite{shen_low-latency_2016} & \cite{sarkis_increasing_2014} & \cite{sarkis_fast_2016} & Ce travail  \\
+     	\cmidrule(lr){1-1}
+     	\cmidrule(lr){2-2}
+     	\cmidrule(lr){3-3}
+     	\cmidrule(lr){4-4}
+     	\cmidrule(lr){5-5}
+     	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
+     	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{ \RED{Fixe}}                         &  \multirow{2}{*}{ \RED{Fixe}}                           &  \multirow{2}{*}{ \RED{Fixe}}                     & \GREEN{Ajustable} \\
+     	 & &  &  & \GREEN{Dynamique} \\
+     	 Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+     	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
+     	 Code déroulé & NON                  & NON                   & OUI               & NON \\
+     	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
+
+    	\end{tabular}
+    }}
+  \end{table}
+  }
+    
+  \only<+>
+  {
+  \begin{table}[t]
+    {\small\resizebox{0.8\linewidth}{!}{
+     	\begin{tabular}{r|C{1cm}C{1cm}C{1cm}C{2cm}} 
+     	 Décodeur     & \cite{shen_low-latency_2016} & \cite{sarkis_increasing_2014} & \cite{sarkis_fast_2016} & Ce travail  \\
+     	\cmidrule(lr){1-1}
+     	\cmidrule(lr){2-2}
+     	\cmidrule(lr){3-3}
+     	\cmidrule(lr){4-4}
+     	\cmidrule(lr){5-5}
+     	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
+     	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{ \RED{Fixe}}                         &  \multirow{2}{*}{ \RED{Fixe}}                           &  \multirow{2}{*}{ \RED{Fixe}}                     & \GREEN{Ajustable} \\
+     	 & &  &  & \GREEN{Dynamique} \\
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
+     	 Code déroulé & NON                  & NON                   & OUI               & NON \\
+     	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
+
+    	\end{tabular}
+    }}
+  \end{table}
+  }
+    \only<+>
+  {
+  \begin{table}[t]
+    {\small\resizebox{0.8\linewidth}{!}{
+     	\begin{tabular}{r|C{1cm}C{1cm}C{1cm}C{2cm}} 
+     	 Décodeur     & \cite{shen_low-latency_2016} & \cite{sarkis_increasing_2014} & \cite{sarkis_fast_2016} & Ce travail  \\
+     	\cmidrule(lr){1-1}
+     	\cmidrule(lr){2-2}
+     	\cmidrule(lr){3-3}
+     	\cmidrule(lr){4-4}
+     	\cmidrule(lr){5-5}
+     	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
+     	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{ \RED{Fixe}}                         &  \multirow{2}{*}{ \RED{Fixe}}                           &  \multirow{2}{*}{ \RED{Fixe}}                     & \GREEN{Ajustable} \\
+     	 & &  &  & \GREEN{Dynamique} \\
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 Latence ($\mu s$)\footnotemark[1]      &     \RED{1572}  \footnotemark[2]                        & \RED{3300}  \footnotemark[3]                      & \GREEN{433} \footnotemark[3]                 & \ORANGE{770} \footnotemark[3]\\
+     	 Code déroulé & NON                  & NON                   & OUI               & NON \\
+     	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
+
+    	\end{tabular}
+    }}
+  \end{table}
+  }
+  \only<+>
+  {
+  \begin{table}[t]
+    {\small\resizebox{0.8\linewidth}{!}{
+     	\begin{tabular}{r|C{1cm}C{1cm}C{1cm}C{2cm}} 
+     	 Décodeur     & \cite{shen_low-latency_2016} & \cite{sarkis_increasing_2014} & \cite{sarkis_fast_2016} & Ce travail  \\
+     	\cmidrule(lr){1-1}
+     	\cmidrule(lr){2-2}
+     	\cmidrule(lr){3-3}
+     	\cmidrule(lr){4-4}
+     	\cmidrule(lr){5-5}
+     	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
+     	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{ \RED{Fixe}}                         &  \multirow{2}{*}{ \RED{Fixe}}                           &  \multirow{2}{*}{ \RED{Fixe}}                     & \GREEN{Ajustable} \\
+     	 & &  &  & \GREEN{Dynamique} \\
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 Latence ($\mu s$)\footnotemark[1]      &     \RED{1572}  \footnotemark[2]                        & \RED{3300}  \footnotemark[3]                      & \GREEN{433} \footnotemark[3]                 & \ORANGE{770} \footnotemark[3]\\
+     	 Code déroulé & \RED{NON}                  & \RED{NON}                   & \GREEN{OUI}               & \RED{NON} \\
+     	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
+
+    	\end{tabular}
+    }}
+  \end{table}
+  }
+  
+  \footnotetext[1]{CASCL, $K=1723$, $N=2048$} 
+  \footnotetext[2]{Processeur Intel i7-4790K}
+  \footnotetext[3]{Processeur Intel i7-2600} 
 \end{frame}
 
 
