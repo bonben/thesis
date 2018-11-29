@@ -1,0 +1,80 @@
+%!TEX root = ../gen_code.tex
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
+\chapter{Décodeur logiciel de codes polaires à liste}
+\label{chap:soft_scl}
+}
+{
+\Chapter{D\'ECODEUR LOGICIEL DE CODES POLAIRES \`A LISTE}
+\label{chap:soft_scl}
+}
+
+
+\begin{figure}[htp]
+\lstset{language=C++,
+        basicstyle=\footnotesize\ttfamily,
+        keywordstyle=\bfseries\color{green!40!black},
+        commentstyle=\itshape\color{purple!40!black},
+        identifierstyle=\color{blue},
+        stringstyle=\color{orange},
+        morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}[language=C++, numbers=none, tabsize=2, basicstyle=\footnotesize\ttfamily]
+  decode(node)
+  {
+    f(node);
+    decode(node_gauche);
+    g(node);
+    decode(node_droit);
+    if(node.frozen)
+      node.s = 0;
+    else
+      node.s = R1(node);
+  }
+  \end{lstlisting}
+  \caption{Implémentation logicielle des fonctions $f$ et $g$ utilisant la bibliothèque MIPP.}
+  \label{fig:mipp}
+\end{figure}
+\begin{figure}[htp]
+\lstset{language=C++,
+        basicstyle=\footnotesize\ttfamily,
+        keywordstyle=\bfseries\color{green!40!black},
+        commentstyle=\itshape\color{purple!40!black},
+        identifierstyle=\color{blue},
+        stringstyle=\color{orange},
+        morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}[language=C++, numbers=none, tabsize=2, basicstyle=\footnotesize\ttfamily]
+  decode()
+  {
+    f(n1);
+    n2.s = 0;
+    g(n1);
+    n3.s = R1(node);
+  }
+  \end{lstlisting}
+  \caption{Implémentation logicielle des fonctions $f$ et $g$ utilisant la bibliothèque MIPP.}
+  \label{fig:mipp}
+\end{figure}
+
+\begin{figure}[htp]
+\lstset{language=C++,
+        basicstyle=\footnotesize\ttfamily,
+        keywordstyle=\bfseries\color{green!40!black},
+        commentstyle=\itshape\color{purple!40!black},
+        identifierstyle=\color{blue},
+        stringstyle=\color{orange},
+        morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}[language=C++, numbers=none, tabsize=2, basicstyle=\footnotesize\ttfamily]
+  decode()
+  {
+    f(n1);
+    n2.s = 0;
+    g(n1);
+    n3.s = R1(node);
+  }
+  \end{lstlisting}
+  \caption{Implémentation logicielle des fonctions $f$ et $g$ utilisant la bibliothèque MIPP.}
+  \label{fig:mipp}
+\end{figure}
