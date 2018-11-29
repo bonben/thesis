@@ -24,7 +24,9 @@
 \usepackage{mathtools}
 \usepackage{listings}
 \usepackage{eulervm}
-
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 \lstset{
   language=C++,
   basicstyle=\tiny\ttfamily,
@@ -331,15 +333,19 @@ subsectionstyle=show/shaded/hide
 
 \begin{frame}[c]{Algorithme de décodage CASCL}
 			\includegraphics[width=\textwidth]{./fig/cascl}
+			\begin{itemize}
+				\item Distance faible des codes polaires
+				\item Améliorée par la concaténation du CRC
+				\item Utilisé pour discriminer les candidats
+			\end{itemize}
+\end{frame}
+
+\begin{frame}[c]{Performances de décodage}
+			\includegraphics[width=\textwidth]{./fig/scl_L/tikz/source}
 \end{frame}
 
 \begin{frame}[c]{\'Elagage de l'arbre}
 			\includegraphics[width=\textwidth]{./fig/pruning}
-\end{frame}
-
-
-\begin{frame}[c]{Performances de décodage}
-			\includegraphics[width=\textwidth]{./fig/scl_L/tikz/source}
 \end{frame}
 
 \begin{frame}[c]{Algorithmes de décodage}
@@ -352,24 +358,34 @@ subsectionstyle=show/shaded/hide
       \hline
       SC           & \RED{faibles}                  & \GREEN{haut}                    & \GREEN{faible}    \\
       SCL          & \ORANGE{moyennes}              & \RED{bas}                       & \ORANGE{moyenne}  \\
-      CA-SCL       & \GREEN{importantes}            & \RED{bas}                       & \ORANGE{moyenne}  \\
-      Adaptive-SCL & \GREEN{importantes}            & \GREEN{haut}                    & \RED{forte}       \\
+      CASCL       & \GREEN{élevées}            & \RED{bas}                       & \ORANGE{moyenne}  \\
+      Adaptive-SCL & \GREEN{élevées}            & \GREEN{haut}                    & \RED{forte}       \\
     \end{tabular}
     }}
   \end{table}
 	\vspace{0.5cm}
 \end{frame}
 
-
+\begin{frame}[c]{Résumé}
+	\begin{itemize}
+		\item Chaîne de communications
+		\item Role des codes correcteurs d'erreurs
+		\item Codes polaires
+		\item Algorithme de décodage SC
+		\item Algorithme de décodage SCL (et CASCL)
+		\item Compromis entre performances de décodage, débit et latence
+	\end{itemize}
+\end{frame}
 \section[Décodeur logiciel à liste]{Décodage à liste sur processeurs génériques}
 \subsection*{}
 
-\begin{frame}[c]{Virtualisation}
+\begin{frame}[c]{\'Evolutions des systèmes de télécommunications}
 	\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/bs_evo}
 	\begin{itemize}
 		\item<1-> Architectures dédiées localisées pour le calcul bande de base
 		\item<2-> Architectures dédiées à distance pour le calcul bande de base
 		\item<3-> Cloud-RAN : décodeur logiciel
+		\item<4-> Adaptativité de l'infrastructure
 	\end{itemize}
 \end{frame}
 
@@ -387,17 +403,45 @@ subsectionstyle=show/shaded/hide
 		\begin{itemize}
 			\item N, K
 			\item Concaténation de CRC
-			\item Construction du code
+			\item Position des bits gelés
 			\item Poinçonnage
 		\end{itemize}
 		\item Flexibilité
 		\begin{itemize}
+			\item Variantes algorithmiques
 			\item Taille de la liste
 			\item Représentation en virgule fixe
 			\item Ajustement de l'élagage
+			\item Non déroulé
 		\end{itemize}
 	\end{itemize}
 \end{frame}
+
+
+\begin{frame}[c]{Généricité et Flexibilité}
+  \begin{table}[t]
+    \centering
+    {\small\resizebox{0.8\linewidth}{!}{
+     	\begin{tabular}{r|cccc} 
+     	 Décodeur     & \cite{shen_low-latency_2016} & \cite{sarkis_increasing_2014} & \cite{sarkis_fast_2016} & Ce travail  \\
+     	\cmidrule(lr){1-1}
+     	\cmidrule(lr){2-2}
+     	\cmidrule(lr){3-3}
+     	\cmidrule(lr){4-4}
+     	\cmidrule(lr){5-5}
+     	 Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
+     	 PASCL        & \xmark                       & \cmark                        & \cmark                  & \cmark \\
+     	 FASCL        & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+     	 Virgule fixe & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+     	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{Fixe}                         &  \multirow{2}{*}{Fixe}                           &  \multirow{2}{*}{Fixe}                     & Ajustable \\
+     	 & &  &  & Dynamique \\
+     	 Poinçonnage & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+
+    	\end{tabular}
+    }}
+  \end{table}
+\end{frame}
+
 
 
 \begin{frame}[c]{Impact de l'élagage des nœuds SPC}
@@ -477,7 +521,7 @@ subsectionstyle=show/shaded/hide
 \begin{frame}
     \begin{table}[ht]
       \centering
-      {\small\resizebox{0.9\linewidth}{!}{
+      {\small\resizebox{0.8\linewidth}{!}{
       \begin{tabular}{r|l|c|c|c c c}
         \multirow{2}{*}{\textbf{Cible}} & \multirow{2}{*}{\textbf{Algorithme}} & \multirow{2}{*}{\textbf{Version}}  & \multirow{1}{*}{\textbf{${\mathcal{L}_{PC}}$}} & \multicolumn{3}{c}{${\mathcal{T}_i}$ (Mb/s)} \\
         \cline{5-7}
@@ -1188,13 +1232,13 @@ subsectionstyle=show/shaded/hide
 	\end{itemize}
 
 \end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+\printbibliography
+\end{frame}
 \end{document}
 
 
-
-% \begin{frame}[allowframebreaks]{References}
-% \printbibliography
-% \end{frame}
 
 % \begin{frame}[c]{Hardware Implementations Comparison}
 % 		\begin{table}
