@@ -1,0 +1,195 @@
+%!TEX root = ../soutenance.tex
+
+
+\section[Introduction]{Introduction}
+\subsection*{Les codes correcteurs d'erreurs}
+
+\begin{frame}[c]
+	\begin{center}
+	\multiinclude[<+>][start=1,format=pdf,graphics={width=.8\textwidth}]{./fig/chaine_com}
+	\end{center}
+  	\frametitle<1>{Chaîne de communication}
+  	\frametitle<2->{Chaîne de communication numérique}
+	\begin{itemize}
+		\item<1-> Message transmis au travers d'un canal de communication
+		\item<2-> Nécessité d'une modulation
+		\item<3-> Modèle simplifié
+		\item<4-> Correction d'erreurs par ajout de redondance ($N>K$)
+		\item<5-> Le cas des codes polaires
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\vfill
+	\begin{itemize}
+		\item 1948 : Théorie de l’information (Shannon)
+		\item 1950 : Codes de Hamming
+		\item 1955 : Codes convolutifs
+		\item 1960 : Codes BCH
+		\item 1960 : Codes Reed-Solomon
+		\item 1960 : Codes LDPC 
+		\item 1966 : Codes concaténés (Forney)
+		\item 1993 : \textbf{Codes turbos}
+		\item 1996 : \textbf{LDPC rediscovery}
+		\item 2008 : \textbf{Codes polaires}
+	\end{itemize}
+	\vfill
+\end{frame}
+
+\subsection*{Les codes polaires}
+\begin{frame}[c]{Codage polaire}
+	\begin{columns}[T] % align columns
+		\begin{column}{.65\textwidth}
+			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/focus_polar}
+		\end{column}
+		\begin{column}{.35\textwidth}
+		\begin{itemize}
+			\item<1-> Matrice d'encodage
+			\item<2-> Bits gelés
+			\item<3-> Mot de code : $x_i$
+			\item<4-> Graphe de factorisation
+		\end{itemize}
+		\end{column}
+
+	\end{columns}
+
+\end{frame}
+\subsection*{Le décodage SC}
+
+\begin{frame}[c]{Algorithme de décodage SC}
+	\includegraphics[width=.8\textwidth]{fig/decoder_in_chain.pdf}
+	\begin{itemize}
+		\item Estimations : LLR
+		\item Signe : valeur binaire la plus probable
+		\item Valeur absolue : fiabilité de l'information
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[c]{Algorithme de décodage SC}
+	\begin{columns}[T] % align columns
+		\begin{column}{.65\textwidth}
+			\multiinclude[<+>][start=1,end=3,format=pdf,graphics={width=\textwidth}]{./fig/focus_decoder}
+		\end{column}
+		\begin{column}{.35\textwidth}
+		\begin{itemize}
+			\item<1-> $L$ : Log Likelihood Ratios (LLR)
+			\item<3-> $s$ : Sommes Partielles
+		\end{itemize}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\begin{frame}[c]{Algorithme de décodage SC}
+	\begin{columns}[T] % align columns
+		\begin{column}{.35\textwidth}
+			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/polar_functions}    
+		\end{column}
+
+		\begin{column}{.65\textwidth}
+		\only<1>{
+		$$f(L_a,L_b) \approx \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)$$
+		\vspace{1.1cm}
+
+		$$g(L_a,L_b,\hat{s}_a) = (1-2\hat{s}_a)L_a+L_b$$
+		}
+
+				\only<2>{
+				\vspace{0.5cm}
+		$$\texttt{R1}(L_a)  =  \left\{\begin{array}{l c l} 0 \text{ si } L_a \geq 0 \\ 1 \text{ si } L_a < 0 \end{array}\right.$$
+		\vspace{1.1cm}
+
+		$$h(\hat{s}_a,\hat{s}_b) = (\hat{s}_{a} \oplus \hat{s}_{b}, \hat{s}_{b})$$
+		}
+		\end{column}
+
+	\end{columns}
+
+	
+ %    g(L_a,L_b,\hat{s}_a)&=&(1-2\hat{s}_a)L_a+L_b\\
+ %    h(\hat{s}_a,\hat{s}_b)&=& (\hat{s}_{a} \oplus \hat{s}_{b}, \hat{s}_{b})\\
+ %    \texttt{R0}(L_a) &=& 0 \\
+ %    \texttt{R1}(L_a) &=&  \left\{\begin{array}{l c l} 0 \text{ si } L_a \geq 0 \\ 1 \text{ si } L_a < 0 \end{array}\right.
+\end{frame}
+
+\begin{frame}[c]{Algorithme de décodage SC}
+	\multiinclude[<+>][start=3,format=pdf,graphics={width=.8\textwidth}]{./fig/focus_decoder}
+\end{frame}
+
+\begin{frame}[c]{Algorithme de décodage SC}
+	\multiinclude[<+>][start=1,format=pdf,graphics={width=.7\textwidth}]{./fig/sc_tree}
+\end{frame}
+
+\begin{frame}[c]{Algorithme de décodage SC}
+	\includegraphics[width=.5\textwidth]{fig/sc_tree_output.pdf}
+\end{frame}
+
+\subsection*{Le décodage SC Liste}
+
+\begin{frame}[c]{Algorithme de décodage SCL}
+	\begin{columns}[T] % align columns
+
+		\begin{column}{.7\textwidth}
+
+			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/scl_anim}
+
+		\end{column}
+
+		\begin{column}{.3\textwidth}
+			\begin{itemize}
+				\item<3-> Pas de décision dure
+				\item<4-> Duplication des chemins
+				\item<5-> Métrique de chemins
+				\item<6-> Tri des métrique \& élimination
+				\item<7-> Mot de code décodé
+			\end{itemize}
+		\end{column}
+
+	\end{columns}
+\end{frame}
+
+\begin{frame}[c]{Algorithme de décodage CASCL}
+			\includegraphics[width=\textwidth]{./fig/cascl}
+			\begin{itemize}
+				\item Distance faible des codes polaires
+				\item Améliorée par la concaténation du CRC
+				\item Utilisé pour discriminer les candidats
+			\end{itemize}
+\end{frame}
+
+\begin{frame}[c]{Performances de décodage}
+			\includegraphics[width=\textwidth]{./fig/scl_L/tikz/source}
+\end{frame}
+
+\begin{frame}[c]{\'Elagage de l'arbre}
+			\includegraphics[width=\textwidth]{./fig/pruning}
+\end{frame}
+
+\begin{frame}[c]{Algorithmes de décodage}
+  \begin{table}[t]
+    \centering
+    {\small\resizebox{0.8\linewidth}{!}{
+     \begin{tabular}{r|c|c|c} 
+      \textbf{Algorithme}  & \textbf{Performances}  & \multirow{2}{*}{\textbf{Débit}} & \textbf{Latence}  \\
+      \textbf{de décodage} & \textbf{BER \& FER}    &                                 & \textbf{Maximum}  \\
+      \hline
+      SC           & \RED{faibles}                  & \GREEN{haut}                    & \GREEN{faible}    \\
+      SCL          & \ORANGE{moyennes}              & \RED{bas}                       & \ORANGE{moyenne}  \\
+      CASCL       & \GREEN{élevées}            & \RED{bas}                       & \ORANGE{moyenne}  \\
+      Adaptive-SCL & \GREEN{élevées}            & \GREEN{haut}                    & \RED{forte}       \\
+    \end{tabular}
+    }}
+  \end{table}
+	\vspace{0.5cm}
+\end{frame}
+
+\begin{frame}[c]{Résumé}
+	\begin{itemize}
+		\item Chaîne de communications
+		\item Role des codes correcteurs d'erreurs
+		\item Codes polaires
+		\item Algorithme de décodage SC
+		\item Algorithme de décodage SCL (et CASCL)
+		\item Compromis entre performances de décodage, débit et latence
+	\end{itemize}
+\end{frame}

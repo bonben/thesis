@@ -1,0 +1,40 @@
+\documentclass[tikz,margin=3mm]{standalone}
+% \usepackage{pgfplots}
+% \pgfplotsset{compat=newest}
+% \usetikzlibrary{patterns}
+% \usetikzlibrary{calc}
+% \usetikzlibrary{matrix}
+\usepackage{eulervm}
+\input{colors}
+
+\begin{document}
+\begin{tikzpicture}
+    \draw[gray] (0,-1) grid (3,1);
+    \draw[ultra thick,Paired-1] 
+    (0 /8,  0  ) sin 
+    (1 /8,  1  ) cos
+    (2 /8,  0  ) sin 
+    (3 /8, -1  ) cos 
+    (4 /8,  0  ) sin 
+    (5 /8, -1  ) cos
+    (6 /8,  0  ) sin 
+    (7 /8,  1  ) cos 
+    (8 /8,  0  ) sin 
+    (9 /8,  1  ) cos
+    (10/8,  0  ) sin 
+    (11/8, -1  ) cos 
+    (12/8,  0  ) sin 
+    (13/8,  1  ) cos
+    (14/8,  0  ) sin 
+    (15/8, -1  ) cos 
+    (16/8,  0  ) sin 
+    (17/8, -1  ) cos
+    (18/8,  0  ) sin 
+    (19/8,  1  ) cos 
+    (20/8,  0  ) sin 
+    (21/8,  1  ) cos
+    (22/8,  0  ) sin 
+    (23/8, -1  ) cos 
+    (24/8,  0  );
+\end{tikzpicture}%
+\end{document}
