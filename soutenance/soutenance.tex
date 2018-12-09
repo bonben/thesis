@@ -85,6 +85,7 @@
 \setbeamertemplate{frametitle}{ \nointerlineskip \begin{beamercolorbox}[wd=\paperwidth,ht=2.2ex,dp=0.5ex,left]{frametitle} \hspace*{3.1ex}\strut\bfseries\color{bleuUni!15!white}\insertframetitle\strut\par \end{beamercolorbox}}
 
 \setbeamertemplate{bibliography item}{\insertbiblabel}
+  \definecolor{bluecite}{HTML}{009DE0} 
 
 
 \makeatletter
@@ -180,7 +181,8 @@ subsectionstyle=show/shaded/hide
 
 \bibliography{bibli}
 
-% \includeonly{part3}
+
+\includeonly{part1}
 
 \begin{document}
 
@@ -196,8 +198,8 @@ subsectionstyle=show/shaded/hide
 
 
 \include{part1}
-% \include{part2}
-% \include{part3}
+\include{part2}
+\include{part3}
 
 \end{document}
 

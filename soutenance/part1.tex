@@ -1,7 +1,7 @@
 %!TEX root = ./soutenance.tex
 
 
-\section[Introduction]{Le décodage de codes polaires}
+\section[Introduction]{Décodage de codes polaires}
 \subsection*{Les codes correcteurs d'erreurs}
 
 \begin{frame}[c]
@@ -9,13 +9,12 @@
 	\multiinclude[<+>][start=1,format=pdf,graphics={width=.8\textwidth}]{./fig/chaine_com}
 	\end{center}
   	\frametitle<1>{Chaîne de communications}
-  	\frametitle<2->{Chaîne de communications numérique}
+  	\frametitle<2->{Chaîne de communications numériques}
 	\begin{itemize}
-		\item<1-> Message transmis au travers d'un canal de communication
-		\item<2-> Nécessité d'une modulation
-		\item<3-> Modèle simplifié
-		\item<4-> Correction d'erreurs par ajout de redondance ($N>K$)
-		\item<5-> Le cas des codes polaires
+		\item<1-> Transmission de bits d'information
+		\item<2-> Présence de perturbations
+		\item<7-> Ajout de récurrence
+		\item<9-> Correction des erreurs
 	\end{itemize}
 \end{frame}
 
@@ -36,14 +35,14 @@
 \end{frame}
 
 \subsection*{Les codes polaires}
-\begin{frame}[c]{Codage polaire}
+\begin{frame}[c]{Codes polaires}
 	\begin{columns}[T] % align columns
 		\begin{column}{.65\textwidth}
 			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/focus_polar}
 		\end{column}
 		\begin{column}{.35\textwidth}
 		\begin{itemize}
-			\item<1-> Matrice d'encodage
+			\item<1-> Matrice génératrice
 			\item<2-> Bits gelés
 			\item<3-> Mot de code : $x_i$
 			\item<4-> Graphe de factorisation
@@ -55,10 +54,10 @@
 \end{frame}
 \subsection*{Le décodage SC}
 
-\begin{frame}[c]{Algorithme de décodage SC}
+\begin{frame}[c]{Algorithme de décodage SC (Successive Cancellation)}
 	\includegraphics[width=.8\textwidth]{fig/decoder_in_chain.pdf}
 	\begin{itemize}
-		\item Estimations : LLR
+		\item Estimations : LLR (Log-Likelihood Ratio)
 		\item Signe : valeur binaire la plus probable
 		\item Valeur absolue : fiabilité de l'information
 	\end{itemize}
@@ -120,7 +119,32 @@
 \end{frame}
 
 \begin{frame}[c]{Algorithme de décodage SC}
-	\includegraphics[width=.5\textwidth]{fig/sc_tree_output.pdf}
+	\begin{columns}[T] % align columns
+
+		\begin{column}{.55\textwidth}
+
+			\includegraphics[width=\textwidth]{fig/sc_tree_output.pdf}
+
+		\end{column}
+
+		\begin{column}{.45\textwidth}
+		\only<2>{
+			\begin{itemize}
+				\item \GREEN{Récursif}
+				\item \GREEN{Régulier}
+				\item \GREEN{Atteint la capacité pour une taille de mot de code infinie}
+				\vspace{0.5cm}
+				\item \RED{Performances faibles pour $N<4096$}
+				\item \RED{Problème des décisions dures}
+			\end{itemize}
+		}
+
+
+		\end{column}
+
+	\end{columns}
+
+
 \end{frame}
 
 \subsection*{Le décodage SC Liste}
@@ -163,32 +187,34 @@
 \begin{frame}[c]{\'Elagage de l'arbre}
 			\includegraphics[width=\textwidth]{./fig/pruning}
 \end{frame}
+	
+	\begin{frame}[c]{Résumé}
+	\vspace{-1cm}
+	\begin{minipage}[t][2.5cm][t]{\textwidth}
+		\begin{itemize}
+			\item<+-> Rôle des codes correcteurs d'erreurs
+			\item<+-> Les codes polaires
+			\item<+-> Compromis entre performances de décodage, débit et latence
+		\end{itemize}
+	\end{minipage}
+	\begin{minipage}[t][2cm][t]{\textwidth}
 
-\begin{frame}[c]{Algorithmes de décodage}
-  \begin{table}[t]
-    \centering
-    {\small\resizebox{0.8\linewidth}{!}{
-     \begin{tabular}{r|c|c|c} 
-      \textbf{Algorithme}  & \textbf{Performances}  & \multirow{2}{*}{\textbf{Débit}} & \textbf{Latence}  \\
-      \textbf{de décodage} & \textbf{BER \& FER}    &                                 & \textbf{Maximum}  \\
-      \hline
-      SC           & \RED{faibles}                  & \GREEN{haut}                    & \GREEN{faible}    \\
-      SCL          & \ORANGE{moyennes}              & \RED{bas}                       & \ORANGE{moyenne}  \\
-      CASCL       & \GREEN{élevées}            & \RED{bas}                       & \ORANGE{moyenne}  \\
-      Adaptive-SCL & \GREEN{élevées}            & \GREEN{haut}                    & \RED{forte}       \\
-    \end{tabular}
-    }}
-  \end{table}
-	\vspace{0.5cm}
-\end{frame}
+	\only<3>{
+		\begin{table}[t]
+			\centering
+			{\small\resizebox{0.8\linewidth}{!}{
+			\begin{tabular}{r|c|c|c} 
+				\textbf{Algorithme}  & \textbf{Performances}  & \multirow{2}{*}{\textbf{Débit}} & \textbf{Latence}  \\
+				\textbf{de décodage} & \textbf{BER \& FER}    &                                 & \textbf{Maximum}  \\
+				\hline
+				SC           & \RED{faibles}                  & \GREEN{haut}                    & \GREEN{faible}    \\
+				SCL          & \ORANGE{moyennes}              & \RED{bas}                       & \ORANGE{moyenne}  \\
+				CASCL       & \GREEN{élevées}            & \RED{bas}                       & \ORANGE{moyenne}  \\
+				Adaptive-SCL & \GREEN{élevées}            & \GREEN{haut}                    & \RED{forte}       \\
+			\end{tabular}
+			}}
+		\end{table}
+	}
+	\end{minipage}
 
-\begin{frame}[c]{Résumé}
-	\begin{itemize}
-		\item Chaîne de communications
-		\item Role des codes correcteurs d'erreurs
-		\item Codes polaires
-		\item Algorithme de décodage SC
-		\item Algorithme de décodage SCL (et CASCL)
-		\item Compromis entre performances de décodage, débit et latence
-	\end{itemize}
 \end{frame}

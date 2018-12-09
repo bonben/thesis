@@ -9,6 +9,7 @@
 
 
 \begin{frame}[c]{Implémentation de l'algorithme SC}
+\vfill
   \begin{table}[t]
     \centering
     {\small\resizebox{0.8\linewidth}{!}{
@@ -23,12 +24,10 @@
     \end{tabular}
     }}
   \end{table}
-  \vspace{0.5cm}
+  \vfill
   \centering
-  Tous ces algorithmes sont basés sur l'algorithme SC
-  \vspace{0.7cm}
-
   L'architecture proposée se concentre sur l'algorithme SC
+  \vfill
 \end{frame}
 
 
@@ -38,21 +37,27 @@
 \end{frame}
 
 \begin{frame}[c]{Approche Tensilica}
+\renewcommand{\section}[2]{} % Trick to avoid references section
+
   \begin{columns}
     \begin{column}{.48\textwidth}
+    \vspace{-1cm}
       \begin{itemize}
         \item Spécialisation d'un processeur de base
         \item Instructions spécialisées
         \item Environnement de développement complet
         \item<2-> Réduction de la consommation énergétique
+        \item<2-> Publication\color{bluecite}{\cite{leonardon_custom_2018}}
+  
       \end{itemize}
     \end{column}
     \begin{column}[T]{.48\textwidth}
+    \vspace{-0.5cm}
+
+  \begin{minipage}[c][0cm][t]{\textwidth}
     \only<+>
-    {
-      \vfill
+    { 
       \includegraphics[width=\textwidth]{./fig/archi_tensilica}
-      \vfill
     }
     \only<+->
     {
@@ -68,64 +73,78 @@
         \cmidrule(lr){2-2}
         \cmidrule(lr){3-5}
 %                       
-        \multirow{4}{*}{\bf A57-1.1GHz}  & $1024$   & $13$  & $38$  & \ORANGE{$21$} \\
+        \multirow{4}{*}{\bf A57-1.1GHz}  & $1024$   & $13$  & $38$  & \ORANGE{$\mathbf{21}$} \\
 
-                                         & $512$    & $6.7$ & $38$  & \ORANGE{$21$} \\
+                                         & $512$    & $6.7$ & $38$  & \ORANGE{$\mathbf{21}$} \\
 
-                                         & $256$    & $3.6$ & $35$  & \ORANGE{$22$}\\
+                                         & $256$    & $3.6$ & $35$  & \ORANGE{$\mathbf{22}$}\\
 
-                                         & $128$    & $2.1$ & $30$  & \ORANGE{$27$}\\
-
-        \midrule
-
-        \multirow{4}{*}{\bf i7-3.3GHz}   & $1024$   & $2.3$ & $222$ & \RED{$47$} \\
-
-                                         & $512$    & $1.4$ & $182$ & \RED{$57$} \\
-
-                                         & $256$    & $0.8$ & $155$ & \RED{$68$}\\
-
-                                         & $128$    & $0.5$ & $124$ & \RED{$85$}\\
+                                         & $128$    & $2.1$ & $30$  & \ORANGE{$\mathbf{27}$}\\
 
         \midrule
 
-        \multirow{4}{*}{\bf ASIP-835MHz} & $1024$   & $7.2$ & $71$  & \GREEN{$1.6$} \\
+        \multirow{4}{*}{\bf i7-3.3GHz}   & $1024$   & $2.3$ & $222$ & \RED{$\mathbf{47}$} \\
 
-                                         & $512$    & $3.9$ & $66$  & \GREEN{$1.7$} \\
+                                         & $512$    & $1.4$ & $182$ & \RED{$\mathbf{57}$} \\
 
-                                         & $256$    & $1.9$ & $65$  & \GREEN{$1.7$}\\
+                                         & $256$    & $0.8$ & $155$ & \RED{$\mathbf{68}$}\\
 
-                                         & $128$    & $1.0$ & $62$  & \GREEN{$1.8$}\\
+                                         & $128$    & $0.5$ & $124$ & \RED{$\mathbf{85}$}\\
+
+        \midrule
+
+        \multirow{4}{*}{\bf ASIP-835MHz} & $1024$   & $7.2$ & $71$  & \GREEN{$\mathbf{1.6}$} \\
+
+                                         & $512$    & $3.9$ & $66$  & \GREEN{$\mathbf{1.7}$} \\
+
+                                         & $256$    & $1.9$ & $65$  & \GREEN{$\mathbf{1.7}$}\\
+
+                                         & $128$    & $1.0$ & $62$  & \GREEN{$\mathbf{1.8}$}\\
         \bottomrule
       \end{tabular}
       }}
     \end{table}
     }
+  \end{minipage} 
     \end{column}
   \end{columns}
 \vfill
 \centering
-  \only<3>{Ce travail a fait l'objet d'une communication lors de la conférence ISCAS 2018.}
+  \begin{minipage}[c][0cm][t]{\textwidth}
+\only<2>
+{
+    \printbibliography[keyword={leonardon}]
+
+}
+  \end{minipage} 
 \end{frame}
 
 
 \begin{frame}[c]{Limites de l'approche Tensilica}
   \begin{itemize}
-    \item Langage de description matérielle spécifique
-    \item Licence nécessaire
+    \vfill
     \item Limitation de l'accès à la mémoire
+    \vfill
     \item Rigidité de l'architecture
+    \vfill
+    \item Langage de description matérielle spécifique
+    \vfill
+    \item Licence nécessaire
+    \vfill
   \end{itemize}
 \end{frame}
 
 \begin{frame}[c]{Transport Triggered Architectures}
   \begin{itemize}
+    \vfill
     \item Modèle de processeur
-    \vspace{0.5cm}
+    \vfill
     \item Similaire aux architectures VLIW
-    \vspace{0.5cm}
+    \vfill
     \item Parallélisme de données
-    \vspace{0.5cm}
+    \vfill
     \item Parallélisme d'instructions
+    \vfill
   \end{itemize}
 \end{frame}
 
@@ -214,9 +233,9 @@
         \cmidrule(lr){2-2}
         \cmidrule(lr){3-5}
 
-        \multirow{2}{*}{\bf \BLUE{TTPD-800MHz}}            & $1024$   & $1.4$  & $352$ & $0.14$ \\ % 1512 cycles
+        \multirow{2}{*}{\bf \BLUE{TTPD-800MHz}}     & $1024$   & $1.4$  & $352$ & $0.14$ \\ % 1512 cycles
                                                     & $512$    & $0.8$  & $313$ & $0.15$ \\ % 803 cycles
-        \multirow{2}{*}{\bf \BLUE{(ASIP)}}                 & $256$    & $0.4$  & $304$ & $0.16$ \\ % 413 cycles
+        \multirow{2}{*}{\bf \BLUE{(ASIP)}}          & $256$    & $0.4$  & $304$ & $0.16$ \\ % 413 cycles
                                                     & $128$    & $0.2$  & $284$ & $0.17$ \\ % 224 cycles
         \midrule
         \multirow{2}{*}{\bf i7-3.3GHz}              & $1024$   & $2.0$  & $257$ & $41$   \\
@@ -578,24 +597,64 @@
 \section{Conclusions et perspectives}
 \subsection*{}
 
-\begin{frame}[c]{Conclusion}
+\begin{frame}[c]{Conclusions}
+
+  \begin{enumerate}
+\renewcommand{\section}[2]{} % Trick to avoid references section
+
+    \renewcommand*{\bibfont}{\scriptsize}
+    \nocite{leonardon_fast_2017,ghaffari_improving_2017,leonardon_tta_2018,Ghaffari2018,cassagne_fast_2017,cassagne_gdr_2017}
+    \vfill
+    \item<+-> Implémentation logicielle de l'algorithme  SCL
+    \scriptsize{\printbibliography[keyword={fast-scl}]}
+    \vfill
+    \item<+-> Spécialisation d'un processeur Tensilica
+    \scriptsize{\printbibliography[keyword={leonardon}]}
+    \vfill
+    \item<+-> Conception d'un processeur de type TTA
+    \scriptsize{\printbibliography[keyword={tta}]}
+    \vfill
+    \item<+-> Implémentation du décodeur SCMA
+    \printbibliography[keyword={ghaffari}]
+    \vfill
+    \item<+-> Participation au projet AFF3CT
+    \printbibliography[keyword={aff3ct}]
+    \vfill
+  \end{enumerate}
+
+\end{frame}
+
+\begin{frame}[c]{Perspectives}
 
   \begin{itemize}
-    \item<+-> Premier décodeur polaire TTA
-    \vspace{0.3cm}
-    \item<+-> Meilleure efficacité énergétique que pour des processeurs embarqués
-    \vspace{0.3cm}
-    \item<+-> Architecture modulaire et adaptive (implémentation de l'algorithme SCAN)
-    \vspace{0.3cm}
-    \item<+-> Perspectives
+    \renewcommand*{\bibfont}{\scriptsize}
+    \vfill
+    \item<+-> Extension des travaux sur les décodeurs logiciels
     \begin{itemize}
-      \item<+-> Algorithme SCL
-      \item<+-> Multicœur
+      \item Implémentations logicielles des algorithmes SCF, SCS
+      \item Support des codes polaires multinoyaux
     \end{itemize}
+    \vfill
+    \item<+-> Architecture TTA supportant le décodage de l'algorithme SCL
+    \vfill
+    \item<+-> Intégration des codes polaires dans des chaînes de communications plus complexes
+    \begin{itemize}
+      \item Travaux sur le SCMA
+      \item Support des codes polaires de la 5G
+    \end{itemize}
+    \vfill
   \end{itemize}
 
 \end{frame}
 
+\begin{frame}[c]{Merci}
+\vfill
+Merci pour votre attention !
+\vfill
+\end{frame}
+
 \begin{frame}[allowframebreaks]{References}
+\renewcommand*{\bibfont}{\scriptsize}
+
 \printbibliography
 \end{frame}
