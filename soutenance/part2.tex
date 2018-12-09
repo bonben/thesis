@@ -15,9 +15,11 @@
 \begin{frame}[c]{Décodeur logiciel}
 	\begin{itemize}
 		\vfill
-		\item Cloud : Architecture x86-64
-		\vfill
-		\item Langage de haut niveau
+		\item Architecture x86-64 majoritaire dans les serveurs
+    \vfill
+    \item Description logicielle du décodeur
+    \vfill
+    \item Exploiter les unités SIMD
 		\vfill
 		\item Meilleure efficacité énergétique : ARM
 		\vfill
@@ -44,6 +46,39 @@
 		\end{itemize}
 	\end{itemize}
   \vfill
+\end{frame}
+
+
+\begin{frame}[c]{Généricité et Flexibilité}
+    \centering
+
+  \renewcommand*{\thefootnote}{\alph{footnote}}
+  \begin{table}[t]
+    {\small\resizebox{0.8\linewidth}{!}{
+      \begin{tabular}{r|C{1cm}C{1cm}C{1cm}C{2cm}} 
+       Décodeur     & \cite{shen_low-latency_2016} & \cite{sarkis_increasing_2014} & \cite{sarkis_fast_2016} & Ce travail  \\
+      \cmidrule(lr){1-1}
+      \cmidrule(lr){2-2}
+      \cmidrule(lr){3-3}
+      \cmidrule(lr){4-4}
+      \cmidrule(lr){5-5}
+       N            & \cmark                       & \cmark                        & \cmark                  & \cmark \\
+       K            & \cmark                       & \cmark                        & \cmark                  & \cmark \\
+       CRC          & \cmark                       & \cmark                        & \cmark                  & \cmark \\
+       Pos. bits gelés & \cmark                       & \cmark                        & \cmark                  & \cmark \\
+       Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+       \hline
+       PASCL        & \xmark                       & \cmark                        & \cmark                  & \cmark \\
+       FASCL        & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+       Virgule fixe & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+       \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{Fixe}                         &  \multirow{2}{*}{Fixe}                           &  \multirow{2}{*}{Fixe}                     & Ajustable \\
+       & &  &  & Dynamique \\
+       Code déroulé & NON                  & NON                   & OUI               & NON \\
+       % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
+
+      \end{tabular}
+    }}
+  \end{table}
 \end{frame}
 
 
@@ -271,6 +306,9 @@
   \begin{table}[hb]
     \renewcommand{\arraystretch}{1.1}
     \centering
+
+    \only<+>
+    {
     {\small\resizebox{\linewidth}{!}{
     \begin{tabular}{r | c | c || c | c || c | c || c | c}
       \multirow{3}{*}{\textbf{Décodeur}} & \multirow{3}{*}{\textbf{Quantif.}} & \multirow{3}{*}{${\mathcal{L}_{PC}}$} & \multicolumn{2}{c ||}{\textbf{3.5 dB}} & \multicolumn{2}{c ||}{\textbf{4.0 dB}} & \multicolumn{2}{c}{\textbf{4.5 dB}} \\
@@ -285,13 +323,38 @@
       %\cline{3-9}
                                &  8-bit &  651 & 232.4 &   7.6 & 41.2 &  42.6 & 6.5 & 268.3 \\
       \hline
-      \multirow{3}{*}{FASCL} & 32-bit & 1201 &  67.2 &  26.1 &  8.5 & 207.8 & 5.1 & 345.5 \\
+      \multirow{3}{*}{FASCL}  & 32-bit & 1201 &  67.2 &  26.1 &  8.5 & 207.8 & 5.1 & 345.5 \\
       %\cline{3-9}
                                & 16-bit & 1198 &  68.7 &  25.6 &  7.7 & 225.7 & 4.3 & 408.7 \\
       %\cline{3-9}
                                &  8-bit & 1259 &  71.8 &  24.4 &  7.7 & 227.3 & 4.1 & 425.9 \\
     \end{tabular}
     }}
+   }
+    \only<+>
+    {
+    {\small\resizebox{\linewidth}{!}{
+    \begin{tabular}{r | c | c || c | c || c | c || c | c}
+      \multirow{3}{*}{\textbf{Décodeur}} & \multirow{3}{*}{\textbf{Quantif.}} & \multirow{3}{*}{${\mathcal{L}_{PC}}$} & \multicolumn{2}{c ||}{\textbf{3.5 dB}} & \multicolumn{2}{c ||}{\textbf{4.0 dB}} & \multicolumn{2}{c}{\textbf{4.5 dB}} \\
+      \cline{4-9}
+      & & & ${\mathcal{L}_{moy}}$ & {Débit} & ${\mathcal{L}_{moy}}$ & {Débit} & ${\mathcal{L}_{moy}}$ & {Débit} \\
+      & & & ($\mu $s) & (Mb/s) & ($\mu $s) & (Mb/s) & ($\mu $s) & (Mb/s) \\
+      % \hline
+      \hline
+      \multirow{3}{*}{PASCL} & 32-bit &  635 & 232.3 &   7.6 & 41.7 &  42.1 & 7.4 & 237.6 \\
+      %\cline{3-9}
+                               & 16-bit &  622 & 219.6 &   8.0 & 40.1 &  43.8 & 6.6 & 267.5 \\
+      %\cline{3-9}
+                               &  8-bit &  651 & 232.4 &   7.6 & 41.2 &  42.6 & 6.5 & 268.3 \\
+      \hline
+      \multirow{3}{*}{FASCL}  & \RED{32-bit} & 1201 &  67.2 &  26.1 &  8.5 & 207.8 & 5.1 & \RED{345.5} \\
+      %\cline{3-9}
+                               & \ORANGE{16-bit} & 1198 &  68.7 &  25.6 &  7.7 & 225.7 & 4.3 & \ORANGE{408.7} \\
+      %\cline{3-9}
+                               &  \GREEN{8-bit} & 1259 &  71.8 &  24.4 &  7.7 & 227.3 & 4.1 & \GREEN{425.9} \\
+    \end{tabular}
+    }}
+   }
    \end{table}
     \begin{itemize}
     	\item Prototypage
@@ -454,28 +517,23 @@
 \end{frame}
 
 \begin{frame}[c]{Déroulage}
-\begin{columns}
-	\begin{column}{.5\textwidth}
-	\begin{itemize}
-		\vfill
-		\item \'Evite indirections
-		\vfill
-		\item Diminue le temps de décodage
-		\vfill
-		\item Une version du code par jeu de paramètres
-		\vfill
-		\item Difficilement compatible dans le contexte 5G
-		\vfill
-	\end{itemize}
-	\end{column}
+\begin{center}
+			\includegraphics[width=.5\textwidth]{./fig/unrolling-4}
+\end{center}
 
-	\begin{column}{.5\textwidth}
-		\vfill
-			\includegraphics[width=\textwidth]{./fig/unrolling-4}
-			\vfill
-	\end{column}
-
-\end{columns}
+  \begin{itemize}
+    \vfill
+    \item \GREEN{+ \'Evite indirections}
+    \vfill
+    \item \GREEN{+ Diminue le temps de décodage}
+    \vfill
+    \item \RED{- Une version du code par jeu de paramètres}
+    \vfill
+    \item \RED{- Augmentation drastique de la taille du code}
+    \vfill
+    \item \RED{- Difficilement compatible dans le contexte 5G}
+    \vfill
+  \end{itemize}
 \end{frame}
 
 
@@ -515,12 +573,6 @@
 \only<+>{
 	\begin{itemize}
 		\vfill
-		\item Template C++ (format des données)
-		\vfill
-		\item Utilisation de la bibliothèque MIPP
-		\vfill
-		% \item Intégration au sein du projet AFF3CT\footnotemark[1]
-		% \vfill
 		\item Extraction du CRC
 		\vfill
 		\item Nouvelle méthode de tri
@@ -533,12 +585,6 @@
   {
 	\begin{itemize}
 		\vfill
-		\item Template C++ (format des données)
-		\vfill
-		\item Utilisation de la bibliothèque MIPP
-		\vfill
-		% \item Intégration au sein du projet AFF3CT\footnotemark[1]
-		% \vfill
 		\item \textbf{Extraction du CRC}
 		\vfill
 		\item Nouvelle méthode de tri
@@ -551,9 +597,16 @@
 \end{frame}
 
 
+\begin{frame}
+\vfill
+\centering
+  \includegraphics[width=0.7\textwidth]{./fig/extract-1}
+  \vfill
+\end{frame}
+
 \begin{frame}[c]{Extraction du CRC}
 	\centering
-	\multiinclude[<+>][start=1,format=pdf,graphics={width=.7\textwidth}]{./fig/extract}
+	\multiinclude[<+>][start=2,format=pdf,graphics={width=.7\textwidth}]{./fig/extract}
 \end{frame}
 
 \begin{frame}[c]{Résumé}
@@ -567,6 +620,8 @@
 		\vfill
 		\item Améliorations du débit et de la latence
 		\vfill
+    \item Mise à disposition du code source \footnote{https://aff3ct.github.io}
+    \vfill
 		\item Consommation \'Energétique ?
 		\vfill
 	\end{itemize}

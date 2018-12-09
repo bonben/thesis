@@ -43,8 +43,9 @@
 		\begin{column}{.35\textwidth}
 		\begin{itemize}
 			\item<1-> Matrice génératrice
+			\item<1->$F^{\otimes n}$ ; $F=\left[\begin{smallmatrix} 1 & 0 \\ 1 & 1\end{smallmatrix}\right]$
 			\item<2-> Bits gelés
-			\item<3-> Mot de code : $x_i$
+			\item<3-> Mot de code : $\mathbold{x}$
 			\item<4-> Graphe de factorisation
 		\end{itemize}
 		\end{column}
@@ -55,11 +56,11 @@
 \subsection*{Le décodage SC}
 
 \begin{frame}[c]{Algorithme de décodage SC (Successive Cancellation)}
-	\includegraphics[width=.8\textwidth]{fig/decoder_in_chain.pdf}
+	\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/decoder_in_chain}    
 	\begin{itemize}
-		\item Estimations : LLR (Log-Likelihood Ratio)
-		\item Signe : valeur binaire la plus probable
-		\item Valeur absolue : fiabilité de l'information
+		\item<2> Estimations, LLR (Log-Likelihood Ratio)
+		\item<2> Signe, valeur binaire la plus probable
+		\item<2> Valeur absolue, fiabilité de l'information
 	\end{itemize}
 \end{frame}
 
@@ -115,20 +116,15 @@
 \end{frame}
 
 \begin{frame}[c]{Algorithme de décodage SC}
-	\multiinclude[<+>][start=1,format=pdf,graphics={width=.7\textwidth}]{./fig/sc_tree}
-\end{frame}
-
-\begin{frame}[c]{Algorithme de décodage SC}
 	\begin{columns}[T] % align columns
 
 		\begin{column}{.55\textwidth}
-
-			\includegraphics[width=\textwidth]{fig/sc_tree_output.pdf}
+			\multiinclude[<+>][start=2,format=pdf,graphics={width=\textwidth}]{./fig/sc_tree}
 
 		\end{column}
 
 		\begin{column}{.45\textwidth}
-		\only<2>{
+		\only<8>{
 			\begin{itemize}
 				\item \GREEN{Récursif}
 				\item \GREEN{Régulier}
@@ -138,18 +134,18 @@
 				\item \RED{Problème des décisions dures}
 			\end{itemize}
 		}
-
-
 		\end{column}
 
 	\end{columns}
 
-
 \end{frame}
+
 
 \subsection*{Le décodage SC Liste}
 
-\begin{frame}[c]{Algorithme de décodage SCL}
+\begin{frame}[c]{}
+  	\frametitle<1-7>{Algorithme de décodage SCL}
+  	\frametitle<8->{Algorithme de décodage CASCL}
 	\begin{columns}[T] % align columns
 
 		\begin{column}{.7\textwidth}
@@ -157,31 +153,34 @@
 			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/scl_anim}
 
 		\end{column}
-
+\only<1-7>
+ {
 		\begin{column}{.3\textwidth}
 			\begin{itemize}
-				\item<3-> Pas de décision dure
-				\item<4-> Duplication des chemins
-				\item<5-> Métrique de chemins
-				\item<6-> Tri des métrique \& élimination
-				\item<7-> Mot de code décodé
+				\item<3-7> Pas de décision dure
+				\item<4-7> Duplication des chemins
+				\item<5-7> Métrique de chemins
+				\item<6-7> Tri des métrique \& élimination
+				\item<7-7> Mot de code décodé
 			\end{itemize}
 		\end{column}
-
+}
+\only<8->
+ {
+		\begin{column}{.3\textwidth}
+			\begin{itemize}
+				\item<8-> Distance faible des codes polaires
+				\item<8-> Améliorée par la concaténation du CRC
+				\item<9-> Utilisé pour discriminer les candidats
+			\end{itemize}
+		\end{column}
+}
 	\end{columns}
 \end{frame}
 
-\begin{frame}[c]{Algorithme de décodage CASCL}
-			\includegraphics[width=\textwidth]{./fig/cascl}
-			\begin{itemize}
-				\item Distance faible des codes polaires
-				\item Améliorée par la concaténation du CRC
-				\item Utilisé pour discriminer les candidats
-			\end{itemize}
-\end{frame}
 
 \begin{frame}[c]{Performances de décodage}
-			\includegraphics[width=\textwidth]{./fig/scl_L/tikz/source}
+			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/scl_L/tikz/source}
 \end{frame}
 
 \begin{frame}[c]{\'Elagage de l'arbre}

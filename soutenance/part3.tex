@@ -33,7 +33,12 @@
 
 \begin{frame}[c]{Deux modèles de conception d'ASIP}
   \centering
-  \includegraphics[width=0.9\textwidth]{./fig/methodos}
+  \includegraphics[width=0.7\textwidth]{./fig/methodos-1}
+\end{frame}
+
+\begin{frame}[c,noframenumbering]{Deux modèles de conception d'ASIP}
+  \centering
+  \includegraphics[width=0.5\textwidth]{./fig/methodos-2}
 \end{frame}
 
 \begin{frame}[c]{Approche Tensilica}
@@ -55,8 +60,10 @@
     \vspace{-0.5cm}
 
   \begin{minipage}[c][0cm][t]{\textwidth}
+
     \only<+>
     { 
+
       \includegraphics[width=\textwidth]{./fig/archi_tensilica}
     }
     \only<+->
@@ -67,7 +74,7 @@
       \begin{tabular}{c|c|c|c|c}
         \toprule
 
-        Target & $N$ & \begin{tabular}{c}Latency\\{[$\mu$s]}\end{tabular} & \begin{tabular}{c}Throughput\\{[Mb/s]}\end{tabular} & \begin{tabular}{c}$E_b$\\{[nJ]}\end{tabular} \\
+        Cible & $N$ & \begin{tabular}{c}Latency\\{[$\mu$s]}\end{tabular} & \begin{tabular}{c}Throughput\\{[Mb/s]}\end{tabular} & \begin{tabular}{c}$E_b$\\{[nJ]}\end{tabular} \\
 
         \cmidrule(lr){1-1}
         \cmidrule(lr){2-2}
@@ -149,21 +156,26 @@
 \end{frame}
 
 \begin{frame}[c]{Structure d'un processeur TTA}
+\centering
   \multiinclude[<+>][start=1,format=pdf,graphics={width=.8\textwidth}]{./fig/anim_tta_base}
 \end{frame}
 
 \begin{frame}[c]{Niveau de parallélisme}
-  Two main polar functions : $f$ and $g$
-  \vspace{1cm}
-
+  \centering
+  \vfill
+  Deux principales fonctions polaires : $f$ and $g$
+  \vfill
   \includegraphics[width=0.7\textwidth]{fig/f_g_dimensions_scalar}
+  \vfill
 \end{frame}
 
 \begin{frame}[c]{Niveau de parallélisme}
-  Two main polar functions : $f$ and $g$
-  \vspace{1cm}
-
+  \centering
+  \vfill
+  Deux principales fonctions polaires : $f$ and $g$
+  \vfill
   \includegraphics[width=0.7\textwidth]{fig/f_g_dimensions_vector}
+  \vfill
 \end{frame}
 
 \begin{frame}[c]{Conception du processeur}
@@ -422,12 +434,11 @@
   \end{columns}
 \end{frame}
 
-
-\begin{frame}[c]{Comparaison avec des architectures matérielles dédiées}
+\begin{frame}[c]{Comparison avec des architectures matérielles dédiées}
     \begin{itemize}
-      \item<+-> Processeur proposé
-      \item<+-> Décodeur matériel dédié
-      \item<2-> Décodeur matériel dédié avec construction optimisée
+      \item<+-> Transport Triggered Transport Decoder
+      \item<+-> Architecture matérielle dédiée 
+      \item<2-> Architecture matérielle dédiée avec bits gelés adaptés
       \item<+-> Implémentations FPGA
     \end{itemize}
 
@@ -435,18 +446,19 @@
       \begin{table}
       \centering
       {
-        \small\resizebox{0.8\linewidth}{!}{
-        \begin{tabular}{c|c|c|c|c}
+        \small\resizebox{1\linewidth}{!}{
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
                                   & \BLUE{TTPD Proposé}  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+          \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
           \cmidrule(lr){4-5}
 
-          \textbf{FPGA}               &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
+          \textbf{Cible}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
+          \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
+          \textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
+          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full               & Full                 \\
           \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
-          \textbf{\'Elagage}          &  R0 \& R1      & Complet               & Complet            & Complet              \\
-          \textbf{LUTS}               &  14744         & 23020                 & 24821              & 22115                \\
-          \textbf{RAM} (Kb)           &  141           & 43                    & 36                 & 36                   \\
 
         \end{tabular}
       }}
@@ -457,18 +469,19 @@
       \begin{table}
       \centering
       {
-        \small\resizebox{0.8\linewidth}{!}{
-        \begin{tabular}{c|c|c|c|c}
+        \small\resizebox{1\linewidth}{!}{
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
                                   & TTPD Proposé  & \BLUE{\cite{giard_638_2015}} & \multicolumn{2}{c}{\BLUE{\cite{sarkis2014fast}}} \\
+          \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
           \cmidrule(lr){4-5}
 
-          \textbf{FPGA}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
-          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
-          \textbf{\'Elagage}        &  R0 \& R1      & Complet                  & Complet               & Complet                 \\
-          \textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
+          \textbf{Cible}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
           \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
+          \textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
+          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full               & Full                 \\
+          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
 
         \end{tabular}
       }}
@@ -479,18 +492,19 @@
       \begin{table}
       \centering
       {
-        \small\resizebox{0.8\linewidth}{!}{
-        \begin{tabular}{c|c|c|c|c}
+        \small\resizebox{1\linewidth}{!}{
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
                                   & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+          \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
           \cmidrule(lr){4-5}
 
-          \textbf{FPGA}         &  \textbf{Artix 7}       & \textbf{Stratix IV}            & \textbf{Stratix IV }        & \textbf{Virtex 6}             \\
-          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
-          \textbf{\'Elagage}        &  R0 \& R1      & Complet                  & Complet               & Complet                 \\
-          \textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
+          \textbf{Cible}         &  \textbf{Artix 7}       & \textbf{Stratix IV}            & \textbf{Stratix IV }        & \textbf{Virtex 6}             \\
           \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
+          \textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
+          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full               & Full                 \\
+          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
 
         \end{tabular}
       }}
@@ -498,30 +512,31 @@
     }
 \end{frame}
 
-\begin{frame}[c]{Comparaison avec des architectures matérielles dédiées}
+\begin{frame}[c,noframenumbering]{Comparison with dedicated hardware decoders}
     \begin{itemize}
-      \item<+-> 5 à six fois plus de cycles
-      \item<+-> Différents niveaux d'élagage
-      \item<+-> Plus petit nombre de LUTs
-      \item<+-> Plus grosse empreinte mémoire
+      \item<+-> Empreinte mémoire plus importante
+      \item<+-> Nombre inférieur de LUTs
+      \item<+-> \'Elagage différent
+      \item<+-> 5 à 7 fois plus de cycles d'horloge
     \end{itemize}
-
     \only<1>{
       \begin{table}
       \centering
       {
-        \small\resizebox{0.8\linewidth}{!}{
-        \begin{tabular}{c|c|c|c|c}
+        \small\resizebox{1\linewidth}{!}{
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
                                   & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+          \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
           \cmidrule(lr){4-5}
 
-          \textbf{FPGA}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
-          \textbf{Cycles d'horloge}   &  \textbf{1161}  & \textbf{222}           & \textbf{165}        & \textbf{165}          \\
-          \textbf{\'Elagage}        &  R0 \& R1      & Complet                  & Complet               & Complet                 \\
+          \textbf{Cible}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
+          \textbf{RAM} (Kb)       &  \textbf{141}  & \textbf{43}           & \textbf{36}        & \textbf{36}          \\
           \textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
-          \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
+          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full               & Full                  \\
+          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
+
 
         \end{tabular}
       }}
@@ -531,18 +546,20 @@
       \begin{table}
       \centering
       {
-        \small\resizebox{0.8\linewidth}{!}{
-        \begin{tabular}{c|c|c|c|c}
+        \small\resizebox{1\linewidth}{!}{
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
                                   & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+          \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
           \cmidrule(lr){4-5}
 
-          \textbf{FPGA}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
-          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
-          \textbf{\'Elagage}        &  \textbf{R0 \& R1}      & \textbf{Complet}                  & \textbf{Complet}               & \textbf{Complet}                 \\
-          \textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
-          \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
+          \textbf{Cible}         &  Artix 7        & Stratix IV             & Stratix IV          & Virtex 6              \\
+          \textbf{RAM} (Kb)       &  141            & 43                     & 36                  & 36                    \\
+          \textbf{LUTS}           &  \textbf{14744} & \textbf{23020}         & \textbf{24821}      & \textbf{22115}        \\
+          \textbf{\'Elagage}        &  R0 \& R1       & Full                   & Full                & Full                  \\
+          \textbf{Cycles d'horloge}   &  1161           & 222                    & 165                 & 165                   \\
+
 
         \end{tabular}
       }}
@@ -552,47 +569,49 @@
       \begin{table}
       \centering
       {
-        \small\resizebox{0.8\linewidth}{!}{
-        \begin{tabular}{c|c|c|c|c}
+        \small\resizebox{1\linewidth}{!}{
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
                                   & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+          \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
           \cmidrule(lr){4-5}
 
-          \textbf{FPGA}         &  Artix 7        & Stratix IV             & Stratix IV          & Virtex 6              \\
-          \textbf{Cycles d'horloge}   &  1161           & 222                    & 165                 & 165                   \\
-          \textbf{\'Elagage}        &  R0 \& R1       & Complet                   & Complet                & Complet                  \\
-          \textbf{LUTS}           &  \textbf{14744} & \textbf{23020}         & \textbf{24821}      & \textbf{22115}        \\
-          \textbf{RAM} (Kb)       &  141            & 43                     & 36                  & 36                    \\
-
+          \textbf{Cible}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
+          \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
+          \textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
+          \textbf{\'Elagage}        &  \textbf{R0 \& R1}      & \textbf{Full}                  & \textbf{Full}               & \textbf{Full}                 \\
+          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
 
         \end{tabular}
       }}
       \end{table}
     }
+
     \only<4>{
       \begin{table}
       \centering
       {
-        \small\resizebox{0.8\linewidth}{!}{
-        \begin{tabular}{c|c|c|c|c}
+        \small\resizebox{1\linewidth}{!}{
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
                                   & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+          \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
           \cmidrule(lr){4-5}
 
-          \textbf{FPGA}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
-          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
-          \textbf{\'Elagage}        &  R0 \& R1      & Complet                  & Complet               & Complet                  \\
+          \textbf{Cible}         &  Artix 7       & Stratix IV            & Stratix IV         & Virtex 6             \\
+          \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
           \textbf{LUTS}           &  14744         & 23020                 & 24821              & 22115                \\
-          \textbf{RAM} (Kb)       &  \textbf{141}  & \textbf{43}           & \textbf{36}        & \textbf{36}          \\
-
+          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full               & Full                 \\
+          \textbf{Cycles d'horloge}   &  \textbf{1161} & \textbf{222}          & \textbf{165}       & \textbf{165}         \\
 
         \end{tabular}
       }}
       \end{table}
     }
 \end{frame}
+
 
 \section{Conclusions et perspectives}
 \subsection*{}
