@@ -4,17 +4,15 @@
 \section[Introduction]{Décodage de codes polaires}
 \subsection*{Les codes correcteurs d'erreurs}
 
-\begin{frame}[c]
+\begin{frame}[c]{Chaîne de communications numériques}
 	\begin{center}
-	\multiinclude[<+>][start=1,format=pdf,graphics={width=.8\textwidth}]{./fig/chaine_com}
+	\multiinclude[<+>][start=6,format=pdf,graphics={width=.8\textwidth}]{./fig/chaine_com}
 	\end{center}
-  	\frametitle<1>{Chaîne de communications numériques}
-  	\frametitle<2->{Chaîne de communications numériques}
 	\begin{itemize}
 		\item<1-> Transmission de bits d'information
-		\item<2-> Présence de perturbations
-		\item<7-> Ajout de récurrence
-		\item<9-> Correction des erreurs
+		\item<1-> Présence de perturbations
+		\item<2-> Ajout de redondance
+		\item<4-> Correction des erreurs
 	\end{itemize}
 \end{frame}
 
@@ -32,9 +30,9 @@
 		\item 1955 : Codes convolutifs
 		\item 1960 : Codes BCH
 		\item 1960 : Codes Reed-Solomon
-		\item 1960 : \textbf{Codes LDPC (Wimax,5G)}
+		\item 1960 : \textbf{Codes LDPC (DVB,5G)}
 		\item 1966 : Codes concaténés
-		\item 1993 : \textbf{Turbocodes (LTE)}
+		\item 1993 : \textbf{Turbocodes (4G)}
 		\item 2008 : \textbf{Codes polaires (5G)}
 	\end{itemize}
 	\vfill
@@ -61,7 +59,7 @@
 \end{frame}
 \subsection*{Le décodage SC}
 
-\begin{frame}[c]{Algorithme de décodage SC (Successive Cancellation)}
+\begin{frame}[c]{Décodage de codes polaires}
 	\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/decoder_in_chain}    
 	\begin{itemize}
 		\item<2> Estimations, LLR (Log-Likelihood Ratio)
@@ -73,53 +71,55 @@
 \begin{frame}[c]{Algorithme de décodage SC}
 	\begin{columns}[T] % align columns
 		\begin{column}{.65\textwidth}
-			\multiinclude[<+>][start=1,end=3,format=pdf,graphics={width=\textwidth}]{./fig/focus_decoder}
+			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/focus_decoder}
 		\end{column}
 		\begin{column}{.35\textwidth}
 		\begin{itemize}
 			\item<1-> $L$ : Log Likelihood Ratios (LLR)
 			\item<3-> $s$ : Sommes Partielles
+			\item<4-> $$f(L_a,L_b) \approx \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)$$
+			\item<5-> $$g(L_a,L_b,\hat{s}_a) = (1-2\hat{s}_a)L_a+L_b$$
 		\end{itemize}
 		\end{column}
 	\end{columns}
 
 \end{frame}
 
-\begin{frame}[c]{Algorithme de décodage SC}
-	\begin{columns}[T] % align columns
-		\begin{column}{.35\textwidth}
-			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/polar_functions}    
-		\end{column}
+% \begin{frame}[c]{Algorithme de décodage SC}
+% 	\begin{columns}[T] % align columns
+% 		\begin{column}{.35\textwidth}
+% 			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/polar_functions}    
+% 		\end{column}
 
-		\begin{column}{.65\textwidth}
-		\only<1>{
-		$$f(L_a,L_b) \approx \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)$$
-		\vspace{1.1cm}
+% 		\begin{column}{.65\textwidth}
+% 		\only<1>{
+% 		$$f(L_a,L_b) \approx \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)$$
+% 		\vspace{1.1cm}
 
-		$$g(L_a,L_b,\hat{s}_a) = (1-2\hat{s}_a)L_a+L_b$$
-		}
+% 		$$g(L_a,L_b,\hat{s}_a) = (1-2\hat{s}_a)L_a+L_b$$
+% 		}
 
-				\only<2>{
-				\vspace{0.5cm}
-		$$\texttt{R1}(L_a)  =  \left\{\begin{array}{l c l} 0 \text{ si } L_a \geq 0 \\ 1 \text{ si } L_a < 0 \end{array}\right.$$
-		\vspace{1.1cm}
+% 				\only<2>{
+% 				\vspace{0.5cm}
+% 		$$\texttt{R1}(L_a)  =  \left\{\begin{array}{l c l} 0 \text{ si } L_a \geq 0 \\ 1 \text{ si } L_a < 0 \end{array}\right.$$
+% 		\vspace{1.1cm}
 
-		$$h(\hat{s}_a,\hat{s}_b) = (\hat{s}_{a} \oplus \hat{s}_{b}, \hat{s}_{b})$$
-		}
-		\end{column}
+% 		$$h(\hat{s}_a,\hat{s}_b) = (\hat{s}_{a} \oplus \hat{s}_{b}, \hat{s}_{b})$$
+% 		}
+% 		\end{column}
 
-	\end{columns}
+% 	\end{columns}
 
 	
  %    g(L_a,L_b,\hat{s}_a)&=&(1-2\hat{s}_a)L_a+L_b\\
  %    h(\hat{s}_a,\hat{s}_b)&=& (\hat{s}_{a} \oplus \hat{s}_{b}, \hat{s}_{b})\\
  %    \texttt{R0}(L_a) &=& 0 \\
  %    \texttt{R1}(L_a) &=&  \left\{\begin{array}{l c l} 0 \text{ si } L_a \geq 0 \\ 1 \text{ si } L_a < 0 \end{array}\right.
-\end{frame}
+% \end{frame}
 
-\begin{frame}[c]{Algorithme de décodage SC}
-	\multiinclude[<+>][start=3,format=pdf,graphics={width=.8\textwidth}]{./fig/focus_decoder}
-\end{frame}
+% \begin{frame}[c]{Algorithme de décodage SC}
+% 	\multiinclude[<+>][start=3,format=pdf,graphics={width=.8\textwidth}]{./fig/focus_decoder}
+% \end{frame}
 
 \begin{frame}[c]{Algorithme de décodage SC}
 	\begin{columns}[T] % align columns
@@ -137,7 +137,7 @@
 				\item \GREEN{Atteint la capacité pour une taille de mot de code infinie}
 				\vspace{0.5cm}
 				\item \RED{Performances faibles pour $N<4096$}
-				\item \RED{Problème des décisions dures}
+				\item \RED{Problème de propagation des erreurs}
 			\end{itemize}
 		}
 		\end{column}
@@ -164,8 +164,8 @@
 		\begin{column}{.3\textwidth}
 			\begin{itemize}
 				\item<3-7> Pas de décision dure
-				\item<4-7> Duplication des chemins
-				\item<5-7> Métrique de chemins
+				\item<4-7> Duplication des candidats
+				\item<5-7> Métrique de candidats
 				\item<6-7> Tri des métrique \& élimination
 				\item<7-7> Mot de code décodé
 			\end{itemize}
@@ -175,8 +175,7 @@
  {
 		\begin{column}{.3\textwidth}
 			\begin{itemize}
-				\item<8-> Distance faible des codes polaires
-				\item<8-> Améliorée par la concaténation du CRC
+				\item<8-> Concaténation d'un CRC
 				\item<9-> Utilisé pour discriminer les candidats
 			\end{itemize}
 		\end{column}
