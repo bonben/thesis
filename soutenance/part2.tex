@@ -3,28 +3,28 @@
 \subsection*{}
 
 \begin{frame}[c]{\'Evolutions des systèmes de télécommunications}
-	\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/bs_evo}
+	\multiinclude[<+>][start=4,format=pdf,graphics={width=\textwidth}]{./fig/bs_evo}
 	\begin{itemize}
-		\item<1-> Architectures dédiées localisées pour le calcul bande de base
-		\item<2-> Architectures dédiées à distance pour le calcul bande de base
-		\item<3-> Cloud-RAN : décodeur logiciel
-		\item<4-> Adaptativité de l'infrastructure
+		\item Architectures dédiées localisées pour le calcul bande de base
+		\item Architectures dédiées à distance pour le calcul bande de base
+		\item Cloud-RAN : décodeur logiciel
+		\item Adaptativité de l'infrastructure
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[c]{Décodeur logiciel}
-	\begin{itemize}
-		\vfill
-		\item Architecture x86-64 majoritaire dans les serveurs
-    \vfill
-    \item Description logicielle du décodeur
-    \vfill
-    \item Exploiter les unités SIMD
-		\vfill
-		\item Meilleure efficacité énergétique : ARM
-		\vfill
-	\end{itemize}
-\end{frame}
+% \begin{frame}[c]{Décodeur logiciel}
+% 	\begin{itemize}
+% 		\vfill
+% 		\item Architecture x86-64 majoritaire dans les serveurs
+%     \vfill
+%     \item Description logicielle du décodeur
+%     \vfill
+%     \item Exploiter les unités SIMD
+% 		\vfill
+% 		\item Meilleure efficacité énergétique : ARM
+% 		\vfill
+% 	\end{itemize}
+% \end{frame}
 
 \begin{frame}[c]{Généricité et Flexibilité}
   \vfill
@@ -62,11 +62,11 @@
       \cmidrule(lr){3-3}
       \cmidrule(lr){4-4}
       \cmidrule(lr){5-5}
+       Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
        N            & \cmark                       & \cmark                        & \cmark                  & \cmark \\
        K            & \cmark                       & \cmark                        & \cmark                  & \cmark \\
        CRC          & \cmark                       & \cmark                        & \cmark                  & \cmark \\
        Pos. bits gelés & \cmark                       & \cmark                        & \cmark                  & \cmark \\
-       Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
        \hline
        PASCL        & \xmark                       & \cmark                        & \cmark                  & \cmark \\
        FASCL        & \xmark                       & \xmark                        & \xmark                  & \cmark \\
@@ -79,6 +79,8 @@
       \end{tabular}
     }}
   \end{table}
+
+
 \end{frame}
 
 
@@ -87,6 +89,7 @@
 
   \renewcommand*{\thefootnote}{\alph{footnote}}
   \begin{table}[t]
+  \only<+>{
     {\small\resizebox{0.8\linewidth}{!}{
      	\begin{tabular}{r|C{1cm}C{1cm}C{1cm}C{2cm}} 
      	 Décodeur     & \cite{shen_low-latency_2016} & \cite{sarkis_increasing_2014} & \cite{sarkis_fast_2016} & Ce travail  \\
@@ -95,19 +98,45 @@
      	\cmidrule(lr){3-3}
      	\cmidrule(lr){4-4}
      	\cmidrule(lr){5-5}
+     	 Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 PASCL        & \xmark                       & \cmark                        & \cmark                  & \cmark \\
      	 FASCL        & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 Virgule fixe & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{Fixe}                         &  \multirow{2}{*}{Fixe}                           &  \multirow{2}{*}{Fixe}                     & Ajustable \\
      	 & &  &  & Dynamique \\
-     	 Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
      	 Code déroulé & NON                  & NON                   & OUI               & NON \\
      	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
 
     	\end{tabular}
     }}
+    }
+      \only<+>{
+    {\small\resizebox{0.8\linewidth}{!}{
+     	\begin{tabular}{r|C{1cm}C{1cm}C{1cm}C{2cm}} 
+     	 Décodeur     & \cite{shen_low-latency_2016} & \cite{sarkis_increasing_2014} & \cite{sarkis_fast_2016} & Ce travail  \\
+     	\cmidrule(lr){1-1}
+     	\cmidrule(lr){2-2}
+     	\cmidrule(lr){3-3}
+     	\cmidrule(lr){4-4}
+     	\cmidrule(lr){5-5}
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
+     	 PASCL        & \xmark                       & \cmark                        & \cmark                  & \cmark \\
+     	 FASCL        & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+     	 Virgule fixe & \xmark                       & \xmark                        & \xmark                  & \cmark \\
+     	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{Fixe}                         &  \multirow{2}{*}{Fixe}                           &  \multirow{2}{*}{Fixe}                     & Ajustable \\
+     	 & &  &  & Dynamique \\
+     	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
+     	 Code déroulé & NON                  & NON                   & OUI               & NON \\
+     	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
+
+    	\end{tabular}
+    }}
+    }
+
+
   \end{table}
+
   \footnotetext[1]{CASCL, $K=1723$, $N=2048$} 
   \footnotetext[2]{Processeur Intel i7-4790K}
   \footnotetext[3]{Processeur Intel i7-2600} 
@@ -126,12 +155,12 @@
      	\cmidrule(lr){3-3}
      	\cmidrule(lr){4-4}
      	\cmidrule(lr){5-5}
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
      	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Virgule fixe & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{Fixe}                         &  \multirow{2}{*}{Fixe}                           &  \multirow{2}{*}{Fixe}                     & Ajustable \\
      	 & &  &  & Dynamique \\
-     	 Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
      	 Code déroulé & NON                  & NON                   & OUI               & NON \\
      	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
@@ -145,6 +174,7 @@
 \end{frame}
 
 \begin{frame}
+\vfill
 	\only<1>{
     \begin{table}[ht]
       \centering
@@ -153,10 +183,6 @@
          \multirow{2}{*}{{Algorithme}} & \multirow{2}{*}{Version}  & \multirow{1}{*}{{${\mathcal{L}_{PC}}$}} & \multicolumn{3}{c}{Débit (Mb/s)} \\
         \cline{4-6}
         &   & ($\mu s$)            & {3.5 dB} & {4.0 dB} & {4.5 dB} \\
-        \hline
-        CASCL &~\cite{sarkis_increasing_2014}    & 3300                           & 0.52            & 0.52            & 0.52            \\
-        CASCL &~\cite{sarkis_fast_2016}          & 433                            & 4.0             & 4.0             & 4.0             \\
-        CASCL & Ce travail                       & 770                            & 2.3             & 2.3             & 2.3             \\
         \hline
         \textbf{PASCL} &~\cite{sarkis_increasing_2014}    & $\approx$ 3300                 & 0.9             & 4.90            & 54.0            \\
         \textbf{PASCL} &~\cite{sarkis_fast_2016}          & $\approx$ 433                  & 8.6             & 33.0            & 196.0           \\
@@ -177,10 +203,6 @@
         \cline{4-6}
         &   & ($\mu s$)            & {3.5 dB} & {4.0 dB} & {4.5 dB} \\
         \hline
-        CASCL &~\cite{sarkis_increasing_2014}    & 3300                           & 0.52            & 0.52            & 0.52            \\
-        CASCL &~\cite{sarkis_fast_2016}          & 433                            & 4.0             & 4.0             & 4.0             \\
-        CASCL & Ce travail                       & 770                            & 2.3             & 2.3             & 2.3             \\
-        \hline
         PASCL &~\cite{sarkis_increasing_2014}    & $\approx$ 3300                 & 0.9             & 4.90            & 54.0            \\
         PASCL &~\cite{sarkis_fast_2016}          & $\approx$ 433                  & 8.6             & 33.0            & 196.0           \\
         PASCL & Ce travail                       & 847                            & 5.5             & 31.1            & 168.4           \\
@@ -198,10 +220,6 @@
          \multirow{2}{*}{{Algorithme}} & \multirow{2}{*}{Version}  & \multirow{1}{*}{{${\mathcal{L}_{PC}}$}} & \multicolumn{3}{c}{Débit (Mb/s)} \\
         \cline{4-6}
         &   & ($\mu s$)            & {3.5 dB} & {4.0 dB} & {4.5 dB} \\
-        \hline
-        CASCL &~\cite{sarkis_increasing_2014}    & 3300                           & 0.52            & 0.52            & 0.52            \\
-        CASCL &~\cite{sarkis_fast_2016}          & 433                            & 4.0             & 4.0             & 4.0             \\
-        CASCL & Ce travail                       & \GREEN{770}                    & \RED{2.3}             & \RED{2.3}             & \RED{2.3}             \\
         \hline
         PASCL &~\cite{sarkis_increasing_2014}    & $\approx$ 3300                 & 0.9             & 4.90            & 54.0            \\
         PASCL &~\cite{sarkis_fast_2016}          & $\approx$ 433                  & 8.6             & 33.0            & 196.0           \\
@@ -221,10 +239,6 @@
         \cline{4-6}
         &   & ($\mu s$)            & {3.5 dB} & {4.0 dB} & {4.5 dB} \\
         \hline
-        CASCL &~\cite{sarkis_increasing_2014}    & 3300                           & 0.52            & 0.52            & 0.52            \\
-        CASCL &~\cite{sarkis_fast_2016}          & 433                            & 4.0             & 4.0             & 4.0             \\
-        CASCL & Ce travail                       & 770                            & 2.3             & 2.3             & 2.3             \\
-        \hline
         PASCL &~\cite{sarkis_increasing_2014}    & $\approx$ 3300                 & \RED{0.9}       & \RED{4.90}      & \RED{54.0}      \\
         PASCL &~\cite{sarkis_fast_2016}          & $\approx$ 433                  & \ORANGE{8.6}    & \ORANGE{33.0 }  & \ORANGE{196.0}  \\
         PASCL & Ce travail                       & 847                            & \ORANGE{5.5}    & \ORANGE{31.1}   & \ORANGE{168.4}  \\
@@ -234,6 +248,7 @@
       }}
   	\end{table}
  	}
+ 	\vfill
 
   \begin{itemize}
   	\item<+-> Algorithme partiellement adaptatif (PASCL)
@@ -241,6 +256,7 @@
   	\item<+-> Compromis latence vs débit
   	\item<+-> Algorithme FASCL propose les plus hauts débits
   \end{itemize}
+  \vfill
 \end{frame}
 
 
@@ -258,12 +274,12 @@
      	\cmidrule(lr){3-3}
      	\cmidrule(lr){4-4}
      	\cmidrule(lr){5-5}
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
      	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Virgule fixe & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{Fixe}                         &  \multirow{2}{*}{Fixe}                           &  \multirow{2}{*}{Fixe}                     & Ajustable \\
      	 & &  &  & Dynamique \\
-     	 Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
      	 Code déroulé & NON                  & NON                   & OUI               & NON \\
      	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
@@ -282,12 +298,12 @@
      	\cmidrule(lr){3-3}
      	\cmidrule(lr){4-4}
      	\cmidrule(lr){5-5}
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
      	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{Fixe}                         &  \multirow{2}{*}{Fixe}                           &  \multirow{2}{*}{Fixe}                     & Ajustable \\
      	 & &  &  & Dynamique \\
-     	 Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
      	 Code déroulé & NON                  & NON                   & OUI               & NON \\
      	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
@@ -378,12 +394,12 @@
      	\cmidrule(lr){3-3}
      	\cmidrule(lr){4-4}
      	\cmidrule(lr){5-5}
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
      	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{Fixe}                         &  \multirow{2}{*}{Fixe}                           &  \multirow{2}{*}{Fixe}                     & Ajustable \\
      	 & &  &  & Dynamique \\
-     	 Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
      	 Code déroulé & NON                  & NON                   & OUI               & NON \\
      	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
@@ -403,12 +419,12 @@
      	\cmidrule(lr){3-3}
      	\cmidrule(lr){4-4}
      	\cmidrule(lr){5-5}
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
      	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{ \RED{Fixe}}                         &  \multirow{2}{*}{ \RED{Fixe}}                           &  \multirow{2}{*}{ \RED{Fixe}}                     & \GREEN{Ajustable} \\
      	 & &  &  & \GREEN{Dynamique} \\
-     	 Poinçonnage  & \xmark                       & \xmark                        & \xmark                  & \cmark \\
      	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
      	 Code déroulé & NON                  & NON                   & OUI               & NON \\
      	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
@@ -442,12 +458,12 @@
      	\cmidrule(lr){3-3}
      	\cmidrule(lr){4-4}
      	\cmidrule(lr){5-5}
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
      	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{ \RED{Fixe}}                         &  \multirow{2}{*}{ \RED{Fixe}}                           &  \multirow{2}{*}{ \RED{Fixe}}                     & \GREEN{Ajustable} \\
      	 & &  &  & \GREEN{Dynamique} \\
-     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Latence ($\mu s$)\footnotemark[1]      &     1572  \footnotemark[2]                        & 3300  \footnotemark[3]                      & 433 \footnotemark[3]                 & 770 \footnotemark[3]\\
      	 Code déroulé & NON                  & NON                   & OUI               & NON \\
      	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
@@ -467,12 +483,12 @@
      	\cmidrule(lr){3-3}
      	\cmidrule(lr){4-4}
      	\cmidrule(lr){5-5}
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
      	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{ \RED{Fixe}}                         &  \multirow{2}{*}{ \RED{Fixe}}                           &  \multirow{2}{*}{ \RED{Fixe}}                     & \GREEN{Ajustable} \\
      	 & &  &  & \GREEN{Dynamique} \\
-     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Latence ($\mu s$)\footnotemark[1]      &     \RED{1572}  \footnotemark[2]                        & \RED{3300}  \footnotemark[3]                      & \GREEN{433} \footnotemark[3]                 & \ORANGE{770} \footnotemark[3]\\
      	 Code déroulé & NON                  & NON                   & OUI               & NON \\
      	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
@@ -492,14 +508,14 @@
      	\cmidrule(lr){3-3}
      	\cmidrule(lr){4-4}
      	\cmidrule(lr){5-5}
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
      	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{ \RED{Fixe}}                         &  \multirow{2}{*}{ \RED{Fixe}}                           &  \multirow{2}{*}{ \RED{Fixe}}                     & \GREEN{Ajustable} \\
      	 & &  &  & \GREEN{Dynamique} \\
-     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Latence ($\mu s$)\footnotemark[1]      &     \RED{1572}  \footnotemark[2]                        & \RED{3300}  \footnotemark[3]                      & \GREEN{433} \footnotemark[3]                 & \ORANGE{770} \footnotemark[3]\\
-     	 Code déroulé & \RED{NON}                  & \RED{NON}                   & \GREEN{OUI}               & \RED{NON} \\
+     	 Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
      	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
 
     	\end{tabular}
@@ -550,14 +566,14 @@
      	\cmidrule(lr){3-3}
      	\cmidrule(lr){4-4}
      	\cmidrule(lr){5-5}
+     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 PASCL        & \RED{\xmark}                       & \GREEN{\cmark}                        & \GREEN{\cmark}                  & \GREEN{\cmark} \\
      	 FASCL        & \RED{\xmark}                        & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Virgule fixe & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 \multirow{2}{*}{\'Elagage}    & \multirow{2}{*}{ \RED{Fixe}}                         &  \multirow{2}{*}{ \RED{Fixe}}                           &  \multirow{2}{*}{ \RED{Fixe}}                     & \GREEN{Ajustable} \\
      	 & &  &  & \GREEN{Dynamique} \\
-     	 Poinçonnage  & \RED{\xmark}                       & \RED{\xmark}                        & \RED{\xmark}                  & \GREEN{\cmark} \\
      	 Latence ($\mu s$)\footnotemark[1]      &     \RED{1572}  \footnotemark[2]                        & \RED{3300}  \footnotemark[3]                      & \GREEN{433} \footnotemark[3]                 & \ORANGE{770} \footnotemark[3]\\
-     	 Code déroulé & \RED{NON}                  & \RED{NON}                   & \GREEN{OUI}               & \RED{NON} \\
+     	 Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
      	 % Code déroulé & \GREEN{NON}                  & \GREEN{NON}                   & \RED{OUI}               & \GREEN{NON} \\
 
     	\end{tabular}
@@ -627,7 +643,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[c]{Consommation énergétiques}
+\begin{frame}[c]{Consommation énergétique}
 
 	\begin{minipage}[c][0cm][t]{\textwidth}
 	\centering
@@ -651,97 +667,96 @@
 	\vspace{1cm}
 
 	\only<+>{
-	\begin{tabular}{c|c|c|c|c|c|c}
-	Ref.           & \textbf{Circuit  } &  N                     & R                    & Lat. ($\mu s$)& Débit (Mb/s) & $E_b$ (nJ/bit)  \\\hline
-	\cite{Giard15} & \textbf{i7-4770S  } &  32768                 & 0.84                 & 31            & 886        & 73              \\
-	\cite{6960078} & \textbf{i7-4960HQ } &  32768                 & 0.83                 & 337           & 1400       & 34              \\
-	\cite{7760327} & \textbf{Cortex A57} &  32768                 & 0.83                 & 374           & 73         & 27              \\\hline
-	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & 26.4          & 1200       & -                        \\
-	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 2.4           & 237000     & -                        \\
-	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 5.46          & 94         & 0.095                    \\
-	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & 436        & 0.006                    \\
+	\begin{tabular}{c|c|c|c|c|c}
+	Ref.           & \textbf{Circuit  } &  N                     & R            & Débit (Mb/s) & $E_b$ (nJ/bit)  \\\hline
+	\cite{Giard15} & \textbf{i7-4770S  } &  32768                 & 0.84        & 886        & 73              \\
+	\cite{6960078} & \textbf{i7-4960HQ } &  32768                 & 0.83        & 1400       & 34              \\
+	\cite{7760327} & \textbf{Cortex A57} &  32768                 & 0.83        & 73         & 27              \\\hline
+	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & 1200       & -                        \\
+	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 237000     & -                        \\
+	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 94         & 0.095                    \\
+	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 436        & 0.006                    \\
 	\end{tabular}
 	\footnotetext[1]{\tiny Fixed N \& R}
 	}
 	\only<+>{
-	\begin{tabular}{c|c|c|c|c|c|c}
-	Ref.           & \textbf{Circuit} &  N                     & R                    & Lat. ($\mu s$)& Débit (Mb/s) & $E_b$ (nJ/bit)  \\\hline
-	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & 31            & 886        & 73                       \\
-	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & 337           & 1400       & 34                       \\
-	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & 374           & 73         & 27                       \\\hline
-	\cite{6804939} & \textbf{Stratix IV} &  32768                 & 0.9                  & 26.4          & 1200       & -               \\
-	\cite{7105452} & \textbf{Stratix IV} &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 2.4           & 237000     & -               \\
-	\cite{8017407} & \textbf{ASIC 28nm } &  1024                  & 0.5                  & 5.46          & 94         & 0.095           \\
-	\cite{8017407} & \textbf{ASIC 28nm } &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & 436        & 0.006           \\
+	\begin{tabular}{c|c|c|c|c|c}
+	Ref.           & \textbf{Circuit} &  N                     & R                       & Débit (Mb/s) & $E_b$ (nJ/bit)  \\\hline
+	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                          & 886        & 73                       \\
+	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                          & 1400       & 34                       \\
+	\cite{7760327} & Cortex A57 &  32768                 & 0.83                          & 73         & 27                       \\\hline
+	\cite{6804939} & \textbf{Stratix IV} &  32768                 & 0.9                  & 1200       & -               \\
+	\cite{7105452} & \textbf{Stratix IV} &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 237000     & -               \\
+	\cite{8017407} & \textbf{ASIC 28nm } &  1024                  & 0.5                  & 94         & 0.095           \\
+	\cite{8017407} & \textbf{ASIC 28nm } &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 436        & 0.006           \\
 	\end{tabular}
 	\footnotetext[1]{\tiny Fixed N \& R}
 	}
 	\only<+>{
-	\begin{tabular}{c|c|c|c|c|c|c}
-	Ref.           & Circuit   &  \textbf{N                  }   & \textbf{R                  }  & Lat. ($\mu s$)& Débit (Mb/s) & $E_b$ (nJ/bit)  \\\hline
-	\cite{Giard15} & i7-4770S   &  \textbf{32768              }   & \textbf{0.84               }  & 31            & 886        & 73              \\
-	\cite{6960078} & i7-4960HQ  &  \textbf{32768              }   & \textbf{0.83               }  & 337           & 1400       & 34              \\
-	\cite{7760327} & Cortex A57 &  \textbf{32768              }   & \textbf{0.83               }  & 374           & 73         & 27              \\\hline
-	\cite{6804939} & Stratix IV &  \textbf{32768              }   & \textbf{0.9                }  & 26.4          & 1200       & -               \\
-	\cite{7105452} & Stratix IV &  \textbf{1024\footnotemark[1]}  & \textbf{0.5\footnotemark[1]}  & 2.4           & 237000     & -               \\
-	\cite{8017407} & ASIC 28nm  &  \textbf{1024               }   & \textbf{0.5                }  & 5.46          & 94         & 0.095           \\
-	\cite{8017407} & ASIC 28nm  &  \textbf{1024\footnotemark[1]}  & \textbf{0.5\footnotemark[1]}  & 1.17          & 436        & 0.006           \\
+	\begin{tabular}{c|c|c|c|c|c}
+	Ref.           & Circuit   &  \textbf{N                  }   & \textbf{R                  }   & Débit (Mb/s) & $E_b$ (nJ/bit)  \\\hline
+	\cite{Giard15} & i7-4770S   &  \textbf{32768              }   & \textbf{0.84               }  & 886        & 73              \\
+	\cite{6960078} & i7-4960HQ  &  \textbf{32768              }   & \textbf{0.83               }  & 1400       & 34              \\
+	\cite{7760327} & Cortex A57 &  \textbf{32768              }   & \textbf{0.83               }  & 73         & 27              \\\hline
+	\cite{6804939} & Stratix IV &  \textbf{32768              }   & \textbf{0.9                }  & 1200       & -               \\
+	\cite{7105452} & Stratix IV &  \textbf{1024\footnotemark[1]}  & \textbf{0.5\footnotemark[1]}  & 237000     & -               \\
+	\cite{8017407} & ASIC 28nm  &  \textbf{1024               }   & \textbf{0.5                }  & 94         & 0.095           \\
+	\cite{8017407} & ASIC 28nm  &  \textbf{1024\footnotemark[1]}  & \textbf{0.5\footnotemark[1]}  & 436        & 0.006           \\
 	\end{tabular}
 	\footnotetext[1]{\tiny Fixed N \& R}
 	}
 		\only<+>{
-	\begin{tabular}{c|c|c|c|c|c|c}
-	Ref.           & Circuit   &  N                     & R                    & \textbf{Lat.} ($\mathbold{\mu s}$)& Débit (Mb/s) & $E_b$ (nJ/bit)    \\\hline
-	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & \GREEN{31  }                   & 886        & 73        \\
-	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & \ORANGE{337}                   & 1400       & 34        \\
-	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & \ORANGE{374}                   & 73         & 27        \\\hline
-	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & \GREEN{26.4}                   & 1200       & -         \\
-	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & \GREEN{2.4}                    & 237000     & -               \\
-	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & \GREEN{5.46}                   & 94         & 0.095     \\
-	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & \GREEN{1.17}                   & 436        & 0.006     \\
+	\begin{tabular}{c|c|c|c|c|c}
+	Ref.           & Circuit   &  N                     & R                       & Débit (Mb/s) & $E_b$ (nJ/bit)    \\\hline
+	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                   & 886        & 73        \\
+	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                   & 1400       & 34        \\
+	\cite{7760327} & Cortex A57 &  32768                 & 0.83                   & 73         & 27        \\\hline
+	\cite{6804939} & Stratix IV &  32768                 & 0.9                    & 1200       & -         \\
+	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]    & 237000     & -               \\
+	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                    & 94         & 0.095     \\
+	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]    & 436        & 0.006     \\
 	\end{tabular}
 	\footnotetext[1]{\tiny Fixed N \& R}
 	}
 	\only<+>{
-	\begin{tabular}{c|c|c|c|c|c|c}
-	Ref.           & Circuit   &  N                     & R                    & Lat. ($\mu s$)& \textbf{Débit (Mb/s)} & $E_b$ (nJ/bit)    \\\hline
-	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & 31            & \GREEN{886}        & 73                 \\
-	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & 337           & \GREEN{1400}       & 34                 \\
-	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & 374           & \ORANGE{73}        & 27                 \\\hline
-	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & 26.4          & \GREEN{1200}       & -                  \\
-	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 2.4           & \BLUE{237000}      & -                  \\
-	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 5.46          & \ORANGE{94}        & 0.095              \\
-	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & \GREEN{436}        & 0.006              \\
+	\begin{tabular}{c|c|c|c|c|c}
+	Ref.           & Circuit   &  N                     & R                     & \textbf{Débit (Mb/s)} & $E_b$ (nJ/bit)    \\\hline
+	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & \GREEN{886}        & 73                 \\
+	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & \GREEN{1400}       & 34                 \\
+	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & \ORANGE{73}        & 27                 \\\hline
+	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & \GREEN{1200}       & -                  \\
+	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & \BLUE{237000}      & -                  \\
+	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & \ORANGE{94}        & 0.095              \\
+	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & \GREEN{436}        & 0.006              \\
 	\end{tabular}
 	\footnotetext[1]{\tiny Fixed N \& R}
 	}
 	\only<+>{
-	\begin{tabular}{c|c|c|c|c|c|c}
-	Ref.           & Circuit   &  N                     & R                    & Lat. ($\mu s$)& Débit (Mb/s) & $\mathbf{E_b}$ \textbf{(nJ/bit)}  \\\hline
-	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & 31            & 886        & \ORANGE{73}                       \\
-	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & 337           & 1400       & \ORANGE{34}                       \\
-	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & 374           & 73         & \ORANGE{27}                       \\\hline
-	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & 26.4          & 1200       & \textbf{-}                        \\
-	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 2.4           & 237000     & \textbf{-}                        \\
-	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 5.46          & 94         & \GREEN{0.095}                     \\
-	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & 436        & \GREEN{0.006}                     \\
+	\begin{tabular}{c|c|c|c|c|c}
+	Ref.           & Circuit   &  N                     & R                     & Débit (Mb/s) & $\mathbf{E_b}$ \textbf{(nJ/bit)}  \\\hline
+	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & 886        & \ORANGE{73}                       \\
+	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & 1400       & \ORANGE{34}                       \\
+	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & 73         & \ORANGE{27}                       \\\hline
+	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & 1200       & \textbf{-}                        \\
+	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 237000     & \textbf{-}                        \\
+	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 94         & \GREEN{0.095}                     \\
+	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 436        & \GREEN{0.006}                     \\
 	\end{tabular}
 	\footnotetext[1]{\tiny Fixed N \& R}
 	}
 
 	\only<+>{
 	\vspace{0.5cm}
-	\begin{tabular}{c|c|c|c|c|c|c}
-	Ref.           & Circuit   &  N                     & R                    & Lat. ($\mu s$)& Débit (Mb/s) & $E_b$ (nJ/bit)  \\\hline
-	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & 26.4          & 1200       & -                        \\
-	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & 31            & 886        & 73                       \\
-	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & 337           & 1400       & 34                       \\
-	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & 374           & 73         & 27                       \\\hline
-	& \GREEN{?} & \GREEN{?} & \GREEN{?} & \GREEN{?} & \GREEN{?} & \GREEN{?} \\\hline
-	\cite{Giard15} & Tesla K20c &  4096                  & 0.90                 & 9400          & 1043       & 216                         \\
-	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 2.4           & 237000     & -                        \\
-	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 5.46          & 94         & 0.095                     \\
-	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 1.17          & 436        & 0.006                     \\
+	\begin{tabular}{c|c|c|c|c|c}
+	Ref.           & Circuit   &  N                     & R                     & Débit (Mb/s) & $E_b$ (nJ/bit)  \\\hline
+	\cite{6804939} & Stratix IV &  32768                 & 0.9                  & 1200       & -                        \\
+	\cite{Giard15} & i7-4770S   &  32768                 & 0.84                 & 886        & 73                       \\
+	\cite{6960078} & i7-4960HQ  &  32768                 & 0.83                 & 1400       & 34                       \\
+	\cite{7760327} & Cortex A57 &  32768                 & 0.83                 & 73         & 27                       \\\hline
+	& \GREEN{?} & \GREEN{?} & \GREEN{?} & \GREEN{?} & \GREEN{?}  \\\hline
+	\cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 237000     & -                        \\
+	\cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 94         & 0.095                     \\
+	\cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 436        & 0.006                     \\
 	\end{tabular}
 	}
 
