@@ -1,0 +1,39 @@
+\documentclass{standalone}
+
+\usepackage{amsmath}
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{matrix, positioning, patterns}
+\pgfplotsset{
+/pgfplots/ybar legend/.style={
+/pgfplots/legend image code/.code={%
+\draw[##1,/tikz/.cd,bar width=0.1cm,yshift=-0.2em,bar shift=0.5*\pgfplotbarwidth]
+plot coordinates {(0.5*\pgfplotbarwidth,0.6em) (2.5*\pgfplotbarwidth,0.4em) (4.5*\pgfplotbarwidth,0.2em)};},
+}
+}
+\input{colors}
+\newcommand{\GREEN} [1]{\textcolor{Paired-3}{\textbf{#1}}}
+
+\begin{document}
+
+\begin{tikzpicture}
+  \begin{semilogyaxis}[/pgfplots/table/ignore chars={|}, %footnotesize,
+                        width=0.9\linewidth, height=0.6\linewidth,    
+                       xlabel=$E_b/N_0 \text{(dB)}$, ylabel=FER,  grid=both, grid style={gray!30},
+                       xmin=0, xmax=5.5, xtick={0,0.5,1,...,5.5},
+                       restrict expr to domain={y}{1e-7:0.5},unbounded coords=discard,
+                       tick align=outside, tickpos=left, %legend style={at={(0.5,-0.2)},anchor=north}, 
+                       legend pos=north east, legend columns=1]
+    \addplot[mark=triangle, Set1-1, semithick            , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SPC4_N256_L_8.txt }; 
+    \addplot[mark=triangle, Set1-1, semithick, dashed    , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SPC_N256_L_8.txt }; 
+    \addplot[mark=o       , Set1-2, semithick            , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SPC4_N1024_L_8.txt }; 
+    \addplot[mark=o       , Set1-2, semithick, dashed    , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SPC_N1024_L_8.txt }; 
+    \addplot[mark=square  , Set1-3, semithick            , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SPC4_N4096_L_8.txt }; 
+    \addplot[mark=square  , Set1-3, semithick, dashed    , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SPC_N4096_L_8.txt }; 
+    \legend{$N=256$ \GREEN{+9\%}, ,$N=1024$ \GREEN{+15\%}, ,$N=4096$ \GREEN{+17\%}}
+  \end{semilogyaxis}
+\end{tikzpicture}
+\end{document}

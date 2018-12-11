@@ -18,28 +18,28 @@ import subprocess
 
 #           L   R    256    1024  4096
 snr  = [
-           [8 ,0.33,"0.15","0.03","0.02"],
+           # [8 ,0.33,"0.15","0.03","0.02"],
            [8 ,0.50,"0.09","0.04","0.07"],
-           [8 ,0.66,"0.03","0.04","0.09"],
-           [16 ,0.33,"0.03","0.04","0.09"],
-           [16 ,0.50,"0.03","0.04","0.09"],
-           [16 ,0.66,"0.03","0.04","0.09"],
-           [32,0.33,"0.52","0.19","0.22"],
+           # [8 ,0.66,"0.03","0.04","0.09"],
+           # [16 ,0.33,"0.03","0.04","0.09"],
+           # [16 ,0.50,"0.03","0.04","0.09"],
+           # [16 ,0.66,"0.03","0.04","0.09"],
+           # [32,0.33,"0.52","0.19","0.22"],
            [32,0.50,"0.30","0.24","0.26"],
-           [32,0.66,"0.27","0.22","0.25"]
+           # [32,0.66,"0.27","0.22","0.25"]
        ]
 
 
 Rkey    = [
-              "1/3",
+              # "1/3",
               "1/2",
-              "2/3",
-    	      "1/3",
+              # "2/3",
+    	      # "1/3",
               "1/2",
-              "2/3",
-              "1/3",
+              # "2/3",
+              # "1/3",
               "1/2",
-              "2/3"
+              # "2/3"
           ]
 
 
@@ -83,41 +83,43 @@ for i in range (0,9):
 		args[len(args) -1] = "{R0,R0L,R1,REP,REPL,SPC_4}"
 
 		# display command line
-		# for arg in args:
-		# 	print(arg, end=' ')
-		# print()
-
-		process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-		(stdout, stderr) = process.communicate()
-
-		lines = stdout.decode('utf-8').split('\n')
-
-		for line in lines:
-			if "decode_siho" in line :
-				line = line.replace("||", "|").replace(" ", "")
-				cols = line.split("|")
-				cthr_spc4 = cols[6]
-
-		args[len(args) -1] = "{R0,R0L,R1,REP,REPL,SPC}"
-
-
-		process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-		(stdout, stderr) = process.communicate()
-
-		lines = stdout.decode('utf-8').split('\n')
-		for line in lines:
-			if "decode_siho" in line :
-				line = line.replace("||", "|").replace(" ", "")
-				cols = line.split("|")
-				cthr_spc = cols[6]
-
-		diff = (float(cthr_spc) - float(cthr_spc4)) / float(cthr_spc4)
-		diff = round(100 * diff,1)
+		for arg in args:
+			print(arg, end=' ')
+		print()
 		
-		# print("CTHR SPC4: " + str(cthr_spc4) + ", CTHR SPC4+: " + str(cthr_spc) + ", DIFF %: " + str(diff))
-		print("DIFF %: " + str(diff))
+		process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		# (stdout, stderr) = process.communicate()
 
-		diff_array[N_index] = diff
-		N_index = N_index + 1
+		# lines = stdout.decode('utf-8').split('\n')
+
+		# for line in lines:
+		# 	if "decode_siho" in line :
+		# 		line = line.replace("||", "|").replace(" ", "")
+		# 		cols = line.split("|")
+		# 		cthr_spc4 = cols[6]
+
+		# args[len(args) -1] = "{R0,R0L,R1,REP,REPL,SPC}"
+
+		for arg in args:
+			print(arg, end=' ')
+		print()
+		# process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		# (stdout, stderr) = process.communicate()
+
+		# lines = stdout.decode('utf-8').split('\n')
+		# for line in lines:
+		# 	if "decode_siho" in line :
+		# 		line = line.replace("||", "|").replace(" ", "")
+		# 		cols = line.split("|")
+		# 		cthr_spc = cols[6]
+
+		# diff = (float(cthr_spc) - float(cthr_spc4)) / float(cthr_spc4)
+		# diff = round(100 * diff,1)
+		
+		# # print("CTHR SPC4: " + str(cthr_spc4) + ", CTHR SPC4+: " + str(cthr_spc) + ", DIFF %: " + str(diff))
+		# print("DIFF %: " + str(diff))
+
+		# diff_array[N_index] = diff
+		# N_index = N_index + 1
 		N_cur = N_cur * 4
 

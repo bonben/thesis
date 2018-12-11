@@ -1,0 +1,84 @@
+# ----------------------------------------------------
+# ---- A FAST FORWARD ERROR CORRECTION TOOLBOX >> ----
+# ----------------------------------------------------
+# Parameters :
+# * Simulation ------------------------------------
+#    ** Type                     = BFER
+#    ** Type of bits             = int32
+#    ** Type of reals            = float32
+#    ** Date (UTC)               = 2018-12-11 09:25:18
+#    ** Git version              = v2.1.1
+#    ** Code type (C)            = POLAR
+#    ** Noise range              = 0 -> 6 dB
+#    ** Noise type (E)           = EBN0
+#    ** Seed                     = 0
+#    ** Statistics               = off
+#    ** Debug mode               = off
+#    ** Multi-threading (t)      = 48 thread(s)
+#    ** Coset approach (c)       = no
+#    ** Coded monitoring         = no
+#    ** Bad frames tracking      = off
+#    ** Bad frames replay        = off
+#    ** Bit rate                 = 0.492188 (63/128)
+#    ** Inter frame level        = 1
+# * Source ----------------------------------------
+#    ** Type                     = RAND
+#    ** Implementation           = STD
+#    ** Info. bits (K_info)      = 2016
+# * CRC -------------------------------------------
+#    ** Type                     = 32-GZIP
+#    ** Polynomial (hexadecimal) = 0x4c11db7
+#    ** Size (in bit)            = 32
+#    ** Implementation           = FAST
+# * Codec -----------------------------------------
+#    ** Type                     = POLAR
+#    ** Info. bits (K)           = 2048
+#    ** Codeword size (N_cw)     = 4096
+#    ** Frame size (N)           = 4096
+#    ** Code rate                = 0.5 (1/2)
+# * Encoder ---------------------------------------
+#    ** Type                     = POLAR
+#    ** Systematic               = yes
+#    Frozen bits generator ------------------------
+#    ** Type                     = GA
+#    ** Sigma                    = adaptive
+# * Decoder ---------------------------------------
+#    ** Type (D)                 = ASCL
+#    ** Implementation           = FAST
+#    ** Systematic               = yes
+#    ** SIMD strategy            = INTRA
+#    ** Max num. of lists (L)    = 32
+#    ** Adaptative mode          = full
+#    ** Polar node types         = {R0,R0L,R1,REP,REPL,SPC_4}
+# * Modem -----------------------------------------
+#    ** Type                     = BPSK
+#    ** Implementation           = STD
+#    ** Bits per symbol          = 1
+#    ** Sigma square             = on
+# * Channel ---------------------------------------
+#    ** Type                     = AWGN
+#    ** Implementation           = FAST
+#    ** Complex                  = off
+#    ** Add users                = off
+# * Monitor ---------------------------------------
+#    ** Frame error count (e)    = 100
+#    ** Compute mutual info      = no
+# * Terminal --------------------------------------
+#    ** Enabled                  = yes
+#    ** Frequency (ms)           = 500
+# 
+# The simulation is running...
+# ---------------------||------------------------------------------------------||---------------------
+#  Signal Noise Ratio  ||   Bit Error Rate (BER) and Frame Error Rate (FER)    ||  Global throughput  
+#         (SNR)        ||                                                      ||  and elapsed time   
+# ---------------------||------------------------------------------------------||---------------------
+# ----------|----------||----------|----------|----------|----------|----------||----------|----------
+     Es/N0 |    Eb/N0 ||      FRA |       BE |       FE |      BER |      FER ||  SIM_THR |    ET/RT 
+#      (dB) |     (dB) ||          |          |          |          |          ||   (Mb/s) | (hhmmss) 
+# ----------|----------||----------|----------|----------|----------|----------||----------|----------
+      -3.08 |     0.00 ||      147 |    59254 |      147 | 2.00e-01 | 1.00e+00 ||    0.196 | 00h00'01   
+      -2.58 |     0.50 ||      173 |    31698 |      143 | 9.09e-02 | 8.27e-01 ||    0.881 | 00h00'00   
+      -2.08 |     1.00 ||     1188 |    13771 |      121 | 5.75e-03 | 1.02e-01 ||    5.536 | 00h00'00   
+      -1.58 |     1.50 ||   128904 |     4890 |      100 | 1.88e-05 | 7.76e-04 ||  176.222 | 00h00'01   
+      -1.08 |     2.00 ||  5107728 |      183 |        5 | 1.78e-08 | 9.79e-07 ||  343.223 | 00h00'30   
+# End of the simulation.

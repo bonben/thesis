@@ -113,6 +113,7 @@
 \date{13 Décembre 2018}
 %\pgfdeclareimage[height=.8cm]{logo_ISCAS}{index.png}
 %\logo{\pgfuseimage{logo_ISCAS}\hspace{\dimexpr\paperwidth-3.55cm}\vspace{-8pt}}
+\input{colors}
 
 \definecolor{dgreen}{rgb}{0.,0.6,0.}
 \definecolor{milano}{rgb}{0.458824, 0.050980, 0.058824}
@@ -127,10 +128,12 @@
   \endgroup
 }
 
-\newcommand{\RED} [1]{\textcolor{red}{\textbf{#1}}}
+
+
+\newcommand{\RED} [1]{\textcolor{Paired-5}{\textbf{#1}}}
 \newcommand{\ORANGE} [1]{\textcolor{orange}{\textbf{#1}}}
-\newcommand{\GREEN} [1]{\textcolor{dgreen}{\textbf{#1}}}
-\newcommand{\BLUE} [1]{\textcolor{blue}{\textbf{#1}}}
+\newcommand{\GREEN} [1]{\textcolor{Paired-3}{\textbf{#1}}}
+\newcommand{\BLUE} [1]{\textcolor{Paired-1}{\textbf{#1}}}
 
 \newcommand{\MILANO} [1]{\textcolor{milano}{#1}}
 \newcommand{\BAHAMA} [1]{\textcolor{bahama}{#1}}
@@ -182,7 +185,7 @@ subsectionstyle=show/shaded/hide
 \bibliography{bibli}
 
 
-\includeonly{part1}
+% \includeonly{part2}
 
 \begin{document}
 
