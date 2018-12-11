@@ -1,7 +1,7 @@
 %!TEX root = ./soutenance.tex
 
 
-\section[Introduction]{Décodage de codes polaires}
+\section[Introduction]{Les codes polaires : construction et décodage}
 \subsection*{Les codes correcteurs d'erreurs}
 
 \begin{frame}[c]{Chaîne de communications numériques}
@@ -14,12 +14,6 @@
 		\item<2-> Ajout de redondance
 		\item<4-> Correction des erreurs
 	\end{itemize}
-\end{frame}
-
-\begin{frame}[c]
-	\tableofcontents[
-	subsectionstyle=hide,
-	]
 \end{frame}
 
 \begin{frame}
@@ -37,6 +31,13 @@
 	\end{itemize}
 	\vfill
 \end{frame}
+
+\begin{frame}[c]
+	\tableofcontents[
+	subsectionstyle=hide,
+	]
+\end{frame}
+
 
 \subsection*{Les codes polaires}
 \begin{frame}[c]{Codes polaires}
@@ -137,7 +138,7 @@
 				\item \GREEN{Régulier}
 				\item \GREEN{Bonnes performances pour de très grandes tailles de mots de code}
 				\vspace{0.5cm}
-				\item \RED{Performances faibles pour $N<4096$}
+				\item \RED{Performances modérées pour $N<4096$}
 				\item \RED{Problème de propagation des erreurs}
 			\end{itemize}
 		}
@@ -152,7 +153,7 @@
 
 \begin{frame}[c]{}
   	\frametitle<1-7>{Algorithme de décodage SCL}
-  	\frametitle<8->{Algorithme de décodage CASCL}
+  	\frametitle<8->{Algorithme de décodage CRC-SCL}
 
 	\begin{columns}[T] % align columns
 	\only<1-7>{
@@ -219,7 +220,7 @@
 				\hline
 				SC           & \RED{faibles}                  & \GREEN{haut}                    & \GREEN{faible}    \\
 				SCL          & \ORANGE{moyennes}              & \RED{bas}                       & \ORANGE{moyenne}  \\
-				CASCL       & \GREEN{élevées}            & \RED{bas}                       & \ORANGE{moyenne}  \\
+				CRC-SCL       & \GREEN{élevées}            & \RED{bas}                       & \ORANGE{moyenne}  \\
 				PASCL       & \GREEN{élevées}            & \GREEN{haut}                    & \ORANGE{moyenne}       \\
 				FASCL       & \GREEN{élevées}            & \GREEN{haut}                    & \RED{forte}       \\
 			\end{tabular}
