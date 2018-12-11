@@ -70,16 +70,17 @@
 
 \begin{frame}[c]{Algorithme de décodage SC}
 	\begin{columns}[T] % align columns
-		\begin{column}{.65\textwidth}
+		\begin{column}{.55\textwidth}
 			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/focus_decoder}
 		\end{column}
-		\begin{column}{.35\textwidth}
+		\begin{column}{.45\textwidth}
 		\begin{itemize}
 			\item<1-> $L$ : Log Likelihood Ratios (LLR)
 			\item<3-> $s$ : Sommes Partielles
-			\item<4-> $$f(L_a,L_b) \approx \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)$$
-			\item<5-> $$g(L_a,L_b,\hat{s}_a) = (1-2\hat{s}_a)L_a+L_b$$
 		\end{itemize}
+		\vspace{1cm}
+			\only<4->{ \scriptsize{$$g(L_a,L_b,\hat{s}_a) = (1-2\hat{s}_a)L_a+L_b$$}}
+			\only<5->{ \scriptsize{$$f(L_a,L_b) \approx \text{sign}(L_a.L_b).\min(|L_a|,|L_b|)$$}}
 		\end{column}
 	\end{columns}
 
@@ -134,7 +135,7 @@
 			\begin{itemize}
 				\item \GREEN{Récursif}
 				\item \GREEN{Régulier}
-				\item \GREEN{Atteint la capacité pour une taille de mot de code infinie}
+				\item \GREEN{Bonnes performances pour de très grandes tailles de mots de code}
 				\vspace{0.5cm}
 				\item \RED{Performances faibles pour $N<4096$}
 				\item \RED{Problème de propagation des erreurs}
@@ -152,10 +153,14 @@
 \begin{frame}[c]{}
   	\frametitle<1-7>{Algorithme de décodage SCL}
   	\frametitle<8->{Algorithme de décodage CASCL}
+
 	\begin{columns}[T] % align columns
-
+	\only<1-7>{
 		\begin{column}{.7\textwidth}
-
+	}
+	\only<8->{
+		\begin{column}{.6\textwidth}
+	}
 			\multiinclude[<+>][start=1,format=pdf,graphics={width=\textwidth}]{./fig/scl_anim}
 
 		\end{column}
@@ -173,7 +178,7 @@
 }
 \only<8->
  {
-		\begin{column}{.3\textwidth}
+		\begin{column}{.4\textwidth}
 			\begin{itemize}
 				\item<8-> Concaténation d'un CRC
 				\item<9-> Utilisé pour discriminer les candidats
