@@ -8,35 +8,12 @@
 \subsection*{Conception d'architectures programmables}
 
 
-\begin{frame}[c]{Implémentation de l'algorithme SC}
-\vfill
-  \begin{table}[t]
-    \centering
-    {\small\resizebox{0.8\linewidth}{!}{
-     \begin{tabular}{r|c|c|c} 
-      \textbf{Algorithme}  & \textbf{Performances}  & \multirow{2}{*}{\textbf{Débit}} & \textbf{Latence}  \\
-      \textbf{de décodage} & \textbf{BER \& FER}    &                                 & \textbf{Maximum}  \\
-      \hline
-      SC           & \RED{faibles}                  & \GREEN{haut}                    & \GREEN{faible}    \\
-      SCL          & \ORANGE{moyennes}              & \RED{bas}                       & \ORANGE{moyenne}  \\
-      CA-SCL       & \GREEN{importantes}            & \RED{bas}                       & \ORANGE{moyenne}  \\
-      Adaptive-SCL & \GREEN{importantes}            & \GREEN{haut}                    & \RED{forte}       \\
-    \end{tabular}
-    }}
-  \end{table}
-  \vfill
-  \centering
-  L'architecture proposée se concentre sur l'algorithme SC
-  \vfill
-\end{frame}
-
-
-\begin{frame}[c]{Deux modèles de conception d'ASIP}
+\begin{frame}[c]{Spécialisation d'un processeur de base}
   \centering
   \includegraphics[width=0.7\textwidth]{./fig/methodos-1}
 \end{frame}
 
-\begin{frame}[c]{Approche Tensilica}
+\begin{frame}[c]{Spécialisation d'un processeur de base}
 \renewcommand{\section}[2]{} % Trick to avoid references section
 
   \begin{columns}
@@ -115,6 +92,7 @@
   \begin{minipage}[c][0cm][t]{\textwidth}
 \only<2>
 {
+\renewcommand*{\bibfont}{\footnotesize}
     \printbibliography[keyword={leonardon}]
 
 }
@@ -122,7 +100,7 @@
 \end{frame}
 
 
-\begin{frame}[c]{Limites de l'approche Tensilica}
+\begin{frame}[c]{Limites de l'approche}
   \begin{itemize}
     \vfill
     \item Limitation de l'accès à la mémoire
@@ -134,7 +112,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[c]{Deux modèles de conception d'ASIP}
+\begin{frame}[c]{Définition complète d'une architecture de processeur}
   \centering
   \includegraphics[width=0.5\textwidth]{./fig/methodos-2}
 \end{frame}
@@ -167,7 +145,7 @@
   \vfill
 \end{frame}
 
-\begin{frame}[c]{Niveau de parallélisme}
+\begin{frame}[c,noframenumbering]{Niveau de parallélisme}
   \centering
   \vfill
   Deux principales fonctions polaires : $f$ and $g$
@@ -204,32 +182,26 @@
   \includegraphics[width=\textwidth]{fig/compilation}
 \end{frame}
 
-\begin{frame}[c]{Parallélisme d'instruction}
-  \multiinclude[<+>][start=1,format=pdf,graphics={width=.8\textwidth}]{./fig/ilp}
-\end{frame}
-
-
-
-
-
 \begin{frame}[c]{Comparaison avec des décodeurs logiciels}
   \begin{columns}[T] % align columns
   \begin{column}{.48\textwidth}
     \begin{itemize}
-      \item<+-> Architecture proposée
+      \vfill
       \item<+-> Processeurs Intel x86 (i7-4712HQ) et ARM (Cortex A57)
-      \begin{itemize}
-        \item<+-> Boîte à outils logicielle \textbf{AFF3CT}
-        \item<+-> SIMD (Neon \& AVX2)
-      \end{itemize}
+      \vfill
       \item<+-> ASIP de type Tensilica
+      \vfill
+      \item<+-> Architecture proposée
+      \vfill
       \item<+-> Débit maximum atteint par le processeur proposé
+      \vfill
       \item<+-> Consommation énergétique réduite d'un à deux ordres de grandeur
+      \vfill
     \end{itemize}
   \end{column}
 
   \begin{column}{.48\textwidth}
-  \only<1>{
+  \only<3>{
     \begin{table}
       \centering
       {
@@ -243,11 +215,6 @@
         \cmidrule(lr){2-2}
         \cmidrule(lr){3-5}
 
-        \multirow{2}{*}{\bf \BLUE{TTPD-800MHz}}     & $1024$   & $1.4$  & $352$ & $0.14$ \\ % 1512 cycles
-                                                    & $512$    & $0.8$  & $313$ & $0.15$ \\ % 803 cycles
-        \multirow{2}{*}{\bf \BLUE{(ASIP)}}          & $256$    & $0.4$  & $304$ & $0.16$ \\ % 413 cycles
-                                                    & $128$    & $0.2$  & $284$ & $0.17$ \\ % 224 cycles
-        \midrule
         \multirow{2}{*}{\bf i7-3.3GHz}              & $1024$   & $2.0$  & $257$ & $41$   \\
                                                     & $512$    & $1.2$  & $210$ & $49$   \\
         \multirow{2}{*}{\bf (GPP)}                  & $256$    & $0.7$  & $179$ & $59$   \\
@@ -262,13 +229,18 @@
                                                     & $512$    & $3.9$  & $66$  & $1.7$  \\
         \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $1.9$  & $65$  & $1.7$  \\
                                                     & $128$    & $1.0$  & $62$  & $1.8$  \\
+        \midrule
+        \multirow{2}{*}{\bf \BLUE{TTPD-800MHz}}     & $1024$   & $1.4$  & $352$ & $0.14$ \\ % 1512 cycles
+                                                    & $512$    & $0.8$  & $313$ & $0.15$ \\ % 803 cycles
+        \multirow{2}{*}{\bf \BLUE{(ASIP)}}          & $256$    & $0.4$  & $304$ & $0.16$ \\ % 413 cycles
+                                                    & $128$    & $0.2$  & $284$ & $0.17$ \\ % 224 cycles
         \bottomrule
       \end{tabular}
       }}
     \end{table}
   }
     
-    \only<2-4>{
+    \only<1>{
     \begin{table}
       \centering
       {
@@ -283,11 +255,6 @@
         \cmidrule(lr){3-5}
 
 
-        \multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & $352$ & $0.14$ \\ % 1512 cycles
-                                                    & $512$    & $0.8$  & $313$ & $0.15$ \\ % 803 cycles
-        \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & $304$ & $0.16$ \\ % 413 cycles
-                                                    & $128$    & $0.2$  & $284$ & $0.17$ \\ % 224 cycles
-        \midrule
         \multirow{2}{*}{\bf \BLUE{i7-3.3GHz}}       & $1024$   & $2.0$  & $257$ & $41$   \\
                                                     & $512$    & $1.2$  & $210$ & $49$   \\
         \multirow{2}{*}{\bf \BLUE{(GPP)}}           & $256$    & $0.7$  & $179$ & $59$   \\
@@ -302,13 +269,18 @@
                                                     & $512$    & $3.9$  & $66$  & $1.7$  \\
         \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $1.9$  & $65$  & $1.7$  \\
                                                     & $128$    & $1.0$  & $62$  & $1.8$  \\
+        \midrule
+        \multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & $352$ & $0.14$ \\ % 1512 cycles
+                                                    & $512$    & $0.8$  & $313$ & $0.15$ \\ % 803 cycles
+        \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & $304$ & $0.16$ \\ % 413 cycles
+                                                    & $128$    & $0.2$  & $284$ & $0.17$ \\ % 224 cycles
         \bottomrule
       \end{tabular}
       }}
     \end{table}
     }
 
-  \only<5>{
+  \only<2>{
     \begin{table}
       \centering
       {
@@ -323,11 +295,6 @@
         \cmidrule(lr){3-5}
 
 
-        \multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & $352$ & $0.14$ \\ % 1512 cycles
-                                                    & $512$    & $0.8$  & $313$ & $0.15$ \\ % 803 cycles
-        \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & $304$ & $0.16$ \\ % 413 cycles
-                                                    & $128$    & $0.2$  & $284$ & $0.17$ \\ % 224 cycles
-        \midrule
         \multirow{2}{*}{\bf i7-3.3GHz}              & $1024$   & $2.0$  & $257$ & $41$   \\
                                                     & $512$    & $1.2$  & $210$ & $49$   \\
         \multirow{2}{*}{\bf (GPP)}                  & $256$    & $0.7$  & $179$ & $59$   \\
@@ -342,13 +309,18 @@
                                                     & $512$    & $3.9$  & $66$  & $1.7$  \\
         \multirow{2}{*}{\bf \BLUE{(ASIP)}}          & $256$    & $1.9$  & $65$  & $1.7$  \\
                                                     & $128$    & $1.0$  & $62$  & $1.8$  \\
+        \midrule
+        \multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & $352$ & $0.14$ \\ % 1512 cycles
+                                                    & $512$    & $0.8$  & $313$ & $0.15$ \\ % 803 cycles
+        \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & $304$ & $0.16$ \\ % 413 cycles
+                                                    & $128$    & $0.2$  & $284$ & $0.17$ \\ % 224 cycles
 
         \bottomrule
       \end{tabular}
       }}
     \end{table}
     }
-    \only<6>{
+    \only<4>{
     \begin{table}
       \centering
       {
@@ -363,11 +335,6 @@
         \cmidrule(lr){3-5}
 
 
-        \multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & \GREEN{$\mathbf{352}$} & $0.14$ \\ % 1512 cycles
-                                                    & $512$    & $0.8$  & \GREEN{$\mathbf{313}$} & $0.15$ \\ % 803 cycles
-        \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & \GREEN{$\mathbf{304}$} & $0.16$ \\ % 413 cycles
-                                                    & $128$    & $0.2$  & \GREEN{$\mathbf{284}$} & $0.17$ \\ % 224 cycles
-        \midrule
         \multirow{2}{*}{\bf i7-3.3GHz}              & $1024$   & $2.0$  & \GREEN{$\mathbf{257}$} & $41$   \\
                                                     & $512$    & $1.2$  & \GREEN{$\mathbf{210}$} & $49$   \\
         \multirow{2}{*}{\bf (GPP)}                  & $256$    & $0.7$  & \GREEN{$\mathbf{179}$} & $59$   \\
@@ -382,13 +349,18 @@
                                                     & $512$    & $3.9$  & \ORANGE{$\mathbf{66}$} & $1.7$  \\
         \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $1.9$  & \ORANGE{$\mathbf{65}$} & $1.7$  \\
                                                     & $128$    & $1.0$  & \ORANGE{$\mathbf{62}$} & $1.8$  \\
+        \midrule
+        \multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & \GREEN{$\mathbf{352}$} & $0.14$ \\ % 1512 cycles
+                                                    & $512$    & $0.8$  & \GREEN{$\mathbf{313}$} & $0.15$ \\ % 803 cycles
+        \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & \GREEN{$\mathbf{304}$} & $0.16$ \\ % 413 cycles
+                                                    & $128$    & $0.2$  & \GREEN{$\mathbf{284}$} & $0.17$ \\ % 224 cycles
 
         \bottomrule
       \end{tabular}
       }}
     \end{table}
     }
-    \only<7>{
+    \only<5>{
     \begin{table}
       \centering
       {
@@ -403,11 +375,6 @@
         \cmidrule(lr){3-5}
 
 
-        \multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & $352$ & \GREEN{$\mathbf{0.14}$} \\ % 1512 cycles
-                                                    & $512$    & $0.8$  & $313$ & \GREEN{$\mathbf{0.15}$} \\ % 803 cycles
-        \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & $304$ & \GREEN{$\mathbf{0.16}$} \\ % 413 cycles
-                                                    & $128$    & $0.2$  & $284$ & \GREEN{$\mathbf{0.17}$} \\ % 224 cycles
-        \midrule
         \multirow{2}{*}{\bf i7-3.3GHz}              & $1024$   & $2.0$  & $257$ & \RED{$\mathbf{41}$}   \\
                                                     & $512$    & $1.2$  & $210$ & \RED{$\mathbf{49}$}   \\
         \multirow{2}{*}{\bf (GPP)}                  & $256$    & $0.7$  & $179$ & \RED{$\mathbf{59}$}   \\
@@ -422,6 +389,11 @@
                                                     & $512$    & $3.9$  & $66$  & \ORANGE{$\mathbf{1.7}$}  \\
         \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $1.9$  & $65$  & \ORANGE{$\mathbf{1.7}$}  \\
                                                     & $128$    & $1.0$  & $62$  & \ORANGE{$\mathbf{1.8}$}  \\
+        \midrule
+        \multirow{2}{*}{\bf TTPD-800MHz}            & $1024$   & $1.4$  & $352$ & \GREEN{$\mathbf{0.14}$} \\ % 1512 cycles
+                                                    & $512$    & $0.8$  & $313$ & \GREEN{$\mathbf{0.15}$} \\ % 803 cycles
+        \multirow{2}{*}{\bf (ASIP)}                 & $256$    & $0.4$  & $304$ & \GREEN{$\mathbf{0.16}$} \\ % 413 cycles
+                                                    & $128$    & $0.2$  & $284$ & \GREEN{$\mathbf{0.17}$} \\ % 224 cycles
 
         \bottomrule
       \end{tabular}
@@ -432,9 +404,9 @@
   \end{columns}
 \end{frame}
 
-\begin{frame}[c]{Comparison avec des architectures matérielles dédiées}
+\begin{frame}[c]{Comparaison avec des architectures matérielles dédiées}
     \begin{itemize}
-      \item<+-> Transport Triggered Transport Decoder
+      \item<+-> Transport Triggered Polar Decoder
       \item<+-> Architecture matérielle dédiée 
       \item<2-> Architecture matérielle dédiée avec bits gelés adaptés
       \item<+-> Implémentations FPGA
@@ -510,7 +482,7 @@
     }
 \end{frame}
 
-\begin{frame}[c,noframenumbering]{Comparison with dedicated hardware decoders}
+\begin{frame}[c,noframenumbering]{Comparaison avec des architectures matérielles dédiées}
     \begin{itemize}
       \item<+-> Empreinte mémoire plus importante
       \item<+-> Nombre inférieur de LUTs
@@ -631,6 +603,18 @@
     \item<+-> Conception d'un processeur de type TTA
     \scriptsize{\printbibliography[keyword={tta}]}
     \vfill
+  \end{enumerate}
+
+\end{frame}
+
+\begin{frame}[c]{Conclusions}
+
+  \begin{enumerate}
+\renewcommand{\section}[2]{} % Trick to avoid references section
+
+    \renewcommand*{\bibfont}{\scriptsize}
+    \nocite{leonardon_fast_2017,ghaffari_improving_2017,leonardon_tta_2018,Ghaffari2018,cassagne_fast_2017,cassagne_gdr_2017}
+    \vfill
     \item<+-> Implémentation du décodeur SCMA
     \printbibliography[keyword={ghaffari}]
     \vfill
@@ -648,8 +632,8 @@
     \vfill
     \item<+-> Extension des travaux sur les décodeurs logiciels
     \begin{itemize}
-      \item Implémentations logicielles des algorithmes SCF, SCS
-      \item Support des codes polaires multinoyaux
+      \item Implémentation logicielle de variantes algorithmiques
+      \item Support de nouvelles constructions de codes polaires
     \end{itemize}
     \vfill
     \item<+-> Architecture TTA supportant le décodage de l'algorithme SCL

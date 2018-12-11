@@ -528,21 +528,17 @@
 \end{frame}
 
 \begin{frame}[c]{Déroulage}
-\begin{center}
-			\includegraphics[width=.5\textwidth]{./fig/unrolling-4}
-\end{center}
-
   \begin{itemize}
     \vfill
-    \item \GREEN{+ \'Evite indirections}
+    \item[\GREEN{+}] \GREEN{\'Evite indirections}
     \vfill
-    \item \GREEN{+ Diminue le temps de décodage}
+    \item[\GREEN{+}] \GREEN{Diminue le temps de décodage}
     \vfill
-    \item \RED{- Une version du code par jeu de paramètres}
+    \item[\RED{-}] \RED{Une version du code par jeu de paramètres}
     \vfill
-    \item \RED{- Augmentation drastique de la taille du code}
+    \item[\RED{-}] \RED{Augmentation drastique de la taille du code}
     \vfill
-    \item \RED{- Difficilement compatible dans le contexte 5G}
+    \item[\RED{-}] \RED{Difficilement compatible dans le contexte 5G}
     \vfill
   \end{itemize}
 \end{frame}
@@ -617,7 +613,8 @@
 
 \begin{frame}[c]{Extraction du CRC}
 	\centering
-	\multiinclude[<+>][start=2,format=pdf,graphics={width=.7\textwidth}]{./fig/extract}
+  \multiinclude[<+>][start=2,format=pdf,graphics={width=.7\textwidth}]{./fig/extract}
+
 \end{frame}
 
 \begin{frame}[c]{Résumé}
@@ -649,11 +646,11 @@
 	\vfill
 	\only<3>{Tailles de codes et rendements variés}
 	\vfill
-	\only<5>{Débits compétitifs des décodeurs logiciels}
+	\only<4>{Débits compétitifs des décodeurs logiciels}
 	\vfill
-	\only<6>{Principal défaut des décodeurs logiciels : la consommation énergétique}
+	\only<5>{Principal défaut des décodeurs logiciels : la consommation énergétique}
 	\vfill
-	\only<7>{\GREEN{Comment conserver la flexibilité des décodeurs logiciels en se rapprochant des performances des architectures dédiées ?}}
+	\only<6>{\GREEN{Comment conserver la flexibilité des décodeurs logiciels en se rapprochant des performances des architectures dédiées ?}}
 	\vfill
 	\end{minipage}		
 
@@ -662,14 +659,14 @@
 	\only<+>{
   \begin{table}[t]
   \begin{tabular}{C{0.9cm}|C{1.9cm}|C{1cm}|C{0.7cm}|C{1.7cm}|C{1.5cm}}
-  Ref.           & \textbf{Circuit  } &  N                     & R            & Débit (Mb/s) & $E_b$ (nJ/bit)  \\\hline
-  \cite{Giard15} & \textbf{i7-4770S  } &  32768                 & 0.84        & 886        & 73              \\
-  \cite{6960078} & \textbf{i7-4960HQ } &  32768                 & 0.83        & 1400       & 34              \\
-  \cite{7760327} & \textbf{Cortex A57} &  32768                 & 0.83        & 73         & 27              \\\hline
-  \cite{6804939} & Stratix IV &  32768                 & 0.9                  & 1200       & -                        \\
-  \cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 237000     & -                        \\
-  \cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 94         & 0.095                    \\
-  \cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 436        & 0.006                    \\
+  Ref.           & \textbf{Circuit  } &  N             & R                    & Débit (Mb/s) & $E_b$ (nJ/bit) \\\hline
+  \cite{Giard15} & \textbf{i7-4770S  } &  32768        & 0.84                 & 886          & 73             \\
+  \cite{6960078} & \textbf{i7-4960HQ } &  32768        & 0.83                 & 1400         & 34             \\
+  \cite{7760327} & \textbf{Cortex A57} &  32768        & 0.83                 & 73           & 27             \\\hline
+  \cite{6804939} & Stratix IV &  32768                 & 0.9                  & 1200         & -              \\
+  \cite{7105452} & Stratix IV &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 237000       & -              \\
+  \cite{8017407} & ASIC 28nm  &  1024                  & 0.5                  & 94           & 0.095          \\
+  \cite{8017407} & ASIC 28nm  &  1024\footnotemark[1]  & 0.5\footnotemark[1]  & 436          & 0.006          \\
   \end{tabular}
   \end{table}
   \footnotetext[1]{\tiny Fixed N \& R}
