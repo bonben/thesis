@@ -17,6 +17,7 @@ plot coordinates {(0.5*\pgfplotbarwidth,0.6em) (2.5*\pgfplotbarwidth,0.4em) (4.5
 \input{colors}
 \newcommand{\GREEN} [1]{\textcolor{Paired-3}{\textbf{#1}}}
 
+\tikzstyle{stuff_fill}=[rectangle,draw,font={A}, fill=white,label={center:$L=32$}, minimum width=1.2cm]
 \begin{document}
 
 \begin{tikzpicture}
@@ -36,5 +37,6 @@ plot coordinates {(0.5*\pgfplotbarwidth,0.6em) (2.5*\pgfplotbarwidth,0.4em) (4.5
     \addplot[mark=square  , Set1-3, semithick, dashed    , mark options={solid}] table [x=Eb/N0, y=FER] {../dat/SPC_N4096_L_32.txt }; 
     \legend{$N=256$ \GREEN{+7\%}, ,$N=1024$ \GREEN{+16\%}, ,$N=4096$ \GREEN{+17\%}}
   \end{semilogyaxis}
+ \node at (2.1,1.5) [stuff_fill] {};
 \end{tikzpicture}
 \end{document}
