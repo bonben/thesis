@@ -99,19 +99,6 @@
   \end{minipage} 
 \end{frame}
 
-
-\begin{frame}[c]{Limites de l'approche}
-  \begin{itemize}
-    \vfill
-    \item Limitation de l'accès à la mémoire
-    \vfill
-    \item Rigidité de l'architecture
-    \vfill
-    \item Langage de description matérielle spécifique
-    \vfill
-  \end{itemize}
-\end{frame}
-
 \begin{frame}[c]{Définition complète d'une architecture de processeur}
   \centering
   \includegraphics[width=0.5\textwidth]{./fig/methodos-2}
@@ -191,9 +178,9 @@
       \vfill
       \item<+-> ASIP de type Tensilica
       \vfill
-      \item<+-> Architecture proposée
+      \item<+-> Architecture TTA
       \vfill
-      \item<+-> Débit maximum atteint par le processeur proposé
+      \item<+-> Débit maximum atteint par le processeur TTA
       \vfill
       \item<+-> Consommation énergétique réduite d'un à deux ordres de grandeur
       \vfill
@@ -417,18 +404,18 @@
       \centering
       {
         \small\resizebox{1\linewidth}{!}{
-        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
-                                  & \BLUE{TTPD Proposé}  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}}
+                                  & \BLUE{TTPD}  & \cite{giard_638_2015} & \cite{sarkis2014fast} \\
           \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
-          \cmidrule(lr){4-5}
+          \cmidrule(lr){4-4}
 
-          \textbf{Cible}         &  Stratix IV       & Stratix IV            & Stratix IV         & Virtex 6             \\
-          \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
-          \textbf{LUTS}           &  19664         & 23020                 & 24821              & 22115                \\
-          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full               & Full                 \\
-          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
+          \textbf{Cible}         &  Stratix IV       & Stratix IV            & Stratix IV     \\
+          \textbf{RAM} (Kb)       &  141           & 43                    & 36               \\
+          \textbf{LUTS}           &  19664         & 23020                 & 24821            \\
+          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full           \\
+          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165          \\
 
         \end{tabular}
       }}
@@ -440,18 +427,18 @@
       \centering
       {
         \small\resizebox{1\linewidth}{!}{
-        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
-                                  & TTPD Proposé  & \BLUE{\cite{giard_638_2015}} & \multicolumn{2}{c}{\BLUE{\cite{sarkis2014fast}}} \\
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}}
+                                  & TTPD  & \BLUE{\cite{giard_638_2015}} & \BLUE{\cite{sarkis2014fast}} \\
           \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
-          \cmidrule(lr){4-5}
+          \cmidrule(lr){4-4}
 
-          \textbf{Cible}         &  Stratix IV       & Stratix IV            & Stratix IV         & Virtex 6             \\
-          \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
-          \textbf{LUTS}           &  19664         & 23020                 & 24821              & 22115                \\
-          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full               & Full                 \\
-          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
+          \textbf{Cible}         &  Stratix IV       & Stratix IV            & Stratix IV                 \\
+          \textbf{RAM} (Kb)       &  141           & 43                    & 36                         \\
+          \textbf{LUTS}           &  19664         & 23020                 & 24821                      \\
+          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full                       \\
+          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                        \\
 
         \end{tabular}
       }}
@@ -463,18 +450,18 @@
       \centering
       {
         \small\resizebox{1\linewidth}{!}{
-        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
-                                  & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}}
+                                  & TTPD  & \cite{giard_638_2015} & \cite{sarkis2014fast} \\
           \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
-          \cmidrule(lr){4-5}
+          \cmidrule(lr){4-4}
 
-          \textbf{Cible}         &  \BLUE{Stratix IV}       & \textbf{Stratix IV}            & \textbf{Stratix IV }        & \textbf{Virtex 6}             \\
-          \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
-          \textbf{LUTS}           &  19664         & 23020                 & 24821              & 22115                \\
-          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full               & Full                 \\
-          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
+          \textbf{Cible}         &  \BLUE{Stratix IV}       & \textbf{Stratix IV}            & \textbf{Stratix IV }            \\
+          \textbf{RAM} (Kb)       &  141           & 43                    & 36                           \\
+          \textbf{LUTS}           &  19664         & 23020                 & 24821                        \\
+          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full                         \\
+          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                          \\
 
         \end{tabular}
       }}
@@ -494,18 +481,18 @@
       \centering
       {
         \small\resizebox{1\linewidth}{!}{
-        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
-                                  & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}}
+                                  & TTPD  & \cite{giard_638_2015} & \cite{sarkis2014fast} \\
           \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
-          \cmidrule(lr){4-5}
+          \cmidrule(lr){4-4}
 
-          \textbf{Cible}         &  Stratix IV       & Stratix IV            & Stratix IV         & Virtex 6             \\
-          \textbf{RAM} (Kb)       &  \textbf{141}  & \textbf{43}           & \textbf{36}        & \textbf{36}          \\
-          \textbf{LUTS}           &  19664         & 23020                 & 24821              & 22115                \\
-          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full               & Full                  \\
-          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
+          \textbf{Cible}         &  Stratix IV       & Stratix IV            & Stratix IV                 \\
+          \textbf{RAM} (Kb)       &  \textbf{141}  & \textbf{43}           & \textbf{36}                \\
+          \textbf{LUTS}           &  19664         & 23020                 & 24821                      \\
+          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full                        \\
+          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                        \\
 
 
         \end{tabular}
@@ -517,18 +504,18 @@
       \centering
       {
         \small\resizebox{1\linewidth}{!}{
-        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
-                                  & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}}
+                                  & TTPD  & \cite{giard_638_2015} & \cite{sarkis2014fast} \\
           \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
-          \cmidrule(lr){4-5}
+          \cmidrule(lr){4-4}
 
-          \textbf{Cible}         &  Stratix IV        & Stratix IV             & Stratix IV          & Virtex 6              \\
-          \textbf{RAM} (Kb)       &  141            & 43                     & 36                  & 36                    \\
-          \textbf{LUTS}           &  \textbf{19664} & \textbf{23020}         & \textbf{24821}      & \textbf{22115}        \\
-          \textbf{\'Elagage}        &  R0 \& R1       & Full                   & Full                & Full                  \\
-          \textbf{Cycles d'horloge}   &  1161           & 222                    & 165                 & 165                   \\
+          \textbf{Cible}         &  Stratix IV        & Stratix IV             & Stratix IV                \\
+          \textbf{RAM} (Kb)       &  141            & 43                     & 36                        \\
+          \textbf{LUTS}           &  \textbf{19664} & \textbf{23020}         & \textbf{24821}            \\
+          \textbf{\'Elagage}        &  R0 \& R1       & Full                   & Full                      \\
+          \textbf{Cycles d'horloge}   &  1161           & 222                    & 165                       \\
 
 
         \end{tabular}
@@ -540,18 +527,18 @@
       \centering
       {
         \small\resizebox{1\linewidth}{!}{
-        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
-                                  & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}}
+                                  & TTPD  & \cite{giard_638_2015} & \cite{sarkis2014fast} \\
           \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
-          \cmidrule(lr){4-5}
+          \cmidrule(lr){4-4}
 
-          \textbf{Cible}         &  Stratix IV       & Stratix IV            & Stratix IV         & Virtex 6             \\
-          \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
-          \textbf{LUTS}           &  19664         & 23020                 & 24821              & 22115                \\
-          \textbf{\'Elagage}        &  \textbf{R0 \& R1}      & \textbf{Full}                  & \textbf{Full}               & \textbf{Full}                 \\
-          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                & 165                  \\
+          \textbf{Cible}         &  Stratix IV       & Stratix IV            & Stratix IV             \\
+          \textbf{RAM} (Kb)       &  141           & 43                    & 36                     \\
+          \textbf{LUTS}           &  19664         & 23020                 & 24821                  \\
+          \textbf{\'Elagage}        &  \textbf{R0 \& R1}      & \textbf{Full}                             & \textbf{Full}                 \\
+          \textbf{Cycles d'horloge}   &  1161          & 222                   & 165                    \\
 
         \end{tabular}
       }}
@@ -563,18 +550,18 @@
       \centering
       {
         \small\resizebox{1\linewidth}{!}{
-        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}|C{2cm}}
-                                  & TTPD Proposé  & \cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis2014fast}} \\
+        \begin{tabular}{C{3cm}|C{3cm}|C{2cm}|C{2cm}}
+                                  & TTPD  & \cite{giard_638_2015} & \cite{sarkis2014fast} \\
           \cmidrule(lr){1-1}
           \cmidrule(lr){2-2}
           \cmidrule(lr){3-3}
-          \cmidrule(lr){4-5}
+          \cmidrule(lr){4-4}
 
-          \textbf{Cible}         &  Stratix IV       & Stratix IV            & Stratix IV         & Virtex 6             \\
-          \textbf{RAM} (Kb)       &  141           & 43                    & 36                 & 36                   \\
-          \textbf{LUTS}           &  19664         & 23020                 & 24821              & 22115                \\
-          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full               & Full                 \\
-          \textbf{Cycles d'horloge}   &  \textbf{1161} & \textbf{222}          & \textbf{165}       & \textbf{165}         \\
+          \textbf{Cible}         &  Stratix IV       & Stratix IV            & Stratix IV      \\
+          \textbf{RAM} (Kb)       &  141           & 43                    & 36                \\
+          \textbf{LUTS}           &  19664         & 23020                 & 24821             \\
+          \textbf{\'Elagage}        &  R0 \& R1      & Full                  & Full            \\
+          \textbf{Cycles d'horloge}   &  \textbf{1161} & \textbf{222}          & \textbf{165}  \\
 
         \end{tabular}
       }}
@@ -618,7 +605,7 @@
     \item<+-> Implémentation du décodeur SCMA
     \printbibliography[keyword={ghaffari}]
     \vfill
-    \item<+-> Participation au projet AFF3CT
+    \item<+-> Contribution au projet AFF3CT
     \printbibliography[keyword={aff3ct}]
     \vfill
   \end{enumerate}
