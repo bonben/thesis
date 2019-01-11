@@ -1,11 +1,25 @@
 %!TEX root = ../my_thesis.tex
+
+
+
+\ifthenelse{\equal{\templateVersion}{UBX}}
+{
 \cleardoublepage
 \thispagestyle{empty}
 
 \vspace*{\fill}
 
 \begin{raggedleft}
-\`A mes grands parents.\\
+\itshape \`A mes grands parents.\\
 \end{raggedleft}
 \vspace*{\fill}
+
+}
+{
+\chapter*{DÉDICACE}\thispagestyle{headings}
+\addcontentsline{toc}{compteur}{DÉDICACE}
+\begin{flushright}
+  \itshape \`A mes grands parents.
+\end{flushright}
+}
 
