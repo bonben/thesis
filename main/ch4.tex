@@ -322,23 +322,23 @@ Pour les deux processeurs à usage général, le code source utilisé est géné
   \centering
   \caption{Implémentations sur cible FPGA de décodeurs SC pour un code polaire (1024,512).}
   \label{tab:fpga_tta}
-  \begin{tabular}{rccccc}
+  \begin{tabular}{rcccccc}
    \toprule
 
-                            & \TTSC     &~\cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis_fast_2014}}  \\ % & \texttt{TT-SC-COMP} \\
-	\cmidrule(lr){2-2}
-	\cmidrule(lr){3-3}
-	\cmidrule(lr){4-5}
+                            & \multicolumn{2}{c}{\TTSC}     &~\cite{giard_638_2015} & \multicolumn{2}{c}{\cite{sarkis_fast_2014}}  \\ % & \texttt{TT-SC-COMP} \\
+	\cmidrule(lr){2-3}
+	\cmidrule(lr){4-4}
+	\cmidrule(lr){5	-6}
 	% \cmidrule(lr){6-6}
 
-    \textbf{Cible}              &  Artix-7  & Stratix IV            & Stratix IV          & Virtex 6               \\ % & Artix-7             \\
-    \textbf{Cycles d'horloge}   &  1161     & 222                   & 165                 & 165                    \\ % & 1161                \\
-    \textbf{Débit info.} (Mb/s) &  44       & 238                   & 319                 & 217                    \\ % & 44                  \\
-    \textbf{Fréquence} (MHz)    &  100      & 103                   & 103                 & 70                     \\ % & 100                 \\
-    \textbf{LUTS}               &  14744    & 23020                 & 24821               & 22115                  \\ % & 17352               \\
-    \textbf{FFs}                &  7354     & 1024                  & 5823                & 7941                   \\ % & 7354                \\
-    \textbf{RAM} (Kb)           &  948      & 43                    & 36                  & 36                     \\ % & 141                 \\
-    \textbf{\'Elagage}          &  R0 \& R1 & Complet               & Complet             & Complet                \\ % & R0 \& R1            \\
+    \textbf{Cible}              &  Artix-7     & Stratix IV  & Stratix IV            & Stratix IV          & Virtex 6               \\ % & Artix-7             \\
+    \textbf{Cycles d'horloge}   &  \multicolumn{2}{c}{1161}     & 222                   & 165                 & 165                    \\ % & 1161                \\
+    \textbf{Débit info.} (Mb/s) &  44          &   39        & 238                   & 319                 & 217                    \\ % & 44                  \\
+    \textbf{Fréquence} (MHz)    &  100         &   90        & 103                   & 103                 & 70                     \\ % & 100                 \\
+    \textbf{LUTS}               &  14744       &   19665     & 23020                 & 24821               & 22115                  \\ % & 17352               \\
+    \textbf{FFs}                &  7354        &   8359      & 1024                  & 5823                & 7941                   \\ % & 7354                \\
+    \textbf{RAM} (Kb)           &  \multicolumn{2}{c}{948}      & 43                    & 36                  & 36                     \\ % & 141                 \\
+    \textbf{\'Elagage}          &  \multicolumn{2}{c}{R0 \& R1} & Complet               & Complet             & Complet                \\ % & R0 \& R1            \\
     \bottomrule   
   \end{tabular}  
 \end{table}
